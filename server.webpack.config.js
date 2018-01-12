@@ -1,8 +1,8 @@
 // 
 
-const webpack = require('webpack')
 const path = require('path')
-const node_externals = require('webpack-node-externals')
+const webpack = require('webpack')
+const externals = require('webpack-node-externals')
 
 
 
@@ -17,7 +17,7 @@ module.exports = {
 
 	target: 'node',
 
-	externals: [node_externals()],
+	externals: [externals()],
 
 	resolve: {
 		extensions: ['.ts', '.js'],
@@ -37,7 +37,7 @@ module.exports = {
 	},
 
 	plugins: [
-		new webpack.IgnorePlugin(/typescript/),
+
 	],
 
 	devtool: 'source-map',

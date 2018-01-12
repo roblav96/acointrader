@@ -1,18 +1,14 @@
 // 
 
-const eyes = require('eyes')
-const clc = require('cli-color')
-const webpack = require('webpack')
 const path = require('path')
+const webpack = require('webpack')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-
-const env = require('./env.json')[process.env.NODE_ENV]
-env.env = process.env.NODE_ENV
+const envjson = require('./client/env.json')
+const env = envjson[process.env.NODE_ENV]
 
 
 
-const config = {
+module.exports = {
 
 	entry: './client/client.ts',
 	output: {
@@ -39,7 +35,7 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					
+					// appendTsSuffixTo: [/\.vue$/],
 				},
 			},
 			{
@@ -68,36 +64,13 @@ const config = {
 	},
 
 	plugins: [
+		new LiveReloadPlugin({ appendScriptTag: true }),
 		new webpack.IgnorePlugin(/typescript/),
 	],
 
+	devtool: 'source-map',
+
 }
 
 
-
-if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	config.devtool = 'source-map'
-	config.watchOptions = { ignored: /node_modules/ }
-	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
-	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
-}
-
-
-
-if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	
-}
-
-
-
-Object.keys(env).forEach(function(key) {
-	env[key] = JSON.stringify(env[key])
-})
-config.plugins.push(new webpack.DefinePlugin({ 'process.env': env }))
-
-
-
-// console.log(clc.bold.blue('client.webpack.config.js >')); eyes.inspect(config);
-
-module.exports = config
 
