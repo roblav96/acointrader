@@ -3,19 +3,13 @@
 import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
 import Vue from 'vue'
-import MainDrawer from '../components/main-drawer/main-drawer'
 
 
 
 @Vts.Component(<VueComponent>{
-	name: 'Root',
-
-	components: {
-		'main-drawer': MainDrawer,
-	},
-	
+	name: 'Coinbase',
 })
-export default class Root extends Vue {
+export default class Coinbase extends Vue {
 
 	created() {
 
@@ -28,8 +22,8 @@ export default class Root extends Vue {
 	beforeDestroy() {
 
 	}
-	
-	
+
+
 
 }
 

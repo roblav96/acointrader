@@ -7,12 +7,16 @@
 
 html,
 body {
-    overflow: hidden;
-    background-color: white;
+    /*overflow: hidden;*/
+    /*background-color: white;*/
 }
 
 p {
     margin-bottom: 0px;
+}
+
+.z-9 {
+    z-index: 9 !important;
 }
 
 .z-99 {
