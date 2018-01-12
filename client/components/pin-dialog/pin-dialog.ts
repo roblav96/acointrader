@@ -3,6 +3,9 @@
 import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
 import Vue from 'vue'
+import _ from 'lodash'
+import lockr from 'lockr'
+import moment from 'moment'
 
 
 
@@ -20,7 +23,7 @@ export default class PinDialog extends Vue {
 	}
 
 	mounted() {
-
+		// _.delay(() => this.pin_dialog.show = true, 1000)
 	}
 
 	beforeDestroy() {
@@ -30,6 +33,20 @@ export default class PinDialog extends Vue {
 
 
 	get pin_dialog() { return this.$store.state.pin_dialog }
+
+	@Vts.Watch('pin_dialog.show') w_show(to: boolean, from: boolean) {
+		if (to && !from) {
+			_.delay(() => (this.$refs.pin_dialog_input as HTMLInputElement).focus(), 300)
+		}
+	}
+
+	pin = this.$store.state.pin
+	get valid() { return this.pin && this.pin.length == 4 }
+
+	save() {
+		if (!this.valid) return;
+		this.$store.state.pin = this.pin
+	}
 
 
 
