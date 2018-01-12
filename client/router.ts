@@ -1,35 +1,41 @@
 // 
 
 import Vue from 'vue'
-import VueRouter, { RouteConfig as VRouteConfig } from 'vue-router'
+import VueRouter from 'vue-router'
 import * as store from './services/store'
 
 import Root from './root/root'
-import Signup from './routes/signup/signup'
-import Coinbase from './routes/coinbase/coinbase'
+import Register from './routes/register/register'
+import Coins from './routes/coins/coins'
 
 
 
 export const routes = [
 
 	{
-		name: 'signup',
-		path: '/signup',
-		component: Signup,
+		dname: 'Coinbase & Exchanges',
+		icon: 'mdi-account-key',
+		mmenu: true,
+		name: 'register',
+		path: '/register',
+		component: Register,
 	},
 
 	{
-		name: 'coinbase',
-		path: '/coinbase',
-		component: Coinbase,
+		dname: 'Coins',
+		icon: 'mdi-coin',
+		mmenu: true,
+		name: 'coins',
+		path: '/coins',
+		component: Coins,
 	},
 
 	{
 		path: '*',
-		redirect: { name: 'signup' },
+		redirect: { name: 'coins' },
 	},
 
-] as Array<VRouteConfig>
+] as Array<RouteConfig>
 
 
 

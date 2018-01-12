@@ -20,10 +20,12 @@ import MainDrawer from '../components/main-drawer/main-drawer'
 export default class Root extends Vue {
 
 	created() {
-		
+
 	}
 
+	initing = true
 	mounted() {
+		setTimeout(() => this.initing = false, 1)
 		// if (!this.$store.state.pin) this.$store.state.pin_dialog.show = true;
 	}
 

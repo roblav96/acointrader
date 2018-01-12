@@ -9,6 +9,12 @@ import * as Avts from 'av-ts'
 
 
 declare global {
+	
+	interface RouteConfig extends VueRouter.RouteConfig {
+		dname?: string
+		icon?: string
+		mmenu?: boolean
+	}
 
 	interface VueComponent extends ComponentOptions<Vue> { }
 

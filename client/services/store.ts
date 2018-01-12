@@ -13,8 +13,8 @@ class State {
 
 	pin = ''
 
-	main_drawer = new MainDrawer.store()
 	pin_dialog = new PinDialog.store()
+	main_drawer = new MainDrawer.store()
 	coinbase = new coinbase.store()
 
 }

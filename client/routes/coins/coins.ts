@@ -7,12 +7,12 @@ import Vue from 'vue'
 
 
 @Vts.Component(<VueComponent>{
-	name: 'Signup',
+	name: 'Coins',
 })
-export default class Signup extends Vue {
+export default class Coins extends Vue {
 
 	created() {
-
+		
 	}
 
 	mounted() {
