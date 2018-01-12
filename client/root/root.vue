@@ -10,6 +10,8 @@
             <router-view class="animated animated-fastest" />
         </transition>
 
+        <pin-dialog />
+
     </v-app>
 </template>
 

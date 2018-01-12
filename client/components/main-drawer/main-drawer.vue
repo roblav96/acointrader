@@ -12,13 +12,25 @@ aside.main-drawer div.list__tile__title > img {
     height: 24px;
 }
 
+
+/**/
+
 </style>
 
 <template>
     <v-navigation-drawer app fixed v-model="drawer" class="main-drawer">
         <v-list>
-        	
-            <v-list-tile v-on:click>
+
+            <v-list-tile :to="{ name: 'landing' }">
+                <v-list-tile-action>
+                    <v-icon>home</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Landing</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+
+            <v-list-tile :to="{ name: 'coinbase' }">
                 <v-list-tile-action>
                     <img src="img/coinbase-logo.png">
                 </v-list-tile-action>
@@ -29,7 +41,7 @@ aside.main-drawer div.list__tile__title > img {
                     </v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
-            
+
         </v-list>
     </v-navigation-drawer>
 </template>

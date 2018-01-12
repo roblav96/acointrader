@@ -19,6 +19,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
+import colors from 'vuetify/es5/util/colors'
 
 Vue.config.devtools = false
 Vue.config.productionTip = false

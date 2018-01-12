@@ -1,9 +1,10 @@
 {
 	"scripts": {
-		"i": "npm install",
+		"i": "npm install && npm run client:fixdts",
 		"rc": "npm run client:dev",
 		"rs": "npm-run-all --parallel server:dev server:start",
 		"k": "npm run server:kill",
+		"client:fixdts": "rm -f node_modules/vuex/types/vue.d.ts && rm -f node_modules/@types/echarts/index.d.ts",
 		"client:dev": "cross-env NODE_ENV=development webpack --config client.webpack.config --progress --hide-modules --watch",
 		"client:build": "cross-env NODE_ENV=production webpack --config client.webpack.config --progress --hide-modules",
 		"server:dev": "cross-env NODE_ENV=development webpack --config server.webpack.config --progress --hide-modules --watch",
