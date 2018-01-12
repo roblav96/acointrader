@@ -25,7 +25,7 @@ aside.main-drawer > ul.list div.list__tile__title > img {
 
                 <v-list-tile v-for="item in routes" :to="{ name: item.name }" :key="item.name">
                     <v-list-tile-action>
-                        <v-icon>{{ item.icon }}</v-icon>
+                        <v-icon medium>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>{{ item.dname }}</v-list-tile-title>
