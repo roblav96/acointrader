@@ -1,5 +1,9 @@
 # 
 
+/env.json
+/client/env.json
+/server/env.json
+
 node_modules/
 tsc/
 .awcache

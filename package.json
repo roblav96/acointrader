@@ -95,8 +95,9 @@
 		"ts-loader": "latest",
 		"vue-loader": "latest",
 		"vue-template-compiler": "latest",
-		"webpack-node-externals": "latest",
+		"webpack-bundle-analyzer": "latest",
 		"webpack-livereload-plugin": "latest",
+		"webpack-node-externals": "latest",
 		"webpack": "latest"
 	}
 }
