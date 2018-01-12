@@ -12,12 +12,12 @@
 		"removeComments": true,
 		"pretty": true,
 		"sourceMap": true,
-		"outDir": "client/tsc"
+		"outDir": "tsc"
 	},
 	"include": [
 		"types",
-		"client/types",
-		"client/src"
+		"client",
+		"server"
 	],
 	"exclude": [
 		"dist",

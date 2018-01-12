@@ -8,7 +8,7 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
 
 module.exports = {
 
-	entry: './client/src/main.ts',
+	entry: './client/client.ts',
 	output: {
 		path: path.resolve(__dirname, './client/public/dist'),
 		publicPath: '/client/public/dist/',
@@ -63,6 +63,7 @@ module.exports = {
 	
 	plugins: [
 		new LiveReloadPlugin({ appendScriptTag: true }),
+		new webpack.IgnorePlugin(/typescript/),
 	],
 
 	devtool: 'source-map',

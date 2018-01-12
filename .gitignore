@@ -1,9 +1,9 @@
 # 
 
-node_modules
+node_modules/
+tsc/
 .awcache
 
-client/tsc/
 client/public/dist/
 
 *.heapsnapshot
