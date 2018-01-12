@@ -2,7 +2,7 @@
 <script lang="ts" src="./root.ts"></script>
 
 <template>
-    <v-app>
+    <v-app dark>
 
         <main-drawer />
 

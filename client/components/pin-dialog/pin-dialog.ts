@@ -37,15 +37,21 @@ export default class PinDialog extends Vue {
 	@Vts.Watch('pin_dialog.show') w_show(to: boolean, from: boolean) {
 		if (to && !from) {
 			_.delay(() => (this.$refs.pin_dialog_input as HTMLInputElement).focus(), 300)
+			_.delay(() => this.pin = '1234', 500)
 		}
 	}
 
 	pin = this.$store.state.pin
+	@Vts.Watch('pin') w_pin(to: string, from: string) {
+		if (to && to.length == 4) this.save();
+	}
+
 	get valid() { return this.pin && this.pin.length == 4 }
 
 	save() {
 		if (!this.valid) return;
 		this.$store.state.pin = this.pin
+		this.$store.state.pin_dialog.show = false
 	}
 
 

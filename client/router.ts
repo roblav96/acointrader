@@ -5,7 +5,7 @@ import VueRouter, { RouteConfig as VRouteConfig } from 'vue-router'
 import * as store from './services/store'
 
 import Root from './root/root'
-import Landing from './routes/landing/landing'
+import Signup from './routes/signup/signup'
 import Coinbase from './routes/coinbase/coinbase'
 
 
@@ -13,9 +13,9 @@ import Coinbase from './routes/coinbase/coinbase'
 export const routes = [
 
 	{
-		name: 'landing',
-		path: '/landing',
-		component: Landing,
+		name: 'signup',
+		path: '/signup',
+		component: Signup,
 	},
 
 	{
@@ -26,7 +26,7 @@ export const routes = [
 
 	{
 		path: '*',
-		redirect: { name: 'landing' },
+		redirect: { name: 'signup' },
 	},
 
 ] as Array<VRouteConfig>

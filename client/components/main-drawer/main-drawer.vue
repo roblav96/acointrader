@@ -21,12 +21,12 @@ aside.main-drawer div.list__tile__title > img {
     <v-navigation-drawer app fixed v-model="drawer" class="main-drawer">
         <v-list>
 
-            <v-list-tile :to="{ name: 'landing' }">
+            <v-list-tile :to="{ name: 'signup' }">
                 <v-list-tile-action>
-                    <v-icon>home</v-icon>
+                    <v-icon>mdi-account-plus</v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                    <v-list-tile-title>Landing</v-list-tile-title>
+                    <v-list-tile-title>Signup</v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
 

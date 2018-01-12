@@ -15,23 +15,23 @@ import MainDrawer from '../components/main-drawer/main-drawer'
 		'pin-dialog': PinDialog,
 		'main-drawer': MainDrawer,
 	},
-	
+
 })
 export default class Root extends Vue {
 
 	created() {
-
+		
 	}
 
 	mounted() {
-
+		// if (!this.$store.state.pin) this.$store.state.pin_dialog.show = true;
 	}
 
 	beforeDestroy() {
 
 	}
-	
-	
+
+
 
 }
 

@@ -1,18 +1,18 @@
 <!--  -->
-<script lang="ts" src="./landing.ts"></script>
+<script lang="ts" src="./signup.ts"></script>
 
 <template>
     <v-content>
 
-        <v-toolbar app fixed>
+        <v-toolbar app fixed dark color="primary">
             <v-toolbar-side-icon></v-toolbar-side-icon>
-            <v-toolbar-title>Landing</v-toolbar-title>
+            <v-toolbar-title>Signup</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 
         <v-container fluid>
             <v-layout column>
-                <p>this is landing</p>
+                <p>this is signup</p>
             </v-layout>
         </v-container>
 

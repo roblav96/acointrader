@@ -7,9 +7,9 @@ import Vue from 'vue'
 
 
 @Vts.Component(<VueComponent>{
-	name: 'Landing',
+	name: 'Signup',
 })
-export default class Landing extends Vue {
+export default class Signup extends Vue {
 
 	created() {
 

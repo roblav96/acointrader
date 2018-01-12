@@ -17,7 +17,7 @@
                 <v-card-title primary-title class="pb-0">
                     <div>
                         <p class="headline">Security PIN</p>
-                        <p class="grey--text">This will encrypt your sensitive data</p>
+                        <p class="grey--text">Encrypts your sensitive data</p>
                     </div>
                 </v-card-title>
 
@@ -25,9 +25,9 @@
                     <v-text-field ref="pin_dialog_input" prepend-icon="security" label="4-digit number" :mask="'####'" v-model="pin" solo></v-text-field>
                 </v-card-text>
 
-                <v-card-actions>
-                    <v-btn block large type="submit" color="primary" :disabled="!valid">Save</v-btn>
-                </v-card-actions>
+                <!-- <v-card-actions>
+                    <v-btn block large type="submit" color="primary" :disabled="!valid">Submit</v-btn>
+                </v-card-actions> -->
 
             </v-form>
         </v-card>
