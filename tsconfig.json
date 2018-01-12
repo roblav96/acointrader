@@ -11,15 +11,16 @@
 		"skipDefaultLibCheck": true,
 		"removeComments": true,
 		"pretty": true,
-		"sourceMap": true
+		"sourceMap": true,
+		"outDir": "client/tsc"
 	},
 	"include": [
-		"../types",
 		"types",
-		"src"
+		"client/types",
+		"client/src"
 	],
 	"exclude": [
-		"public",
+		"dist",
 		"node_modules"
 	]
 }

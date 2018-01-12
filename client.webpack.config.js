@@ -8,10 +8,10 @@ const LiveReloadPlugin = require('webpack-livereload-plugin')
 
 module.exports = {
 
-	entry: './src/main.ts',
+	entry: './client/src/main.ts',
 	output: {
-		path: path.resolve(__dirname, './public/dist'),
-		publicPath: '/public/dist/',
+		path: path.resolve(__dirname, './client/public/dist'),
+		publicPath: '/client/public/dist/',
 		filename: 'build.js',
 	},
 
@@ -20,7 +20,7 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: ['.ts', '.js', '.vue'],
+		extensions: ['.vue', '.ts', '.js'],
 		alias: {
 			'vue$': 'vue/dist/vue.esm.js',
 		},
@@ -33,7 +33,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					appendTsSuffixTo: [/\.vue$/],
+					// appendTsSuffixTo: [/\.vue$/],
 				},
 			},
 			{

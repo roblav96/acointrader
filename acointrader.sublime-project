@@ -3,7 +3,8 @@
 		"path": ".",
 		"folder_exclude_patterns": [
 			".awcache",
-			"public/dist",
+			"dist",
+			"tsc",
 			"node_modules"
 		]
 	}]

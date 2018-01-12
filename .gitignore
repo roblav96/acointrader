@@ -1,0 +1,11 @@
+# 
+
+node_modules
+.awcache
+
+client/tsc/
+client/public/dist/
+
+*.heapsnapshot
+*.DS_STORE
+*.log
