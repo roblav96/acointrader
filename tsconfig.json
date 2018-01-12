@@ -21,6 +21,7 @@
 	],
 	"exclude": [
 		"dist",
+		"tsc",
 		"node_modules"
 	]
 }
