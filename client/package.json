@@ -1,0 +1,34 @@
+{
+	"scripts": {
+		"i": "npm i",
+		"r": "npm run dev",
+		"dev": "cross-env NODE_ENV=development webpack --progress --hide-modules --watch",
+		"build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+	},
+	"dependencies": {
+		"av-ts": "latest",
+		"vue": "latest",
+		"vue-class-component": "latest",
+		"vue-property-decorator": "latest",
+		"vue-router": "latest",
+		"vuetify": "next",
+		"vuex": "latest"
+	},
+	"devDependencies": {
+		"babel-core": "latest",
+		"babel-loader": "latest",
+		"cross-env": "latest",
+		"css-loader": "latest",
+		"file-loader": "latest",
+		"npm-run-all": "latest",
+		"style-loader": "latest",
+		"stylus": "latest",
+		"stylus-loader": "latest",
+		"typescript": "latest",
+		"ts-loader": "latest",
+		"vue-loader": "latest",
+		"vue-template-compiler": "latest",
+		"webpack-livereload-plugin": "latest",
+		"webpack": "latest"
+	}
+}
