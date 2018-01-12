@@ -1,0 +1,11 @@
+{
+	"uid": "acointrader-development",
+	"append": true,
+	"killTree": true,
+	"watch": true,
+	"watchDirectory": "dist/build.js",
+	"watchIgnore": "node_modules",
+	"script": "dist/build.js",
+	"args": ["$env", "DEVELOPMENT"]
+}
+

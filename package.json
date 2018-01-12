@@ -2,10 +2,13 @@
 	"scripts": {
 		"i": "npm install",
 		"rc": "npm run client:dev",
-		"rs": "npm run server:dev",
+		"rs": "npm-run-all --parallel server:dev server:start",
+		"k": "npm run server:kill",
 		"client:dev": "cross-env NODE_ENV=development webpack --config client.webpack.config --progress --hide-modules --watch",
 		"client:build": "cross-env NODE_ENV=production webpack --config client.webpack.config --progress --hide-modules",
-		"server:dev": "cross-env NODE_ENV=development webpack --config server.webpack.config --progress --hide-modules --watch"
+		"server:dev": "cross-env NODE_ENV=development webpack --config server.webpack.config --progress --hide-modules --watch",
+		"server:kill": "forever stopall && forever cleanlogs",
+		"server:start": "npm run server:kill && sleep 3 && cd server && forever start -c 'node --expose-gc --max_old_space_size=512' forever.development.json && tail -F ~/.forever/acointrader-development.log"
 	},
 	"dependencies": {
 		"animate.css": "latest",

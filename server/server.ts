@@ -116,5 +116,13 @@ server.post('/api/proxy', api_proxy)
 
 
 
+server.listen(process.$port, process.$host, function() {
+	console.log('listening...')
+})
+
+
+
+
+
 
 

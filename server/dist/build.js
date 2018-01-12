@@ -200,6 +200,9 @@ server.use(__WEBPACK_IMPORTED_MODULE_6_restify___default.a.plugins.bodyParser())
 server.use(__WEBPACK_IMPORTED_MODULE_6_restify___default.a.plugins.queryParser());
 
 server.post('/api/proxy', __WEBPACK_IMPORTED_MODULE_9__routes_proxy__["a" /* default */]);
+server.listen(process.$port, process.$host, function () {
+    console.log('listening...');
+});
 
 
 /***/ }),
