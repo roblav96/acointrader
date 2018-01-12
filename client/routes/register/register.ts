@@ -23,6 +23,10 @@ export default class Register extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterM
 	beforeDestroy() {
 
 	}
+	
+	
+	
+	keys
 
 
 

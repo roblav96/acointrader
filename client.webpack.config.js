@@ -3,6 +3,8 @@
 const path = require('path')
 const webpack = require('webpack')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
+const envjson = require('./client/env.json')
+const env = envjson[process.env.NODE_ENV]
 
 
 
@@ -60,7 +62,7 @@ module.exports = {
 			},
 		],
 	},
-	
+
 	plugins: [
 		new LiveReloadPlugin({ appendScriptTag: true }),
 		new webpack.IgnorePlugin(/typescript/),

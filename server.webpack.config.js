@@ -2,7 +2,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
-const nodeExternals = require('webpack-node-externals')
+const externals = require('webpack-node-externals')
 
 
 
@@ -17,9 +17,7 @@ module.exports = {
 
 	target: 'node',
 
-	externals: [nodeExternals({
-
-	})],
+	externals: [externals()],
 
 	resolve: {
 		extensions: ['.ts', '.js'],
@@ -32,7 +30,7 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					
+
 				},
 			},
 		],
