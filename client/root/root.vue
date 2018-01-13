@@ -14,15 +14,11 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 </style>
 
 <template>
-    <v-app dark>
+    <v-app dark :class="{ 'anim-loading': initing === true, 'animated animated-fast fadeIn': initing === false }">
 
         <main-drawer></main-drawer>
 
         <v-toolbar class="dummy-toolbar" app fixed flat dark color="primary"></v-toolbar>
-
-        <!-- <transition mode="out-in" enter-active-class="fadeIn" leave-active-class="fadeOut">
-            <router-view class="animated animated-fastest" :class="{ 'anim-loading': initing }"></router-view>
-        </transition> -->
 
         <!-- <v-slide-x-reverse-transition mode="out-in"> -->
         <v-fade-transition mode="out-in">

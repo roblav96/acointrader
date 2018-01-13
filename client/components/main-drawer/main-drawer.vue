@@ -4,17 +4,8 @@
 <style>
 /**/
 
-
-/*aside.main-drawer {
-    transition-timing-function: ease-in !important;
-    transition-duration: 0.3s !important;
-}*/
-
-aside.main-drawer div.list__tile__action > img {
+aside.main-drawer ul.list img {
     width: 24px;
-}
-
-aside.main-drawer div.list__tile__title > img {
     height: 24px;
 }
 
@@ -29,7 +20,6 @@ aside.main-drawer div.list__tile__content {
 
 aside.main-drawer hr.divider {
     display: inherit !important;
-    transition: opacity 0.1s linear;
 }
 
 
@@ -41,11 +31,10 @@ aside.main-drawer hr.divider {
     <v-navigation-drawer app fixed permanent stateless class="main-drawer pb-0" :mini-variant="!main_drawer.show">
 
         <v-layout column fill-height>
-            <!-- <v-layout column fill-height v-on:mouseover="hovering = true" v-on:mouseleave="hovering = false"> -->
 
             <v-list two-line class="pt-0 pb-5">
 
-                <template v-for="item in routes">
+                <template v-for="(item, index) in routes">
                     <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name">
                         <v-list-tile-action>
                             <v-icon medium :class="{ 't-bold': item.bold }">{{ item.icon }}</v-icon>
@@ -57,6 +46,7 @@ aside.main-drawer hr.divider {
                     </v-list-tile>
                     <v-divider></v-divider>
                 </template>
+
             </v-list>
 
         </v-layout>

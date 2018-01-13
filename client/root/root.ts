@@ -25,8 +25,11 @@ export default class Root extends Vue {
 
 	}
 
+	// keep the initing to allow time for fonts to download and render 
+	initing = true
 	mounted() {
-
+		setTimeout(() => this.initing = false, 100)
+		setTimeout(() => this.initing = null, 1000)
 	}
 
 	beforeDestroy() {

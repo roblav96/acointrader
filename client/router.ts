@@ -7,15 +7,15 @@ import * as store from './services/store'
 import Root from './root/root'
 import Accounts from './routes/accounts/accounts'
 import Coins from './routes/coins/coins'
+import Search from './routes/search/search'
 
 
 
 export const routes = [
 
 	{
-		dname: 'My Exchange Accounts', // Manager',
-		// dname: 'Sync Trading Exchanges',
-		description: 'Coinbase, GDAX, Binance',
+		dname: 'My Exchange Accounts',
+		description: 'Coinbase, Binance, Gemini',
 		icon: 'mdi-account-key',
 		mmenu: true,
 		name: 'accounts',
@@ -31,7 +31,7 @@ export const routes = [
 		mmenu: true,
 		name: 'search',
 		path: '/search',
-		component: Accounts,
+		component: Search,
 	},
 
 	{

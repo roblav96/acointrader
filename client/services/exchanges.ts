@@ -65,7 +65,7 @@ export const exchanges = [
 
 	new Binance('binance', 'Binance', 'https://www.binance.com'),
 
-	new Huobi('huobi', 'Huobi.Pro', 'https://www.huobi.pro'),
+	new Huobi('huobi', 'Huobi Pro', 'https://www.huobi.pro'),
 
 	new Poloniex('poloniex', 'Poloniex', 'https://poloniex.com'),
 
