@@ -14,13 +14,19 @@ aside.main-drawer a.list__tile.list__tile--active div.list__tile__title {
 }
 
 aside.main-drawer div.list__tile__content {
-    transition: opacity 0.1s linear;
+    transition: opacity 0.1s ease;
     white-space: nowrap;
 }
 
-aside.main-drawer hr.divider {
-    display: inherit !important;
+aside.main-drawer.navigation-drawer--mini-variant hr.divider {
+	display: inherit !important;
+    transition: opacity 0.1s ease;
+	opacity: 0;
 }
+
+/*aside.main-drawer hr.divider {
+    display: inherit !important;
+}*/
 
 
 /**/

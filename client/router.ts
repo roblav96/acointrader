@@ -8,6 +8,7 @@ import Root from './root/root'
 import Accounts from './routes/accounts/accounts'
 import Coins from './routes/coins/coins'
 import Search from './routes/search/search'
+import Intro from './routes/intro/intro'
 
 
 
@@ -21,6 +22,17 @@ export const routes = [
 		name: 'accounts',
 		path: '/accounts',
 		component: Accounts,
+	},
+
+	{
+		dname: 'Introduction',
+		icon: 'mdi-trending-up',
+		description: 'Ready to levelup your game?',
+		bold: true,
+		mmenu: true,
+		name: 'intro',
+		path: '/intro',
+		component: Intro,
 	},
 
 	{

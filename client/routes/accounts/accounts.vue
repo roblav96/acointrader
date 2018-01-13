@@ -4,7 +4,13 @@
 <style>
 /**/
 
-div.tabs.accounts--tabs div.tabs__container {
+li.expansion-panel__container--active div.expansion-panel__header p {
+    color: #21CE99;
+    font-weight: bold;
+}
+
+
+/*div.tabs.accounts--tabs div.tabs__container {
 	height: 100px !important;
 }
 
@@ -19,11 +25,6 @@ div.tabs.accounts--tabs a.tabs__item {
 
 div.tabs.accounts--tabs div.tabs__slider {
 	height: 4px;
-}
-
-/*li.expansion-panel__container--active div.expansion-panel__header p {
-    color: #21CE99;
-    font-weight: bold;
 }*/
 
 
@@ -44,18 +45,17 @@ div.tabs.accounts--tabs div.tabs__slider {
 
 
 
-        <v-tabs icons-and-text v-model="tab_index" class="accounts--tabs">
+        <!-- <v-tabs show-arrows icons-and-text v-model="tab_index" class="accounts--tabs">
             <v-tabs-slider color="primary"></v-tabs-slider>
             <v-tab class="t-transform-none" v-for="item in exchanges" :key="item.id">
                 {{ item.dname }}
-                <!-- <v-icon>favorite</v-icon> -->
                 <img :src="v_exchange_png(item.id)">
             </v-tab>
-        </v-tabs>
+        </v-tabs> -->
 
 
 
-        <!-- <v-container fluid grid-list-xl>
+        <v-container fluid grid-list-xl>
             <v-layout row>
 
 
@@ -69,10 +69,10 @@ div.tabs.accounts--tabs div.tabs__slider {
                             <v-spacer></v-spacer>
                         </v-toolbar>
                         <v-expansion-panel class="shadow-none">
-                            <v-expansion-panel-content :ripple="true" v-for="(item, index) in exchanges" :key="index" :value="visibles[index]">
-                                <p class="select-none" slot="header" v-on:click="setTutsId(item.id)">
-                                    {{ item.dname }}
-                                </p>
+                            <v-expansion-panel-content :lazy="true" :ripple="true" v-for="(item, index) in exchanges" :key="index">
+                                <div slot="header">
+                                    <p class="select-none">{{ item.dname }}</p>
+                                </div>
                                 <v-divider></v-divider>
                                 <v-card>
                                     <v-card-text>
@@ -90,41 +90,45 @@ div.tabs.accounts--tabs div.tabs__slider {
 
 
                 <v-flex xs8>
-                    <v-card v-if="tuts_id">
+                    <v-card>
 
                         <v-toolbar dense flat dark color="primary">
                             <v-icon medium>mdi-book-open-page-variant</v-icon>
                             <v-toolbar-title>
-                                {{ tutsing.dname }}: Aquiring API Key Step-by-Step Instructions
+                                <!-- {{ tutsing.dname }}: Aquiring API Key Step-by-Step Instructions -->
+                                Aquiring API Key Step-by-Step Instructions
                             </v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
 
                         <v-stepper vertical class="bg-initial shadow-none" v-model="step">
-                            <v-stepper-header>
-                                <v-stepper-step step="1" :complete="step > 1">Name of step 1</v-stepper-step>
-                                <v-divider></v-divider>
-                                <v-stepper-step step="2" :complete="step > 2">Name of step 2</v-stepper-step>
-                                <v-divider></v-divider>
-                                <v-stepper-step step="3">Name of step 3</v-stepper-step>
-                            </v-stepper-header>
-                            <v-stepper-items>
-                                <v-stepper-content step="1">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn color="primary" v-on:click="step = 2">Continue</v-btn>
-                                    <v-btn flat>Cancel</v-btn>
-                                </v-stepper-content>
-                                <v-stepper-content step="2">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn color="primary" v-on:click="step = 3">Continue</v-btn>
-                                    <v-btn flat>Cancel</v-btn>
-                                </v-stepper-content>
-                                <v-stepper-content step="3">
-                                    <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
-                                    <v-btn color="primary" v-on:click="step = 1">Continue</v-btn>
-                                    <v-btn flat>Cancel</v-btn>
-                                </v-stepper-content>
-                            </v-stepper-items>
+                            <v-stepper-step step="1" :complete="step > 1">
+                                Select an app
+                                <small>Summarize if needed</small>
+                            </v-stepper-step>
+                            <v-stepper-content step="1">
+                                <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                                <v-btn color="primary" @click.native="step = 2">Continue</v-btn>
+                                <v-btn flat>Cancel</v-btn>
+                            </v-stepper-content>
+                            <v-stepper-step step="2" :complete="step > 2">Configure analytics for this app</v-stepper-step>
+                            <v-stepper-content step="2">
+                                <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                                <v-btn color="primary" @click.native="step = 3">Continue</v-btn>
+                                <v-btn flat>Cancel</v-btn>
+                            </v-stepper-content>
+                            <v-stepper-step step="3" :complete="step > 3">Select an ad format and name ad unit</v-stepper-step>
+                            <v-stepper-content step="3">
+                                <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                                <v-btn color="primary" @click.native="step = 4">Continue</v-btn>
+                                <v-btn flat>Cancel</v-btn>
+                            </v-stepper-content>
+                            <v-stepper-step step="4">View setup instructions</v-stepper-step>
+                            <v-stepper-content step="4">
+                                <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+                                <v-btn color="primary" @click.native="step = 1">Continue</v-btn>
+                                <v-btn flat>Cancel</v-btn>
+                            </v-stepper-content>
                         </v-stepper>
 
                     </v-card>
@@ -133,7 +137,7 @@ div.tabs.accounts--tabs div.tabs__slider {
 
 
             </v-layout>
-        </v-container> -->
+        </v-container>
 
     </v-content>
 </template>

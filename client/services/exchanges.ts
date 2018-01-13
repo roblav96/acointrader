@@ -47,6 +47,10 @@ export class Gdax extends ExchangeBuilder {
 
 }
 
+export class Okex extends ExchangeBuilder {
+
+}
+
 export class HitBTC extends ExchangeBuilder {
 
 }
@@ -119,22 +123,23 @@ export const exchanges = [
 	new Huobi('huobipro', 'Huobi Pro', 'https://www.huobi.pro'),
 	new Poloniex('poloniex', 'Poloniex', 'https://poloniex.com'),
 	new Gdax('gdax', 'GDAX', 'https://www.gdax.com'),
-	new HitBTC('hitbtc', 'HitBTC', '____'),
-	new Bitstamp('bitstamp', 'Bitstamp', '____'),
-	new Gemini('gemini', 'Gemini', '____'),
-	new Kucoin('kucoin', 'Kucoin', '____'),
-	new Liqui('liqui', 'Liqui', '____'),
-	new Gateio('gateio', 'Gate.io', '____'),
-	new CoinsBank('coinsbank', 'CoinsBank', '____'),
-	new YoBit('yobit', 'YoBit', '____'),
-	new CexIO('cexio', 'Cexio', '____'),
-	new Tidex('tidex', 'Tidex', '____'),
-	new CoinExchange('coinexchange', 'CoinExchange', '____'),
-	new Exmo('exmo', 'Exmo', '____'),
-	new Cryptopia('cryptopia', 'Cryptopia', '____'),
-	new LiveCoin('livecoin', 'Livecoin', '____'),
-	new Bittrex('bittrex', 'Bittrex', '____'),
-	new Kraken('kraken', 'Kraken', '____'),
+	new Okex('okex', 'OKEx', 'https://www.okex.com'),
+	new HitBTC('hitbtc', 'HitBTC', 'https://hitbtc.com'),
+	new Bitstamp('bitstamp', 'Bitstamp', 'https://www.bitstamp.net'),
+	new Gemini('gemini', 'Gemini', 'https://gemini.com'),
+	new Kucoin('kucoin', 'Kucoin', 'https://www.kucoin.com'),
+	new Liqui('liqui', 'Liqui', 'https://liqui.io'),
+	new Gateio('gateio', 'Gate.io', 'https://gate.io'),
+	new CoinsBank('coinsbank', 'CoinsBank', 'https://coinsbank.com'),
+	new YoBit('yobit', 'YoBit', 'https://yobit.net/en'),
+	new CexIO('cexio', 'Cexio', 'https://cex.io'),
+	new Tidex('tidex', 'Tidex', 'https://tidex.com'),
+	new CoinExchange('coinexchange', 'CoinExchange', 'https://www.coinexchange.io'),
+	new Exmo('exmo', 'Exmo', 'https://exmo.com'),
+	new Cryptopia('cryptopia', 'Cryptopia', 'https://www.cryptopia.co.nz'),
+	new LiveCoin('livecoin', 'Livecoin', 'https://www.livecoin.net'),
+	new Bittrex('bittrex', 'Bittrex', 'https://bittrex.com'),
+	new Kraken('kraken', 'Kraken', 'https://www.kraken.com'),
 ] as Array<ExchangeBuilder>
 
 // console.log('exchanges', exchanges)

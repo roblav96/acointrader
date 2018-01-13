@@ -45,6 +45,8 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
+
+
 	// tuts_id = ''
 	// get tutsing() {
 	// 	return this.exchanges.find(v => v.id == this.tuts_id) || {} as exchanges.ExchangeBuilder
@@ -61,11 +63,11 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
-	// wtfidk = null
-	// @Vts.Watch('wtfidk', { deep: true }) w_wtfidk(to: any, from: any) {
-	// 	console.log('to', to)
-	// 	console.log('from', from)
-	// }
+	wtfidk = true
+	@Vts.Watch('wtfidk', { deep: true }) w_wtfidk(to: any, from: any) {
+		console.log('to', to)
+		console.log('from', from)
+	}
 
 
 
