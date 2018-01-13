@@ -12,10 +12,9 @@ declare global {
 	
 	interface RouteConfig extends VueRouter.RouteConfig {
 		dname?: string
+		description?: string
 		icon?: string
 		mmenu?: boolean
-		category?: string
-		description?: string
 	}
 
 	interface VueComponent extends ComponentOptions<Vue> { }

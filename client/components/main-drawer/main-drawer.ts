@@ -6,6 +6,7 @@ import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as router from '../../router'
+import VMixin from '../../mixins/v.mixin'
 
 
 
@@ -15,8 +16,8 @@ export class store {
 
 @Vts.Component(<VueComponent>{
 	name: 'MainDrawer',
-})
-export default class MainDrawer extends Vue {
+} as any)
+export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 	created() {
 
@@ -34,15 +35,26 @@ export default class MainDrawer extends Vue {
 
 	get main_drawer() { return this.$store.state.main_drawer }
 
-	hovering = true
+	thover: number
+	hovering = false
+	ishovering = false
+	@Vts.Watch('ishovering') w_ishovering(to: boolean, from: boolean) {
+		if (to == true && from == false) {
+			clearTimeout(this.thover)
+			this.hovering = true
+		}
+		if (to == false && from == true) {
+			this.hovering = false
+			// this.thover = _.delay(() => this.hovering = false, 300)
+		}
+	}
 
 	get routes() {
-		let routes = router.routes.filter(v => !!v.icon && !!v.mmenu).map(v => {
-			return { dname: v.dname, icon: v.icon, name: v.name } as RouteConfig
+		return router.routes.filter(v => !!v.mmenu).map(v => {
+			return {
+				name: v.name, dname: v.dname, description: v.description, icon: v.icon,
+			} as RouteConfig
 		})
-		return routes
-		// console.log('routes', JSON.stringify(routes, null, 4))
-		// return _.orderBy(routes, ['category', 'dname'], ['asc', 'asc'])
 	}
 
 

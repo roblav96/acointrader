@@ -13,21 +13,21 @@ import Coins from './routes/coins/coins'
 export const routes = [
 
 	{
-		dname: 'My Exchange Accounts',
-		description: 'Sync Coinbase, GDAX, Binance, etc.',
+		dname: 'Exchange Account Manager',
+		description: 'Coinbase, GDAX, Binance',
 		icon: 'mdi-account-key',
 		mmenu: true,
-		category: 'account_managment',
 		name: 'register',
 		path: '/register',
 		component: Register,
 	},
 
 	{
-		dname: 'Coins',
-		icon: 'mdi-coin',
+		dname: 'Trending Gainers and Losers',
+		// icon: 'mdi-trending-up',
+		icon: 'mdi-shuffle-variant',
+		description: 'Past 24hr flips and flops',
 		mmenu: true,
-		category: 'market_overview',
 		name: 'coins',
 		path: '/coins',
 		component: Coins,

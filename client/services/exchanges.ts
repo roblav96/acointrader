@@ -7,17 +7,9 @@ import lockr from 'lockr'
 
 
 
-// declare global {
-// 	interface ExchangeApiKey {
-// 		id: string, key: string, secret: string
-// 	}
-// }
-
-
-
 export class ExchangeBuilder {
 
-	api_key = { id: '', key: '', secret: '' } // as ExchangeApiKey
+	api_key = { id: '', key: '', secret: '' }
 
 	constructor(
 		public id: string,
@@ -104,6 +96,8 @@ export const exchanges = [
 // 	cexio = { api_key: '', api_secret: '' }
 // 	tidex = { api_key: '', api_secret: '' }
 // 	coinexchange = { api_key: '', api_secret: '' }
+// 	exmo = { api_key: '', api_secret: '' }
+// 	coinsbank = { api_key: '', api_secret: '' }
 // }
 
 
