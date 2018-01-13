@@ -14,6 +14,8 @@ declare global {
 		dname?: string
 		icon?: string
 		mmenu?: boolean
+		category?: string
+		description?: string
 	}
 
 	interface VueComponent extends ComponentOptions<Vue> { }

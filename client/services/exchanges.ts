@@ -7,10 +7,17 @@ import lockr from 'lockr'
 
 
 
+// declare global {
+// 	interface ExchangeApiKey {
+// 		id: string, key: string, secret: string
+// 	}
+// }
+
+
+
 export class ExchangeBuilder {
 
-	// api_key = { id: '', key: '', secret: '' } //, uuid: '', name: '' }
-	api_key = { id: '', key: '', secret: '' } //, uuid: '', name: '' }
+	api_key = { id: '', key: '', secret: '' } // as ExchangeApiKey
 
 	constructor(
 		public id: string,
@@ -29,32 +36,32 @@ export class ExchangeBuilder {
 
 
 export class Coinbase extends ExchangeBuilder {
-	
-	
+
+
 
 }
 
 
 
 export class Binance extends ExchangeBuilder {
-	
-	
+
+
 
 }
 
 
 
 export class Huobi extends ExchangeBuilder {
-	
-	
+
+
 
 }
 
 
 
 export class Poloniex extends ExchangeBuilder {
-	
-	
+
+
 
 }
 
@@ -63,16 +70,16 @@ export class Poloniex extends ExchangeBuilder {
 export const exchanges = [
 
 	new Coinbase('coinbase', 'Coinbase', 'https://www.coinbase.com'),
-	
+
 	new Binance('binance', 'Binance', 'https://www.binance.com'),
-	
+
 	new Huobi('huobi', 'Huobi.Pro', 'https://www.huobi.pro'),
-	
+
 	new Poloniex('poloniex', 'Poloniex', 'https://poloniex.com'),
-	
+
 ] as Array<ExchangeBuilder>
 
-console.log('exchanges', exchanges)
+// console.log('exchanges', exchanges)
 
 
 

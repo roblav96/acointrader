@@ -154,6 +154,10 @@ p {
     background-color: rgba(10, 10, 10, 0.5);
 }
 
+.bg-initial {
+    background-color: initial !important;
+}
+
 .select-none {
     -webkit-user-select: none;
     -moz-user-select: none;

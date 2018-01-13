@@ -12,6 +12,10 @@ aside.main-drawer > ul.list div.list__tile__title > img {
     height: 24px;
 }
 
+aside.main-drawer a.list__tile.list__tile--active div.list__tile__title {
+    font-weight: 500;
+}
+
 
 /**/
 
@@ -19,9 +23,43 @@ aside.main-drawer > ul.list div.list__tile__title > img {
 
 <template>
     <v-navigation-drawer app fixed permanent stateless class="main-drawer pb-0" :mini-variant="!hovering">
-        <v-layout column fill-height v-on:mouseover="hovering = true" v-on:mouseleave="hovering = false">
+        <v-layout column fill-height>
+        <!-- <v-layout column fill-height v-on:mouseover="hovering = true" v-on:mouseleave="hovering = false"> -->
 
-            <v-list>
+            <!-- <v-list> -->
+            <v-list two-line subheader>
+
+                <!-- <v-subheader inset>Folders</v-subheader>
+                <v-list-tile avatar v-for="item in items" v-bind:key="item.title" @click="">
+                    <v-list-tile-avatar>
+                        <v-icon v-bind:class="[item.iconClass]">{{ item.icon }}</v-icon>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action>
+                        <v-btn icon ripple>
+                            <v-icon color="grey lighten-1">info</v-icon>
+                        </v-btn>
+                    </v-list-tile-action>
+                </v-list-tile>
+                <v-divider inset></v-divider>
+                <v-subheader inset>Files</v-subheader>
+                <v-list-tile v-for="item in items2" v-bind:key="item.title" avatar @click="">
+                    <v-list-tile-avatar>
+                        <v-icon v-bind:class="[item.iconClass]">{{ item.icon }}</v-icon>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                        <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                    <v-list-tile-action>
+                        <v-btn icon ripple>
+                            <v-icon color="grey lighten-1">info</v-icon>
+                        </v-btn>
+                    </v-list-tile-action>
+                </v-list-tile> -->
 
                 <v-list-tile v-ripple v-for="item in routes" :to="{ name: item.name }" :key="item.name">
                     <v-list-tile-action>

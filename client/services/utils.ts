@@ -57,9 +57,7 @@ export function array_merge_safely<T>(target: Array<T>, source: Array<T>, uniq_k
 	if (_.isEmpty(source)) return;
 
 	source.forEach(function(item, i) {
-		console.warn('item', i, JSON.stringify(item))
 		let found = target.find(v => v && v[uniq_key] == item[uniq_key])
-		console.log('found', JSON.stringify(found))
 		if (found) merge_safely(found, item);
 		else target.push(item);
 	})
@@ -87,7 +85,6 @@ export function array_uniqby_safely<T>(items: Array<T>, uniq_key: string) {
 
 	return items
 }
-
 
 
 

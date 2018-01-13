@@ -16,17 +16,20 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 <template>
     <v-app dark>
 
-        <main-drawer />
+        <main-drawer></main-drawer>
 
         <v-toolbar class="dummy-toolbar" app fixed dark color="primary"></v-toolbar>
 
-        <transition mode="out-in" enter-active-class="fadeIn" leave-active-class="fadeOut">
-            <router-view class="animated animated-fastest" :class="{ 'anim-loading': initing }" />
-        </transition>
+        <!-- <transition mode="out-in" enter-active-class="fadeIn" leave-active-class="fadeOut">
+            <router-view class="animated animated-fastest" :class="{ 'anim-loading': initing }"></router-view>
+        </transition> -->
 
-        <pin-dialog />
+        <v-fade-transition mode="out-in">
+            <router-view></router-view>
+        </v-fade-transition>
+
+        <pin-dialog></pin-dialog>
 
     </v-app>
 </template>
-
 

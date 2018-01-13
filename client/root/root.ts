@@ -23,9 +23,9 @@ export default class Root extends Vue {
 
 	}
 
-	initing = true
+	// initing = true
 	mounted() {
-		setTimeout(() => this.initing = false, 1)
+		// setTimeout(() => this.initing = false, 1)
 		// if (!this.$store.state.pin) this.$store.state.pin_dialog.show = true;
 	}
 
