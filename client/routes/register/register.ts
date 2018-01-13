@@ -26,7 +26,11 @@ export default class Register extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterM
 	
 	
 	
-	keys
+	get keys() {
+		return this.$store.state.api_keys
+	}
+	
+	editing = ''
 
 
 
