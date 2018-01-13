@@ -6,6 +6,7 @@ import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as exchanges from '../../services/exchanges'
+import VMixin from '../../mixins/v.mixin'
 import RouterMixin from '../../mixins/router.mixin'
 
 
@@ -13,14 +14,14 @@ import RouterMixin from '../../mixins/router.mixin'
 @Vts.Component(<VueComponent>{
 	name: 'Accounts',
 } as any)
-export default class Accounts extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterMixin) {
+export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue, RouterMixin, VMixin) {
 
 	created() {
 
 	}
 
 	mounted() {
-
+		
 	}
 
 	beforeDestroy() {
@@ -36,9 +37,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterM
 
 
 
-	get exchanges() {
-		return exchanges.exchanges
-	}
+	get exchanges() { return exchanges.exchanges }
 
 	get api_keys() {
 		return this.$store.state.api_keys

@@ -4,10 +4,27 @@
 <style>
 /**/
 
-li.expansion-panel__container--active div.expansion-panel__header p {
+div.tabs.accounts--tabs div.tabs__container {
+	height: 100px !important;
+}
+
+div.tabs.accounts--tabs img {
+	height: 48px;
+	margin-bottom: 8px;
+}
+
+div.tabs.accounts--tabs a.tabs__item {
+	font-size: 16px;
+}
+
+div.tabs.accounts--tabs div.tabs__slider {
+	height: 4px;
+}
+
+/*li.expansion-panel__container--active div.expansion-panel__header p {
     color: #21CE99;
     font-weight: bold;
-}
+}*/
 
 
 /**/
@@ -27,16 +44,16 @@ li.expansion-panel__container--active div.expansion-panel__header p {
 
 
 
-        <v-tabs icons-and-text color="accent" v-model="wtfidk">
+        <v-tabs icons-and-text v-model="tab_index" class="accounts--tabs">
             <v-tabs-slider color="primary"></v-tabs-slider>
-            <v-tab v-for="item in exchanges">
+            <v-tab class="t-transform-none" v-for="item in exchanges" :key="item.id">
                 {{ item.dname }}
-                <v-icon>favorite</v-icon>
-                <!-- <img src="img/coinbase-logo.png" style="width: 32px; margin-bottom: 4px;"> -->
+                <!-- <v-icon>favorite</v-icon> -->
+                <img :src="v_exchange_png(item.id)">
             </v-tab>
         </v-tabs>
-        
-        
+
+
 
         <!-- <v-container fluid grid-list-xl>
             <v-layout row>

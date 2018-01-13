@@ -15,6 +15,8 @@ export default class VMixin extends Vue {
 
 	v_starts_case(input: string) { return _.startCase(input) }
 
+	v_exchange_png(id: string) { return 'img/exchanges/' + id + '-logo.png' }
+
 
 
 }
