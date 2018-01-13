@@ -27,7 +27,18 @@ li.expansion-panel__container--active div.expansion-panel__header p {
 
 
 
-        <v-container fluid grid-list-xl>
+        <v-tabs icons-and-text color="accent" v-model="wtfidk">
+            <v-tabs-slider color="primary"></v-tabs-slider>
+            <v-tab v-for="item in exchanges">
+                {{ item.dname }}
+                <v-icon>favorite</v-icon>
+                <!-- <img src="img/coinbase-logo.png" style="width: 32px; margin-bottom: 4px;"> -->
+            </v-tab>
+        </v-tabs>
+        
+        
+
+        <!-- <v-container fluid grid-list-xl>
             <v-layout row>
 
 
@@ -36,21 +47,21 @@ li.expansion-panel__container--active div.expansion-panel__header p {
                     <v-card>
 
                         <v-toolbar dense flat dark color="primary">
-                            <v-icon>mdi-key</v-icon>
+                            <v-icon medium>mdi-key</v-icon>
                             <v-toolbar-title>Exchange API Keys</v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
                         <v-expansion-panel class="shadow-none">
-                            <v-expansion-panel-content :ripple="true" v-for="(item, index) in exchanges" :key="index">
-                                <p class="select-none" slot="header">
+                            <v-expansion-panel-content :ripple="true" v-for="(item, index) in exchanges" :key="index" :value="visibles[index]">
+                                <p class="select-none" slot="header" v-on:click="setTutsId(item.id)">
                                     {{ item.dname }}
                                 </p>
                                 <v-divider></v-divider>
                                 <v-card>
                                     <v-card-text>
-                                        Lorem ipsum dsfgolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                        ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                        Lorem ipsum dsfgolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                                        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                     </v-card-text>
                                 </v-card>
                             </v-expansion-panel-content>
@@ -61,34 +72,16 @@ li.expansion-panel__container--active div.expansion-panel__header p {
 
 
 
+                <v-flex xs8>
+                    <v-card v-if="tuts_id">
 
-                <!-- <v-flex xs3>
-                    <v-card>
                         <v-toolbar dense flat dark color="primary">
-                            <v-icon>mdi-key</v-icon>
-                            <v-toolbar-title>Exchange API Keys</v-toolbar-title>
+                            <v-icon medium>mdi-book-open-page-variant</v-icon>
+                            <v-toolbar-title>
+                                {{ tutsing.dname }}: Aquiring API Key Step-by-Step Instructions
+                            </v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
-                        <v-list class="py-0">
-                            <template v-for="(item, index) in exchanges">
-                                <v-list-tile avatar ripple v-on:click="editing = item.id" :key="item.id">
-                                    <v-list-tile-content>
-                                        <v-list-tile-title>{{ item.dname }}</v-list-tile-title>
-                                        <v-list-tile-sub-title>{{ item.api_key.key }}</v-list-tile-sub-title>
-                                        <v-list-tile-sub-title>{{ item.api_key.secret }}</v-list-tile-sub-title>
-                                    </v-list-tile-content>
-                                    <v-list-tile-action>
-                                    	
-                                    </v-list-tile-action>
-                                </v-list-tile>
-                                <v-divider v-if="index + 1 < exchanges.length" :key="index"></v-divider>
-                            </template>
-                        </v-list>
-                    </v-card>
-                </v-flex> -->
-
-                <v-flex xs8>
-                    <v-card>
 
                         <v-stepper vertical class="bg-initial shadow-none" v-model="step">
                             <v-stepper-header>
@@ -120,8 +113,10 @@ li.expansion-panel__container--active div.expansion-panel__header p {
                     </v-card>
                 </v-flex>
 
+
+
             </v-layout>
-        </v-container>
+        </v-container> -->
 
     </v-content>
 </template>

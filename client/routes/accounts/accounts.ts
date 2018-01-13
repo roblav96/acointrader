@@ -29,6 +29,13 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterM
 
 
 
+	tab_index = lockr.get('accounts.tab_index', 0)
+	@Vts.Watch('tab_index') w_tab_index(to: number, from: number) {
+		lockr.set('accounts.tab_index', to)
+	}
+
+
+
 	get exchanges() {
 		return exchanges.exchanges
 	}
@@ -36,12 +43,30 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterM
 	get api_keys() {
 		return this.$store.state.api_keys
 	}
-	
-	
 
-	editing = ''
-	
+
+
+	// tuts_id = ''
+	// get tutsing() {
+	// 	return this.exchanges.find(v => v.id == this.tuts_id) || {} as exchanges.ExchangeBuilder
+	// }
+
+	// setTutsId(id: string) {
+	// 	console.log('setTutsId > id', id)
+	// 	this.tuts_id = id
+	// 	console.log('this.visibles', this.visibles)
+	// 	console.log('this.tutsing', JSON.stringify(this.tutsing, null, 4))
+	// }
+
 	step = 0
+
+
+
+	// wtfidk = null
+	// @Vts.Watch('wtfidk', { deep: true }) w_wtfidk(to: any, from: any) {
+	// 	console.log('to', to)
+	// 	console.log('from', from)
+	// }
 
 
 
