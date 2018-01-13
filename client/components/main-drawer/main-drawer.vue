@@ -4,6 +4,7 @@
 <style>
 /**/
 
+
 /*aside.main-drawer {
     transition-timing-function: ease-in !important;
     transition-duration: 0.3s !important;
@@ -37,16 +38,17 @@ aside.main-drawer hr.divider {
 </style>
 
 <template>
-    <v-navigation-drawer app fixed permanent stateless class="main-drawer pb-0" :mini-variant="!show">
+    <v-navigation-drawer app fixed permanent stateless class="main-drawer pb-0" :mini-variant="!main_drawer.show">
 
-        <v-layout column fill-height v-on:mouseover="hovering = true" v-on:mouseleave="hovering = false">
+        <v-layout column fill-height>
+            <!-- <v-layout column fill-height v-on:mouseover="hovering = true" v-on:mouseleave="hovering = false"> -->
 
             <v-list two-line class="pt-0 pb-5">
 
                 <template v-for="item in routes">
-                    <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name" v-on:click="clicked">
+                    <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name">
                         <v-list-tile-action>
-                            <v-icon medium>{{ item.icon }}</v-icon>
+                            <v-icon medium :class="{ 't-bold': item.bold }">{{ item.icon }}</v-icon>
                         </v-list-tile-action>
                         <v-list-tile-content>
                             <v-list-tile-title>{{ item.dname }}</v-list-tile-title>

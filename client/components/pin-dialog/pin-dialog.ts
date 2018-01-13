@@ -15,7 +15,7 @@ export class store {
 
 @Vts.Component(<VueComponent>{
 	name: 'PinDialog',
-})
+} as any)
 export default class PinDialog extends Vue {
 
 	created() {

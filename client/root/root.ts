@@ -18,7 +18,7 @@ import MainDrawer from '../components/main-drawer/main-drawer'
 		'main-drawer': MainDrawer,
 	},
 
-})
+} as any)
 export default class Root extends Vue {
 
 	created() {

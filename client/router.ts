@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 import * as store from './services/store'
 
 import Root from './root/root'
-import Register from './routes/register/register'
+import Accounts from './routes/accounts/accounts'
 import Coins from './routes/coins/coins'
 
 
@@ -13,31 +13,32 @@ import Coins from './routes/coins/coins'
 export const routes = [
 
 	{
-		dname: 'Search Anything',
-		description: 'Coins, symbols, ICOs, exchanges',
-		icon: 'mdi-magnify',
-		mmenu: true,
-		name: 'search',
-		path: '/search',
-		component: Register,
-	},
-
-	{
-		dname: 'Exchange Accounts', // Manager',
+		dname: 'My Exchange Accounts', // Manager',
 		// dname: 'Sync Trading Exchanges',
 		description: 'Coinbase, GDAX, Binance',
 		icon: 'mdi-account-key',
 		mmenu: true,
-		name: 'register',
-		path: '/register',
-		component: Register,
+		name: 'accounts',
+		path: '/accounts',
+		component: Accounts,
 	},
 
 	{
-		dname: 'Trending Gainers and Losers',
-		// icon: 'mdi-trending-up',
-		icon: 'mdi-shuffle-variant',
+		dname: 'Search Anything',
+		description: 'Coins, symbols, ICOs, exchanges',
+		icon: 'mdi-magnify',
+		bold: true,
+		mmenu: true,
+		name: 'search',
+		path: '/search',
+		component: Accounts,
+	},
+
+	{
+		dname: 'Top Gainers and Losers',
+		icon: 'mdi-trending-up',
 		description: 'Past 24hr flips and flops',
+		bold: true,
 		mmenu: true,
 		name: 'coins',
 		path: '/coins',
@@ -46,7 +47,7 @@ export const routes = [
 
 	{
 		path: '*',
-		redirect: { name: 'coins' },
+		redirect: { name: 'accounts' },
 	},
 
 ] as Array<RouteConfig>

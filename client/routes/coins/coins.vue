@@ -5,7 +5,10 @@
     <v-content>
 
         <v-toolbar app fixed dark color="primary">
-            <v-toolbar-title>Coins</v-toolbar-title>
+            <v-btn icon large v-on:click="toggle_main_drawer">
+                <v-icon medium>mdi-menu</v-icon>
+            </v-btn>
+            <v-toolbar-title>{{ router_dname }}</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 

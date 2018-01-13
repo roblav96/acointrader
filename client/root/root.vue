@@ -14,7 +14,7 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 </style>
 
 <template>
-    <v-app light>
+    <v-app dark>
 
         <main-drawer></main-drawer>
 

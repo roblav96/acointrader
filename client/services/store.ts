@@ -6,6 +6,7 @@ import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
 import * as exchanges from './exchanges'
+import * as MainDrawer from '../components/main-drawer/main-drawer'
 import * as PinDialog from '../components/pin-dialog/pin-dialog'
 
 
@@ -14,6 +15,8 @@ class State {
 
 	pin = ''
 	pin_dialog = new PinDialog.store()
+
+	main_drawer = new MainDrawer.store()
 
 	api_keys = exchanges.exchanges.map(v => v.api_key)
 
@@ -26,6 +29,7 @@ const StoragePlugin = function(store: Store<State>) {
 	Object.keys(store.state).forEach(function(key) {
 
 		const save = [
+			'main_drawer',
 			'api_keys',
 		]
 		if (save.indexOf(key) == -1) return;

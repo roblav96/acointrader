@@ -10,7 +10,7 @@ import lockr from 'lockr'
 
 @Vts.Component(<VueComponent>{
 	name: 'VMixin',
-})
+} as any)
 export default class VMixin extends Vue {
 
 	v_starts_case(input: string) { return _.startCase(input) }

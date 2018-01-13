@@ -11,9 +11,9 @@ import RouterMixin from '../../mixins/router.mixin'
 
 
 @Vts.Component(<VueComponent>{
-	name: 'Register',
+	name: 'Accounts',
 } as any)
-export default class Register extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterMixin) {
+export default class Accounts extends Avts.Mixin<Vue & RouterMixin>(Vue, RouterMixin) {
 
 	created() {
 
