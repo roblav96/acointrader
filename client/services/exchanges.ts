@@ -2,22 +2,24 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import _ from 'lodash'
+import lockr from 'lockr'
 
 
 
 export class ExchangeBuilder {
 
-	id = ''
-	dname = ''
-	url = ''
-	logo = ''
+	// api_key = { id: '', key: '', secret: '' } //, uuid: '', name: '' }
+	api_key = { id: '', key: '', secret: '' } //, uuid: '', name: '' }
 
-	api_key = { id: '', key: '', secret: '' }
-	
-	constructor() {
-		console.log('this', JSON.stringify(this, null, 4))
+	constructor(
+		public id: string,
+		public dname: string,
+		public url: string,
+	) {
+		this.api_key.id = this.id
 	}
-	
+
 	getQuote() {
 		return { some: 'data' }
 	}
@@ -27,18 +29,50 @@ export class ExchangeBuilder {
 
 
 export class Coinbase extends ExchangeBuilder {
+	
+	
 
-	id = 'coinbase'
-	dname = 'Coinbase'
-	url = 'https://www.coinbase.com/'
+}
+
+
+
+export class Binance extends ExchangeBuilder {
+	
+	
+
+}
+
+
+
+export class Huobi extends ExchangeBuilder {
+	
+	
+
+}
+
+
+
+export class Poloniex extends ExchangeBuilder {
+	
+	
 
 }
 
 
 
 export const exchanges = [
-	new Coinbase()
+
+	new Coinbase('coinbase', 'Coinbase', 'https://www.coinbase.com'),
+	
+	new Binance('binance', 'Binance', 'https://www.binance.com'),
+	
+	new Huobi('huobi', 'Huobi.Pro', 'https://www.huobi.pro'),
+	
+	new Poloniex('poloniex', 'Poloniex', 'https://poloniex.com'),
+	
 ] as Array<ExchangeBuilder>
+
+console.log('exchanges', exchanges)
 
 
 
