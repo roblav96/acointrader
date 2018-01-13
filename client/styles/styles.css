@@ -427,6 +427,10 @@ p {
     font-style: normal !important;
 }
 
+i.icon.t-bold::before {
+    font-weight: bold !important;
+}
+
 .t-8 {
     font-size: 8px !important;
 }

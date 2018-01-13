@@ -6,7 +6,6 @@ import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
 import * as exchanges from './exchanges'
-import * as MainDrawer from '../components/main-drawer/main-drawer'
 import * as PinDialog from '../components/pin-dialog/pin-dialog'
 
 
@@ -15,8 +14,6 @@ class State {
 
 	pin = ''
 	pin_dialog = new PinDialog.store()
-
-	main_drawer = new MainDrawer.store()
 
 	api_keys = exchanges.exchanges.map(v => v.api_key)
 

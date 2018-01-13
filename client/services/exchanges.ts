@@ -97,6 +97,7 @@ export const exchanges = [
 // 	tidex = { api_key: '', api_secret: '' }
 // 	coinexchange = { api_key: '', api_secret: '' }
 // 	exmo = { api_key: '', api_secret: '' }
+// 	cryptopia = { api_key: '', api_secret: '' }
 // 	coinsbank = { api_key: '', api_secret: '' }
 // }
 

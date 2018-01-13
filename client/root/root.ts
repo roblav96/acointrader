@@ -3,6 +3,8 @@
 import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
 import Vue from 'vue'
+import _ from 'lodash'
+import lockr from 'lockr'
 import PinDialog from '../components/pin-dialog/pin-dialog'
 import MainDrawer from '../components/main-drawer/main-drawer'
 
@@ -23,10 +25,8 @@ export default class Root extends Vue {
 
 	}
 
-	// initing = true
 	mounted() {
-		// setTimeout(() => this.initing = false, 1)
-		// if (!this.$store.state.pin) this.$store.state.pin_dialog.show = true;
+
 	}
 
 	beforeDestroy() {

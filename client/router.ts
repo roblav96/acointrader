@@ -13,7 +13,18 @@ import Coins from './routes/coins/coins'
 export const routes = [
 
 	{
-		dname: 'Exchange Account Manager',
+		dname: 'Search Anything',
+		description: 'Coins, symbols, ICOs, exchanges',
+		icon: 'mdi-magnify',
+		mmenu: true,
+		name: 'search',
+		path: '/search',
+		component: Register,
+	},
+
+	{
+		dname: 'Exchange Accounts', // Manager',
+		// dname: 'Sync Trading Exchanges',
 		description: 'Coinbase, GDAX, Binance',
 		icon: 'mdi-account-key',
 		mmenu: true,

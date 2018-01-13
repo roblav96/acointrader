@@ -25,11 +25,11 @@ export default class RouteToolbarTitle extends Vue {
 
 
 
-	get main_drawer() { return this.$store.state.main_drawer }
+	// get main_drawer() { return this.$store.state.main_drawer }
 	
-	toggle() {
-		this.main_drawer.show = !this.main_drawer.show
-	}
+	// toggle() {
+	// 	this.main_drawer.show = !this.main_drawer.show
+	// }
 
 
 
