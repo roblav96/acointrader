@@ -14,7 +14,7 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 </style>
 
 <template>
-    <v-app dark :class="{ 'anim-loading': initing === true, 'animated animated-fast fadeIn': initing === false }">
+    <v-app id="root" dark :class="{ 'anim-loading': initing === true, 'animated animated-fast fadeIn': initing === false }">
 
         <main-drawer></main-drawer>
 
@@ -24,6 +24,9 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
         <v-fade-transition mode="out-in">
             <router-view></router-view>
         </v-fade-transition>
+        <!-- <transition mode="out-in" enter-active-class="animated animated-fast fadeInRight" leave-active-class="animated animated-fast fadeOutLeft">
+            <router-view></router-view>
+        </transition> -->
 
         <pin-dialog></pin-dialog>
 

@@ -4,11 +4,11 @@
 /client/env.json
 /server/env.json
 
-node_modules/
-tsc/
-.awcache
+/client/public/dist/
 
-client/public/dist/
+/node_modules/
+/tsc/
+.awcache
 
 *.heapsnapshot
 *.DS_STORE

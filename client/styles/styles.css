@@ -5,18 +5,6 @@
 	CONTENT
 */
 
-html,
-body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    /*overflow: hidden;*/
-    /*background-color: white;*/
-}
-
-p {
-    margin-bottom: 0px;
-}
-
 .z-9 {
     z-index: 9 !important;
 }
@@ -490,6 +478,9 @@ i.icon.t-bold::before {
 .t-28 {
     font-size: 28px !important;
 }
+
+
+/**/
 
 .scroll-initial {
     overflow-x: initial !important;

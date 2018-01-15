@@ -1,0 +1,74 @@
+/**/
+
+html,
+body {
+    overflow: hidden;
+}
+
+html,
+body,
+div.application,
+main.content {
+    overflow: hidden;
+    height: 100vh;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+main.content.route-scrollable > div.content--wrap {
+    overflow-y: auto;
+}
+
+
+/*
+	SCROLLBAR
+*/
+
+.scrollbar-mini::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+}
+
+.scroll-x.scrollbar-mini::-webkit-scrollbar {
+    height: 4px;
+}
+
+.scroll-y.scrollbar-mini::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scrollbar-small::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+}
+
+.scroll-x.scrollbar-small::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-y.scrollbar-small::-webkit-scrollbar {
+    width: 8px;
+}
+
+.theme--light.scrollbar-mini::-webkit-scrollbar-thumb,
+.theme--light.scrollbar-small::-webkit-scrollbar-thumb,
+.theme--light .scrollbar-mini::-webkit-scrollbar-thumb,
+.theme--light .scrollbar-small::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.theme--dark.scrollbar-mini::-webkit-scrollbar-thumb,
+.theme--dark.scrollbar-small::-webkit-scrollbar-thumb,
+.theme--dark .scrollbar-mini::-webkit-scrollbar-thumb,
+.theme--dark .scrollbar-small::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/**/
+
+
+/**/
+

@@ -6,6 +6,7 @@ import 'animate.css'
 import 'chartist/dist/chartist.min.css'
 import 'vuetify/dist/vuetify.css'
 import './styles/styles.css'
+import './styles/root.css'
 
 
 
@@ -37,8 +38,6 @@ Vue.use(Vuetify, {
 		success: '#21CE99',
 	}
 })
-
-
 
 
 

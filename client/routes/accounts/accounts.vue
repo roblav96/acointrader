@@ -33,7 +33,7 @@ div.tabs.accounts--tabs div.tabs__slider {
 </style>
 
 <template>
-    <v-content>
+    <v-content class="route-scrollable">
 
         <v-toolbar app fixed dark color="primary">
             <v-btn icon large v-on:click="toggle_main_drawer">

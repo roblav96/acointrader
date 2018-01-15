@@ -19,10 +19,11 @@ aside.main-drawer div.list__tile__content {
 }
 
 aside.main-drawer.navigation-drawer--mini-variant hr.divider {
-	display: inherit !important;
+    display: inherit !important;
     transition: opacity 0.1s ease;
-	opacity: 0;
+    opacity: 0;
 }
+
 
 /*aside.main-drawer hr.divider {
     display: inherit !important;
@@ -34,8 +35,8 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 </style>
 
 <template>
-    <v-navigation-drawer app fixed permanent stateless class="main-drawer pb-0" :mini-variant="!main_drawer.show">
-
+    <v-navigation-drawer app fixed permanent stateless floating class="main-drawer scroll-y scrollbar-mini scrollbar-small card br-0 pb-0"
+        :mini-variant="!main_drawer.show">
         <v-layout column fill-height>
 
             <v-list two-line class="pt-0 pb-5">

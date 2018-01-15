@@ -15,7 +15,7 @@ import Intro from './routes/intro/intro'
 export const routes = [
 
 	{
-		dname: 'My Exchange Accounts',
+		dname: 'Exchange Accounts',
 		description: 'Coinbase, Binance, Gemini',
 		icon: 'mdi-account-key',
 		mmenu: true,
@@ -59,7 +59,7 @@ export const routes = [
 
 	{
 		path: '*',
-		redirect: { name: 'accounts' },
+		redirect: { name: 'intro' },
 	},
 
 ] as Array<RouteConfig>
@@ -75,10 +75,6 @@ Root.options.router = router
 Root.options.store = store.store
 
 new Root().$mount('#root')
-
-
-
-
 
 
 
