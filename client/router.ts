@@ -35,16 +35,16 @@ export const routes = [
 		component: Intro,
 	},
 
-	{
-		dname: 'Search Anything',
-		description: 'Coins, symbols, ICOs, exchanges',
-		icon: 'mdi-magnify',
-		bold: true,
-		mmenu: true,
-		name: 'search',
-		path: '/search',
-		component: Search,
-	},
+	// {
+	// 	dname: 'Search Anything',
+	// 	description: 'Coins, symbols, ICOs, exchanges',
+	// 	icon: 'mdi-magnify',
+	// 	bold: true,
+	// 	mmenu: true,
+	// 	name: 'search',
+	// 	path: '/search',
+	// 	component: Search,
+	// },
 
 	{
 		dname: 'Top Gainers and Losers',

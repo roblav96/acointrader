@@ -21,7 +21,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	mounted() {
-		
+
 	}
 
 	beforeDestroy() {
@@ -37,7 +37,13 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
-	get exchanges() { return exchanges.exchanges }
+	get exchanges() {
+		return exchanges.exchanges.map(v=>({
+			id: v.meta.id,
+			name: v.meta.name,
+			url: v.meta.url,
+		}))
+	}
 
 	get api_keys() {
 		return this.$store.state.api_keys

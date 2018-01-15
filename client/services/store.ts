@@ -8,6 +8,7 @@ import * as utils from './utils'
 import * as exchanges from './exchanges'
 import * as MainDrawer from '../components/main-drawer/main-drawer'
 import * as PinDialog from '../components/pin-dialog/pin-dialog'
+require('./countries')
 
 
 

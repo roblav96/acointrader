@@ -17,7 +17,7 @@ p {
     margin-bottom: 0px;
 }
 
-main.content.route-scrollable > div.content--wrap {
+main.content.route-scroll-y > div.content--wrap {
     overflow-y: auto;
 }
 
