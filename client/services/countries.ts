@@ -9,14 +9,29 @@ import axios from 'axios'
 
 
 
-const countries = lockr.get('services.countries', [])
+export const countries = lockr.get('services.countries', [])
 
 
 
 function syncCountries() {
 	return axios.get('https://restcountries.eu/rest/v2/all').then(function({ data }) {
-		let response = data.map(v => _.pick(v, ['alpha2Code', 'alpha3Code', 'name', 'topLevelDomain', 'callingCodes', 'capital', 'region', 'subregion', 'demonym', 'timezones', 'numericCode', 'currencies'])) as Array<any>
-		// console.log('response', JSON.stringify(response))
+		let response = data.map(v => _.pick(v, [
+			'alpha2Code',
+			// 'alpha3Code',
+			'name',
+			// 'topLevelDomain',
+			// 'callingCodes',
+			// 'capital',
+			// 'region',
+			// 'subregion',
+			// 'demonym',
+			// 'nativeName',
+			// 'timezones',
+			// 'numericCode',
+			// 'currencies',
+		])) as Array<any>
+		console.log('response', JSON.stringify(response))
+		console.log('response', response)
 		lockr.set('services.countries', response)
 		response.forEach(v => countries.push(v))
 		return Promise.resolve()
@@ -25,12 +40,12 @@ function syncCountries() {
 		return pdelay(1000).then(syncCountries)
 	})
 }
-
+// syncCountries()
 if (_.isEmpty(countries)) syncCountries();
 
 
 
-export default countries
+
 
 
 

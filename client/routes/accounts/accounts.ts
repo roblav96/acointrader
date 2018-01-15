@@ -38,16 +38,39 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 	get exchanges() {
-		return exchanges.exchanges.map(v=>({
-			id: v.meta.id,
-			name: v.meta.name,
-			url: v.meta.url,
-		}))
+		return exchanges.exchanges.map(v => {
+			let api_key = this.$store.state.api_keys.find(vv => vv.id == v.id)
+			return Object.assign({}, {
+				active: !!api_key.key,
+				key: api_key.key,
+			}, v.meta)
+		})
 	}
 
-	get api_keys() {
-		return this.$store.state.api_keys
-	}
+	headers = ([
+		// { text: 'Active', value: 'active' },
+		{ text: 'Country', value: 'country' },
+		{ text: '', value: '', sortable: false },
+		{ text: 'Exchange', value: 'name' },
+		{ text: 'Status', value: 'active' },
+		// { text: 'API Key', value: 'key', sortable: false },
+		{ text: 'Website', value: 'url', sortable: false },
+		// { text: '', value: '', sortable: false },
+		// { text: '____', value: '____' },
+	] as Array<VueTableHeader>).map(function(header) {
+		if (!header.align) header.align = 'left';
+		return header
+	})
+
+	pagination = { sortBy: 'name', descending: false, rowsPerPage: -1 } as VueTablePagination
+
+
+
+
+
+	// get api_keys() {
+	// 	return this.$store.state.api_keys
+	// }
 
 
 
@@ -69,11 +92,11 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
-	wtfidk = true
-	@Vts.Watch('wtfidk', { deep: true }) w_wtfidk(to: any, from: any) {
-		console.log('to', to)
-		console.log('from', from)
-	}
+	// wtfidk = true
+	// @Vts.Watch('wtfidk', { deep: true }) w_wtfidk(to: any, from: any) {
+	// 	console.log('to', to)
+	// 	console.log('from', from)
+	// }
 
 
 

@@ -4,7 +4,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
-import countries from './countries'
 
 
 
@@ -12,8 +11,9 @@ declare global {
 	interface ExchangeMeta {
 		id: string
 		name: string
-		url: string
 		country: string
+		url: string
+		setupurl: string
 	}
 	interface ExchangeApiKey {
 		id: string
@@ -52,27 +52,63 @@ export class Binance extends ExchangeBuilder {
 
 }
 
+export class Bitfinex extends ExchangeBuilder {
+
+}
+
+export class Bittrex extends ExchangeBuilder {
+
+}
+
+export class HitBTC extends ExchangeBuilder {
+
+}
+
 
 
 export const exchanges = [
 	new Coinbase({
 		id: 'coinbase',
 		name: 'Coinbase',
-		url: 'https://www.coinbase.com',
 		country: 'US',
+		url: 'https://www.coinbase.com',
+		setupurl: 'https://www.coinbase.com/settings/api#api_keys',
 	}),
 	new Gdax({
 		id: 'gdax',
 		name: 'GDAX',
-		url: 'https://www.gdax.com',
 		country: 'US',
+		url: 'https://www.gdax.com',
+		setupurl: 'https://www.gdax.com/settings/api',
 	}),
 	new Binance({
 		id: 'binance',
 		name: 'Binance',
+		country: 'HK',
 		url: 'https://www.binance.com',
-		country: 'US',
+		setupurl: 'https://www.binance.com/userCenter/createApi.html',
 	}),
+	// new Bitfinex({
+	// 	id: 'bitfinex',
+	// 	name: 'Bitfinex',
+	// 	country: 'HK',
+	// 	url: 'https://www.bitfinex.com',
+	// 	setupurl: 'https://www.bitfinex.com/api',
+	// }),
+	// new Bittrex({
+	// 	id: 'bittrex',
+	// 	name: 'Bittrex',
+	// 	country: 'US',
+	// 	url: 'https://bittrex.com',
+	// 	setupurl: 'https://bittrex.com',
+	// }),
+	// new HitBTC({
+	// 	id: 'hitbtc',
+	// 	name: 'HitBTC',
+	// 	country: 'DK',
+	// 	url: 'https://hitbtc.com',
+	// 	setupurl: 'https://hitbtc.com/settings/api-keys',
+	// }),
 ] as Array<ExchangeBuilder>
 
 

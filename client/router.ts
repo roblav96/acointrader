@@ -15,8 +15,8 @@ import Intro from './routes/intro/intro'
 export const routes = [
 
 	{
-		dname: 'Exchange Accounts',
-		description: 'Coinbase, Binance, Gemini',
+		dname: 'My Exchange Accounts',
+		description: 'Coinbase, GDAX, Binance',
 		icon: 'mdi-account-key',
 		mmenu: true,
 		name: 'accounts',
@@ -25,10 +25,9 @@ export const routes = [
 	},
 
 	{
-		dname: 'Introduction',
-		icon: 'mdi-trending-up',
-		description: 'Ready to levelup your game?',
-		bold: true,
+		dname: 'Welcome',
+		icon: 'mdi-emoticon',
+		description: 'Your jorney starts here',
 		mmenu: true,
 		name: 'intro',
 		path: '/intro',
