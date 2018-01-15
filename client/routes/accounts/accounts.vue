@@ -234,11 +234,11 @@ div.tabs.accounts--tabs div.tabs__slider {
 
 
 
-        <!-- <v-fab-transition appear>
-            <v-btn dark fab fixed bottom right large color="primary">
-                <v-icon>close</v-icon>
+        <v-fab-transition>
+            <v-btn v-show="fab" dark fab fixed bottom right large color="primary" class="ma-4">
+                <v-icon large>add</v-icon>
             </v-btn>
-        </v-fab-transition> -->
+        </v-fab-transition>
 
     </v-content>
 </template>

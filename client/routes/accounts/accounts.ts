@@ -21,7 +21,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	mounted() {
-
+		_.delay(() => this.fab = true, 100)
 	}
 
 	beforeDestroy() {
@@ -30,10 +30,14 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
-	tab_index = lockr.get('accounts.tab_index', 0)
-	@Vts.Watch('tab_index') w_tab_index(to: number, from: number) {
-		lockr.set('accounts.tab_index', to)
-	}
+	fab = false
+
+
+
+	// tab_index = lockr.get('accounts.tab_index', 0)
+	// @Vts.Watch('tab_index') w_tab_index(to: number, from: number) {
+	// 	lockr.set('accounts.tab_index', to)
+	// }
 
 
 
