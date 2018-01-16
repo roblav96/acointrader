@@ -16,7 +16,7 @@ export const routes = [
 
 	{
 		dname: 'My Exchange Accounts',
-		description: 'Coinbase, GDAX, Binance',
+		description: 'Link with Coinbase and more',
 		icon: 'mdi-account-key',
 		mmenu: true,
 		name: 'accounts',

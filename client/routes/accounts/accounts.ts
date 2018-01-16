@@ -52,13 +52,13 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	headers = ([
+		// { text: 'Website', value: 'url', sortable: false },
 		// { text: 'Active', value: 'active' },
-		{ text: 'Country', value: 'country' },
+		// { text: 'Country', value: 'country' },
 		{ text: '', value: '', sortable: false },
 		{ text: 'Exchange', value: 'name' },
-		{ text: 'Status', value: 'active' },
-		// { text: 'API Key', value: 'key', sortable: false },
-		{ text: 'Website', value: 'url', sortable: false },
+		{ text: 'API Key', value: 'key', sortable: false },
+		{ text: 'Actions', value: '', sortable: false },
 		// { text: '', value: '', sortable: false },
 		// { text: '____', value: '____' },
 	] as Array<VueTableHeader>).map(function(header) {
@@ -66,7 +66,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 		return header
 	})
 
-	pagination = { sortBy: 'name', descending: false, rowsPerPage: -1 } as VueTablePagination
+	pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
 
 
 
