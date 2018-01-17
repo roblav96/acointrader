@@ -1,8 +1,7 @@
 // 
 
-export { }
-import restify = require('restify')
-import errors = require('restify-errors')
+import * as restify from 'restify'
+import * as errors from 'restify-errors'
 import * as axios from 'axios'
 
 

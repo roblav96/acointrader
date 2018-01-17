@@ -1,5 +1,6 @@
 // 
 
+import 'source-map-support/register'
 import os from 'os'
 import cluster from 'cluster'
 import eyes from 'eyes'
@@ -57,14 +58,14 @@ if (process.DEVELOPMENT) {
 
 
 require('debug-trace')()
-console.format = function(c) {
+console.format = function(arg) {
 	let stack = process.$stack
 	if (!stack) {
 		stack = new Error().stack.toString()
 		stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
 	}
 	let fullpath = stack.split('/').pop()
-	if (!fullpath) fullpath = c.filename + ':' + c.getLineNumber();
+	if (!fullpath) fullpath = arg.filename + ':' + arg.getLineNumber();
 	let file = fullpath.split('.ts:')[0]
 	let i = (fullpath.indexOf('.ts:') == -1) ? 0 : 1
 	let line = fullpath.split('.ts:')[i].split(':')[0]
@@ -72,13 +73,13 @@ console.format = function(c) {
 	let format = 'hh:mm:ss:SSS'
 	let time = moment().format(format)
 	let cString: string
-	if (c.method == 'log') {
+	if (arg.method == 'log') {
 		cString = clc.blue(time) + header
-	} else if (c.method == 'info') {
+	} else if (arg.method == 'info') {
 		cString = clc.green(time) + header
-	} else if (c.method == 'warn') {
+	} else if (arg.method == 'warn') {
 		cString = clc.yellowBright('=============================== WARN ================================\n') + clc.yellow(time) + header
-	} else if (c.method == 'error') {
+	} else if (arg.method == 'error') {
 		cString = clc.redBright('=============================== ERROR ================================\n') + clc.red(time) + header
 	}
 	return '\n \n' + clc.underline(cString) + '\n'

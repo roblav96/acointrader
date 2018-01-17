@@ -1,23 +1,7 @@
 // 
 
-
-
-import 'source-map-support/register'
-import os from 'os'
-import cluster from 'cluster'
-
-import './services/process'
-
-
-
-import cron from 'cron'
-import ci from 'correcting-interval'
-import ee3 from 'eventemitter3'
-
-process.ee3 = new ee3.EventEmitter()
-
-
-
+import './process'
+import './emitters'
 import './restify'
 
 

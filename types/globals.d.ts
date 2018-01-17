@@ -1,6 +1,6 @@
 // 
 
-export { }
+import * as ee3 from 'eventemitter3'
 
 
 
@@ -12,6 +12,7 @@ declare global {
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean
 			$webpack: any
+			ee3: ee3.EventEmitter
 		}
 	}
 
