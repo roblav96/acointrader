@@ -22,8 +22,9 @@
             <v-avatar size="48">
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
-            <v-toolbar-title>
-                {{ exchange.name }} | Connecting Your Account
+            <v-toolbar-title class="t-lh2">
+                <p>{{ exchange.name }}</p>
+                <p class="subheading t-300">Connecting Your Account</p>
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -44,7 +45,7 @@
                             </v-tooltip>
                         </v-toolbar>
                         <v-form class="pa-3" v-on:submit.prevent="save">
-                            <v-text-field class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="apiKey.key" hide-details></v-text-field>
+                            <v-text-field ref="key_input" class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="apiKey.key" hide-details></v-text-field>
                             <v-text-field class="mb-3" color="info" prepend-icon="mdi-eye-off" label="API Secret" v-model="apiKey.secret"
                                 type="password" hide-details></v-text-field>
                             <v-text-field v-if="apiKey.passphrase !== undefined" class="mb-3" color="info" prepend-icon="mdi-lock"
@@ -59,23 +60,21 @@
                 <v-flex xs9>
 
                     <v-card>
-                        <v-toolbar dense flat dark color="primary">
+                        <v-toolbar dense flat color="transparent">
                             <v-icon>mdi-book-open-page-variant</v-icon>
-                            <v-toolbar-title>Instructions</v-toolbar-title>
+                            <!-- <v-toolbar-title>Instructions</v-toolbar-title> -->
+                            <v-toolbar-title>
+                                Create an
+                                <code class="info white--text">API Key Pair</code>
+                                <!-- for {{ exchange.name }} -->
+                            </v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
-
-                        <div class="pa-3">
-                        	<v-icon>mdi-book-open-page-variant</v-icon>
-                            <v-toolbar-title>Instructions</v-toolbar-title>
-                            <div class="headline">Top western road trips</div>
-                            <span class="grey--text">1,000 miles of wonder</span>
-                        </div>
                         <v-divider></v-divider>
 
                         <v-stepper vertical non-linear class="bg-initial shadow-none" v-model="step">
 
-                            <v-stepper-step step="1" :editable="step != 1">
+                            <v-stepper-step :step="1" :editable="step != 1">
                                 <v-layout row align-center class="mx-0">
                                     <p class="subheading mr-2">Goto your {{ exchange.name }} account API settings</p>
                                     <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="v_hrefSettingsUrl(exchange.settingsUrl)">
@@ -84,9 +83,9 @@
                                     </v-btn>
                                 </v-layout>
                             </v-stepper-step>
-                            <v-stepper-content step="1">
+                            <v-stepper-content :step="1">
                                 <div class="pa-2">
-                                    <v-btn class="mt-2" large block color="primary" v-on:click="step++">Continue</v-btn>
+                                    <v-btn class="mt-2" large color="primary" v-on:click="step++">Continue</v-btn>
                                 </div>
                             </v-stepper-content>
 
@@ -97,7 +96,8 @@
                                 <v-stepper-content :step="index + 2">
                                     <div class="pa-2">
                                         <img class="elevation-1 br-2 w-100" :src="'/img/connect/coinbase-' + (index + 2) + '.png'">
-                                        <v-btn v-if="index + 2 <= steps.length" large block color="primary" v-on:click="step++">Continue</v-btn>
+                                        <v-btn v-if="index + 2 <= steps.length" large color="primary" v-on:click="step++">Continue</v-btn>
+                                        <!-- <v-btn v-else large color="info" v-on:click="v_focusKeyInput">Input API Key Pair</v-btn> -->
                                     </div>
                                 </v-stepper-content>
                             </template>

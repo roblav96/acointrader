@@ -51,23 +51,27 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 	save() {
 		if (!this.valid) return;
-		console.log('this.apiKey', JSON.stringify(this.apiKey, null, 4))
-		// this.exchange.saveApiKey(this.apiKey)
+		// console.log('this.apiKey', JSON.stringify(this.apiKey, null, 4))
+		this.exchange.saveApiKey(this.apiKey)
+		this.$router.push({ name: 'accounts' })
 	}
 
 
 
 	step = 1
+	@Vts.Watch('step') w_step(to: number, from: number) {
+		if (to <= this.steps.length) return;
+		let key_input = (this.$refs.key_input as any) as HTMLInputElement
+		key_input.focus()
+	}
+
 	get steps() {
 		let steps = this.exchange.getSteps()
 		let keys = ['API Key', 'API Secret']
 		if (this.apiKey.passphrase !== undefined) keys.push('Passphrase');
 		let last = keys.pop()
 		let words = keys.map(v => '<code>' + v + '</code>').join(', ')
-		console.log('words', words)
-		steps.push(
-			`Copy and paste the provided ${words} and <code>${last}</code> into the <code class="info--text">API Key Pair</code> form in the <code>left column</code>`
-		)
+		steps.push(`Copy and paste the provided ${words} and <code>${last}</code> into the <code class="info white--text">API Key Pair</code> form in the <code>left column</code>`)
 		return steps
 	}
 

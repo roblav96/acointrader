@@ -17,11 +17,11 @@ import RouterMixin from '../../mixins/router.mixin'
 export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue, RouterMixin, VMixin) {
 
 	created() {
-		
+
 	}
 
 	mounted() {
-		
+
 	}
 
 	beforeDestroy() {
@@ -45,6 +45,13 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	})
 
 	v_pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
+
+	v_deleteApiKey(id: string) {
+		let exchange = exchanges.exchanges.find(v => v.id == id)
+		exchange.deleteApiKey()
+	}
+	
+	deleteDialog = true
 
 
 

@@ -55,7 +55,15 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 	saveApiKey(apiKey: ExchangeApiKey) {
 		Object.assign(this.apiKey, apiKey)
-		lockr.get('exchanges.' + this.id + '.apiKey', apiKey)
+		lockr.set('exchanges.' + this.id + '.apiKey', apiKey)
+	}
+
+	deleteApiKey() {
+		Object.keys(this.apiKey).forEach(key => {
+			if (key == 'id') return;
+			this.apiKey[key] = null
+		})
+		lockr.rm('exchanges.' + this.id + '.apiKey')
 	}
 
 
