@@ -37,18 +37,21 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 	api_key = { key: '', secret: '' } as ExchangeApiKey
 
-	get disabled() {
-		return (!!this.api_key.key && !!this.api_key.secret) == false
-	}
+	get disabled() { return (!!this.api_key.key && !!this.api_key.secret) == false }
 
 	save() {
 		console.log('this.api_key', JSON.stringify(this.api_key, null, 4))
 	}
 
+	on_scroll(event: MouseEvent) {
+		let target = event.target as HTMLElement
+		let key_form = (this.$refs.key_form as any).$el as HTMLElement
+		key_form.style.transform = 'translateY(' + target.scrollTop + 'px)'
+	}
+
 
 
 	step = 1
-
 	steps = [
 		{
 			title: 'Click the following url to setup your account API key:',
@@ -60,6 +63,10 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		if (this.step == 1) this.step++;
 		this.v_href(keyurl)
 	}
+
+
+
+
 
 
 }

@@ -10,7 +10,7 @@
 </style>
 
 <template>
-    <v-content class="route--scrollable connect--route">
+    <v-content>
 
         <v-toolbar app fixed dark color="primary">
             <v-btn icon large v-on:click="toggle_main_drawer" class="mr-4">
@@ -25,14 +25,13 @@
             <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-container fluid grid-list-xl class="my-1">
+        <v-container fluid grid-list-xl class="py-4 container--scrollable" v-on:scroll="on_scroll">
             <v-layout row>
                 <v-flex xs3>
 
-                    <v-card>
-                        <v-toolbar dense flat dark color="primary">
-                            <v-icon>mdi-key</v-icon>
-                            <v-toolbar-title>API Key</v-toolbar-title>
+                    <v-card ref="key_form">
+                        <v-toolbar dense flat dark color="info">
+                            <v-toolbar-title>API Key Pair</v-toolbar-title>
                             <v-spacer></v-spacer>
                             <v-tooltip class="mr-2" bottom transition="false" open-delay="0" close-delay="0">
                                 <v-btn icon class="ma-0" :href="meta.keyurl" target="_blank" slot="activator">
@@ -42,17 +41,17 @@
                             </v-tooltip>
                         </v-toolbar>
                         <v-form class="pa-3" v-on:submit.prevent="save">
-                            <v-text-field class="mb-3" label="Key" v-model="api_key.key" hide-details></v-text-field>
-                            <v-text-field class="mb-3" label="Secret" v-model="api_key.secret" type="password" hide-details></v-text-field>
-                            <v-btn block large class="ma-0" type="submit" color="success" :disabled="disabled">Save</v-btn>
+                            <v-text-field class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="api_key.key"
+                                hide-details></v-text-field>
+                            <v-text-field class="mb-4" color="info" prepend-icon="mdi-eye-off" label="API Secret" v-model="api_key.secret"
+                                type="password" hide-details></v-text-field>
+                            <v-btn block large class="ma-0" type="submit" color="info" :disabled="disabled">Save</v-btn>
                         </v-form>
                     </v-card>
 
                 </v-flex>
-
-
-
                 <v-flex xs9>
+
                     <v-card>
                         <v-toolbar dense flat dark color="primary">
                             <v-icon>mdi-book-open-page-variant</v-icon>
@@ -73,7 +72,7 @@
                             </v-stepper-step>
                             <v-stepper-content step="1">
                                 <div class="pa-2">
-                                    <v-btn class="mt-2" color="primary" v-on:click="step++">Continue</v-btn>
+                                    <v-btn class="mt-2" large color="primary" v-on:click="step++">Continue</v-btn>
                                 </div>
                             </v-stepper-content>
 
@@ -88,7 +87,7 @@
                             <v-stepper-content step="2">
                                 <div class="pa-2">
                                     <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-2.png">
-                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                    <v-btn large color="primary" v-on:click="step++">Continue</v-btn>
                                 </div>
                             </v-stepper-content>
 
@@ -102,7 +101,7 @@
                             <v-stepper-content step="3">
                                 <div class="pa-2">
                                     <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-3.png">
-                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                    <v-btn large color="primary" v-on:click="step++">Continue</v-btn>
                                 </div>
                             </v-stepper-content>
 
@@ -117,7 +116,7 @@
                             <v-stepper-content step="4">
                                 <div class="pa-2">
                                     <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-4.png">
-                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                    <v-btn large color="primary" v-on:click="step++">Continue</v-btn>
                                 </div>
                             </v-stepper-content>
 
@@ -131,22 +130,37 @@
                                     <code>Security settings</code> section, set the
                                     <code>Allowed IP Addresses</code> to
                                     <code class="red--text">192.34.85.234</code>
-                                    <br>Finally click the
-                                    <code class="light-blue--text">Create</code> button
+                                    <br>Finally click the blue
+                                    <code>Create</code> button at the bottom
                                 </span>
                             </v-stepper-step>
                             <v-stepper-content step="5">
                                 <div class="pa-2">
                                     <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-5.png">
-                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                    <v-btn large color="primary" v-on:click="step++">Continue</v-btn>
+                                </div>
+                            </v-stepper-content>
+
+                            <v-stepper-step step="6" :editable="step != 6">
+                                <span class="subheading">
+                                    Copy and paste the provided
+                                    <code>API Key</code> and
+                                    <code>API Secret</code> into the
+                                    <code class="info--text">API Key Pair</code> form on the
+                                    <code>left column</code>
+                                </span>
+                            </v-stepper-step>
+                            <v-stepper-content step="6">
+                                <div class="pa-2">
+                                    <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-6.png">
                                 </div>
                             </v-stepper-content>
 
                         </v-stepper>
 
                     </v-card>
-                </v-flex>
 
+                </v-flex>
             </v-layout>
         </v-container>
 

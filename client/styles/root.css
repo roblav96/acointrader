@@ -1,11 +1,6 @@
 /**/
 
 html,
-body {
-    overflow: hidden;
-}
-
-html,
 body,
 div.application,
 main.content {
@@ -23,9 +18,15 @@ code {
     margin-right: 2px;
 }
 
-main.content.route--scrollable > div.content--wrap {
+div.container.container--scrollable {
     overflow-y: auto;
+    height: 100%;
 }
+
+
+/*main.content.route--scrollable > div.content--wrap {
+    overflow-y: auto;
+}*/
 
 
 /*
