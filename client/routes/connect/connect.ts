@@ -14,6 +14,11 @@ import RouterMixin from '../../mixins/router.mixin'
 
 @Vts.Component(<VueComponent>{
 	name: 'Connect',
+
+	directives: {
+		render: { inserted: function(el, binding) { el.innerHTML = binding.value } },
+	},
+
 } as any)
 export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue, RouterMixin, VMixin) {
 
@@ -28,8 +33,6 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 			key_form.style.width = key_form.clientWidth + 'px'
 			key_form.style.position = 'fixed'
 		})
-		this.steps = utils.clone(STEPS.find(v => v.id == this.exchange.id).steps)
-		console.log('this.steps', this.steps)
 	}
 
 	beforeDestroy() {
@@ -55,7 +58,18 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 
 	step = 1
-	steps = [] as Array<string>
+	get steps() {
+		let steps = this.exchange.getSteps()
+		let keys = ['API Key', 'API Secret']
+		if (this.apiKey.passphrase !== undefined) keys.push('Passphrase');
+		let last = keys.pop()
+		let words = keys.map(v => '<code>' + v + '</code>').join(', ')
+		console.log('words', words)
+		steps.push(
+			`Copy and paste the provided ${words} and <code>${last}</code> into the <code class="info--text">API Key Pair</code> form in the <code>left column</code>`
+		)
+		return steps
+	}
 
 	v_hrefSettingsUrl(keyurl: string) {
 		if (this.step == 1) this.step++;
@@ -65,26 +79,5 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 
 }
-
-
-
-const STEPS = [
-	{
-		id: 'coinbase',
-		steps: [
-			`
-			In the
-			<code>API Access</code> tab, under the
-			<code>API Keys</code> section, click the
-			<code>+ New API Key</code> button
-			`,
-			`
-			In the
-			<code>Accounts</code> section, click the
-			<code>all</code> checkbox
-			`,
-		],
-	}
-]
 
 

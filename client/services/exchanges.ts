@@ -38,6 +38,7 @@ export class ExchangeMetadata {
 export class ExchangeBuilder extends ExchangeMetadata {
 
 	index: number
+	getSteps?(): Array<string>
 
 	apiKey = { key: null, secret: null } as ExchangeApiKey
 
@@ -64,6 +65,20 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 
 export class Coinbase extends ExchangeBuilder {
+
+	getSteps() {
+		return [
+			`In the <code>API Access</code> tab, under the <code>API Keys</code> section, click the <code>+ New API Key</code> button`,
+			`In the <code>Accounts</code> section, click the <code>all</code> checkbox`,
+			`In the <code>Permissions</code> section, at the bottom of <code>API v2 permissions</code> click <code>Select all</code>`,
+			`
+			In the <code>Notifications</code> section, set the <code>Notification URL</code> to <code class="red--text">https://acointrader.com/api/coinbase/notifications</code><br>
+			Then in the <code>Security settings</code> section, set the <code>Allowed IP Addresses</code> to <code class="red--text">192.34.85.234</code><br>
+			Finally click the blue <code>Create</code> button at the bottom
+			`,
+			// `Copy and paste the provided <code>API Key</code> and <code>API Secret</code> into the <code class="info--text">API Key Pair</code> form in the <code>left column</code>`,
+		]
+	}
 
 }
 

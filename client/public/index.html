@@ -17,8 +17,8 @@
 
 </head>
 
-<body style="background-color: rgb(48, 48, 48);">
-    <!-- <body> -->
+<body>
+    <script>let color="rgb(48, 48, 48)";if(window.localStorage){let o=window.localStorage["root.theme"];o&&"light"==(o=JSON.parse(o).data)&&(color="white")}document.body.style.backgroundColor=color;</script>
     <div id="root"></div>
     <script src="/dist/build.js"></script>
 </body>

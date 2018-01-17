@@ -23,21 +23,14 @@ export default class Root extends Vue {
 
 	}
 
+	fading = true
 	mounted() {
-		this.start_fading()
+		_.delay(() => this.fading = false, 100)
+		_.delay(() => this.fading = null, 1000)
 	}
 
 	beforeDestroy() {
 
-	}
-
-
-
-	fading = true
-	start_fading(duration = 100) {
-		this.fading = true
-		_.delay(() => this.fading = false, duration)
-		_.delay(() => this.fading = null, 1000)
 	}
 
 
@@ -47,11 +40,11 @@ export default class Root extends Vue {
 		lockr.set('root.theme', to)
 	}
 	toggle_theme() {
-		_.delay(() => {
-			this.start_fading(300)
-			if (this.theme == 'light') return this.theme = 'dark';
-			if (this.theme == 'dark') return this.theme = 'light';
-		}, 100)
+		// _.delay(() => {
+		// 	this.start_fading(300)
+		if (this.theme == 'light') return this.theme = 'dark';
+		if (this.theme == 'dark') return this.theme = 'light';
+		// }, 100)
 	}
 
 
