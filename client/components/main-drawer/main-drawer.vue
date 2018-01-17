@@ -38,7 +38,7 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
     <v-navigation-drawer app fixed permanent stateless floating class="main-drawer card br-0 pb-0" :mini-variant="!main_drawer.show">
         <v-layout column fill-height>
 
-            <v-list two-line class="py-0 scroll-y scrollbar-mini scrollbar-small">
+            <v-list two-line class="pt-0 pb-3 scroll-y scrollbar-mini scrollbar-small">
 
                 <template v-for="(item, index) in routes">
                     <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name">

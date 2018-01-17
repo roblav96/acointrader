@@ -47,7 +47,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 
 
-	step = 3
+	step = 1
 
 	steps = [
 		{

@@ -64,7 +64,7 @@
 
                             <v-stepper-step step="1" :editable="step != 1">
                                 <v-layout row align-center class="mx-0">
-                                    <p class="subheading mr-2">Goto your {{ meta.name }} API settings</p>
+                                    <p class="subheading mr-2">Goto your {{ meta.name }} account API settings</p>
                                     <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="href_keyurl(meta.keyurl)">
                                         <v-icon left>mdi-open-in-new</v-icon>
                                         {{ meta.keyurl }}
@@ -109,9 +109,9 @@
                             <v-stepper-step step="4" :editable="step != 4">
                                 <span class="subheading">
                                     In the
-                                    <code>Permissions</code> section, click
-                                    <code>Select all</code> under
-                                    <code>API v2 permissions</code>
+                                    <code>Permissions</code> section, at the bottom of
+                                    <code>API v2 permissions</code> click
+                                    <code>Select all</code>
                                 </span>
                             </v-stepper-step>
                             <v-stepper-content step="4">
@@ -125,12 +125,14 @@
                                 <span class="subheading">
                                     In the
                                     <code>Notifications</code> section, set the
-                                    <code>Notification URL</code> as
-                                    <code class="error--text">https://acointrader.com/api/coinbase/notifications</code>
-                                    then in the
+                                    <code>Notification URL</code> to
+                                    <code class="red--text">https://acointrader.com/api/coinbase/notifications</code>
+                                    <br>Then in the
                                     <code>Security settings</code> section, set the
-                                    <code>Allowed IP Addresses</code> as
-                                    <code>192.34.85.234</code>
+                                    <code>Allowed IP Addresses</code> to
+                                    <code class="red--text">192.34.85.234</code>
+                                    <br>Finally click the
+                                    <code class="light-blue--text">Create</code> button
                                 </span>
                             </v-stepper-step>
                             <v-stepper-content step="5">
