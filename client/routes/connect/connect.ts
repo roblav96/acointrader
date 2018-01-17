@@ -47,8 +47,18 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	
 	
 	
-	step = 0
+	step = 4
+	
+	steps = [
+		{
+			title: 'Click the following url to setup your account API key:',
+			subtitle: '',
+		}
+	]
 
+	wtf() {
+		console.log('wtf')
+	}
 
 
 }

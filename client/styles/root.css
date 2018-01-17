@@ -67,7 +67,89 @@ main.content.route--scrollable > div.content--wrap {
 }
 
 
-/**/
+/*
+	TEXT
+*/
+
+.theme--light.text,
+.theme--light .text {
+    color: black !important;
+    opacity: 0.87 !important;
+}
+
+.theme--light.text--light,
+.theme--light .text--light {
+    color: black !important;
+    opacity: 0.54 !important;
+}
+
+.theme--light.text--lighter,
+.theme--light .text--lighter {
+    color: black !important;
+    opacity: 0.38 !important;
+}
+
+.theme--light.text--lightest,
+.theme--light .text--lightest {
+    color: black !important;
+    opacity: 0.2 !important;
+}
+
+code.theme--light,
+.theme--light code {
+    color: black !important;
+    opacity: 0.2 !important;
+}
+
+.theme--light .bg-dim {
+    background-color: rgba(0, 0, 0, 0.33);
+}
+
+.theme--light .divider--light {
+    background-color: rgba(0, 0, 0, 0.54);
+}
+
+.theme--light .divider--lighter {
+    background-color: rgba(0, 0, 0, 0.38);
+}
+
+.theme--dark.text,
+.theme--dark .text {
+    color: white !important;
+}
+
+.theme--dark.text--light,
+.theme--dark .text--light {
+    color: white !important;
+    opacity: 0.8 !important;
+}
+
+.theme--dark.text--lighter,
+.theme--dark .text--lighter {
+    color: white !important;
+    opacity: 0.66 !important;
+}
+
+.theme--dark.text--lightest,
+.theme--dark .text--lightest {
+    color: white !important;
+    opacity: 0.33 !important;
+}
+
+.theme--dark.bg-dim,
+.theme--dark .bg-dim {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.theme--dark.divider--light,
+.theme--dark .divider--light {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.theme--dark.divider--lighter,
+.theme--dark .divider--lighter {
+    background-color: rgba(255, 255, 255, 0.5);
+}
 
 
 /**/
