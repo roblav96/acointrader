@@ -22,9 +22,9 @@
             <v-avatar size="48">
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
-            <v-toolbar-title class="t-lh2">
-                <p>{{ exchange.name }}</p>
-                <p class="subheading t-300">Connecting Your Account</p>
+            <v-toolbar-title>
+                <p class="headline t-bold t-lh2">{{ exchange.name }}</p>
+                <p class="subheading t-300 t-lh2 mb-1">Connecting Your Account</p>
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -51,7 +51,7 @@
                             <v-text-field v-if="apiKey.passphrase !== undefined" class="mb-3" color="info" prepend-icon="mdi-lock"
                                 label="Passphrase" v-model="apiKey.passphrase" type="password" hide-details></v-text-field>
                             <div class="pt-2">
-                                <v-btn block large class="ma-0" type="submit" color="info" :disabled="!valid">Save</v-btn>
+                                <v-btn block large class="ma-0" type="submit" color="info" :disabled="!valid">Connect</v-btn>
                             </div>
                         </v-form>
                     </v-card>
@@ -65,7 +65,8 @@
                             <!-- <v-toolbar-title>Instructions</v-toolbar-title> -->
                             <v-toolbar-title>
                                 Create an
-                                <code class="info white--text">API Key Pair</code>
+                                <code>API Key Pair</code>
+                                <!-- <code class="info white--text">API Key Pair</code> -->
                                 <!-- for {{ exchange.name }} -->
                             </v-toolbar-title>
                             <v-spacer></v-spacer>

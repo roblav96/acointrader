@@ -21,7 +21,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	mounted() {
-
+		
 	}
 
 	beforeDestroy() {

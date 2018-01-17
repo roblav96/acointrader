@@ -33,7 +33,7 @@ export const routes = [
 	{
 		dname: 'Welcome',
 		icon: 'mdi-emoticon',
-		description: 'Your jorney starts here',
+		description: 'Your journey starts here',
 		mmenu: true,
 		name: 'intro',
 		path: '/intro',

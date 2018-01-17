@@ -40,6 +40,7 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	index: number
 	getSteps?(): Array<string>
 
+	supported = true
 	apiKey = { key: null, secret: null } as ExchangeApiKey
 
 	constructor(metadata: ExchangeMetadata) {
@@ -81,10 +82,9 @@ export class Coinbase extends ExchangeBuilder {
 			`In the <code>Permissions</code> section, at the bottom of <code>API v2 permissions</code> click <code>Select all</code>`,
 			`
 			In the <code>Notifications</code> section, set the <code>Notification URL</code> to <code class="red--text">https://acointrader.com/api/coinbase/notifications</code><br>
-			Then in the <code>Security settings</code> section, set the <code>Allowed IP Addresses</code> to <code class="red--text">192.34.85.234</code><br>
-			Finally click the blue <code>Create</code> button at the bottom
+			In the <code>Security settings</code> section, set the <code>Allowed IP Addresses</code> to <code class="red--text">192.34.85.234</code><br>
+			Click the <code>Create</code> button
 			`,
-			// `Copy and paste the provided <code>API Key</code> and <code>API Secret</code> into the <code class="info--text">API Key Pair</code> form in the <code>left column</code>`,
 		]
 	}
 
@@ -97,21 +97,59 @@ export class Gdax extends ExchangeBuilder {
 		if (this.apiKey.passphrase === undefined) this.apiKey.passphrase = null;
 	}
 
+	getSteps() {
+		return [
+			`
+			In the <code>Permissions</code> section, select the checkboxes as shown below<br>
+			Input a <code>Passphrase</code> or use the one pre-filled<br>
+			Set the <code>IP Whitelist</code> to <code class="red--text">192.34.85.234</code><br>
+			Click the <code>Create API Key</code> button
+			`,
+		]
+	}
+
 }
 
 export class Binance extends ExchangeBuilder {
+
+	getSteps() {
+		return [
+			`
+			Set the <code>API key label</code> to <code class="red--text">acointrader</code><br>
+			Click the <code>Create New Key</code> button
+			`,
+			`Click the <code>Edit</code> button`,
+			`
+			In the <code>Option</code> section, select all the checkboxes as shown below<br>
+			In the <code>IP Access Restriction</code> section, select <code>Restrict access to trusted IPs only</code><br>
+			Set the <code>Trusted IPs</code> to <code class="red--text">192.34.85.234</code><br>
+			Click the <code>Save</code> button
+			`,
+		]
+	}
+
+}
+
+export class HitBTC extends ExchangeBuilder {
+
+	getSteps() {
+		return [
+			`Click the <code>New API Key</code> button`,
+			`In the <code>Access Rights</code> column, select all checkboxes as shown below`,
+		]
+	}
 
 }
 
 export class Bitfinex extends ExchangeBuilder {
 
+	supported = false
+
 }
 
 export class Bittrex extends ExchangeBuilder {
 
-}
-
-export class HitBTC extends ExchangeBuilder {
+	supported = false
 
 }
 
@@ -143,6 +181,14 @@ export const exchanges = [
 		settingsUrl: 'https://www.binance.com/userCenter/createApi.html',
 	} as ExchangeMetadata),
 
+	new HitBTC({
+		id: 'hitbtc',
+		name: 'HitBTC',
+		countryCode: 'DK',
+		website: 'https://hitbtc.com',
+		settingsUrl: 'https://hitbtc.com/settings/api-keys',
+	} as ExchangeMetadata),
+
 	new Bitfinex({
 		id: 'bitfinex',
 		name: 'Bitfinex',
@@ -157,14 +203,6 @@ export const exchanges = [
 		countryCode: 'US',
 		website: 'https://bittrex.com',
 		settingsUrl: 'https://bittrex.com',
-	} as ExchangeMetadata),
-
-	new HitBTC({
-		id: 'hitbtc',
-		name: 'HitBTC',
-		countryCode: 'DK',
-		website: 'https://hitbtc.com',
-		settingsUrl: 'https://hitbtc.com/settings/api-keys',
 	} as ExchangeMetadata),
 
 ] as Array<ExchangeBuilder>

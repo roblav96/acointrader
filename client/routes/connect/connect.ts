@@ -23,11 +23,10 @@ import RouterMixin from '../../mixins/router.mixin'
 export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue, RouterMixin, VMixin) {
 
 	created() {
-
+		this.apiKey = Object.assign({}, this.exchange.apiKey)
 	}
 
 	mounted() {
-		this.apiKey = Object.assign({}, this.exchange.apiKey)
 		this.$nextTick(() => {
 			let key_form = (this.$refs.key_form as any).$el as HTMLElement
 			key_form.style.width = key_form.clientWidth + 'px'
@@ -51,7 +50,6 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 	save() {
 		if (!this.valid) return;
-		// console.log('this.apiKey', JSON.stringify(this.apiKey, null, 4))
 		this.exchange.saveApiKey(this.apiKey)
 		this.$router.push({ name: 'accounts' })
 	}
@@ -71,7 +69,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		if (this.apiKey.passphrase !== undefined) keys.push('Passphrase');
 		let last = keys.pop()
 		let words = keys.map(v => '<code>' + v + '</code>').join(', ')
-		steps.push(`Copy and paste the provided ${words} and <code>${last}</code> into the <code class="info white--text">API Key Pair</code> form in the <code>left column</code>`)
+		steps.push(`Copy and paste the ${words} and <code>${last}</code> into the <code class="info white--text">API Key Pair</code> form in the <code class="info white--text">left column</code>`)
 		return steps
 	}
 

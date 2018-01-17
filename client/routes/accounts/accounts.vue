@@ -75,7 +75,11 @@
                         <td width="1" class="title">{{ props.item.name }}</td>
                         <td class="title">{{ props.item.apiKey.key }}</td>
                         <td width="1">
-                            <v-btn v-if="props.item.apiKey.key" block color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
+                            <v-btn v-if="props.item.supported == false" block disabled class="ma-0 t-transform-none">
+                                <v-icon left>mdi-worker</v-icon>
+                                WIP
+                            </v-btn>
+                            <v-btn v-else-if="props.item.apiKey.key" block color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
                                 <v-icon left>mdi-key-remove</v-icon>
                                 Disconnect
                             </v-btn>
