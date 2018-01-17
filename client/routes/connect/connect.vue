@@ -20,7 +20,7 @@
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
             <v-toolbar-title>
-                {{ exchange.meta.name }} | Connecting Your Account
+                {{ exchange.name }} | Connecting Your Account
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -34,18 +34,21 @@
                             <v-toolbar-title>API Key Pair</v-toolbar-title>
                             <v-spacer></v-spacer>
                             <v-tooltip class="mr-2" bottom transition="false" open-delay="0" close-delay="0">
-                                <v-btn icon class="ma-0" :href="exchange.meta.keyurl" target="_blank" slot="activator">
+                                <v-btn icon class="ma-0" :href="exchange.settingsUrl" target="_blank" slot="activator">
                                     <v-icon>mdi-open-in-new</v-icon>
                                 </v-btn>
-                                <span>{{ exchange.meta.keyurl }}</span>
+                                <span>{{ exchange.settingsUrl }}</span>
                             </v-tooltip>
                         </v-toolbar>
                         <v-form class="pa-3" v-on:submit.prevent="save">
-                            <v-text-field class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="api_key.key"
-                                hide-details></v-text-field>
-                            <v-text-field class="mb-4" color="info" prepend-icon="mdi-eye-off" label="API Secret" v-model="api_key.secret"
+                            <v-text-field class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="apiKey.key" hide-details></v-text-field>
+                            <v-text-field class="mb-3" color="info" prepend-icon="mdi-eye-off" label="API Secret" v-model="apiKey.secret"
                                 type="password" hide-details></v-text-field>
-                            <v-btn block large class="ma-0" type="submit" color="info" :disabled="disabled">Save</v-btn>
+                            <v-text-field v-if="apiKey.passphrase !== undefined" class="mb-3" color="info" prepend-icon="mdi-lock"
+                                label="Passphrase" v-model="apiKey.passphrase" type="password" hide-details></v-text-field>
+                            <div class="pt-2">
+                                <v-btn block large class="ma-0" type="submit" color="info" :disabled="!valid">Save</v-btn>
+                            </div>
                         </v-form>
                     </v-card>
 
@@ -63,10 +66,10 @@
 
                             <v-stepper-step step="1" :editable="step != 1">
                                 <v-layout row align-center class="mx-0">
-                                    <p class="subheading mr-2">Goto your {{ exchange.meta.name }} account API settings</p>
-                                    <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="href_keyurl(exchange.meta.keyurl)">
+                                    <p class="subheading mr-2">Goto your {{ exchange.name }} account API settings</p>
+                                    <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="v_hrefSettingsUrl(exchange.settingsUrl)">
                                         <v-icon left>mdi-open-in-new</v-icon>
-                                        {{ exchange.meta.keyurl }}
+                                        {{ exchange.settingsUrl }}
                                     </v-btn>
                                 </v-layout>
                             </v-stepper-step>
@@ -76,7 +79,19 @@
                                 </div>
                             </v-stepper-content>
 
-                            <v-stepper-step step="2" :editable="step != 2">
+                            <template v-for="(item, index) in steps">
+                                <v-stepper-step step="index + 2" :editable="step != (index + 2)">
+                                    <span class="subheading">{{ item }}</span>
+                                </v-stepper-step>
+                                <v-stepper-content step="index + 2">
+                                    <div class="pa-2">
+                                        <img class="elevation-1 br-2 w-100" :src="'/img/connect/coinbase-' + (index + 2) + '.png'">
+                                        <v-btn large color="primary" v-on:click="step++">Continue</v-btn>
+                                    </div>
+                                </v-stepper-content>
+                            </template>
+
+                            <!-- <v-stepper-step step="2" :editable="step != 2">
                                 <span class="subheading">
                                     In the
                                     <code>API Access</code> tab, under the
@@ -154,7 +169,7 @@
                                 <div class="pa-2">
                                     <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-6.png">
                                 </div>
-                            </v-stepper-content>
+                            </v-stepper-content> -->
 
                         </v-stepper>
 

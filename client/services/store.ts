@@ -12,7 +12,6 @@ import * as MainDrawer from '../components/main-drawer/main-drawer'
 
 class State {
 
-	// exchanges = exchanges.exchanges
 	apiKeys = exchanges.exchanges.map(v => v.apiKey)
 
 	mainDrawer = new MainDrawer.store()

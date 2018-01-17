@@ -10,10 +10,10 @@ import * as utils from './utils'
 
 declare global {
 	interface ExchangeApiKey {
+		id: string
 		key: string
 		secret: string
 		passphrase: string
-		valid: boolean
 	}
 }
 
@@ -24,7 +24,7 @@ export class ExchangeMetadata {
 	id: string
 	name: string
 	countryCode: string
-	homeUrl: string
+	website: string
 	settingsUrl: string
 
 	constructor(metadata: ExchangeMetadata) { Object.assign(this, metadata) }
@@ -39,14 +39,11 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 	index: number
 
-	apiKey = {
-		key: null,
-		secret: null,
-		get valid() { return !!this.key && !!this.secret },
-	} as ExchangeApiKey
+	apiKey = { key: null, secret: null } as ExchangeApiKey
 
 	constructor(metadata: ExchangeMetadata) {
 		super(metadata)
+		this.apiKey.id = this.id
 		this.loadApiKey()
 	}
 
@@ -103,7 +100,7 @@ export const exchanges = [
 		id: 'coinbase',
 		name: 'Coinbase',
 		countryCode: 'US',
-		homeUrl: 'https://www.coinbase.com',
+		website: 'https://www.coinbase.com',
 		settingsUrl: 'https://www.coinbase.com/settings/api', // #add_new_key',
 	} as ExchangeMetadata),
 
@@ -111,7 +108,7 @@ export const exchanges = [
 		id: 'gdax',
 		name: 'GDAX',
 		countryCode: 'US',
-		homeUrl: 'https://www.gdax.com',
+		website: 'https://www.gdax.com',
 		settingsUrl: 'https://www.gdax.com/settings/api',
 	} as ExchangeMetadata),
 
@@ -119,7 +116,7 @@ export const exchanges = [
 		id: 'binance',
 		name: 'Binance',
 		countryCode: 'HK',
-		homeUrl: 'https://www.binance.com',
+		website: 'https://www.binance.com',
 		settingsUrl: 'https://www.binance.com/userCenter/createApi.html',
 	} as ExchangeMetadata),
 
@@ -127,7 +124,7 @@ export const exchanges = [
 		id: 'bitfinex',
 		name: 'Bitfinex',
 		countryCode: 'HK',
-		homeUrl: 'https://www.bitfinex.com',
+		website: 'https://www.bitfinex.com',
 		settingsUrl: 'https://www.bitfinex.com/api',
 	} as ExchangeMetadata),
 
@@ -135,7 +132,7 @@ export const exchanges = [
 		id: 'bittrex',
 		name: 'Bittrex',
 		countryCode: 'US',
-		homeUrl: 'https://bittrex.com',
+		website: 'https://bittrex.com',
 		settingsUrl: 'https://bittrex.com',
 	} as ExchangeMetadata),
 
@@ -143,7 +140,7 @@ export const exchanges = [
 		id: 'hitbtc',
 		name: 'HitBTC',
 		countryCode: 'DK',
-		homeUrl: 'https://hitbtc.com',
+		website: 'https://hitbtc.com',
 		settingsUrl: 'https://hitbtc.com/settings/api-keys',
 	} as ExchangeMetadata),
 

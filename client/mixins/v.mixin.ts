@@ -23,9 +23,15 @@ export default class VMixin extends Vue {
 	v_flag_png(country: string) { return '/img/flags/' + country.toLowerCase() + '.png' }
 
 	v_exchange_png(id: string) { return '/img/exchanges/' + id + '-logo.png' }
-	v_exchange_active(id: string) { return !!this.$store.state.api_keys.find(v => v.id == id) }
-	
-	
+
+	v_pagination = {} as VueTablePagination
+	v_lastsortby = this.v_pagination.sortBy
+	@Vts.Watch('v_pagination.descending', { deep: true }) w_v_pagination(to: boolean, from: boolean) {
+		if (to == false && from == true && this.v_lastsortby != this.v_pagination.sortBy) {
+			this.$nextTick(() => this.v_pagination.descending = true)
+		}
+		this.v_lastsortby = this.v_pagination.sortBy
+	}
 
 }
 

@@ -10,7 +10,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const env = require('./env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
 
-// 
+
 
 const config = {
 

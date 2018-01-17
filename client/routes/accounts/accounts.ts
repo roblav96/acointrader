@@ -17,11 +17,11 @@ import RouterMixin from '../../mixins/router.mixin'
 export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue, RouterMixin, VMixin) {
 
 	created() {
-
+		
 	}
 
 	mounted() {
-		console.log('this.exchanges', this.exchanges)
+		
 	}
 
 	beforeDestroy() {
@@ -30,15 +30,13 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
-	get exchanges() {
-		return exchanges.exchanges //.map(v => v.getMeta())
-	}
+	get exchanges() { return exchanges.exchanges.map(v => v.getMeta()) }
 
 	headers = ([
-		{ text: 'Website', value: 'meta.url', sortable: false },
-		{ text: 'Country', value: 'meta.country' },
+		{ text: 'Website', value: 'website', sortable: false },
+		{ text: 'Country', value: 'countryCode' },
 		{ text: 'Logo', value: '', sortable: false },
-		{ text: 'Exchange', value: 'meta.name' },
+		{ text: 'Exchange', value: 'name' },
 		{ text: 'API Key', value: 'api_key.key', sortable: false },
 		{ text: 'Actions', value: '', sortable: false },
 	] as Array<VueTableHeader>).map(function(header) {
@@ -46,7 +44,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 		return header
 	})
 
-	pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
+	v_pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
 
 
 

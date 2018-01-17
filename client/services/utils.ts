@@ -88,6 +88,13 @@ export function array_uniqby_safely<T>(items: Array<T>, uniq_key: string) {
 
 
 
+/** ⟶ clones the argument using JSON.stringify and JSON.parse */
+export function clone<T = any>(input: T): T {
+	return JSON.parse(JSON.stringify(input))
+}
+
+
+
 
 
 
