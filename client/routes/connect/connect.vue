@@ -34,7 +34,7 @@
                         <v-form class="pa-3" v-on:submit.prevent="save">
                             <v-text-field class="mb-3" label="Key" v-model="api_key.key" hide-details solo></v-text-field>
                             <v-text-field class="mb-3" label="Secret" v-model="api_key.secret" type="password" hide-details solo></v-text-field>
-                            <v-btn block large type="submit" color="success" :disabled="disabled">Submit</v-btn>
+                            <v-btn block large class="my-0" type="submit" color="success" :disabled="disabled">Submit</v-btn>
                         </v-form>
                     </v-card>
 
