@@ -68,7 +68,7 @@ main.content.route--scrollable > div.content--wrap {
 
 
 /*
-	TEXT
+	TEXT - THEME LIGHT
 */
 
 .theme--light.text,
@@ -95,12 +95,6 @@ main.content.route--scrollable > div.content--wrap {
     opacity: 0.2 !important;
 }
 
-code.theme--light,
-.theme--light code {
-    color: black !important;
-    opacity: 0.2 !important;
-}
-
 .theme--light .bg-dim {
     background-color: rgba(0, 0, 0, 0.33);
 }
@@ -112,6 +106,18 @@ code.theme--light,
 .theme--light .divider--lighter {
     background-color: rgba(0, 0, 0, 0.38);
 }
+
+
+/*code.theme--light,
+.theme--light code {
+    color: black !important;
+    opacity: 0.2 !important;
+}*/
+
+
+/*
+	TEXT - THEME DARK
+*/
 
 .theme--dark.text,
 .theme--dark .text {
