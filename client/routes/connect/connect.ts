@@ -44,6 +44,10 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	save() {
 		console.log('this.api_key', JSON.stringify(this.api_key, null, 4))
 	}
+	
+	
+	
+	step = 0
 
 
 

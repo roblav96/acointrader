@@ -4,17 +4,13 @@
 <style>
 /**/
 
-main.accounts--route table img {
-    background-color: white;
-}
-
 
 /**/
 
 </style>
 
 <template>
-    <v-content class="accounts--route route-scroll-y">
+    <v-content class="route--scrollable">
 
         <v-toolbar app fixed dark color="primary">
             <v-btn icon large v-on:click="toggle_main_drawer">
@@ -36,8 +32,7 @@ main.accounts--route table img {
                     <v-toolbar-title>Supported Exchanges</v-toolbar-title>
                     <v-spacer></v-spacer>
                 </v-toolbar> -->
-                <v-data-table class="accounts--table" :headers="headers" :items="exchanges" :pagination.sync="pagination"
-                    hide-actions>
+                <v-data-table :headers="headers" :items="exchanges" :pagination.sync="pagination" hide-actions>
                     <template slot="items" slot-scope="props">
                         <td width="1">
                             <v-btn large icon class="ma-0" :href="props.item.url" target="_blank">
@@ -51,7 +46,7 @@ main.accounts--route table img {
                             <v-icon>{{ props.item.active ? 'mdi-lan-connect' : 'mdi-lan-disconnect' }}</v-icon>
                         </td> -->
                         <td width="1">
-                            <img class="mt-1 elevation-1" style="width: 36px;" :src="v_flag_png(props.item.country)">
+                            <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.country)">
                             <!-- <v-layout row align-center>
                                 <img class="elevation-1" style="width: 36px;" :src="v_flag_png(props.item.country)">
                                 <p class="ml-2">{{ props.item.country }}</p>
