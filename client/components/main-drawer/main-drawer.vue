@@ -25,8 +25,8 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 }
 
 
-/*aside.main-drawer hr.divider {
-    display: inherit !important;
+/*aside.main-drawer.navigation-drawer--mini-variant hr.divider.divider--inset {
+    opacity: 0;
 }*/
 
 
@@ -35,11 +35,10 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 </style>
 
 <template>
-    <v-navigation-drawer app fixed permanent stateless floating class="main-drawer scroll-y scrollbar-mini scrollbar-small card br-0 pb-0"
-        :mini-variant="!main_drawer.show">
+    <v-navigation-drawer app fixed permanent stateless floating class="main-drawer card br-0 pb-0" :mini-variant="!main_drawer.show">
         <v-layout column fill-height>
 
-            <v-list two-line class="pt-0 pb-5">
+            <v-list two-line class="py-0 scroll-y scrollbar-mini scrollbar-small">
 
                 <template v-for="(item, index) in routes">
                     <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name">
@@ -54,6 +53,21 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
                     <v-divider inset></v-divider>
                 </template>
 
+            </v-list>
+
+            <v-spacer></v-spacer>
+
+            <v-list two-line class="py-0">
+                <v-divider></v-divider>
+                <v-list-tile v-ripple v-on:click="$root.toggle_theme">
+                    <v-list-tile-action>
+                        <v-icon medium>{{ $root.theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>Toggle Theme</v-list-tile-title>
+                        <v-list-tile-sub-title>Light or Dark</v-list-tile-sub-title>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
 
         </v-layout>

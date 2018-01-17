@@ -17,6 +17,12 @@ p {
     margin-bottom: 0px;
 }
 
+code {
+    color: inherit;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
 main.content.route--scrollable > div.content--wrap {
     overflow-y: auto;
 }
@@ -95,6 +101,12 @@ main.content.route--scrollable > div.content--wrap {
     opacity: 0.2 !important;
 }
 
+code.theme--light,
+.theme--light code {
+    /*background-color: rgba(0, 0, 0, 0.12);*/
+    /*background-color: #fafafa;*/
+}
+
 .theme--light .bg-dim {
     background-color: rgba(0, 0, 0, 0.33);
 }
@@ -106,13 +118,6 @@ main.content.route--scrollable > div.content--wrap {
 .theme--light .divider--lighter {
     background-color: rgba(0, 0, 0, 0.38);
 }
-
-
-/*code.theme--light,
-.theme--light code {
-    color: black !important;
-    opacity: 0.2 !important;
-}*/
 
 
 /*
@@ -140,6 +145,11 @@ main.content.route--scrollable > div.content--wrap {
 .theme--dark .text--lightest {
     color: white !important;
     opacity: 0.33 !important;
+}
+
+code.theme--dark,
+.theme--dark code {
+    background-color: rgb(48, 48, 48);
 }
 
 .theme--dark.bg-dim,

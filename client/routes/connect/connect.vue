@@ -4,10 +4,6 @@
 <style>
 /**/
 
-main.connect--route .stepper--vertical .stepper__step {
-	/*padding-bottom: 24px;*/
-}
-
 
 /**/
 
@@ -24,7 +20,7 @@ main.connect--route .stepper--vertical .stepper__step {
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
             <v-toolbar-title>
-                Connect Your {{ meta.name }} Account
+                {{ meta.name }} | Connecting Your Account
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -46,8 +42,8 @@ main.connect--route .stepper--vertical .stepper__step {
                             </v-tooltip>
                         </v-toolbar>
                         <v-form class="pa-3" v-on:submit.prevent="save">
-                            <v-text-field class="mb-3" label="Key" v-model="api_key.key" hide-details solo></v-text-field>
-                            <v-text-field class="mb-3" label="Secret" v-model="api_key.secret" type="password" hide-details solo></v-text-field>
+                            <v-text-field class="mb-3" label="Key" v-model="api_key.key" hide-details></v-text-field>
+                            <v-text-field class="mb-3" label="Secret" v-model="api_key.secret" type="password" hide-details></v-text-field>
                             <v-btn block large class="ma-0" type="submit" color="success" :disabled="disabled">Save</v-btn>
                         </v-form>
                     </v-card>
@@ -66,42 +62,82 @@ main.connect--route .stepper--vertical .stepper__step {
 
                         <v-stepper vertical non-linear class="bg-initial shadow-none" v-model="step">
 
-                            <v-stepper-step step="1" editable>
-                                <span class="subheading mb-2">Click the following link to create a {{ meta.name }} API key:</span>
-                                <!-- <v-btn outline class="ma-0 t-transform-none t-400" :href="meta.keyurl" target="_blank"> -->
-                                <v-btn outline class="ma-0 t-transform-none t-400" v-on:click="v_href(meta.keyurl)">
-                                    {{ meta.keyurl }}
-                                </v-btn>
+                            <v-stepper-step step="1" :editable="step != 1">
+                                <v-layout row align-center class="mx-0">
+                                    <p class="subheading mr-2">Goto your {{ meta.name }} API settings</p>
+                                    <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="href_keyurl(meta.keyurl)">
+                                        <v-icon left>mdi-open-in-new</v-icon>
+                                        {{ meta.keyurl }}
+                                    </v-btn>
+                                </v-layout>
                             </v-stepper-step>
                             <v-stepper-content step="1">
-                                <img class="card w-100" src="/img/connect/coinbase-1.png">
-                                <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                <div class="pa-2">
+                                    <v-btn class="mt-2" color="primary" v-on:click="step++">Continue</v-btn>
+                                </div>
                             </v-stepper-content>
 
-                            <v-stepper-step step="2" editable>
-                                <span class="subheading">In the "Accounts" section, select "all"</span>
+                            <v-stepper-step step="2" :editable="step != 2">
+                                <span class="subheading">
+                                    In the
+                                    <code>API Access</code> tab, under the
+                                    <code>API Keys</code> section, click the
+                                    <code>+ New API Key</code> button
+                                </span>
                             </v-stepper-step>
                             <v-stepper-content step="2">
-                                <img class="card w-100" src="/img/connect/coinbase-2.png">
-                                <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                <div class="pa-2">
+                                    <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-2.png">
+                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                </div>
                             </v-stepper-content>
 
-                            <v-stepper-step step="3" editable>
-                                <span class="subheading">In the "Permissions" section, click "Select all"</span>
+                            <v-stepper-step step="3" :editable="step != 3">
+                                <span class="subheading">
+                                    In the
+                                    <code>Accounts</code> section, click the
+                                    <code>all</code> checkbox
+                                </span>
                             </v-stepper-step>
                             <v-stepper-content step="3">
-                                <img class="card w-100" src="/img/connect/coinbase-3.png">
-                                <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                <div class="pa-2">
+                                    <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-3.png">
+                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                </div>
                             </v-stepper-content>
 
-                            <v-stepper-step step="4" editable>
+                            <v-stepper-step step="4" :editable="step != 4">
                                 <span class="subheading">
-                                    In the "Notifications" section, set <code>https://acointrader.com/api/coinbase/notifications</code>
+                                    In the
+                                    <code>Permissions</code> section, click
+                                    <code>Select all</code> under
+                                    <code>API v2 permissions</code>
                                 </span>
                             </v-stepper-step>
                             <v-stepper-content step="4">
-                                <img class="card w-100" src="/img/connect/coinbase-4.png">
-                                <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                <div class="pa-2">
+                                    <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-4.png">
+                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                </div>
+                            </v-stepper-content>
+
+                            <v-stepper-step step="5" :editable="step != 5">
+                                <span class="subheading">
+                                    In the
+                                    <code>Notifications</code> section, set the
+                                    <code>Notification URL</code> as
+                                    <code class="error--text">https://acointrader.com/api/coinbase/notifications</code>
+                                    then in the
+                                    <code>Security settings</code> section, set the
+                                    <code>Allowed IP Addresses</code> as
+                                    <code>192.34.85.234</code>
+                                </span>
+                            </v-stepper-step>
+                            <v-stepper-content step="5">
+                                <div class="pa-2">
+                                    <img class="elevation-1 br-2 w-100" src="/img/connect/coinbase-5.png">
+                                    <v-btn color="primary" v-on:click="step++">Continue</v-btn>
+                                </div>
                             </v-stepper-content>
 
                         </v-stepper>

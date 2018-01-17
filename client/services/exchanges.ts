@@ -72,7 +72,7 @@ export const exchanges = [
 		name: 'Coinbase',
 		country: 'US',
 		url: 'https://www.coinbase.com',
-		keyurl: 'https://www.coinbase.com/settings/api#add_new_key',
+		keyurl: 'https://www.coinbase.com/settings/api', // #add_new_key',
 	}),
 	new Gdax({
 		id: 'gdax',

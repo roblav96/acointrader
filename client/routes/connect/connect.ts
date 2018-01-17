@@ -44,11 +44,11 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	save() {
 		console.log('this.api_key', JSON.stringify(this.api_key, null, 4))
 	}
-	
-	
-	
-	step = 4
-	
+
+
+
+	step = 3
+
 	steps = [
 		{
 			title: 'Click the following url to setup your account API key:',
@@ -56,8 +56,9 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		}
 	]
 
-	wtf() {
-		console.log('wtf')
+	href_keyurl(keyurl: string) {
+		if (this.step == 1) this.step++;
+		this.v_href(keyurl)
 	}
 
 

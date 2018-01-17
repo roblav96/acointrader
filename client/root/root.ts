@@ -27,15 +27,35 @@ export default class Root extends Vue {
 
 	}
 
-	// keep the initing to allow time for fonts to download and render 
-	initing = true
 	mounted() {
-		setTimeout(() => this.initing = false, 100)
-		setTimeout(() => this.initing = null, 1000)
+		this.start_fading()
 	}
 
 	beforeDestroy() {
 
+	}
+
+
+
+	fading = true
+	start_fading(duration = 100) {
+		this.fading = true
+		_.delay(() => this.fading = false, duration)
+		_.delay(() => this.fading = null, 1000)
+	}
+
+
+
+	theme = lockr.get('root.theme', 'dark')
+	@Vts.Watch('theme') w_theme(to: string, from: string) {
+		lockr.set('root.theme', to)
+	}
+	toggle_theme() {
+		_.delay(() => {
+			this.start_fading(300)
+			if (this.theme == 'light') return this.theme = 'dark';
+			if (this.theme == 'dark') return this.theme = 'light';
+		}, 100)
 	}
 
 
