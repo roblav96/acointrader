@@ -25,9 +25,6 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
             <router-view></router-view>
         </v-fade-transition>
 
-        <!-- <pin-dialog></pin-dialog> -->
-        <!-- <exchange-connect></exchange-connect> -->
-
     </v-app>
 </template>
 

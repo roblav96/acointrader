@@ -21,7 +21,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	mounted() {
-		_.delay(() => this.fab = true, 100)
+		console.log('this.exchanges', this.exchanges)
 	}
 
 	beforeDestroy() {
@@ -30,36 +30,17 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 
 
-	fab = false
-
-
-
-	// tab_index = lockr.get('accounts.tab_index', 0)
-	// @Vts.Watch('tab_index') w_tab_index(to: number, from: number) {
-	// 	lockr.set('accounts.tab_index', to)
-	// }
-
-
-
 	get exchanges() {
-		return exchanges.exchanges.map(v => {
-			let api_key = this.$store.state.api_keys.find(vv => vv.id == v.id)
-			return Object.assign({}, {
-				active: !!api_key.key,
-				key: api_key.key,
-			}, v.meta)
-		})
+		return exchanges.exchanges //.map(v => v.getMeta())
 	}
 
 	headers = ([
-		{ text: 'Website', value: 'url', sortable: false },
-		{ text: 'Country', value: 'country' },
+		{ text: 'Website', value: 'meta.url', sortable: false },
+		{ text: 'Country', value: 'meta.country' },
 		{ text: 'Logo', value: '', sortable: false },
-		{ text: 'Exchange', value: 'name' },
-		{ text: 'API Key', value: 'key', sortable: false },
+		{ text: 'Exchange', value: 'meta.name' },
+		{ text: 'API Key', value: 'api_key.key', sortable: false },
 		{ text: 'Actions', value: '', sortable: false },
-		// { text: '', value: '', sortable: false },
-		// { text: '____', value: '____' },
 	] as Array<VueTableHeader>).map(function(header) {
 		if (!header.align) header.align = 'left';
 		return header

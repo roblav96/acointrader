@@ -33,7 +33,7 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 
 
-	get main_drawer() { return this.$store.state.main_drawer }
+	get mainDrawer() { return this.$store.state.mainDrawer }
 
 	get routes() {
 		return router.routes.filter(v => !!v.mmenu).map(v => {

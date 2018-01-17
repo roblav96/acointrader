@@ -4,37 +4,63 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
+import * as utils from './utils'
 
 
 
 declare global {
-	interface ExchangeMeta {
-		id: string
-		name: string
-		country: string
-		url: string
-		keyurl: string
-	}
 	interface ExchangeApiKey {
-		id: string
 		key: string
 		secret: string
+		passphrase: string
+		valid: boolean
 	}
 }
 
 
 
-export class ExchangeBuilder {
+export class ExchangeMetadata {
 
 	id: string
-	api_key = { id: '', key: '', secret: '' } as ExchangeApiKey
+	name: string
+	countryCode: string
+	homeUrl: string
+	settingsUrl: string
 
-	constructor(
-		public meta: ExchangeMeta,
-	) {
-		this.id = this.meta.id
-		this.api_key.id = this.id
+	constructor(metadata: ExchangeMetadata) { Object.assign(this, metadata) }
+
+	getMeta() { return _.pick(this, Object.keys(this)) }
+
+}
+
+
+
+export class ExchangeBuilder extends ExchangeMetadata {
+
+	index: number
+
+	apiKey = {
+		key: null,
+		secret: null,
+		get valid() { return !!this.key && !!this.secret },
+	} as ExchangeApiKey
+
+	constructor(metadata: ExchangeMetadata) {
+		super(metadata)
+		this.loadApiKey()
 	}
+
+	loadApiKey() {
+		let apiKey = lockr.get('exchanges.' + this.id + '.apiKey', {} as ExchangeApiKey)
+		Object.assign(this.apiKey, apiKey)
+	}
+
+	saveApiKey(apiKey: ExchangeApiKey) {
+		Object.assign(this.apiKey, apiKey)
+		lockr.get('exchanges.' + this.id + '.apiKey', apiKey)
+	}
+
+
 
 }
 
@@ -45,6 +71,11 @@ export class Coinbase extends ExchangeBuilder {
 }
 
 export class Gdax extends ExchangeBuilder {
+
+	constructor(metadata: ExchangeMetadata) {
+		super(metadata)
+		if (this.apiKey.passphrase === undefined) this.apiKey.passphrase = null;
+	}
 
 }
 
@@ -67,51 +98,60 @@ export class HitBTC extends ExchangeBuilder {
 
 
 export const exchanges = [
+
 	new Coinbase({
 		id: 'coinbase',
 		name: 'Coinbase',
-		country: 'US',
-		url: 'https://www.coinbase.com',
-		keyurl: 'https://www.coinbase.com/settings/api', // #add_new_key',
-	}),
+		countryCode: 'US',
+		homeUrl: 'https://www.coinbase.com',
+		settingsUrl: 'https://www.coinbase.com/settings/api', // #add_new_key',
+	} as ExchangeMetadata),
+
 	new Gdax({
 		id: 'gdax',
 		name: 'GDAX',
-		country: 'US',
-		url: 'https://www.gdax.com',
-		keyurl: 'https://www.gdax.com/settings/api',
-	}),
+		countryCode: 'US',
+		homeUrl: 'https://www.gdax.com',
+		settingsUrl: 'https://www.gdax.com/settings/api',
+	} as ExchangeMetadata),
+
 	new Binance({
 		id: 'binance',
 		name: 'Binance',
-		country: 'HK',
-		url: 'https://www.binance.com',
-		keyurl: 'https://www.binance.com/userCenter/createApi.html',
-	}),
-	// new Bitfinex({
-	// 	id: 'bitfinex',
-	// 	name: 'Bitfinex',
-	// 	country: 'HK',
-	// 	url: 'https://www.bitfinex.com',
-	// 	keyurl: 'https://www.bitfinex.com/api',
-	// }),
-	// new Bittrex({
-	// 	id: 'bittrex',
-	// 	name: 'Bittrex',
-	// 	country: 'US',
-	// 	url: 'https://bittrex.com',
-	// 	keyurl: 'https://bittrex.com',
-	// }),
-	// new HitBTC({
-	// 	id: 'hitbtc',
-	// 	name: 'HitBTC',
-	// 	country: 'DK',
-	// 	url: 'https://hitbtc.com',
-	// 	keyurl: 'https://hitbtc.com/settings/api-keys',
-	// }),
+		countryCode: 'HK',
+		homeUrl: 'https://www.binance.com',
+		settingsUrl: 'https://www.binance.com/userCenter/createApi.html',
+	} as ExchangeMetadata),
+
+	new Bitfinex({
+		id: 'bitfinex',
+		name: 'Bitfinex',
+		countryCode: 'HK',
+		homeUrl: 'https://www.bitfinex.com',
+		settingsUrl: 'https://www.bitfinex.com/api',
+	} as ExchangeMetadata),
+
+	new Bittrex({
+		id: 'bittrex',
+		name: 'Bittrex',
+		countryCode: 'US',
+		homeUrl: 'https://bittrex.com',
+		settingsUrl: 'https://bittrex.com',
+	} as ExchangeMetadata),
+
+	new HitBTC({
+		id: 'hitbtc',
+		name: 'HitBTC',
+		countryCode: 'DK',
+		homeUrl: 'https://hitbtc.com',
+		settingsUrl: 'https://hitbtc.com/settings/api-keys',
+	} as ExchangeMetadata),
+
 ] as Array<ExchangeBuilder>
 
+exchanges.forEach((v, i) => v.index = i)
 
+console.log('exchanges', exchanges)
 
 
 

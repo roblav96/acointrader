@@ -35,7 +35,7 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 </style>
 
 <template>
-    <v-navigation-drawer app fixed permanent stateless floating class="main-drawer card br-0 pb-0" :mini-variant="!main_drawer.show">
+    <v-navigation-drawer app fixed permanent stateless floating class="main-drawer card br-0 pb-0" :mini-variant="!mainDrawer.show">
         <v-layout column fill-height>
 
             <v-list two-line class="pt-0 pb-3 scroll-y scrollbar-mini scrollbar-small">

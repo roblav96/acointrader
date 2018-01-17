@@ -13,10 +13,10 @@ import * as router from '../router'
 } as any)
 export default class RouterMixin extends Vue {
 
-	get router_dname() { return _.get(router.routes.find(v => v.name == this.$route.name), 'dname') }
+	get v_routeDname() { return _.get(router.routes.find(v => v.name == this.$route.name), 'dname') }
 
-	get main_drawer() { return this.$store.state.main_drawer }
-	toggle_main_drawer() { this.main_drawer.show = !this.main_drawer.show }
+	get mainDrawer() { return this.$store.state.mainDrawer }
+	v_toggleMainDrawer() { this.mainDrawer.show = !this.mainDrawer.show }
 
 
 

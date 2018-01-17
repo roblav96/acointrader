@@ -5,10 +5,10 @@
     <v-content>
 
         <v-toolbar app fixed dark color="primary">
-            <v-btn icon large v-on:click="toggle_main_drawer">
+            <v-btn icon large v-on:click="v_toggleMainDrawer">
                 <v-icon medium>mdi-menu</v-icon>
             </v-btn>
-            <v-toolbar-title>{{ router_dname }}</v-toolbar-title>
+            <v-toolbar-title>{{ v_routeDname }}</v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 

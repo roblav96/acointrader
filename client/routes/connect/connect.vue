@@ -13,31 +13,31 @@
     <v-content>
 
         <v-toolbar app fixed dark color="primary">
-            <v-btn icon large v-on:click="toggle_main_drawer" class="mr-4">
+            <v-btn icon large v-on:click="v_toggleMainDrawer" class="mr-4">
                 <v-icon medium>mdi-menu</v-icon>
             </v-btn>
             <v-avatar size="48">
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
             <v-toolbar-title>
-                {{ meta.name }} | Connecting Your Account
+                {{ exchange.meta.name }} | Connecting Your Account
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-container fluid grid-list-xl class="py-4 container--scrollable" v-on:scroll="on_scroll">
+        <v-container fluid grid-list-xl class="container--scrollable">
             <v-layout row>
                 <v-flex xs3>
 
-                    <v-card ref="key_form">
+                    <v-card ref="key_form" class="z-9">
                         <v-toolbar dense flat dark color="info">
                             <v-toolbar-title>API Key Pair</v-toolbar-title>
                             <v-spacer></v-spacer>
                             <v-tooltip class="mr-2" bottom transition="false" open-delay="0" close-delay="0">
-                                <v-btn icon class="ma-0" :href="meta.keyurl" target="_blank" slot="activator">
+                                <v-btn icon class="ma-0" :href="exchange.meta.keyurl" target="_blank" slot="activator">
                                     <v-icon>mdi-open-in-new</v-icon>
                                 </v-btn>
-                                <span>{{ meta.keyurl }}</span>
+                                <span>{{ exchange.meta.keyurl }}</span>
                             </v-tooltip>
                         </v-toolbar>
                         <v-form class="pa-3" v-on:submit.prevent="save">
@@ -63,10 +63,10 @@
 
                             <v-stepper-step step="1" :editable="step != 1">
                                 <v-layout row align-center class="mx-0">
-                                    <p class="subheading mr-2">Goto your {{ meta.name }} account API settings</p>
-                                    <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="href_keyurl(meta.keyurl)">
+                                    <p class="subheading mr-2">Goto your {{ exchange.meta.name }} account API settings</p>
+                                    <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="href_keyurl(exchange.meta.keyurl)">
                                         <v-icon left>mdi-open-in-new</v-icon>
-                                        {{ meta.keyurl }}
+                                        {{ exchange.meta.keyurl }}
                                     </v-btn>
                                 </v-layout>
                             </v-stepper-step>
