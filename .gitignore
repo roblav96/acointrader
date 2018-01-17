@@ -6,6 +6,8 @@
 
 /client/public/dist/
 
+/server/dist/
+
 /node_modules/
 /tsc/
 .awcache
