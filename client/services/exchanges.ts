@@ -29,7 +29,7 @@ export class ExchangeMetadata {
 
 	constructor(metadata: ExchangeMetadata) { Object.assign(this, metadata) }
 
-	getMeta() { return _.pick(this, Object.keys(this)) }
+	getMeta() { return <any>_.pick(this, Object.keys(this)) as ExchangeMetadata }
 
 }
 

@@ -23,14 +23,31 @@
             </v-btn> -->
         </v-toolbar>
 
-        <v-dialog v-model="deleteDialog" persistent>
+        <v-dialog persistent lazy max-width="1024" scrollable v-model="deletingDialog">
             <v-card>
-                <v-card-title class="headline">Use Google's location service?</v-card-title>
-                <v-card-text>Let Google help apps determine location. This means sending anonymous location data to
-                    Google, even when no apps are running.</v-card-text>
-                <v-card-actions>
+                <v-toolbar flat dark color="error">
+                    <v-toolbar-title>Delete {{ deleting.name }} API Key</v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-btn color="error">Confirm</v-btn>
+                    <v-btn outline class="my-0 mr-3 t-transform-none t-400" :href="deleting.settingsUrl" target="_blank">
+                        <v-icon left>mdi-open-in-new</v-icon>
+                        {{ deleting.settingsUrl }}
+                    </v-btn>
+                </v-toolbar>
+                <v-card-text>
+                    <img class="elevation-1 br-2 w-100" :src="'/img/connect/' + deleting.id + '-delete.png'">
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions class="pa-3">
+                    <p class="title t-400">
+                        Delete the API key
+                        <code v-if="deleting.id" class="py-1">{{ deleting.apiKey.key }}</code>
+                        from your {{ deleting.name }} account settings then click disconnect
+                    </p>
+                </v-card-actions>
+                <v-divider></v-divider>
+                <v-card-actions class="pa-3">
+                    <v-btn large flat class="ma-0 mr-3" v-on:click="deletingDialog = false">Cancel</v-btn>
+                    <v-btn large block class="ma-0" color="error" v-on:click="deleteApiKey(deleting.id)">Disconnect</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -58,7 +75,7 @@
                         <td width="1" class="title">{{ props.item.name }}</td>
                         <td class="title">{{ props.item.apiKey.key }}</td>
                         <td width="1">
-                            <v-btn v-if="props.item.apiKey.key" block color="error" class="ma-0 t-transform-none" v-on:click="v_deleteApiKey(props.item.id)">
+                            <v-btn v-if="props.item.apiKey.key" block color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
                                 <v-icon left>mdi-key-remove</v-icon>
                                 Disconnect
                             </v-btn>

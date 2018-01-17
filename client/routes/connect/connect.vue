@@ -95,7 +95,7 @@
                                 </v-stepper-step>
                                 <v-stepper-content :step="index + 2">
                                     <div class="pa-2">
-                                        <img class="elevation-1 br-2 w-100" :src="'/img/connect/coinbase-' + (index + 2) + '.png'">
+                                        <img class="elevation-1 br-2 w-100" :src="'/img/connect/' + exchange.id + '-' + (index + 2) + '.png'">
                                         <v-btn v-if="index + 2 <= steps.length" large color="primary" v-on:click="step++">Continue</v-btn>
                                         <!-- <v-btn v-else large color="info" v-on:click="v_focusKeyInput">Input API Key Pair</v-btn> -->
                                     </div>

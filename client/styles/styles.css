@@ -487,6 +487,7 @@ i.icon.t-bold::before {
     overflow-y: initial !important;
 }
 
+.scroll-none,
 .scroll-hidden {
     overflow-x: hidden !important;
     overflow-y: hidden !important;

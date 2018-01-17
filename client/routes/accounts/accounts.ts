@@ -46,48 +46,21 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 
 	v_pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
 
-	v_deleteApiKey(id: string) {
+
+
+	deleting = {} as exchanges.ExchangeMetadata
+	deletingDialog = false
+
+	disconnectApiKey(id: string) {
+		this.deleting = exchanges.exchanges.find(v => v.id == id).getMeta()
+		this.deletingDialog = true
+	}
+
+	deleteApiKey(id: string) {
 		let exchange = exchanges.exchanges.find(v => v.id == id)
 		exchange.deleteApiKey()
+		this.deletingDialog = false
 	}
-	
-	deleteDialog = true
-
-
-
-
-
-	// get api_keys() {
-	// 	return this.$store.state.api_keys
-	// }
-
-
-
-
-
-	// tuts_id = ''
-	// get tutsing() {
-	// 	return this.exchanges.find(v => v.id == this.tuts_id) || {} as exchanges.ExchangeBuilder
-	// }
-
-	// setTutsId(id: string) {
-	// 	console.log('setTutsId > id', id)
-	// 	this.tuts_id = id
-	// 	console.log('this.visibles', this.visibles)
-	// 	console.log('this.tutsing', JSON.stringify(this.tutsing, null, 4))
-	// }
-
-	step = 0
-
-
-
-	// wtfidk = true
-	// @Vts.Watch('wtfidk', { deep: true }) w_wtfidk(to: any, from: any) {
-	// 	console.log('to', to)
-	// 	console.log('from', from)
-	// }
-
-
 
 
 
