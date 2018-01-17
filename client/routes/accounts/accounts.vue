@@ -39,20 +39,24 @@ main.accounts--route table img {
                 <v-data-table class="accounts--table" :headers="headers" :items="exchanges" :pagination.sync="pagination"
                     hide-actions>
                     <template slot="items" slot-scope="props">
-                        <!-- <td width="1">
+                        <td width="1">
                             <v-btn large icon class="ma-0" :href="props.item.url" target="_blank">
                                 <v-icon>mdi-open-in-new</v-icon>
-                            </v-btn> -->
+                            </v-btn>
                             <!-- <v-btn flat class="ma-0 t-transform-none t-400" :href="props.item.url" target="_blank">
                             <v-icon left>mdi-open-in-new</v-icon>{{ v_domain(props.item.url) }}
                         </v-btn> -->
-                        <!-- </td> -->
+                        </td>
                         <!-- <td width="1">
                             <v-icon>{{ props.item.active ? 'mdi-lan-connect' : 'mdi-lan-disconnect' }}</v-icon>
                         </td> -->
-                        <!-- <td width="1">
+                        <td width="1">
                             <img class="mt-1 elevation-1" style="width: 36px;" :src="v_flag_png(props.item.country)">
-                        </td> -->
+                            <!-- <v-layout row align-center>
+                                <img class="elevation-1" style="width: 36px;" :src="v_flag_png(props.item.country)">
+                                <p class="ml-2">{{ props.item.country }}</p>
+                            </v-layout> -->
+                        </td>
                         <td width="1" class="py-3">
                             <a :href="props.item.url" target="_blank">
                                 <v-avatar size="48">
@@ -60,7 +64,7 @@ main.accounts--route table img {
                                 </v-avatar>
                             </a>
                         </td>
-                        <td width="1" class="subheading t-500">{{ props.item.name }}</td>
+                        <td width="1" class="title">{{ props.item.name }}</td>
                         <td>{{ props.item.key }}</td>
                         <td width="1">
                             <!-- {{ props.item.key }} -->
@@ -77,11 +81,11 @@ main.accounts--route table img {
 
 
 
-        <v-fab-transition>
+        <!-- <v-fab-transition>
             <v-btn v-show="fab" dark fab fixed bottom right large color="primary" class="ma-4">
                 <v-icon large>add</v-icon>
             </v-btn>
-        </v-fab-transition>
+        </v-fab-transition> -->
 
     </v-content>
 </template>

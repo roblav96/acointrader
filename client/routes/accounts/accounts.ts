@@ -52,10 +52,9 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	headers = ([
-		// { text: 'Website', value: 'url', sortable: false },
-		// { text: 'Active', value: 'active' },
-		// { text: 'Country', value: 'country' },
-		{ text: '', value: '', sortable: false },
+		{ text: 'Website', value: 'url', sortable: false },
+		{ text: 'Country', value: 'country' },
+		{ text: 'Logo', value: '', sortable: false },
 		{ text: 'Exchange', value: 'name' },
 		{ text: 'API Key', value: 'key', sortable: false },
 		{ text: 'Actions', value: '', sortable: false },
