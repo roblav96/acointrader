@@ -14,6 +14,8 @@ import 'correcting-interval'
 import ee3 from 'eventemitter3'
 process.ee3 = new ee3.EventEmitter()
 
+// console.log('process.$webpack', process.$webpack)
+
 
 
 import Vue from 'vue'

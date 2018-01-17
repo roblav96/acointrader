@@ -1,12 +1,18 @@
 // 
 
+const eyes = require('eyes')
+const clc = require('cli-color')
 const webpack = require('webpack')
 const path = require('path')
-const node_externals = require('webpack-node-externals')
+const NodeExternals = require('webpack-node-externals')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+
+const env = require('./server/env.json')[process.env.NODE_ENV]
+env.env = process.env.NODE_ENV
 
 
 
-module.exports = {
+const config = {
 
 	entry: './server/server.ts',
 	output: {
@@ -17,7 +23,7 @@ module.exports = {
 
 	target: 'node',
 
-	externals: [node_externals()],
+	externals: [NodeExternals()],
 
 	resolve: {
 		extensions: ['.ts', '.js'],
@@ -44,5 +50,30 @@ module.exports = {
 
 }
 
+
+
+if (process.env.NODE_ENV == 'DEVELOPMENT') {
+	config.watchOptions = { ignored: /node_modules/ }
+	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
+}
+
+
+
+if (process.env.NODE_ENV == 'PRODUCTION') {
+	
+}
+
+
+
+Object.keys(env).forEach(function(key) {
+	env[key] = JSON.stringify(env[key])
+})
+config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
+
+
+
+// console.log(clc.bold.blue('client.webpack.config.js >')); eyes.inspect(config);
+
+module.exports = config
 
 

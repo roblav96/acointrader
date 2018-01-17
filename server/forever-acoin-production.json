@@ -3,7 +3,6 @@
 	"append": true,
 	"killTree": true,
 	"watch": false,
-	"script": "dist/build.js",
-	"args": ["$env", "PRODUCTION"]
+	"script": "dist/build.js"
 }
 

@@ -5,7 +5,6 @@
 	"watch": true,
 	"watchDirectory": "dist/build.js",
 	"watchIgnore": "node_modules",
-	"script": "dist/build.js",
-	"args": ["$env", "DEVELOPMENT"]
+	"script": "dist/build.js"
 }
 

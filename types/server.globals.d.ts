@@ -46,12 +46,9 @@ declare global {
 		data: AxiosErrorData
 	}
 	type AxiosErrorData = errors.HttpError
+	type AxiosCanceler = axios.Canceler
 
 	type IdkError = Error & AxiosError & errors.HttpError
-
-	interface AxiosCanceler extends axios.Canceler {
-
-	}
 
 
 

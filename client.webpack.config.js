@@ -7,7 +7,7 @@ const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
-const env = require('./env.json')[process.env.NODE_ENV]
+const env = require('./client/env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
 
 
@@ -71,12 +71,13 @@ const config = {
 		new webpack.IgnorePlugin(/typescript/),
 	],
 
+	devtool: 'source-map',
+
 }
 
 
 
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	config.devtool = 'source-map'
 	config.watchOptions = { ignored: /node_modules/ }
 	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
 	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
@@ -84,7 +85,7 @@ if (process.env.NODE_ENV == 'DEVELOPMENT') {
 
 
 
-if (process.env.NODE_ENV == 'DEVELOPMENT') {
+if (process.env.NODE_ENV == 'PRODUCTION') {
 	
 }
 
@@ -93,11 +94,12 @@ if (process.env.NODE_ENV == 'DEVELOPMENT') {
 Object.keys(env).forEach(function(key) {
 	env[key] = JSON.stringify(env[key])
 })
-config.plugins.push(new webpack.DefinePlugin({ 'process.env': env }))
+config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
 
 
 
 // console.log(clc.bold.blue('client.webpack.config.js >')); eyes.inspect(config);
 
 module.exports = config
+
 
