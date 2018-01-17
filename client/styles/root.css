@@ -21,6 +21,10 @@ main.content.route-scroll-y > div.content--wrap {
     overflow-y: auto;
 }
 
+img.img--exchange {
+	background-color: white;
+}
+
 
 /*
 	SCROLLBAR
