@@ -13,7 +13,7 @@ declare global {
 		name: string
 		country: string
 		url: string
-		setupurl: string
+		keyurl: string
 	}
 	interface ExchangeApiKey {
 		id: string
@@ -72,42 +72,42 @@ export const exchanges = [
 		name: 'Coinbase',
 		country: 'US',
 		url: 'https://www.coinbase.com',
-		setupurl: 'https://www.coinbase.com/settings/api#api_keys',
+		keyurl: 'https://www.coinbase.com/settings/api#add_new_key',
 	}),
 	new Gdax({
 		id: 'gdax',
 		name: 'GDAX',
 		country: 'US',
 		url: 'https://www.gdax.com',
-		setupurl: 'https://www.gdax.com/settings/api',
+		keyurl: 'https://www.gdax.com/settings/api',
 	}),
 	new Binance({
 		id: 'binance',
 		name: 'Binance',
 		country: 'HK',
 		url: 'https://www.binance.com',
-		setupurl: 'https://www.binance.com/userCenter/createApi.html',
+		keyurl: 'https://www.binance.com/userCenter/createApi.html',
 	}),
 	// new Bitfinex({
 	// 	id: 'bitfinex',
 	// 	name: 'Bitfinex',
 	// 	country: 'HK',
 	// 	url: 'https://www.bitfinex.com',
-	// 	setupurl: 'https://www.bitfinex.com/api',
+	// 	keyurl: 'https://www.bitfinex.com/api',
 	// }),
 	// new Bittrex({
 	// 	id: 'bittrex',
 	// 	name: 'Bittrex',
 	// 	country: 'US',
 	// 	url: 'https://bittrex.com',
-	// 	setupurl: 'https://bittrex.com',
+	// 	keyurl: 'https://bittrex.com',
 	// }),
 	// new HitBTC({
 	// 	id: 'hitbtc',
 	// 	name: 'HitBTC',
 	// 	country: 'DK',
 	// 	url: 'https://hitbtc.com',
-	// 	setupurl: 'https://hitbtc.com/settings/api-keys',
+	// 	keyurl: 'https://hitbtc.com/settings/api-keys',
 	// }),
 ] as Array<ExchangeBuilder>
 

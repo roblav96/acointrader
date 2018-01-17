@@ -31,9 +31,19 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 
 	get exchange() { return exchanges.exchanges.find(v => v.id == this.$route.params.exchange) }
-	get name() { return this.exchange.meta.name }
-	
+	get meta() { return this.exchange.meta }
+
+
+
 	api_key = { key: '', secret: '' } as ExchangeApiKey
+
+	get disabled() {
+		return (!!this.api_key.key && !!this.api_key.secret) == false
+	}
+
+	save() {
+		console.log('this.api_key', JSON.stringify(this.api_key, null, 4))
+	}
 
 
 
