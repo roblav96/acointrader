@@ -5,8 +5,9 @@ import * as Avts from 'av-ts'
 import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
-import PinDialog from '../components/pin-dialog/pin-dialog'
 import MainDrawer from '../components/main-drawer/main-drawer'
+// import PinDialog from '../components/pin-dialog/pin-dialog'
+// import ExchangeConnect from '../components/exchange-connect/exchange-connect'
 
 
 
@@ -14,8 +15,9 @@ import MainDrawer from '../components/main-drawer/main-drawer'
 	name: 'Root',
 
 	components: {
-		'pin-dialog': PinDialog,
 		'main-drawer': MainDrawer,
+		// 'pin-dialog': PinDialog,
+		// 'exchange-connect': ExchangeConnect,
 	},
 
 } as any)

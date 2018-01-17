@@ -7,16 +7,19 @@ import lockr from 'lockr'
 import * as utils from './utils'
 import * as exchanges from './exchanges'
 import * as MainDrawer from '../components/main-drawer/main-drawer'
-import * as PinDialog from '../components/pin-dialog/pin-dialog'
+// import * as PinDialog from '../components/pin-dialog/pin-dialog'
+// import * as ExchangeConnect from '../components/exchange-connect/exchange-connect'
 
 
 
 class State {
 
-	pin = ''
-	pin_dialog = new PinDialog.store()
-
 	main_drawer = new MainDrawer.store()
+
+	// pin = ''
+	// pin_dialog = new PinDialog.store()
+
+	// exchange_connect = new ExchangeConnect.store()
 
 	api_keys = exchanges.exchanges.map(v => v.api_key)
 

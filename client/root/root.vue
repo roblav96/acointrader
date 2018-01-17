@@ -20,15 +20,12 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 
         <v-toolbar class="dummy-toolbar" app fixed flat dark color="primary"></v-toolbar>
 
-        <!-- <v-slide-x-reverse-transition mode="out-in"> -->
         <v-fade-transition mode="out-in">
             <router-view></router-view>
         </v-fade-transition>
-        <!-- <transition mode="out-in" enter-active-class="animated animated-fast fadeInRight" leave-active-class="animated animated-fast fadeOutLeft">
-            <router-view></router-view>
-        </transition> -->
 
-        <pin-dialog></pin-dialog>
+        <!-- <pin-dialog></pin-dialog> -->
+        <!-- <exchange-connect></exchange-connect> -->
 
     </v-app>
 </template>
