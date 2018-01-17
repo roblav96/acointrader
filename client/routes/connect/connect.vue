@@ -5,9 +5,6 @@
 /**/
 
 
-/*main.connect--route div.stepper img {}*/
-
-
 /**/
 
 </style>
@@ -45,7 +42,8 @@
                             </v-tooltip>
                         </v-toolbar>
                         <v-form class="pa-3" v-on:submit.prevent="save">
-                            <v-text-field ref="key_input" class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="apiKey.key" hide-details></v-text-field>
+                            <v-text-field ref="key_input" class="mb-3" color="info" prepend-icon="mdi-key" label="API Key" v-model="apiKey.key"
+                                hide-details></v-text-field>
                             <v-text-field class="mb-3" color="info" prepend-icon="mdi-eye-off" label="API Secret" v-model="apiKey.secret"
                                 type="password" hide-details></v-text-field>
                             <v-text-field v-if="apiKey.passphrase !== undefined" class="mb-3" color="info" prepend-icon="mdi-lock"

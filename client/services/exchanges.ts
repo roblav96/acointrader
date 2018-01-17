@@ -15,6 +15,12 @@ declare global {
 		secret: string
 		passphrase: string
 	}
+	interface ExchangeMarketData {
+		
+	}
+	interface ExchangeAccount {
+		
+	}
 }
 
 
@@ -29,7 +35,7 @@ export class ExchangeMetadata {
 
 	constructor(metadata: ExchangeMetadata) { Object.assign(this, metadata) }
 
-	getMeta() { return <any>_.pick(this, Object.keys(this)) as ExchangeMetadata }
+	getMeta() { return <any>_.pick(this, Object.keys(this)) as ExchangeBuilder }
 
 }
 
@@ -40,8 +46,16 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	index: number
 	getSteps?(): Array<string>
 
-	supported = true
+	connectable = true
 	apiKey = { key: null, secret: null } as ExchangeApiKey
+	
+	market = {
+		
+	} as ExchangeMarketData
+	
+	account = {
+		
+	} as ExchangeAccount
 
 	constructor(metadata: ExchangeMetadata) {
 		super(metadata)
@@ -143,13 +157,13 @@ export class HitBTC extends ExchangeBuilder {
 
 export class Bitfinex extends ExchangeBuilder {
 
-	supported = false
+	connectable = false
 
 }
 
 export class Bittrex extends ExchangeBuilder {
 
-	supported = false
+	connectable = false
 
 }
 
@@ -210,6 +224,8 @@ export const exchanges = [
 exchanges.forEach((v, i) => v.index = i)
 
 console.log('exchanges', exchanges)
+
+
 
 
 

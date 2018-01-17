@@ -13,6 +13,8 @@ import * as MainDrawer from '../components/main-drawer/main-drawer'
 class State {
 
 	apiKeys = exchanges.exchanges.map(v => v.apiKey)
+	markets = exchanges.exchanges.map(v => v.market)
+	accounts = exchanges.exchanges.map(v => v.account)
 
 	mainDrawer = new MainDrawer.store()
 
@@ -46,6 +48,9 @@ export const store = new Vuex.Store<State>({
 	strict: false,
 	state: new State(),
 	plugins: [StoragePlugin],
+	getters: {
+
+	}
 })
 
 // console.log('store.state.apiKeys', store.state.apiKeys)

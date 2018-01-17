@@ -10,7 +10,7 @@
 </style>
 
 <template>
-    <v-content>
+    <v-content class="accounts--route">
 
         <v-toolbar app fixed dark color="primary">
             <v-btn icon large v-on:click="v_toggleMainDrawer">
@@ -75,7 +75,7 @@
                         <td width="1" class="title">{{ props.item.name }}</td>
                         <td class="title">{{ props.item.apiKey.key }}</td>
                         <td width="1">
-                            <v-btn v-if="props.item.supported == false" block disabled class="ma-0 t-transform-none">
+                            <v-btn v-if="props.item.connectable == false" block disabled class="ma-0 t-transform-none">
                                 <v-icon left>mdi-worker</v-icon>
                                 WIP
                             </v-btn>
