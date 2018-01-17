@@ -6,6 +6,7 @@ import * as store from './services/store'
 
 import Root from './root/root'
 import Accounts from './routes/accounts/accounts'
+import Connect from './routes/connect/connect'
 import Coins from './routes/coins/coins'
 import Search from './routes/search/search'
 import Intro from './routes/intro/intro'
@@ -22,6 +23,11 @@ export const routes = [
 		name: 'accounts',
 		path: '/accounts',
 		component: Accounts,
+	},
+	{
+		name: 'connect',
+		path: '/connect/:exchange',
+		component: Connect,
 	},
 
 	{

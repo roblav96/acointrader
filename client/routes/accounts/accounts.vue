@@ -68,7 +68,7 @@ main.accounts--route table img {
                         <td>{{ props.item.key }}</td>
                         <td width="1">
                             <!-- {{ props.item.key }} -->
-                            <v-btn color="primary" class="ma-0 t-transform-none" :href="props.item.url" target="_blank">
+                            <v-btn color="primary" class="ma-0 t-transform-none" :to="{ name: 'connect', params: { exchange: props.item.id } }">
                                 <v-icon left>mdi-key-plus</v-icon>
                                 Connect
                                 <!-- Connect your {{ props.item.name }} Account -->
