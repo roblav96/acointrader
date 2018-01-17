@@ -3,6 +3,7 @@
 import * as restify from 'restify'
 import * as errors from 'restify-errors'
 import * as axios from 'axios'
+import * as ee3 from 'eventemitter3'
 
 
 

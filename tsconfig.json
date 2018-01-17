@@ -17,7 +17,8 @@
 	"include": [
 		"types",
 		"client",
-		"server"
+		"server",
+		"shared"
 	],
 	"exclude": [
 		"dist",

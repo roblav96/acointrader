@@ -1,12 +1,14 @@
 // 
 
+import os from 'os'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import restify from 'restify'
 import moment from 'moment'
+import restify from 'restify'
 import * as errors from './services/errors'
 import * as utils from './services/utils'
+import * as shared from '../shared/shared'
 
 
 
@@ -38,11 +40,25 @@ server.post('/api/proxy', api_proxy)
 
 
 
-
-
-server.listen(process.$port, process.$host, function() {
-	console.log('listening...')
-})
+if (utils.isMaster()) {
+	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' clusters...'))
+} else {
+	server.listen(process.$port, process.$host, function() {
+		if (utils.isPrimary()) {
+			let host = 'robinstocks.com'
+			if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
+			console.log('\n' +
+				clc.bold.underline(process.$dname) + '\n' +
+				'v' + process.$version + '\n' +
+				clc.bold(process.$env) + '\n' +
+				clc.bold.green('@') + host + '\n' +
+				'/*===============================================\n' +
+				'=========           ' + clc.bold(moment().format('hh:mm:ss')) + '           ==========\n' +
+				'===============================================*/'
+			)
+		}
+	})
+}
 
 
 

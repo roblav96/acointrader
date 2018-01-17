@@ -1,10 +1,46 @@
 // 
 
+import cluster from 'cluster'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
+import moment from 'moment'
 import restify from 'restify'
 import errors from 'restify-errors'
+
+
+
+export function isPrimary() {
+	return process.$instance == 0
+}
+export function isMaster() {
+	return cluster.isMaster
+}
+export function isCaboose() {
+	return process.$instance == process.$instances - 1
+}
+
+
+
+export function nextSecond(add = 0) {
+	return moment().endOf('second').add(add, 'seconds').valueOf()
+}
+export function tillNextSecond(add = 0) {
+	return nextSecond(add) - Date.now()
+}
+export function instanceMs(ms: number) {
+	let instance = Math.max(process.$instance, 0)
+	return _.round(instance * (ms / process.$instances))
+}
+export function instanceSecs(secs: number) {
+	return instanceMs(secs * 1000)
+}
+export function dispersedMs(ms: number, i: number, length: number) {
+	return _.round(i * (ms / length))
+}
+export function dispersedSecs(secs: number, i: number, length: number) {
+	return dispersedMs(secs * 1000, i, length)
+}
 
 
 

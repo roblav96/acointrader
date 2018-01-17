@@ -16,8 +16,9 @@ eOpts.maxLength = 65536
 process.$instances = os.cpus().length
 process.$instance = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1
 
-process.DEVELOPMENT = process.$webpack.env == 'DEVELOPMENT'
-process.PRODUCTION = process.$webpack.env == 'PRODUCTION'
+process.$env = process.$webpack.env
+process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
+process.PRODUCTION = process.$env == 'PRODUCTION'
 
 process.$host = process.$webpack.host
 process.$port = process.$webpack.port
@@ -84,6 +85,10 @@ console.format = function(arg) {
 	}
 	return '\n \n' + clc.underline(cString) + '\n'
 }
+
+
+
+
 
 
 
