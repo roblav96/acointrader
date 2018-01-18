@@ -44,9 +44,8 @@ export default class Root extends Vue {
 
 	theming = false
 	toggleTheme() {
-		let theme = this.theme == 'dark' ? 'light' : 'dark'
 		this.theming = true
-		_.delay(() => this.theme = theme, 300)
+		_.delay(() => this.theme = this.theme == 'dark' ? 'light' : 'dark', 300)
 		_.delay(() => this.theming = false, 600)
 	}
 

@@ -14,19 +14,21 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 </style>
 
 <template>
-    <v-app id="root" :light="theme == 'light'" :dark="theme == 'dark'" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }">
+    <v-fade-transition mode="out-in">
+        <v-app v-show="!theming" id="root" :light="theme == 'light'" :dark="theme == 'dark'" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }">
 
-        <main-drawer></main-drawer>
+            <main-drawer></main-drawer>
 
-        <!-- this is here so the toolbar doesnt disappear during transition -->
-        <v-toolbar class="dummy-toolbar" app fixed flat dark color="primary"></v-toolbar>
+            <!-- this is here so the toolbar doesnt disappear during transition -->
+            <v-toolbar class="dummy-toolbar" app fixed flat dark color="primary"></v-toolbar>
 
-        <v-fade-transition mode="out-in">
-            <router-view v-show="!theming"></router-view>
-        </v-fade-transition>
+            <v-fade-transition mode="out-in">
+                <router-view></router-view>
+            </v-fade-transition>
 
-        <snackbar></snackbar>
+            <snackbar></snackbar>
 
-    </v-app>
+        </v-app>
+    </v-fade-transition>
 </template>
 
