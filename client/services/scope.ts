@@ -1,6 +1,7 @@
 // 
 
 import _ from 'lodash'
+import sha3 from 'js-sha3'
 import Fingerprint2 from 'fingerprintjs2'
 import * as utils from './utils'
 import * as store from './store'
@@ -16,6 +17,7 @@ export const state = {
 
 process.sls.remove('scope.finger')
 new Fingerprint2().get((result: string) => {
+	result = sha3.sha3_256(result)
 	process.sls.set('scope.finger', result)
 	state.ready = true
 	http.post('/ready')

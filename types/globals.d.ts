@@ -16,6 +16,7 @@ declare global {
 			PRODUCTION: boolean
 			$webpack: any
 			$domain: string
+			$version: string
 			ee3: ee3.EventEmitter
 			sls: any
 		}

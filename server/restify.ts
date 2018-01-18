@@ -14,6 +14,8 @@ import * as shared from '../shared/shared'
 
 const server = restify.createServer()
 
+
+
 server.opts(/.*/, utils.restifyRoute(function(req, res, next) {
 	res.header('Access-Control-Allow-Origin', '*')
 	res.header('Access-Control-Allow-Methods', req.header('Access-Control-Request-Method'))
@@ -35,8 +37,34 @@ server.use(restify.plugins.queryParser())
 
 
 
+
+
 import api_proxy from './routes/proxy'
 server.post('/api/proxy', api_proxy)
+
+
+
+
+
+server.use(utils.restifyRoute(function(req, res, next) {
+
+	Promise.resolve().then(function() {
+		if (!req.route) throw new errors.NotFoundError('Undefined request route');
+
+		console.log('req.headers >')
+		eyes.inspect(req.headers)
+
+		return next()
+
+	}).catch(function(error) {
+		return next(errors.generate(error))
+	})
+
+}))
+
+
+
+
 
 import api_ready from './routes/ready'
 server.post('/api/ready', api_ready)

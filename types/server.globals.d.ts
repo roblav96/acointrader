@@ -16,18 +16,6 @@ declare global {
 			$dname: string
 			$host: string
 			$port: number
-			$version: string
-			$redis: {
-				host: string
-				port: number
-				password: string
-			}
-			$rethinkdb: {
-				host: string
-				port: number
-				authKey: string
-				db: string
-			}
 			$stack: string
 		}
 	}
@@ -51,10 +39,6 @@ declare global {
 	type IdkError = Error & AxiosError & errors.HttpError
 
 
-
-	/*===============================
-	=            RESTIFY            =
-	===============================*/
 
 	type HttpHeaders = { [key: string]: string }
 

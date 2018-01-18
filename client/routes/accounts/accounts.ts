@@ -52,6 +52,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	deletingDialog = false
 
 	disconnectApiKey(id: string) {
+		if(process.DEVELOPMENT) return this.deleteApiKey(id);
 		this.deleting = exchanges.exchanges.find(v => v.id == id).getMeta()
 		this.deletingDialog = true
 	}
@@ -63,7 +64,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	}
 
 	connectApiKey(id: string) {
-		if (process.$webpack[id]) {
+		if (process.DEVELOPMENT && process.$webpack[id]) {
 			let exchange = exchanges.exchanges.find(v => v.id == id)
 			exchange.saveApiKey(process.$webpack[id])
 			return
