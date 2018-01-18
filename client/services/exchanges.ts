@@ -7,8 +7,7 @@ import lockr from 'lockr'
 import * as utils from './utils'
 import * as scope from './scope'
 import * as http from './http'
-import * as Snackbar from '../components/snackbar/snackbar'
-import * as EmailPrompt from '../components/email-prompt/email-prompt'
+import Snackbar from '../components/snackbar/snackbar'
 
 
 
@@ -79,7 +78,7 @@ export class ExchangeBuilder extends ExchangeMetadata {
 			return Promise.resolve(true)
 		}).then(result => {
 			if (!result) {
-				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your assets. Please try again.', color: 'warning' })
+				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your crypto assets! Please try again.', color: 'success' }) // , color: 'warning' })
 				return Promise.resolve(false)
 			}
 			return http.post('/save-api-key', apiKey).then(response => {

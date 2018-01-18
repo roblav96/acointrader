@@ -8,8 +8,8 @@ import * as utils from '../../services/utils'
 
 
 
-export const state = {
-	items: [] as Array<SnackbarItem>,
+declare global {
+	interface SnackbarItem { message: string, duration?: number, color?: string, icon?: string, id?: string, timeout?: number }
 }
 
 @Vts.Component(<VueComponent>{
@@ -17,11 +17,26 @@ export const state = {
 } as any)
 export default class Snackbar extends Vue {
 
+	static state = { items: [] as Array<SnackbarItem> }
+
+	static push(item: SnackbarItem) {
+		if (Snackbar.state.items.find(v => v.message == item.message)) return;
+		Snackbar.state.items.push(item)
+	}
+
 	get items() { return this.$store.state.snackbar.items }
-	@Vts.Watch('items') w_items(to: Array<SnackbarItem>) {
-		to.forEach(v => {
-			if (Number.isFinite(v.timeout)) return;
-			v.timeout = _.delay(this.splice, v.duration, v.id)
+	@Vts.Watch('items') w_items(items: Array<SnackbarItem>) {
+		items.forEach(item => {
+			if (Number.isFinite(item.timeout)) return;
+			item.id = utils.randomBytes(8)
+			item.color = item.color || 'secondary'
+			if (!item.icon) {
+				if (item.color == 'success') item.icon = 'mdi-check';
+				if (item.color == 'warning') item.icon = 'mdi-alert';
+				if (item.color == 'error') item.icon = 'mdi-alert-octagram';
+			}
+			item.duration = item.duration || 5000
+			item.timeout = _.delay(this.splice, item.duration, item.id)
 		})
 	}
 
@@ -39,28 +54,5 @@ export default class Snackbar extends Vue {
 	}
 
 }
-
-
-
-declare global {
-	interface SnackbarItem {
-		id?: string
-		message: string
-		duration?: number
-		timeout?: number
-		color?: string
-		icon?: string
-	}
-}
-
-export function push(item: SnackbarItem) {
-	if (state.items.find(v => v.message == item.message)) return;
-	item.id = utils.randomBytes(8)
-	item.color = item.color || 'secondary'
-	item.duration = item.duration || 5000
-	state.items.push(item)
-}
-
-
 
 
