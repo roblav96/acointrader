@@ -33,6 +33,14 @@ div.container.container--scrollable {
 	SCROLLBAR
 */
 
+/*div.container.container--scrollable::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+}
+
+div.container.container--scrollable::-webkit-scrollbar {
+    width: 8px;
+}*/
+
 .scrollbar-mini::-webkit-scrollbar-thumb {
     border-radius: 2px;
 }
@@ -57,6 +65,7 @@ div.container.container--scrollable {
     width: 8px;
 }
 
+/*div.container.container--scrollable::-webkit-scrollbar-thumb,*/
 .theme--light.scrollbar-mini::-webkit-scrollbar-thumb,
 .theme--light.scrollbar-small::-webkit-scrollbar-thumb,
 .theme--light .scrollbar-mini::-webkit-scrollbar-thumb,
