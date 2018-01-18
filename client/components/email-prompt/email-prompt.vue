@@ -1,5 +1,5 @@
 <!--  -->
-<script lang="ts" src="./email-dialog.ts"></script>
+<script lang="ts" src="./email-prompt.ts"></script>
 
 <style>
 /**/
@@ -10,7 +10,7 @@
 </style>
 
 <template>
-    <v-dialog max-width="500" v-model="show">
+    <v-dialog max-width="400" v-model="show">
         <v-form class="card" v-on:submit.prevent="save">
             <v-toolbar flat color="transparent">
                 <span class="headline">Recovery Email</span>
@@ -25,11 +25,10 @@
                     v-model="email" spellcheck="false" solo hide-details></v-text-field>
             </v-card-text>
             <v-divider></v-divider>
-            <v-card-actions class="pa-3">
-                <p class="body-1 text--light">
-                    Your email will strictly be used for API Key Pair recovery. We pinky swear!
-                </p>
-            </v-card-actions>
+            <v-card-text class="pa-3 text--light">
+                We've perfected the art of keeping your assets safe. If your browser cache gets cleared, your email will
+                be used to recover any lost API Key Pairs.
+            </v-card-text>
             <v-divider></v-divider>
             <v-card-actions class="pa-3">
                 <v-btn large block class="ma-0" type="submit" color="success" :disabled="!valid">Submit</v-btn>

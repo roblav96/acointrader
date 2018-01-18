@@ -9,7 +9,7 @@ import Fingerprint2 from 'fingerprintjs2'
 import * as utils from './utils'
 import * as store from './store'
 import * as http from './http'
-import * as EmailDialog from '../components/email-dialog/email-dialog'
+import * as EmailPrompt from '../components/email-prompt/email-prompt'
 
 
 
@@ -48,14 +48,6 @@ export function bytes(bytes?: string) {
 	if (bytes) process.sls.set('scope.bytes', bytes);
 	return process.sls.get('scope.bytes') as string
 }
-
-
-
-_.delay(function() {
-	EmailDialog.prompt().then(function() {
-		console.warn('resolved')
-	})
-}, 100)
 
 
 

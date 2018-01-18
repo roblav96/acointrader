@@ -10,16 +10,13 @@ import VMixin from '../../mixins/v.mixin'
 
 
 @Vts.Component(<VueComponent>{
-	name: 'EmailDialog',
+	name: 'EmailPrompt',
 } as any)
-export default class EmailDialog extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
+export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 	mounted() {
 		this.show = true
-		_.delay(() => {
-			let email_input = (this.$refs.email_input as any) as HTMLInputElement
-			email_input.focus()
-		}, 300)
+		_.delay(() => (this.$refs.email_input as HTMLInputElement).focus(), 300)
 	}
 
 	beforeDestroy() {
@@ -34,6 +31,7 @@ export default class EmailDialog extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 	show = false
 	@Vts.Watch('show') w_show(to: boolean) {
 		if (to != false) return;
+		this.resolve()
 		_.delay(() => this.$destroy(), 300)
 	}
 
@@ -47,8 +45,8 @@ export default class EmailDialog extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 
 export function prompt() {
-	return new Promise(function(resolve, reject) {
-		let vue = new EmailDialog().$mount()
+	return new Promise<string>(function(resolve, reject) {
+		let vue = new EmailPrompt().$mount()
 		vue.resolve = resolve
 		document.getElementById('root').appendChild(vue.$el)
 	})
