@@ -40,7 +40,7 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 
             <v-list two-line class="pt-0 pb-3 scroll-y scrollbar-mini scrollbar-small">
 
-                <template v-for="(item, index) in routes">
+                <template v-for="item in routes">
                     <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name">
                         <v-list-tile-action>
                             <v-icon medium :class="{ 't-bold': item.bold }">{{ item.icon }}</v-icon>
@@ -57,15 +57,25 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 
             <v-spacer></v-spacer>
 
-            <v-list two-line class="py-0">
+            <v-list class="py-0">
                 <v-divider></v-divider>
+                <template v-if="v_development">
+                    <v-list-tile v-ripple v-on:click="clearLocalStorage">
+                        <v-list-tile-action>
+                            <v-icon>mdi-delete-sweep</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Clear Local Storage</v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                    <v-divider inset></v-divider>
+                </template>
                 <v-list-tile v-ripple v-on:click="$root.toggleTheme">
                     <v-list-tile-action>
-                        <v-icon medium>{{ $root.theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+                        <v-icon>{{ $root.theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Toggle Theme</v-list-tile-title>
-                        <v-list-tile-sub-title>Light or Dark</v-list-tile-sub-title>
+                        <v-list-tile-title>Toggle Light or Dark Theme</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>

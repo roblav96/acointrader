@@ -19,6 +19,20 @@ export const state = {
 } as any)
 export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
+	created() {
+
+	}
+
+	mounted() {
+		console.log('this.routes.length', this.routes.length)
+	}
+
+	beforeDestroy() {
+
+	}
+	
+	
+
 	get mainDrawer() { return this.$store.state.mainDrawer }
 
 	get routes() {
@@ -29,6 +43,13 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 				icon: v.icon, bold: v.bold,
 			} as RouteConfig
 		})
+	}
+	
+	
+	
+	clearLocalStorage() {
+		window.localStorage.clear()
+		location.reload(true)
 	}
 
 
