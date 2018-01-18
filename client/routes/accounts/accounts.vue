@@ -23,7 +23,7 @@
             </v-btn> -->
         </v-toolbar>
 
-        <v-dialog persistent lazy max-width="50%" scrollable v-model="deletingDialog">
+        <v-dialog persistent lazy scrollable max-width="50%" content-class="scroll-y-none" v-model="deletingDialog">
             <v-card>
                 <v-toolbar flat dark color="error">
                     <v-toolbar-title>Delete {{ deleting.name }} API Key</v-toolbar-title>
@@ -55,7 +55,7 @@
         <v-container fluid grid-list-xl class="container--scrollable">
             <v-card>
 
-                <v-data-table :headers="headers" :items="exchanges" :pagination.sync="v_pagination" hide-actions>
+                <v-data-table :headers="headers" :items="exchanges" :pagination.sync="pagination" hide-actions>
                     <template slot="items" slot-scope="props">
                         <td width="1">
                             <v-btn large icon class="ma-0" :href="props.item.website" target="_blank">

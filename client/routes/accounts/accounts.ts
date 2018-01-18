@@ -6,22 +6,23 @@ import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as exchanges from '../../services/exchanges'
-import VMixin from '../../mixins/v.mixin'
-import RouterMixin from '../../mixins/router.mixin'
+import VMixin from '../../mixins/v-mixin'
+import VTableMixin from '../../mixins/v-table-mixin'
+import RouterMixin from '../../mixins/router-mixin'
 
 
 
 @Vts.Component(<VueComponent>{
 	name: 'Accounts',
 } as any)
-export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue, RouterMixin, VMixin) {
+export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VTableMixin & VMixin>(Vue, RouterMixin, VTableMixin, VMixin) {
 
 	created() {
 
 	}
 
 	mounted() {
-
+		
 	}
 
 	beforeDestroy() {
@@ -44,7 +45,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 		return header
 	})
 
-	v_pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
+	pagination = { sortBy: '', descending: false, rowsPerPage: -1 } as VueTablePagination
 
 
 
@@ -52,7 +53,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue
 	deletingDialog = false
 
 	disconnectApiKey(id: string) {
-		if(process.DEVELOPMENT) return this.deleteApiKey(id);
+		if (process.DEVELOPMENT) return this.deleteApiKey(id);
 		this.deleting = exchanges.exchanges.find(v => v.id == id).getMeta()
 		this.deletingDialog = true
 	}

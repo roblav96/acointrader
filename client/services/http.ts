@@ -29,9 +29,9 @@ function request(config: HttpRequestConfig): Promise<any> {
 		let domain = config.production ? 'https://acointrader.com' : process.$domain
 		config.baseURL = domain + '/api'
 		Object.assign(config.headers, {
-			'x-finger': scope.finger(),
-			'x-email': scope.email(),
-			'x-bytes': scope.bytes(),
+			'x-finger': scope.getFinger(),
+			// 'x-email': scope.xEmail(),
+			// 'x-bytes': scope.xBytes(),
 			'x-version': process.$version,
 			'x-platform': 'web',
 		})
@@ -55,6 +55,7 @@ function request(config: HttpRequestConfig): Promise<any> {
 		Snackbar.push({ message: premessage + ' > ' + message, color: 'error' })
 		return Promise.reject(error)
 	})
+	
 }
 
 export function get<T = any>(url: string, params?: any, config = {} as HttpRequestConfig) {

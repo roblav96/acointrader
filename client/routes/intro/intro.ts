@@ -6,7 +6,7 @@ import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as exchanges from '../../services/exchanges'
-import RouterMixin from '../../mixins/router.mixin'
+import RouterMixin from '../../mixins/router-mixin'
 
 
 

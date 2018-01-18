@@ -2,8 +2,12 @@
 
 
 /*
-	CONTENT
+	STYLES
 */
+
+table.table thead th:focus {
+    outline: 0;
+}
 
 .z-9 {
     z-index: 9 !important;
@@ -31,6 +35,11 @@
 
 .mono {
     font-family: monospace;
+}
+
+.subtitle {
+    font-size: 18px !important;
+    font-weight: 500;
 }
 
 .pointer-none {
@@ -257,19 +266,6 @@
     max-width: 48px;
 }
 
-
-/*.w-6 {
-    min-width: 40px;
-    width: 40px;
-    max-width: 40px;
-}
-
-.w-7 {
-    min-width: 48px;
-    width: 48px;
-    max-width: 48px;
-}*/
-
 .h-0 {
     height: 0px;
 }
@@ -297,20 +293,6 @@
 .h-5 {
     height: 48px;
 }
-
-
-/*.h-6 {
-    height: 40px;
-}
-
-.h-7 {
-    height: 48px;
-}*/
-
-
-/*
-	MISC
-*/
 
 .t-lh0 {
     line-height: 1 !important;
@@ -479,9 +461,6 @@ i.icon.t-bold::before {
     font-size: 28px !important;
 }
 
-
-/**/
-
 .scroll-initial {
     overflow-x: initial !important;
     overflow-y: initial !important;
@@ -493,10 +472,12 @@ i.icon.t-bold::before {
     overflow-y: hidden !important;
 }
 
+.scroll-y-none,
 .scroll-y-hidden {
     overflow-y: hidden !important;
 }
 
+.scroll-x-none,
 .scroll-x-hidden {
     overflow-x: hidden !important;
 }
@@ -509,31 +490,10 @@ i.icon.t-bold::before {
     overflow-x: auto !important;
 }
 
-.scrollbar-none::-webkit-scrollbar {
+.scrollbar-none::-webkit-scrollbar,
+.scrollbar-hidden::-webkit-scrollbar {
     display: none !important;
 }
-
-
-/*::-webkit-scrollbar {
-    width: 0.5rem;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: blue;
-}*/
-
-
-/*::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid black;
-    background-color: #F5F5F5;
-}*/
-
-
-/*
-	ANIMATIONS
-*/
 
 .animated-none,
 .animated-none * {
@@ -592,34 +552,6 @@ i.icon.t-bold::before {
     animation-duration: 0.1s;
     -webkit-animation-duration: 0.1s;
 }
-
-
-/*
-	VUETIFY FIXES
-*/
-
-
-/*.avatar .icon,*/
-
-
-/*.avatar img {
-    width: 32px;
-    height: 32px;
-}
-
-.sidebar .list__tile:after {
-    display: none;
-}*/
-
-
-/*
-	STYLES
-*/
-
-
-/*.btn- {
-    min-width: initial !important;
-}*/
 
 
 /**/

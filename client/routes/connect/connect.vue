@@ -49,7 +49,7 @@
                             <v-text-field v-if="apiKey.passphrase !== undefined" class="mb-3" color="info" prepend-icon="mdi-lock"
                                 label="Passphrase" v-model="apiKey.passphrase" type="password" hide-details></v-text-field>
                             <div class="pt-2">
-                                <v-btn block large class="ma-0" type="submit" color="info" :disabled="!valid">Connect</v-btn>
+                                <v-btn block large class="ma-0" type="submit" color="info" :disabled="disabled" :loading="saving">Connect</v-btn>
                             </div>
                         </v-form>
                     </v-card>

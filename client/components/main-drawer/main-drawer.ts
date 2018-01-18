@@ -6,32 +6,18 @@ import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as router from '../../router'
-import VMixin from '../../mixins/v.mixin'
+import VMixin from '../../mixins/v-mixin'
 
 
 
-export class store {
-	show = true
+export const state = {
+	show: true,
 }
 
 @Vts.Component(<VueComponent>{
 	name: 'MainDrawer',
 } as any)
 export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
-
-	created() {
-
-	}
-
-	mounted() {
-
-	}
-
-	beforeDestroy() {
-
-	}
-
-
 
 	get mainDrawer() { return this.$store.state.mainDrawer }
 
@@ -44,35 +30,6 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 			} as RouteConfig
 		})
 	}
-
-
-
-	// show = false
-	// hidelock = false
-	// clicked() {
-	// 	_.delay(() => this.show = false, 1)
-	// 	this.hidelock = true
-	// 	_.delay(() => this.hidelock = false, 1000)
-	// }
-
-	// // thover: number
-	// hovering = false
-	// @Vts.Watch('hovering') w_hovering(to: boolean, from: boolean) {
-	// 	// clearTimeout(this.thover)
-	// 	if (this.hidelock == true) return;
-	// 	if (to == true && from == false) {
-	// 		// clearTimeout(this.thover)
-	// 		this.show = true
-	// 		// this.thover = _.delay(() => this.show = true, 500)
-	// 	}
-	// 	if (to == false && from == true) {
-	// 		// clearTimeout(this.thover)
-	// 		this.show = false
-	// 		// this.thover = _.delay(() => this.show = false, 300)
-	// 	}
-	// }
-
-
 
 
 

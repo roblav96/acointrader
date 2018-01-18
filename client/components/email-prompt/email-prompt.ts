@@ -5,7 +5,7 @@ import * as Avts from 'av-ts'
 import Vue from 'vue'
 import _ from 'lodash'
 import * as utils from '../../services/utils'
-import VMixin from '../../mixins/v.mixin'
+import VMixin from '../../mixins/v-mixin'
 
 
 
@@ -44,9 +44,10 @@ export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 
 
-export function prompt() {
+export function prompt(email = '') {
 	return new Promise<string>(function(resolve, reject) {
 		let vue = new EmailPrompt().$mount()
+		vue.email = email
 		vue.resolve = resolve
 		document.getElementById('root').appendChild(vue.$el)
 	})

@@ -5,7 +5,9 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
+import * as scope from './scope'
 import * as http from './http'
+import * as EmailPrompt from '../components/email-prompt/email-prompt'
 
 
 
@@ -70,13 +72,28 @@ export class ExchangeBuilder extends ExchangeMetadata {
 		Object.assign(this.apiKey, apiKey)
 	}
 
-	saveApiKey(apiKey: ExchangeApiKey) {
-		return http.post('/save-api-key', apiKey).then(response => {
-			console.log('response', response)
-			process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
-			this.loadApiKey()
-			return Promise.resolve()
+	saveApiKey(apiKey: ExchangeApiKey): Promise<boolean> {
+		console.log('scope.email', scope.xEmail)
+		console.log('!scope.email', !scope.xEmail)
+		return Promise.resolve().then(() => {
+			if (!scope.xEmail) return scope.askEmail();
+			return Promise.resolve(true)
+		}).then(result => {
+			if (!result) return Promise.resolve(false);
+			return http.post('/save-api-key', apiKey)
 		})
+		// return Promise.resolve().then((idk) => {
+		// 	if (!scope.email) return EmailPrompt.prompt();
+		// 	return Promise.resolve()
+		// }).then(() => {
+		// 	return http.post('/save-api-key', apiKey).then(response => {
+		// 		console.log('response', response)
+		// 		process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
+		// 		this.loadApiKey()
+		// 		return Promise.resolve()
+		// 	})
+		// })
+
 	}
 
 	deleteApiKey() {

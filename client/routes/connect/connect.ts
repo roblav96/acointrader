@@ -7,8 +7,8 @@ import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from '../../services/utils'
 import * as exchanges from '../../services/exchanges'
-import VMixin from '../../mixins/v.mixin'
-import RouterMixin from '../../mixins/router.mixin'
+import VMixin from '../../mixins/v-mixin'
+import RouterMixin from '../../mixins/router-mixin'
 
 
 
@@ -50,12 +50,17 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	apiKey = {} as ExchangeApiKey
 
 	get valid() { return _.compact(Object.keys(this.apiKey).map(k => !this.apiKey[k])).length == 0 }
+	get disabled() { return !this.valid || this.saving }
 
+	saving = false
 	save() {
 		if (!this.valid) return;
-		this.exchange.saveApiKey(this.apiKey).then(() => {
-			this.$router.push({ name: 'accounts' })
-		})
+		this.saving = true
+		this.exchange.saveApiKey(this.apiKey).then(saved => {
+			if (saved) this.$router.push({ name: 'accounts' });
+		}).catch(error => {
+			console.error('save > error', error)
+		}).then(() => this.saving = false)
 	}
 
 

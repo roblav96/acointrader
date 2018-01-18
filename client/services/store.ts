@@ -20,7 +20,7 @@ class State {
 	// markets = exchanges.exchanges.map(v => v.market)
 	// accounts = exchanges.exchanges.map(v => v.account)
 
-	mainDrawer = new MainDrawer.store()
+	mainDrawer = MainDrawer.state
 	snackbar = Snackbar.state
 
 }
