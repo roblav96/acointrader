@@ -1,5 +1,15 @@
 // 
 
+process.$env = process.$webpack.env
+process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
+process.PRODUCTION = process.$env == 'PRODUCTION'
+
+process.$domain = 'https://acointrader.com'
+if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
+// if (process.DEVELOPMENT) process.$domain = 'http://localhost:4337';
+
+process.$version = '0.0.1'
+
 
 
 import 'animate.css'
@@ -14,7 +24,8 @@ import 'correcting-interval'
 import ee3 from 'eventemitter3'
 process.ee3 = new ee3.EventEmitter()
 
-// console.log('process.$webpack', process.$webpack)
+import SecureLS from 'secure-ls'
+process.sls = new SecureLS({ encodingType: 'aes' })
 
 
 

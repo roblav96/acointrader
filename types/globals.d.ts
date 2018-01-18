@@ -1,6 +1,7 @@
 // 
 
 import uws from 'uws'
+import * as axios from 'axios'
 import * as ee3 from 'eventemitter3'
 
 
@@ -14,7 +15,9 @@ declare global {
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean
 			$webpack: any
+			$domain: string
 			ee3: ee3.EventEmitter
+			sls: any
 		}
 	}
 	
@@ -27,8 +30,28 @@ declare global {
 		event?: string
 		data?: any
 	}
+	
+	interface HttpRequestConfig extends axios.AxiosRequestConfig {
+		silent?: boolean
+		rhtoken?: string
+		rhqsdata?: boolean
+		wbtoken?: boolean
+		production?: boolean
+	}
 
 }
+
+
+
+// declare module 'node-forge' {
+// 	var md: any
+// 	var hmac: any
+// 	var random: any
+// 	var prime: any
+// 	namespace pki {
+// 		function privateKeyFromPem(pem: PEM): Key
+// 	}
+// }
 
 
 

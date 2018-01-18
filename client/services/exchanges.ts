@@ -64,14 +64,14 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	}
 
 	loadApiKey() {
-		let apiKey = lockr.get('exchanges.' + this.id + '.apiKey', {} as ExchangeApiKey)
+		// if (process.$webpack[this.id]) this.saveApiKey(process.$webpack[this.id]);
+		let apiKey = process.sls.get('exchanges.' + this.id + '.apiKey') || {} as ExchangeApiKey
 		Object.assign(this.apiKey, apiKey)
-		if (process.$webpack[this.id]) Object.assign(this.apiKey, process.$webpack[this.id]);
 	}
 
 	saveApiKey(apiKey: ExchangeApiKey) {
 		Object.assign(this.apiKey, apiKey)
-		lockr.set('exchanges.' + this.id + '.apiKey', apiKey)
+		process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
 	}
 
 	deleteApiKey() {
@@ -79,7 +79,7 @@ export class ExchangeBuilder extends ExchangeMetadata {
 			if (key == 'id') return;
 			this.apiKey[key] = null
 		})
-		lockr.rm('exchanges.' + this.id + '.apiKey')
+		process.sls.remove('exchanges.' + this.id + '.apiKey')
 	}
 
 

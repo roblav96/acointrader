@@ -23,7 +23,7 @@
             </v-btn> -->
         </v-toolbar>
 
-        <v-dialog persistent lazy max-width="1024" scrollable v-model="deletingDialog">
+        <v-dialog persistent lazy max-width="50%" scrollable v-model="deletingDialog">
             <v-card>
                 <v-toolbar flat dark color="error">
                     <v-toolbar-title>Delete {{ deleting.name }} API Key</v-toolbar-title>
@@ -86,7 +86,7 @@
                                 <v-icon left>mdi-key-remove</v-icon>
                                 Disconnect
                             </v-btn>
-                            <v-btn v-else block color="success" class="ma-0 t-transform-none" :to="{ name: 'connect', params: { exchange: props.item.id } }">
+                            <v-btn v-else block color="success" class="ma-0 t-transform-none" v-on:click="connectApiKey(props.item.id)">
                                 <v-icon left>mdi-key-plus</v-icon>
                                 Connect
                             </v-btn>

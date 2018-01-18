@@ -5,6 +5,7 @@ import Vuex, { Store } from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
+import * as scope from './scope'
 import * as exchanges from './exchanges'
 import * as MainDrawer from '../components/main-drawer/main-drawer'
 
@@ -12,9 +13,11 @@ import * as MainDrawer from '../components/main-drawer/main-drawer'
 
 class State {
 
+	scope = scope.state
+
 	apiKeys = exchanges.exchanges.map(v => v.apiKey)
-	markets = exchanges.exchanges.map(v => v.market)
-	accounts = exchanges.exchanges.map(v => v.account)
+	// markets = exchanges.exchanges.map(v => v.market)
+	// accounts = exchanges.exchanges.map(v => v.account)
 
 	mainDrawer = new MainDrawer.store()
 
@@ -53,6 +56,7 @@ export const store = new Vuex.Store<State>({
 	}
 })
 
+// console.log('store.state.scope', store.state.scope)
 // console.log('store.state.apiKeys', store.state.apiKeys)
 
 

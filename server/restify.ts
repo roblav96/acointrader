@@ -33,8 +33,46 @@ server.use(restify.plugins.fullResponse())
 server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
 
+
+
 import api_proxy from './routes/proxy'
 server.post('/api/proxy', api_proxy)
+
+import api_ready from './routes/ready'
+server.post('/api/ready', api_ready)
+
+
+
+
+
+server.on('uncaughtException', function(req: RestifyRequest, res: RestifyResponse, route: restify.Route, error: any) {
+	console.error(clc.bold.redBright('/*==========  RESTIFY UNCAUGHT EXCEPTION  ==========*/'))
+	console.error('restify uncaughtException', errors.render(error))
+	res.send(new errors.InternalServerError(error.message))
+})
+
+server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: restify.Route, error: any) {
+
+	if (res && res.statusCode == 302) return;
+
+	if (error) {
+		let name = _.get(req, 'route.name') as string
+		console.error('restify after > ' + req.method + ' ' + name + ' >', errors.render(error))
+	}
+
+	if (req.route) {
+		if (process.DEVELOPMENT && !req.query.silent && req.method != 'OPTIONS') {
+			let body = res._body
+			try {
+				body = JSON.stringify(body)
+				body = body.substring(0, 128) + '...'
+			} catch (e) { }
+			let color: string = (error) ? 'red' : 'bold'
+			console.info(clc[color]('◀ ' + req.method + ' ' + req.route.path + ' ◀ ') + body)
+		}
+	}
+
+})
 
 
 
@@ -45,7 +83,7 @@ if (utils.isMaster()) {
 } else {
 	server.listen(process.$port, process.$host, function() {
 		if (utils.isPrimary()) {
-			let host = 'robinstocks.com'
+			let host = 'acointrader.com'
 			if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
 			console.log('\n' +
 				clc.bold.underline(process.$dname) + '\n' +
