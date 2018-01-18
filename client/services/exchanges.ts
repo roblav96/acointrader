@@ -16,10 +16,10 @@ declare global {
 		passphrase: string
 	}
 	interface ExchangeMarketData {
-		
+
 	}
 	interface ExchangeAccount {
-		
+
 	}
 }
 
@@ -48,13 +48,13 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 	connectable = true
 	apiKey = { key: null, secret: null } as ExchangeApiKey
-	
+
 	market = {
-		
+
 	} as ExchangeMarketData
-	
+
 	account = {
-		
+
 	} as ExchangeAccount
 
 	constructor(metadata: ExchangeMetadata) {
@@ -66,6 +66,7 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	loadApiKey() {
 		let apiKey = lockr.get('exchanges.' + this.id + '.apiKey', {} as ExchangeApiKey)
 		Object.assign(this.apiKey, apiKey)
+		if (process.$webpack[this.id]) Object.assign(this.apiKey, process.$webpack[this.id]);
 	}
 
 	saveApiKey(apiKey: ExchangeApiKey) {
@@ -155,6 +156,16 @@ export class HitBTC extends ExchangeBuilder {
 
 }
 
+export class KuCoin extends ExchangeBuilder {
+
+	getSteps() {
+		return [
+			`Click the <code>Create</code> button`,
+		]
+	}
+
+}
+
 export class Bitfinex extends ExchangeBuilder {
 
 	connectable = false
@@ -201,6 +212,14 @@ export const exchanges = [
 		countryCode: 'DK',
 		website: 'https://hitbtc.com',
 		settingsUrl: 'https://hitbtc.com/settings/api-keys',
+	} as ExchangeMetadata),
+
+	new KuCoin({
+		id: 'kucoin',
+		name: 'KuCoin',
+		countryCode: 'HK',
+		website: 'https://www.kucoin.com',
+		settingsUrl: 'https://www.kucoin.com/#/user/setting/api',
 	} as ExchangeMetadata),
 
 	new Bitfinex({

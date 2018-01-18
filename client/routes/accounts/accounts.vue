@@ -63,7 +63,10 @@
                             </v-btn>
                         </td>
                         <td width="1">
-                            <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.countryCode)">
+                            <v-tooltip right transition="false" open-delay="0" close-delay="0">
+                                <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.countryCode)" slot="activator">
+                                <span>{{ props.item.countryCode }}</span>
+                            </v-tooltip>
                         </td>
                         <td width="1" class="py-3">
                             <a :href="props.item.website" target="_blank">
@@ -73,7 +76,7 @@
                             </a>
                         </td>
                         <td width="1" class="title">{{ props.item.name }}</td>
-                        <td class="title">{{ props.item.apiKey.key }}</td>
+                        <td class="body-1">{{ v_truncate(props.item.apiKey.key) }}</td>
                         <td width="1">
                             <v-btn v-if="props.item.connectable == false" block disabled class="ma-0 t-transform-none">
                                 <v-icon left>mdi-worker</v-icon>

@@ -15,6 +15,7 @@ import { parse as urlparse } from 'url'
 export default class VMixin extends Vue {
 
 	v_start_case(str: string) { return _.startCase(str) }
+	v_truncate(str: string, length = 32) { return _.truncate(str, { length }) }
 
 	v_domain(url: string) { return urlparse(url).host }
 
