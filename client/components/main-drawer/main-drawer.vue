@@ -59,7 +59,7 @@ aside.main-drawer.navigation-drawer--mini-variant hr.divider {
 
             <v-list two-line class="py-0">
                 <v-divider></v-divider>
-                <v-list-tile v-ripple v-on:click="$root.v_toggleTheme">
+                <v-list-tile v-ripple v-on:click="$root.toggleTheme">
                     <v-list-tile-action>
                         <v-icon medium>{{ $root.theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
                     </v-list-tile-action>

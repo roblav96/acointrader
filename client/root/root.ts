@@ -25,10 +25,10 @@ export default class Root extends Vue {
 
 	}
 
-	fading = true
+	initing = true
 	mounted() {
-		_.delay(() => this.fading = false, 100)
-		_.delay(() => this.fading = null, 1000)
+		_.delay(() => this.initing = false, 100)
+		_.delay(() => this.initing = null, 1000)
 	}
 
 	beforeDestroy() {
@@ -41,7 +41,7 @@ export default class Root extends Vue {
 	@Vts.Watch('theme') w_theme(to: string, from: string) {
 		lockr.set('root.theme', to)
 	}
-	v_toggleTheme() {
+	toggleTheme() {
 		if (this.theme == 'light') return this.theme = 'dark';
 		if (this.theme == 'dark') return this.theme = 'light';
 	}

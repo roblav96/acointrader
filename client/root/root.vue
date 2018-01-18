@@ -14,7 +14,7 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 </style>
 
 <template>
-    <v-app id="root" :light="theme == 'light'" :dark="theme == 'dark'" :class="{ 'anim-loading': fading === true, 'animated animated-fast fadeIn': fading === false }">
+    <v-app id="root" :light="theme == 'light'" :dark="theme == 'dark'" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }">
 
         <main-drawer></main-drawer>
 
