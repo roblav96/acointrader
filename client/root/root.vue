@@ -19,7 +19,6 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 
             <main-drawer></main-drawer>
 
-            <!-- this is here so the toolbar doesnt disappear during transition -->
             <v-toolbar class="dummy-toolbar" app fixed flat dark color="primary"></v-toolbar>
 
             <v-fade-transition mode="out-in">

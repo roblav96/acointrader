@@ -23,7 +23,7 @@
             <v-card-text>
                 <v-text-field ref="email_input" class="mb-3" prepend-icon="mdi-email-secure" label="Your Email Address"
                     :error="!valid && email.length > 0" v-model="email" spellcheck="false" solo hide-details></v-text-field>
-                <p class="subtitle t-400">Recover your API Key Pairs with email.</p>
+                <p class="subtitle t-400">Recover your API Key Pairs with this email.</p>
                 <p class="body-1 text--light">
                     We've perfected the art of keeping your assets safe. Occasionally your web browser will automatically
                     cleanup after itself to preserve disk memory. Your API Key Pairs could get swept

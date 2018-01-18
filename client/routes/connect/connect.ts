@@ -58,9 +58,8 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		this.saving = true
 		this.exchange.saveApiKey(this.apiKey).then(saved => {
 			if (saved) this.$router.push({ name: 'accounts' });
-		}).catch(error => {
-			console.error('save > error', error)
-		}).then(() => this.saving = false)
+			this.saving = false
+		})
 	}
 
 

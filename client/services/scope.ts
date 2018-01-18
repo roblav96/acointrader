@@ -22,8 +22,8 @@ export const state = {
 
 process.sls.remove('scope.finger')
 new Fingerprint2().get((result: string) => {
-	result = sha3.sha3_256(result)
-	process.sls.set('scope.finger', result)
+	process.sls.set('scope.finger', sha3.sha3_256(result))
+	result = null
 	state.ready = true
 	http.post('/ready')
 })
@@ -31,6 +31,22 @@ new Fingerprint2().get((result: string) => {
 export function getFinger() {
 	return process.sls.get('scope.finger') as string
 }
+
+
+
+export function askEmail(): Promise<boolean> {
+	return EmailPrompt.prompt(state.email).then(function(email) {
+		if (!email) return Promise.resolve(false);
+		return http.post('/set-email', { email }).then(function(response) {
+			console.log('response', response)
+			process.sls.set('scope.email', email)
+			state.email = email
+			return Promise.resolve(true)
+		})
+	}).catch(() => Promise.resolve(false))
+}
+
+
 
 
 
@@ -42,24 +58,10 @@ export function getFinger() {
 // 	return state.email
 // }
 
-
-
 // export function xBytes(bytes?: string) {
 // 	if (bytes) process.sls.set('scope.bytes', bytes);
 // 	return process.sls.get('scope.bytes') as string
 // }
-
-
-
-export function askEmail(): Promise<boolean> {
-	return EmailPrompt.prompt(state.email).then(function(email) {
-		if (!email) return Promise.resolve(false);
-		return http.post('/set-email', { email }).then(function(response) {
-			console.log('response', response)
-			return Promise.resolve(true)
-		})
-	}).catch(() => Promise.resolve(false))
-}
 
 
 

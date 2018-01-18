@@ -7,6 +7,7 @@ import lockr from 'lockr'
 import * as utils from './utils'
 import * as scope from './scope'
 import * as http from './http'
+import * as Snackbar from '../components/snackbar/snackbar'
 import * as EmailPrompt from '../components/email-prompt/email-prompt'
 
 
@@ -73,27 +74,24 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	}
 
 	saveApiKey(apiKey: ExchangeApiKey): Promise<boolean> {
-		console.log('scope.email', scope.xEmail)
-		console.log('!scope.email', !scope.xEmail)
 		return Promise.resolve().then(() => {
-			if (!scope.xEmail) return scope.askEmail();
+			if (!scope.state.email) return scope.askEmail();
 			return Promise.resolve(true)
 		}).then(result => {
-			if (!result) return Promise.resolve(false);
-			return http.post('/save-api-key', apiKey)
+			if (!result) {
+				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your assets. Please try again.', color: 'warning' })
+				return Promise.resolve(false)
+			}
+			return http.post('/save-api-key', apiKey).then(response => {
+				console.log('response', response)
+				process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
+				this.loadApiKey()
+				return Promise.resolve(true)
+			})
+		}).catch(error => {
+			console.error('saveApiKey > error', error)
+			return Promise.resolve(false)
 		})
-		// return Promise.resolve().then((idk) => {
-		// 	if (!scope.email) return EmailPrompt.prompt();
-		// 	return Promise.resolve()
-		// }).then(() => {
-		// 	return http.post('/save-api-key', apiKey).then(response => {
-		// 		console.log('response', response)
-		// 		process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
-		// 		this.loadApiKey()
-		// 		return Promise.resolve()
-		// 	})
-		// })
-
 	}
 
 	deleteApiKey() {

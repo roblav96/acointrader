@@ -13,15 +13,23 @@ import VMixin from '../../mixins/v-mixin'
 	name: 'EmailPrompt',
 } as any)
 export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
+	
+	created() {
+		
+	}
 
 	mounted() {
 		this.show = true
 		_.delay(() => (this.$refs.email_input as HTMLInputElement).focus(), 300)
+		if (process.DEVELOPMENT) _.delay(() => this.email = 'awesome@acointrader.com', 500);
 	}
 
 	beforeDestroy() {
 		this.resolve()
+		this.$el.remove()
 	}
+
+
 
 	resolve: (email?: string) => void
 
