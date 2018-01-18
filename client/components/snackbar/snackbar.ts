@@ -24,6 +24,20 @@ export default class Snackbar extends Vue {
 		Snackbar.state.items.push(item)
 	}
 
+	created() {
+
+	}
+
+	mounted() {
+
+	}
+
+	beforeDestroy() {
+
+	}
+
+
+
 	get items() { return this.$store.state.snackbar.items }
 	@Vts.Watch('items') w_items(items: Array<SnackbarItem>) {
 		items.forEach(item => {

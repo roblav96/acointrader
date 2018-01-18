@@ -7,7 +7,7 @@ import lockr from 'lockr'
 import * as utils from './utils'
 import * as scope from './scope'
 import * as exchanges from './exchanges'
-import * as MainDrawer from '../components/main-drawer/main-drawer'
+import MainDrawer from '../components/main-drawer/main-drawer'
 import Snackbar from '../components/snackbar/snackbar'
 
 

@@ -4,7 +4,7 @@ import _ from 'lodash'
 import axios from 'axios'
 import * as utils from './utils'
 import * as scope from './scope'
-import * as Snackbar from '../components/snackbar/snackbar'
+import Snackbar from '../components/snackbar/snackbar'
 
 
 

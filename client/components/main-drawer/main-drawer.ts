@@ -10,14 +10,12 @@ import VMixin from '../../mixins/v-mixin'
 
 
 
-export const state = {
-	show: true,
-}
-
 @Vts.Component(<VueComponent>{
 	name: 'MainDrawer',
 } as any)
 export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
+
+	static state = { show: true }
 
 	created() {
 
@@ -30,8 +28,8 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 	beforeDestroy() {
 
 	}
-	
-	
+
+
 
 	get mainDrawer() { return this.$store.state.mainDrawer }
 
@@ -44,9 +42,9 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 			} as RouteConfig
 		})
 	}
-	
-	
-	
+
+
+
 	clearLocalStorage() {
 		window.localStorage.clear()
 		location.reload(true)
