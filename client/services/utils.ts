@@ -93,6 +93,33 @@ export function clone<T = any>(input: T): T {
 	return JSON.parse(JSON.stringify(input))
 }
 
+export function randomBytes(length = 32) {
+	let btyes = ''
+	while (btyes.length < length && length > 0) {
+		let rand = Math.random()
+		btyes += (rand < 0.1 ? Math.floor(rand * 100) : String.fromCharCode(Math.floor(rand * 26) + (rand > 0.5 ? 97 : 65)))
+	}
+	return btyes
+}
+
+export function parseId(id: string) {
+	return id.toLowerCase().replace(/\@W+/g, '').trim()
+}
+
+export function cleanString(input: string) {
+	return input.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/\s\s+/g, ' ')
+}
+
+export function cleanSearch(input: string) {
+	return input.toLowerCase().replace(/[^a-zA-Z0-9]/g, '').trim()
+}
+
+
+
+export function isValidEmail(email: string) {
+	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+}
+
 
 
 

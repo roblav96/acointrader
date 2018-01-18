@@ -4,6 +4,7 @@ import _ from 'lodash'
 import axios from 'axios'
 import * as utils from './utils'
 import * as scope from './scope'
+import * as Snackbar from '../components/snackbar/snackbar'
 
 
 
@@ -29,6 +30,7 @@ function request(config: HttpRequestConfig): Promise<any> {
 		config.baseURL = domain + '/api'
 		Object.assign(config.headers, {
 			'x-finger': scope.finger(),
+			'x-email': scope.email(),
 			'x-bytes': scope.bytes(),
 			'x-version': process.$version,
 			'x-platform': 'web',
@@ -50,22 +52,23 @@ function request(config: HttpRequestConfig): Promise<any> {
 		if (_.has(error, 'response.data.message')) message = error.response.data.message;
 		let premessage = config.method + ' ' + config.url
 		console.log('%c◀ ' + premessage + ' ◀', 'color: red; font-weight: bolder;', message)
+		Snackbar.push({ message: premessage + ' > ' + message, color: 'error' })
 		return Promise.reject(error)
 	})
 }
 
-export function get<T = any>(url: string, params?: any, config = {} as HttpRequestConfig): Promise<T> {
+export function get<T = any>(url: string, params?: any, config = {} as HttpRequestConfig) {
 	config.url = url
 	config.method = 'GET'
 	if (params) config.params = params;
-	return request(config) as any
+	return request(config) as Promise<T>
 }
 
-export function post<D = any, T = any>(url: string, data?: D, config = {} as HttpRequestConfig): Promise<T> {
+export function post<D = any, T = any>(url: string, data?: D, config = {} as HttpRequestConfig) {
 	config.url = url
 	config.method = 'POST'
 	if (data) config.data = data;
-	return request(config) as any
+	return request(config) as Promise<T>
 }
 
 

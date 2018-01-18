@@ -62,8 +62,8 @@
                             <v-icon>mdi-book-open-page-variant</v-icon>
                             <!-- <v-toolbar-title>Instructions</v-toolbar-title> -->
                             <v-toolbar-title>
-                                Create an
-                                <code>API Key Pair</code>
+                                Create an API Key Pair
+                                <!-- <code>API Key Pair</code> -->
                                 <!-- <code class="info white--text">API Key Pair</code> -->
                                 <!-- for {{ exchange.name }} -->
                             </v-toolbar-title>

@@ -25,6 +25,8 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
             <router-view></router-view>
         </v-fade-transition>
 
+        <snackbar></snackbar>
+
     </v-app>
 </template>
 

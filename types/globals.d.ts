@@ -34,9 +34,6 @@ declare global {
 	
 	interface HttpRequestConfig extends axios.AxiosRequestConfig {
 		silent?: boolean
-		rhtoken?: string
-		rhqsdata?: boolean
-		wbtoken?: boolean
 		production?: boolean
 	}
 

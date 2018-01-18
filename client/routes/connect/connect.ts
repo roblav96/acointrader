@@ -24,6 +24,9 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 	created() {
 		this.apiKey = Object.assign({}, this.exchange.apiKey)
+		if (process.DEVELOPMENT && process.$webpack[this.exchange.id]) {
+			this.apiKey = Object.assign({}, process.$webpack[this.exchange.id])
+		}
 	}
 
 	mounted() {
@@ -50,8 +53,9 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 	save() {
 		if (!this.valid) return;
-		this.exchange.saveApiKey(this.apiKey)
-		this.$router.push({ name: 'accounts' })
+		this.exchange.saveApiKey(this.apiKey).then(() => {
+			this.$router.push({ name: 'accounts' })
+		})
 	}
 
 

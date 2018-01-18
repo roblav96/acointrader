@@ -1,16 +1,21 @@
 // 
 
+import * as Vts from 'vue-property-decorator'
+import * as Avts from 'av-ts'
+import Vue from 'vue'
 import _ from 'lodash'
 import sha3 from 'js-sha3'
 import Fingerprint2 from 'fingerprintjs2'
 import * as utils from './utils'
 import * as store from './store'
 import * as http from './http'
+import * as EmailDialog from '../components/email-dialog/email-dialog'
 
 
 
 export const state = {
 	ready: false,
+	email: process.sls.get('scope.email') as string,
 }
 
 
@@ -29,6 +34,16 @@ export function finger() {
 
 
 
+export function email(email?: string) {
+	if (email) {
+		process.sls.set('scope.email', email)
+		state.email = email
+	}
+	return state.email
+}
+
+
+
 export function bytes(bytes?: string) {
 	if (bytes) process.sls.set('scope.bytes', bytes);
 	return process.sls.get('scope.bytes') as string
@@ -36,6 +51,11 @@ export function bytes(bytes?: string) {
 
 
 
+_.delay(function() {
+	EmailDialog.prompt().then(function() {
+		console.warn('resolved')
+	})
+}, 100)
 
 
 

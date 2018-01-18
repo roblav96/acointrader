@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
+import * as http from './http'
 
 
 
@@ -64,22 +65,30 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	}
 
 	loadApiKey() {
-		// if (process.$webpack[this.id]) this.saveApiKey(process.$webpack[this.id]);
-		let apiKey = process.sls.get('exchanges.' + this.id + '.apiKey') || {} as ExchangeApiKey
+		let apiKey = (process.sls.get('exchanges.' + this.id + '.apiKey') || {}) as ExchangeApiKey
+		apiKey.secret = null
 		Object.assign(this.apiKey, apiKey)
 	}
 
 	saveApiKey(apiKey: ExchangeApiKey) {
-		Object.assign(this.apiKey, apiKey)
-		process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
+		return http.post('/save-api-key', apiKey).then(response => {
+			console.log('response', response)
+			process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
+			this.loadApiKey()
+			return Promise.resolve()
+		})
 	}
 
 	deleteApiKey() {
-		Object.keys(this.apiKey).forEach(key => {
-			if (key == 'id') return;
-			this.apiKey[key] = null
+		return http.post('/delete-api-key', this.apiKey).then(response => {
+			console.log('response', response)
+			process.sls.remove('exchanges.' + this.id + '.apiKey')
+			Object.keys(this.apiKey).forEach(key => {
+				if (key == 'id') return;
+				this.apiKey[key] = null
+			})
+			return Promise.resolve()
 		})
-		process.sls.remove('exchanges.' + this.id + '.apiKey')
 	}
 
 

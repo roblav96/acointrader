@@ -78,16 +78,17 @@
                         <td width="1" class="title">{{ props.item.name }}</td>
                         <td class="body-1">{{ v_truncate(props.item.apiKey.key) }}</td>
                         <td width="1">
-                            <v-btn v-if="props.item.connectable == false" block disabled class="ma-0 t-transform-none">
-                                <v-icon left>mdi-worker</v-icon>
+                            <v-btn v-if="props.item.connectable == false" block large disabled class="ma-0 t-transform-none">
+                                <v-icon left medium>mdi-worker</v-icon>
                                 WIP
                             </v-btn>
-                            <v-btn v-else-if="props.item.apiKey.key" block color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
-                                <v-icon left>mdi-key-remove</v-icon>
+                            <v-btn v-else-if="props.item.apiKey.key" block large color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
+                                <v-icon left medium>mdi-key-remove</v-icon>
                                 Disconnect
                             </v-btn>
-                            <v-btn v-else block color="success" class="ma-0 t-transform-none" v-on:click="connectApiKey(props.item.id)">
-                                <v-icon left>mdi-key-plus</v-icon>
+                            <v-btn v-else block large color="primary" class="ma-0 t-transform-none" :to="{ name: 'connect', params: { exchange: props.item.id } }">
+                                <!-- v-on:click="connectApiKey(props.item.id)"> -->
+                                <v-icon left medium>mdi-key-plus</v-icon>
                                 Connect
                             </v-btn>
                         </td>

@@ -77,7 +77,7 @@ declare module 'vue-property-decorator' {
 declare module 'av-ts' {
 	type VClass<T extends Vue> = {
 		new(): T
-		extend(option: ComponentOptions<Vue> | FunctionalComponentOptions): typeof Vue
+		extend(options: ComponentOptions<Vue> | FunctionalComponentOptions): typeof Vue
 	}
 	function Mixin<T extends Vue>(parent: typeof Vue, ...traits: (typeof Vue)[]): VClass<T>
 }

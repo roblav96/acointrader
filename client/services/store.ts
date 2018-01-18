@@ -8,6 +8,7 @@ import * as utils from './utils'
 import * as scope from './scope'
 import * as exchanges from './exchanges'
 import * as MainDrawer from '../components/main-drawer/main-drawer'
+import * as Snackbar from '../components/snackbar/snackbar'
 
 
 
@@ -20,6 +21,7 @@ class State {
 	// accounts = exchanges.exchanges.map(v => v.account)
 
 	mainDrawer = new MainDrawer.store()
+	snackbar = Snackbar.state
 
 }
 declare global { type StoreState = State }

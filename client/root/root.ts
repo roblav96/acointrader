@@ -6,6 +6,7 @@ import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
 import MainDrawer from '../components/main-drawer/main-drawer'
+import Snackbar from '../components/snackbar/snackbar'
 
 
 
@@ -14,6 +15,7 @@ import MainDrawer from '../components/main-drawer/main-drawer'
 
 	components: {
 		'main-drawer': MainDrawer,
+		'snackbar': Snackbar,
 	},
 
 } as any)
