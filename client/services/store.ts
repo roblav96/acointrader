@@ -36,9 +36,15 @@ const StoragePlugin = function(store: Store<State>) {
 		]
 		if (save.indexOf(key) == -1) return;
 
-		let value = lockr.get('store.' + key, store.state[key])
-		store.state[key] = value
+		let value = utils.clone(store.state[key])
+		let saved = lockr.get('store.' + key)
+
+		if (_.isUndefined(saved)) { }
+		else if (_.isPlainObject(value) && _.isPlainObject(saved)) _.merge(value, saved);
+		else if (!_.isObject(value)) value = saved;
+
 		lockr.set('store.' + key, value)
+		store.state[key] = value
 
 		store.watch(function(state) { return state[key] }, function(to, from) {
 			lockr.set('store.' + key, to)
@@ -58,6 +64,7 @@ export const store = new Vuex.Store<State>({
 	}
 })
 
+// console.log('store.state', store.state)
 // console.log('store.state.scope', store.state.scope)
 // console.log('store.state.apiKeys', store.state.apiKeys)
 

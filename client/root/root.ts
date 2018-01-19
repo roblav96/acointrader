@@ -38,9 +38,7 @@ export default class Root extends Vue {
 
 
 	theme = lockr.get('root.theme', 'dark')
-	@Vts.Watch('theme') w_theme(to: string, from: string) {
-		lockr.set('root.theme', to)
-	}
+	@Vts.Watch('theme') w_theme(to: string) { lockr.set('root.theme', to) }
 
 	theming = false
 	toggleTheme() {

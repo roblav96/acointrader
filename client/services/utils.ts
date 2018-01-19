@@ -143,20 +143,20 @@ const CONSOLE_DOCS = {
 
 	breakpoints: /*
 
-Extra Small	xs	Phone	0	600
-Small	sm	Tablet	600	960
-Medium	md	Laptop	960	1264
-Large	lg	Desktop	1264	1904
-Extra Large	xl	Workstation	1904	∞
+X-Small	xs	Phone	0	599
+Small	sm	Tablet	600	959
+Medium	md	Laptop	960	1263
+Large	lg	Desktop	1264	1903
+X-Large	xl	Workstation	1904	∞
 
-*/ `/*████  BREAKPOINTS  ████*/
- ============= ==== ============= ====== ====== 
-  Extra Small   xs   Phone            0   600   
-  Small         sm   Tablet         600   960   
-  Medium        md   Laptop         960   1264  
-  Large         lg   Desktop       1264   1904  
-  Extra Large   xl   Workstation   1904   ∞     
- ============= ==== ============= ====== ====== 
+*/ `
+ ========= ==== ============= ====== ====== 
+  X-Small   xs   Phone            0   599   
+  Small     sm   Tablet         600   959   
+  Medium    md   Laptop         960   1263  
+  Large     lg   Desktop       1264   1903  
+  X-Large   xl   Workstation   1904   ∞     
+ ========= ==== ============= ====== ====== 
 `,
 
 

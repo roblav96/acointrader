@@ -24,7 +24,7 @@ div.snackbar--wrapper {
         <v-alert v-for="item in items" :key="item.id" :color="item.color" class="br-2 elevation-4 ma-0 mt-3 py-0 pl-4 pr-3"
             :value="true" v-on:click="splice(item.id)" v-on:mouseenter="onmouseenter(item.id)">
             <v-layout row align-center>
-                <v-icon v-if="item.icon" dark medium class="mr-3">{{ item.icon }}</v-icon>
+                <v-icon v-if="item.icon" dark medium class="mr-4">{{ item.icon }}</v-icon>
                 <p class="flex-1 my-3 subheading t-500" v-on:click.stop>{{ item.message }}</p>
                 <v-btn dark icon large class="ma-0 ml-3">
                     <v-icon dark medium>close</v-icon>

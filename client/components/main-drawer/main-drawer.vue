@@ -29,13 +29,6 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
     opacity: 0;
 }*/
 
-/*aside.main--drawer table.debug--breakpoints {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 999999;
-}*/
-
 
 /**/
 
@@ -90,21 +83,6 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
             </v-list>
 
         </v-layout>
-
-
-
-        <!-- <table class="debug--breakpoints card">
-            <tr class="">
-                <th width="1">Width</th>
-                <th width="1">Height</th>
-            </tr>
-            <tr class="">
-                <td>0px</td>
-                <td>0px</td>
-            </tr>
-        </table> -->
-
-
 
     </v-navigation-drawer>
 </template>

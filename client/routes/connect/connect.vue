@@ -19,9 +19,9 @@
             <v-avatar size="48">
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
-            <v-toolbar-title class="t-lh2">
-                <p class="headline t-500">{{ exchange.name }}</p>
-                <p class="subheading t-300 mb-1">Connecting Your Account</p>
+            <v-toolbar-title>
+                <p class="t-lh2 headline t-500">{{ exchange.name }}</p>
+                <p class="t-lh2 subheading t-300 mb-1">Connecting Your Account</p>
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -60,13 +60,7 @@
                     <v-card>
                         <v-toolbar flat color="transparent">
                             <v-icon medium>mdi-book-open-page-variant</v-icon>
-                            <!-- <v-toolbar-title>Instructions</v-toolbar-title> -->
-                            <v-toolbar-title class="headline">
-                                Create an API Key Pair
-                                <!-- <code>API Key Pair</code> -->
-                                <!-- <code class="info white--text">API Key Pair</code> -->
-                                <!-- for {{ exchange.name }} -->
-                            </v-toolbar-title>
+                            <v-toolbar-title class="headline">Create an API Key Pair</v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
                         <v-divider></v-divider>

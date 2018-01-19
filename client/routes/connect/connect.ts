@@ -30,7 +30,11 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	}
 
 	mounted() {
-		
+		// _.delay(() => {
+		// 	console.log('this.$vuetify.breakpoint', JSON.stringify(this.$vuetify.breakpoint, null, 4))
+		// 	console.log('this.$vuetify.breakpoint', this.$vuetify.breakpoint)
+		// 	console.log('this.v_.name', this.v_.name)
+		// }, 100)
 	}
 
 	beforeDestroy() {

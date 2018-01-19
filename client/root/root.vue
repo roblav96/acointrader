@@ -11,6 +11,16 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 
 /**/
 
+div.debug--breakpoints {
+    position: fixed;
+    z-index: 999;
+    bottom: 0px;
+    left: 0px;
+}
+
+
+/**/
+
 </style>
 
 <template>
@@ -26,6 +36,19 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
             </v-fade-transition>
 
             <snackbar></snackbar>
+
+
+
+            <div v-if="$store.state.mainDrawer.devBreakpoints" class="debug--breakpoints card pa-2">
+                <table>
+                    <tr class="t-left" v-for="(v, k, i) in $vuetify.breakpoint" :key="k">
+                        <th class="body-1">{{ k }}</th>
+                        <th class="body-2">{{ v }}</th>
+                    </tr>
+                </table>
+            </div>
+
+
 
         </v-app>
     </v-fade-transition>
