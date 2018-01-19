@@ -25,6 +25,10 @@ table.table thead th:focus {
     z-index: 9999 !important;
 }
 
+.z-infinite {
+    z-index: 2147483647 !important;
+}
+
 .clickable {
     cursor: pointer !important;
 }

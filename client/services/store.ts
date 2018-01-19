@@ -13,6 +13,8 @@ import Snackbar from '../components/snackbar/snackbar'
 
 
 class State {
+	
+	blockUI = true
 
 	scope = scope.state
 

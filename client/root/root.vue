@@ -20,6 +20,10 @@ div.debug--breakpoints {
     /*pointer-events: none;*/
 }
 
+div.dialog--block-ui {
+    /*margin: 0px;*/
+}
+
 
 /**/
 
@@ -51,6 +55,12 @@ div.debug--breakpoints {
                     </table>
                 </v-card>
             </v-slide-y-transition>
+
+
+
+            <v-dialog persistent lazy content-class="dialog--block-ui z-infinity" v-model="$store.state.blockUI">
+                <v-progress-circular indeterminate size="100" :width="8" color="primary"></v-progress-circular>
+            </v-dialog>
 
 
 
