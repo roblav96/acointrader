@@ -17,7 +17,7 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 	static state = {
 		show: true,
-		devBreakpoints: true,
+		debugBreakpoints: false,
 	}
 
 	created() {

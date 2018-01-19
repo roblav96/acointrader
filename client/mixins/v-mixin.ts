@@ -42,7 +42,7 @@ export default class VMixin extends Vue {
 	v_development = process.DEVELOPMENT
 	v_production = process.PRODUCTION
 
-	get v_bk() { return this.$vuetify.breakpoint }
+	get v_bks() { return this.$vuetify.breakpoint }
 
 	v_start_case(str: string) { return _.startCase(str) }
 	v_truncate(str: string, length = 32) { return _.truncate(str, { length }) }

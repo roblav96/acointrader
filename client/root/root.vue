@@ -39,14 +39,16 @@ div.debug--breakpoints {
 
 
 
-            <div v-if="$store.state.mainDrawer.devBreakpoints" class="debug--breakpoints card pa-2">
-                <table>
-                    <tr class="t-left" v-for="(v, k, i) in $vuetify.breakpoint" :key="k">
-                        <th class="body-1">{{ k }}</th>
-                        <th class="body-2">{{ v }}</th>
-                    </tr>
-                </table>
-            </div>
+            <!-- <v-slide-y-transition> -->
+                <div v-if="$store.state.mainDrawer.debugBreakpoints" class="debug--breakpoints card pa-2">
+                    <table>
+                        <tr class="t-left" v-for="(v, k, i) in $vuetify.breakpoint" :key="k">
+                            <th class="body-1">{{ k }}</th>
+                            <th class="body-2">{{ v }}</th>
+                        </tr>
+                    </table>
+                </div>
+            <!-- </v-slide-y-transition> -->
 
 
 
