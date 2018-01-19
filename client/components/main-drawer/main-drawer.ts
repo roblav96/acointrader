@@ -15,14 +15,16 @@ import VMixin from '../../mixins/v-mixin'
 } as any)
 export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
-	static state = { show: true }
+	static state = {
+		show: true,
+	}
 
 	created() {
 
 	}
 
 	mounted() {
-		console.log('this.routes.length', this.routes.length)
+		
 	}
 
 	beforeDestroy() {
@@ -31,7 +33,7 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 
 
-	get mainDrawer() { return this.$store.state.mainDrawer }
+	get state() { return this.$store.state.mainDrawer }
 
 	get routes() {
 		return router.routes.filter(v => !!v.mmenu).map(v => {
