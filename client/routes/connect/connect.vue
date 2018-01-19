@@ -26,11 +26,11 @@
             <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-container fluid grid-list-xl class="container--scrollable">
-            <v-layout row>
-                <v-flex xs3>
+        <v-container fluid fill-height grid-list-xl class="pa-0">
+            <v-layout row class="ma-0">
+                <v-flex xl3 xs4 class="py-4 pl-4">
 
-                    <v-card ref="key_form" class="z-9">
+                    <v-card>
                         <v-toolbar dense flat dark color="info">
                             <v-toolbar-title>API Key Pair</v-toolbar-title>
                             <v-spacer></v-spacer>
@@ -55,7 +55,7 @@
                     </v-card>
 
                 </v-flex>
-                <v-flex xs9>
+                <v-flex xl9 xs8 class="py-4 pr-4 scroll-y">
 
                     <v-card>
                         <v-toolbar dense flat color="transparent">
@@ -74,13 +74,13 @@
                         <v-stepper vertical non-linear class="bg-initial shadow-none" v-model="step">
 
                             <v-stepper-step :step="1" :editable="step != 1">
-                                <v-layout row align-center class="mx-0">
-                                    <p class="subheading mr-2">Goto your {{ exchange.name }} account API settings</p>
-                                    <v-btn outline class="my-0 t-transform-none t-400" v-on:click.stop="v_hrefSettingsUrl(exchange.settingsUrl)">
+                                <!-- <v-layout row align-center class="mx-0"> -->
+                                    <p class="subheading mb-1">Goto your {{ exchange.name }} account API settings by clicking this link:</p>
+                                    <v-btn outline class="ma-0 t-transform-none t-400" v-on:click.stop="v_hrefSettingsUrl(exchange.settingsUrl)">
                                         <v-icon left>mdi-open-in-new</v-icon>
                                         {{ exchange.settingsUrl }}
                                     </v-btn>
-                                </v-layout>
+                                <!-- </v-layout> -->
                             </v-stepper-step>
                             <v-stepper-content :step="1">
                                 <div class="pa-2">

@@ -30,11 +30,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	}
 
 	mounted() {
-		this.$nextTick(() => {
-			let key_form = (this.$refs.key_form as any).$el as HTMLElement
-			key_form.style.width = key_form.clientWidth + 'px'
-			key_form.style.position = 'fixed'
-		})
+		
 	}
 
 	beforeDestroy() {
