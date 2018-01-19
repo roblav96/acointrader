@@ -50,12 +50,12 @@ function request(config: HttpRequestConfig): Promise<any> {
 	}).catch(function(error) {
 		let message = error.message
 		if (_.has(error, 'response.data.message')) message = error.response.data.message;
-		let premessage = config.method + ' ' + config.url
+		let premessage = '[' + config.method + '] /api' + config.url
 		console.log('%c◀ ' + premessage + ' ◀', 'color: red; font-weight: bolder;', message)
 		Snackbar.push({ message: premessage + ' > ' + message, color: 'error' })
 		return Promise.reject(error)
 	})
-	
+
 }
 
 export function get<T = any>(url: string, params?: any, config = {} as HttpRequestConfig) {

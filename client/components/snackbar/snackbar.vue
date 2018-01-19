@@ -6,7 +6,9 @@
 
 div.snackbar--wrapper {
     position: absolute;
-    top: -4px;
+    min-width: 500px;
+    width: 50%;
+    top: 0px;
     right: 50%;
     transform: translateX(50%);
     z-index: 99;
@@ -18,19 +20,17 @@ div.snackbar--wrapper {
 </style>
 
 <template>
-    <div class="snackbar--wrapper">
-        <v-slide-y-transition>
-            <v-alert v-for="item in items" :key="item.id" :color="item.color" class="br-2 elevation-8 ma-0 mt-3 py-0 px-3"
-                :value="true" v-on:click="splice(item.id)" v-on:mouseenter="onmouseenter(item.id)">
-                <v-layout row align-center>
-                    <v-icon dark medium class="ml-1 mr-4">{{ item.icon }}</v-icon>
-                    <p class="flex-1 my-3 subheading t-500" v-on:click.stop>{{ item.message }}</p>
-                    <v-btn dark icon large class="ma-0 ml-3">
-                        <v-icon dark medium>close</v-icon>
-                    </v-btn>
-                </v-layout>
-            </v-alert>
-        </v-slide-y-transition>
-    </div>
+    <transition-group class="snackbar--wrapper" name="slide-y-transition" tag="div">
+        <v-alert v-for="item in items" :key="item.id" :color="item.color" class="br-2 elevation-4 ma-0 mt-3 py-0 pl-4 pr-3"
+            :value="true" v-on:click="splice(item.id)" v-on:mouseenter="onmouseenter(item.id)">
+            <v-layout row align-center>
+                <v-icon v-if="item.icon" dark medium class="mr-3">{{ item.icon }}</v-icon>
+                <p class="flex-1 my-3 subheading t-500" v-on:click.stop>{{ item.message }}</p>
+                <v-btn dark icon large class="ma-0 ml-3">
+                    <v-icon dark medium>close</v-icon>
+                </v-btn>
+            </v-layout>
+        </v-alert>
+    </transition-group>
 </template>
 

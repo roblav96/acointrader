@@ -78,7 +78,7 @@ export class ExchangeBuilder extends ExchangeMetadata {
 			return Promise.resolve(true)
 		}).then(result => {
 			if (!result) {
-				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your crypto assets! Please try again.', color: 'success' }) // , color: 'warning' })
+				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your crypto assets! Please try again.', color: 'warning' })
 				return Promise.resolve(false)
 			}
 			return http.post('/save-api-key', apiKey).then(response => {

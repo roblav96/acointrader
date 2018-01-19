@@ -44,7 +44,7 @@ export default class Root extends Vue {
 
 	theming = false
 	toggleTheme() {
-		document.body.style.backgroundColor = this.theme == 'dark' ? 'white' : 'rgb(48, 48, 48)'
+		document.body.style.backgroundColor = this.theme == 'dark' ? 'rgb(255, 255, 255)' : 'rgb(48, 48, 48)'
 		_.delay(() => this.theming = true, 1)
 		_.delay(() => this.theme = this.theme == 'dark' ? 'light' : 'dark', 300)
 		_.delay(() => this.theming = false, 600)

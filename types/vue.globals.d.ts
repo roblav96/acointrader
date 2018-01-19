@@ -5,11 +5,12 @@ import * as VueRouter from 'vue-router'
 import * as Vuex from 'vuex'
 import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
+import Root from '../client/root/root'
 
 
 
 declare global {
-	
+
 	interface RouteConfig extends VueRouter.RouteConfig {
 		dname?: string
 		description?: string
@@ -25,7 +26,7 @@ declare global {
 		text: string
 		sortable: boolean
 	}
-	
+
 	interface VueLocation extends VueRouter.Location { }
 	interface VueRoute extends VueRouter.Route { }
 	type VueRouteNext = (to?: VueRouter.RawLocation | false | ((vm: Vue) => any) | void) => void

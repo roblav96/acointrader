@@ -43,7 +43,7 @@ export function askEmail(): Promise<boolean> {
 			state.email = email
 			return Promise.resolve(true)
 		})
-	}).catch(() => Promise.resolve(false))
+	})
 }
 
 

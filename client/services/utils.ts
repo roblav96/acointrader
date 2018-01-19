@@ -53,11 +53,11 @@ export function merge_safely<T>(target: T, source: T): void {
 
 
 /** ⟶ merge source array of dictionaries with target array of dictionaries by the unique key */
-export function array_merge_safely<T>(target: Array<T>, source: Array<T>, uniq_key: string): void {
+export function array_merge_safely<T>(target: Array<T>, source: Array<T>, uniqueKey: string): void {
 	if (_.isEmpty(source)) return;
 
 	source.forEach(function(item, i) {
-		let found = target.find(v => v && v[uniq_key] == item[uniq_key])
+		let found = target.find(v => v && v[uniqueKey] == item[uniqueKey])
 		if (found) merge_safely(found, item);
 		else target.push(item);
 	})
@@ -67,11 +67,11 @@ export function array_merge_safely<T>(target: Array<T>, source: Array<T>, uniq_k
 
 
 /** ⟶ same as _.uniqBy except it only merges valid key values in ascending order */
-export function array_uniqby_safely<T>(items: Array<T>, uniq_key: string) {
+export function array_uniqby_safely<T>(items: Array<T>, uniqueKey: string) {
 	if (!Array.isArray(items) || items.length == 0) return items;
 
 	items.forEach(function(item, i) {
-		let iii = items.findIndex((vv, ii) => ii < i && vv && vv[uniq_key] == item[uniq_key])
+		let iii = items.findIndex((vv, ii) => ii < i && vv && vv[uniqueKey] == item[uniqueKey])
 		if (iii == -1) return;
 		merge_safely(items[iii], item)
 		items[i] = null
@@ -84,6 +84,19 @@ export function array_uniqby_safely<T>(items: Array<T>, uniq_key: string) {
 	}
 
 	return items
+}
+
+
+
+/** ⟶ move an item from index to a specific index */
+export function array_move<T>(items: Array<T>, from: number, to: number) {
+	if (to === from) return items;
+	let target = items[from]
+	let increment = to < from ? -1 : 1
+	for (let k = from; k != to; k += increment) {
+		items[k] = items[k + increment]
+	}
+	items[to] = target
 }
 
 
