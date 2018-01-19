@@ -137,19 +137,36 @@ export function isValidEmail(email: string) {
 
 
 
-Object.assign(window, {
-	breakpoints: `
+const CONSOLE_DOCS = {
 
-`	,
-})
 
-/*
-Extra Small	xs	Small to large handset	0 ‡ 600
-Small	sm	Small to medium tablet	960
-Medium	md	Large tablet to laptop	1264
-Large	lg	Desktop	1264px 1904px
-Extra Large	xl	4k and ultra-wides	1904px
-*/
+
+	breakpoints: /*
+
+Extra Small	xs	Phone	0	600
+Small	sm	Tablet	600	960
+Medium	md	Laptop	960	1264
+Large	lg	Desktop	1264	1904
+Extra Large	xl	Workstation	1904	∞
+
+*/ `/*████  BREAKPOINTS  ████*/
+ ============= ==== ============= ====== ====== 
+  Extra Small   xs   Phone            0   600   
+  Small         sm   Tablet         600   960   
+  Medium        md   Laptop         960   1264  
+  Large         lg   Desktop       1264   1904  
+  Extra Large   xl   Workstation   1904   ∞     
+ ============= ==== ============= ====== ====== 
+`,
+
+
+
+}
+
+// console.log((window as any).breakpoints)
+Object.assign(window, CONSOLE_DOCS)
+
+
 
 
 
