@@ -137,7 +137,19 @@ export function isValidEmail(email: string) {
 
 
 
+Object.assign(window, {
+	breakpoints: `
 
+`	,
+})
+
+/*
+Extra Small	xs	Small to large handset	0 ‡ 600
+Small	sm	Small to medium tablet	960
+Medium	md	Large tablet to laptop	1264
+Large	lg	Desktop	1264px 1904px
+Extra Large	xl	4k and ultra-wides	1904px
+*/
 
 
 

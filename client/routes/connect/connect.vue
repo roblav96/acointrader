@@ -28,7 +28,7 @@
 
         <v-container fluid fill-height grid-list-xl class="pa-0">
             <v-layout row class="ma-0">
-                <v-flex lg3 xs4 class="py-4 pl-4">
+                <v-flex lg3 md4 xs5 class="py-4 pl-4">
 
                     <v-card>
                         <v-toolbar dense flat dark color="info">
@@ -55,7 +55,7 @@
                     </v-card>
 
                 </v-flex>
-                <v-flex lg9 xs8 class="py-4 pr-4 scroll-y">
+                <v-flex lg9 md8 xs7 class="py-4 pr-4 scroll-y">
 
                     <v-card>
                         <v-toolbar flat color="transparent">
