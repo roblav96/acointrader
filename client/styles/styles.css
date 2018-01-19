@@ -42,6 +42,11 @@ table.table thead th:focus {
     font-weight: 500;
 }
 
+.suptitle {
+    font-size: 22px !important;
+    font-weight: 500;
+}
+
 .pointer-none {
     pointer-events: none !important;
 }

@@ -4,8 +4,19 @@ html,
 body,
 div.application,
 main.content {
-    overflow: hidden;
+    width: 100vw;
     height: 100vh;
+    overflow: hidden;
+    /*overflow-y: hidden;*/
+}
+
+/*main.content nav.toolbar.toolbar--fixed:first-of-type {*/
+main.content nav.toolbar:nth-of-type(n-1) {
+	border: 2px solid red !important;
+}
+
+div.content--wrap > div.container {
+	overflow-x: auto;
 }
 
 p {
@@ -32,6 +43,7 @@ div.container.container--scrollable {
 /*
 	SCROLLBAR
 */
+
 
 /*div.container.container--scrollable::-webkit-scrollbar-thumb {
     border-radius: 4px;
@@ -65,7 +77,9 @@ div.container.container--scrollable::-webkit-scrollbar {
     width: 8px;
 }
 
+
 /*div.container.container--scrollable::-webkit-scrollbar-thumb,*/
+
 .theme--light.scrollbar-mini::-webkit-scrollbar-thumb,
 .theme--light.scrollbar-small::-webkit-scrollbar-thumb,
 .theme--light .scrollbar-mini::-webkit-scrollbar-thumb,

@@ -19,16 +19,16 @@
             <v-avatar size="48">
                 <img class="elevation-1" :src="v_exchange_png(exchange.id)">
             </v-avatar>
-            <v-toolbar-title>
-                <p class="headline t-bold t-lh2">{{ exchange.name }}</p>
-                <p class="subheading t-300 t-lh2 mb-1">Connecting Your Account</p>
+            <v-toolbar-title class="t-lh2">
+                <p class="headline t-500">{{ exchange.name }}</p>
+                <p class="subheading t-300 mb-1">Connecting Your Account</p>
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 
         <v-container fluid fill-height grid-list-xl class="pa-0">
             <v-layout row class="ma-0">
-                <v-flex xl3 xs4 class="py-4 pl-4">
+                <v-flex lg3 xs4 class="py-4 pl-4">
 
                     <v-card>
                         <v-toolbar dense flat dark color="info">
@@ -55,13 +55,13 @@
                     </v-card>
 
                 </v-flex>
-                <v-flex xl9 xs8 class="py-4 pr-4 scroll-y">
+                <v-flex lg9 xs8 class="py-4 pr-4 scroll-y">
 
                     <v-card>
-                        <v-toolbar dense flat color="transparent">
-                            <v-icon>mdi-book-open-page-variant</v-icon>
+                        <v-toolbar flat color="transparent">
+                            <v-icon medium>mdi-book-open-page-variant</v-icon>
                             <!-- <v-toolbar-title>Instructions</v-toolbar-title> -->
-                            <v-toolbar-title>
+                            <v-toolbar-title class="headline">
                                 Create an API Key Pair
                                 <!-- <code>API Key Pair</code> -->
                                 <!-- <code class="info white--text">API Key Pair</code> -->
@@ -75,11 +75,11 @@
 
                             <v-stepper-step :step="1" :editable="step != 1">
                                 <!-- <v-layout row align-center class="mx-0"> -->
-                                    <p class="subheading mb-1">Goto your {{ exchange.name }} account API settings by clicking this link:</p>
-                                    <v-btn outline class="ma-0 t-transform-none t-400" v-on:click.stop="v_hrefSettingsUrl(exchange.settingsUrl)">
-                                        <v-icon left>mdi-open-in-new</v-icon>
-                                        {{ exchange.settingsUrl }}
-                                    </v-btn>
+                                <p class="subheading mb-2">Goto your {{ exchange.name }} account API settings by clicking this link:</p>
+                                <v-btn outline class="ma-0 t-transform-none t-400" v-on:click.stop="v_hrefSettingsUrl(exchange.settingsUrl)">
+                                    <v-icon left>mdi-open-in-new</v-icon>
+                                    {{ exchange.settingsUrl }}
+                                </v-btn>
                                 <!-- </v-layout> -->
                             </v-stepper-step>
                             <v-stepper-content :step="1">
