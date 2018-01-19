@@ -38,8 +38,7 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
     <v-navigation-drawer app fixed permanent stateless floating class="main--drawer card br-0 pb-0" :mini-variant="!state.show">
         <v-layout column fill-height>
 
-            <v-list two-line class="pt-0 pb-3 scroll-y scrollbar-mini scrollbar-small">
-
+            <v-list two-line class="py-0 scroll-y scrollbar-small">
                 <template v-for="item in routes">
                     <v-list-tile v-ripple :to="{ name: item.name }" :key="item.name">
                         <v-list-tile-action>
@@ -52,25 +51,59 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                     </v-list-tile>
                     <v-divider inset></v-divider>
                 </template>
-
             </v-list>
 
-            <v-spacer></v-spacer>
 
-            <v-list two-line class="py-0">
-                <v-divider></v-divider>
-                <template v-if="v_development">
-                    <v-list-tile v-ripple v-on:click="clearLocalStorage">
+
+
+
+            <template v-if="v_development">
+                <v-spacer></v-spacer>
+
+                <v-list class="py-0">
+                    <v-divider></v-divider>
+                    <v-list-tile v-ripple v-on:click="state.debugBreakpoints = !state.debugBreakpoints">
                         <v-list-tile-action>
-                            <v-icon medium>mdi-delete-sweep</v-icon>
+                            <v-icon medium>mdi-format-line-style</v-icon>
                         </v-list-tile-action>
                         <v-list-tile-content>
-                            <v-list-tile-title>Clear Local Storage</v-list-tile-title>
-                            <v-list-tile-sub-title>And hard reload page</v-list-tile-sub-title>
+                            <v-list-tile-title>Debug Breakpoints</v-list-tile-title>
                         </v-list-tile-content>
+                        <v-list-tile-action>
+                            <v-icon>chat_bubble</v-icon>
+                        </v-list-tile-action>
                     </v-list-tile>
-                    <v-divider inset></v-divider>
-                </template>
+                    <v-divider></v-divider>
+                </v-list>
+                <v-spacer></v-spacer>
+
+                <v-list class="py-0">
+                    <v-divider></v-divider>
+                    <v-tooltip top color="error" transition="false" open-delay="0" close-delay="0">
+                        <v-list-tile v-ripple v-on:click="preClear" v-on:dblclick="clearLocalStorage" slot="activator">
+                            <v-list-tile-action>
+                                <v-icon medium>mdi-delete-forever</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Wipe Data, Hard Reload</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                        <span>Double click to wipe and reload</span>
+                    </v-tooltip>
+                    <v-divider></v-divider>
+                </v-list>
+                <v-spacer></v-spacer>
+
+            </template>
+
+            <v-spacer v-else></v-spacer>
+
+
+
+
+
+            <v-list three-line class="py-0">
+                <v-divider></v-divider>
                 <v-list-tile v-ripple v-on:click="$root.toggleTheme">
                     <v-list-tile-action>
                         <v-icon medium>{{ $root.theme == 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>

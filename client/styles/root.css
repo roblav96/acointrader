@@ -24,12 +24,24 @@ code {
 
 
 /*
+	VUETIFY
+*/
+
+
+/*ul.list:not(.list--two-line):not(.list--three-line) div.list__tile__title ~ div.list__tile__sub-title,
+ul.list:not(.list--two-line):not(.list--three-line) div.list__tile__sub-title ~ div.list__tile__title {
+    background-color: red !important;
+}*/
+
+
+/*
 	SCROLLING
 */
 
-main.content nav.toolbar.toolbar--fixed ~ div.container {
+
+/*main.content nav.toolbar.toolbar--fixed ~ div.container {
     overflow-x: auto;
-}
+}*/
 
 main.content nav.toolbar.toolbar--fixed ~ div.container.container--scrollable {
     height: 100%;
@@ -70,16 +82,16 @@ main.content nav.toolbar.toolbar--fixed ~ div.container.container--scrollable {
 .theme--light.scrollbar-small::-webkit-scrollbar-thumb,
 .theme--light .scrollbar-mini::-webkit-scrollbar-thumb,
 .theme--light .scrollbar-small::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .theme--dark.scrollbar-mini::-webkit-scrollbar-thumb,
 .theme--dark.scrollbar-small::-webkit-scrollbar-thumb,
 .theme--dark .scrollbar-mini::-webkit-scrollbar-thumb,
 .theme--dark .scrollbar-small::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 

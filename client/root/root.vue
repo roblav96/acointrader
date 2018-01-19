@@ -14,8 +14,10 @@ div.application--wrap > nav.toolbar.dummy-toolbar {
 div.debug--breakpoints {
     position: fixed;
     z-index: 999;
-    bottom: 0px;
-    left: 0px;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    /*pointer-events: none;*/
 }
 
 
@@ -39,16 +41,16 @@ div.debug--breakpoints {
 
 
 
-            <!-- <v-slide-y-transition> -->
-                <div v-if="$store.state.mainDrawer.debugBreakpoints" class="debug--breakpoints card pa-2">
+            <v-slide-y-transition appear>
+                <v-card v-if="$store.state.mainDrawer.debugBreakpoints" class="debug--breakpoints pa-2">
                     <table>
                         <tr class="t-left" v-for="(v, k, i) in $vuetify.breakpoint" :key="k">
                             <th class="body-1">{{ k }}</th>
                             <th class="body-2">{{ v }}</th>
                         </tr>
                     </table>
-                </div>
-            <!-- </v-slide-y-transition> -->
+                </v-card>
+            </v-slide-y-transition>
 
 
 
