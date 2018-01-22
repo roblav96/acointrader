@@ -50,7 +50,7 @@ export default class Snackbar extends Vue {
 				if (item.color == 'warning') item.icon = 'mdi-alert';
 				if (item.color == 'error') item.icon = 'mdi-alert-octagram';
 			}
-			item.duration = item.duration || 3000
+			item.duration = item.duration || 5000
 			item.timeout = _.delay(this.splice, item.duration, item.id)
 		})
 	}

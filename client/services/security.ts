@@ -64,7 +64,7 @@ export function getReady() {
 export function askEmail(): Promise<boolean> {
 	return EmailPrompt.prompt(state.email).then(function(email) {
 		if (!email) return Promise.resolve(false);
-		return http.post('/set-email', { email }).then(function(response) {
+		return http.post('/security/set-email', { email }).then(function(response) {
 			console.log('response', response)
 			// process.sls.set('security.email', email)
 			// state.email = email

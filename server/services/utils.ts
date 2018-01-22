@@ -44,6 +44,15 @@ export function dispersedSecs(secs: number, i: number, length: number) {
 
 
 
+export function restifyBulkRoutes(server: restify.Server, parent: string, routes: { [route: string]: any }) {
+	Object.keys(routes).forEach(function(key) {
+		let split = key.split(':')
+		let method = split[0]
+		let url = split[1]
+		server[method.toLowerCase()]('/api/' + parent + '/' + url, routes[key])
+	})
+}
+
 export function restifyRoute<B = any, R = any>(route: (req: RestifyRequest<B>, res: RestifyResponse<R>, next: RestifyNext) => void) {
 	return route
 }
