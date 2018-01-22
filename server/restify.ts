@@ -11,8 +11,10 @@ import * as shared from '../shared/shared'
 import os from 'os'
 import cluster from 'cluster'
 import restify from 'restify'
+import { parse as parseUrl } from 'url'
 import redis from './adapters/redis'
 import r from './adapters/rethinkdb'
+import * as security from './services/security'
 
 
 
@@ -55,8 +57,9 @@ server.use(utils.restifyRoute(function(req, res, next) {
 	Promise.resolve().then(function() {
 		if (!req.route) throw new errors.NotFoundError('Undefined request route');
 
-		console.log('req.headers >')
-		eyes.inspect(req.headers)
+		security.reqBuild(req)
+
+
 
 		return next()
 
@@ -69,9 +72,6 @@ server.use(utils.restifyRoute(function(req, res, next) {
 
 
 
-
-import api_ready from './routes/ready'
-server.post('/api/ready', api_ready)
 
 import security_routes from './routes/security-routes'
 utils.restifyBulkRoutes(server, 'security', security_routes)
@@ -130,7 +130,7 @@ if (utils.isMaster()) {
 
 	server.listen(process.$port, process.$host, function() {
 		if (utils.isPrimary()) {
-			let host = 'acointrader.com'
+			let host = parseUrl(process.$domain).host
 			if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
 			console.log('\n' +
 				clc.bold.underline(process.$dname) + '\n' +

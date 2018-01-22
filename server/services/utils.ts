@@ -57,12 +57,17 @@ export function restifyRoute<B = any, R = any>(route: (req: RestifyRequest<B>, r
 	return route
 }
 
-export function validate(body: any, keys: Array<string>): void {
+export function validBody(body: any, keys: Array<string>): void {
 	if (!body) throw new errors.PreconditionFailedError('Undefined request body');
 	if (Object.keys(body).length == 0) throw new errors.PreconditionFailedError('Empty request body');
 	keys.forEach(function(k) {
 		if (body[k] == null) throw new errors.PreconditionFailedError(`Missing "${k}" field`);
 	})
+}
+
+export function validHeader(header: string, value: string, length = -1): void {
+	if (!value) throw new errors.PreconditionFailedError('Invalid x-uuid');
+	if (length >= 0 && value.length != length) throw new errors.LengthRequiredError('Invalid x-uuid');
 }
 
 

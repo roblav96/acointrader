@@ -29,8 +29,6 @@ function request(config: HttpRequestConfig): Promise<any> {
 		let domain = config.production ? 'https://acointrader.com' : process.$domain
 		config.baseURL = domain + '/api'
 		Object.assign(config.headers, security.getHeaders(), {
-			'x-finger': process.sls.get('security.finger'),
-			'x-email': process.sls.get('security.email'),
 			'x-version': process.$version,
 			'x-platform': 'web',
 		})

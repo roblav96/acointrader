@@ -6,7 +6,6 @@ import * as store from './services/store'
 import * as security from './services/security'
 
 import Root from './root/root'
-// import Auth from './routes/auth/auth'
 import Accounts from './routes/accounts/accounts'
 import Connect from './routes/connect/connect'
 import Coins from './routes/coins/coins'
@@ -16,12 +15,6 @@ import Intro from './routes/intro/intro'
 
 
 export const routes = [
-
-	// {
-	// 	name: 'auth',
-	// 	path: '/auth',
-	// 	component: Auth,
-	// },
 
 	{
 		dname: 'My Exchange Accounts',
@@ -47,17 +40,6 @@ export const routes = [
 		path: '/intro',
 		component: Intro,
 	},
-
-	// {
-	// 	dname: 'Search Anything',
-	// 	description: 'Coins, symbols, ICOs, exchanges',
-	// 	icon: 'mdi-magnify',
-	// 	bold: true,
-	// 	mmenu: true,
-	// 	name: 'search',
-	// 	path: '/search',
-	// 	component: Search,
-	// },
 
 	{
 		dname: 'Top Gainers and Losers',

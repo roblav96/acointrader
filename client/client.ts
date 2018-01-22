@@ -3,12 +3,13 @@
 process.$env = process.$webpack.env
 process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
 process.PRODUCTION = process.$env == 'PRODUCTION'
+process.CLIENT = true
+process.SERVER = false
 
 process.$domain = 'https://acointrader.com'
 if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
-// if (process.DEVELOPMENT) process.$domain = 'http://localhost:4337';
 
-process.$version = '0.0.1'
+process.$version = '1'
 
 
 

@@ -7,20 +7,20 @@ import restify from 'restify'
 import * as errors from '../services/errors'
 import * as utils from '../services/utils'
 
+import { parse as parseUrl } from 'url'
 import axios from 'axios'
-import url from 'url'
 
 
 
 export default utils.restifyRoute<any, any>(function(req, res, next) {
 
 	Promise.resolve().then(function() {
-		utils.validate(req.body, ['method', 'url'])
+		utils.validBody(req.body, ['method', 'url'])
 
-		let purl = url.parse(req.body.url)
-		if (!_.isString(purl.host)) throw new errors.PreconditionFailedError('Invalid url');
+		let parsed = parseUrl(req.body.url)
+		if (!_.isString(parsed.host)) throw new errors.PreconditionFailedError('Invalid url');
 
-		let host = purl.host.split('.').splice(-2).join('.')
+		let host = parsed.host.split('.').splice(-2).join('.')
 		let validhosts = [
 			// '',
 		]

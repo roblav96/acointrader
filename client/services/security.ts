@@ -21,40 +21,46 @@ export const state = {
 
 
 
-export function getHeaders(): HttpHeaders {
-	return {
-		'x-finger': process.sls.get('security.finger'),
-		'x-email': process.sls.get('security.email'),
-	}
-}
+function initialize() {
 
+	let uuid = process.sls.get('security.uuid') as string
+	if (!uuid) process.sls.set('security.uuid', utils.randomBytes());
 
-
-function initFinger() {
 	let finger = process.sls.get('security.finger') as string
-	if (finger) return Promise.resolve(finger);
-	return new Promise<string>(function(resolve) {
+	if (finger) return Promise.resolve();
+	return new Promise<void>(function(resolve) {
 		new Fingerprint2().get(finger => {
 			process.sls.set('security.finger', finger)
-			resolve(finger)
+			resolve()
 		})
 	})
+
 }
 
-function isReady() {
-	return http.post('/ready').then(response => {
-		console.log('isReady > response', response)
+function syncToken() {
+	return http.get('/security/token').then(response => {
+		console.log('syncToken > response', response)
 		return Promise.resolve()
 	}).catch(function(error) {
-		console.error('isReady > error', error)
-		return pdelay(1000).then(isReady)
+		console.error('syncToken > error', error)
+		return pdelay(process.DEVELOPMENT ? 3000 : 1000).then(syncToken)
 	})
 }
 
 export function getReady() {
-	return Promise.resolve().then(initFinger).then(isReady).then(function() {
+	return Promise.resolve().then(initialize).then(syncToken).then(function() {
 		return Promise.resolve()
 	})
+}
+
+
+
+export function getHeaders(): HttpHeaders {
+	return {
+		'x-uuid': process.sls.get('security.uuid'),
+		'x-finger': process.sls.get('security.finger'),
+		'x-email': process.sls.get('security.email'),
+	}
 }
 
 

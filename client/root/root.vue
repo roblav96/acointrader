@@ -4,7 +4,7 @@
 <style>
 /**/
 
-div.application--wrap > nav.toolbar.dummy-toolbar {
+div.application--wrap nav.toolbar.dummy-toolbar {
     z-index: 0;
 }
 
@@ -35,8 +35,6 @@ div.debug--breakpoints {
             <v-fade-transition mode="out-in">
                 <router-view></router-view>
             </v-fade-transition>
-
-            <!-- <register-dialog></register-dialog> -->
 
             <snackbar></snackbar>
 

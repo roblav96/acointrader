@@ -1,16 +1,14 @@
 /**/
 
-html,
+
+/*html,
 body,
 div.application,
 main.content {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-}
-
-
-/**/
+}*/
 
 p {
     margin-bottom: 0px;
@@ -43,10 +41,14 @@ ul.list:not(.list--two-line):not(.list--three-line) div.list__tile__sub-title ~ 
     overflow-x: auto;
 }*/
 
-main.content nav.toolbar.toolbar--fixed ~ div.container.container--scrollable {
+
+/*main.content nav.toolbar.toolbar--fixed ~ div.container.container--scrollable {*/
+
+
+/*div.container.container--scrollable {
     height: 100%;
     overflow-y: auto;
-}
+}*/
 
 
 /**/
@@ -123,12 +125,6 @@ main.content nav.toolbar.toolbar--fixed ~ div.container.container--scrollable {
     opacity: 0.2 !important;
 }
 
-code.theme--light,
-.theme--light code {
-    /*background-color: rgba(0, 0, 0, 0.12);*/
-    /*background-color: #fafafa;*/
-}
-
 .theme--light .bg-dim {
     background-color: rgba(0, 0, 0, 0.33);
 }
@@ -140,6 +136,13 @@ code.theme--light,
 .theme--light .divider--lighter {
     background-color: rgba(0, 0, 0, 0.38);
 }
+
+
+/*code.theme--light,
+.theme--light code {
+    background-color: rgba(0, 0, 0, 0.12);
+    background-color: #fafafa;
+}*/
 
 
 /*
@@ -169,11 +172,6 @@ code.theme--light,
     opacity: 0.33 !important;
 }
 
-code.theme--dark,
-.theme--dark code {
-    background-color: rgb(48, 48, 48);
-}
-
 .theme--dark.bg-dim,
 .theme--dark .bg-dim {
     background-color: rgba(0, 0, 0, 0.5);
@@ -187,6 +185,11 @@ code.theme--dark,
 .theme--dark.divider--lighter,
 .theme--dark .divider--lighter {
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+code.theme--dark,
+.theme--dark code {
+    background-color: rgb(48, 48, 48);
 }
 
 

@@ -14,6 +14,8 @@ declare global {
 			$env: string
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean
+			CLIENT: boolean
+			SERVER: boolean
 			$webpack: any
 			$domain: string
 			$version: string

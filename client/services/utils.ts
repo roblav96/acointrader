@@ -115,10 +115,6 @@ export function randomBytes(length = 32) {
 	return btyes
 }
 
-export function parseId(id: string) {
-	return id.toLowerCase().replace(/\@W+/g, '').trim()
-}
-
 export function cleanString(input: string) {
 	return input.replace(/[^a-zA-Z0-9 ]/g, '').trim().replace(/\s\s+/g, ' ')
 }

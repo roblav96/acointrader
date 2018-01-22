@@ -41,11 +41,27 @@ declare global {
 
 
 	type HttpHeaders = { [key: string]: string }
+	
+	// interface SecurityDoc {
+	// 	uuid: string
+	// 	finger: string
+	// 	ip: string
+	// 	conn: string
+	// 	prime: string
+	// 	token: string
+	// }
 
 	interface RestifyRequest<T = any> extends restify.Request {
 		headers: HttpHeaders
 		route: restify.Route
 		body: T
+		ip: string
+		conn: string
+		uuid: string
+		finger: string
+		email: string
+		token: string
+		authed: boolean
 	}
 
 	interface RestifyResponse<T = any> extends restify.Response {

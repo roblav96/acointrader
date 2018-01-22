@@ -7,7 +7,6 @@ import _ from 'lodash'
 import lockr from 'lockr'
 import MainDrawer from '../components/main-drawer/main-drawer'
 import Snackbar from '../components/snackbar/snackbar'
-// import RegisterDialog from '../components/register-dialog/register-dialog'
 
 
 
@@ -17,7 +16,6 @@ import Snackbar from '../components/snackbar/snackbar'
 	components: {
 		'main-drawer': MainDrawer,
 		'snackbar': Snackbar,
-		// 'register-dialog': RegisterDialog,
 	},
 
 } as any)

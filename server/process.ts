@@ -19,6 +19,11 @@ process.$instance = cluster.isWorker ? Number.parseInt(cluster.worker.id as any)
 process.$env = process.$webpack.env
 process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
 process.PRODUCTION = process.$env == 'PRODUCTION'
+process.CLIENT = false
+process.SERVER = true
+
+process.$domain = 'https://acointrader.com'
+if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
 
 process.$host = process.$webpack.host
 process.$port = process.$webpack.port

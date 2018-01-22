@@ -17,6 +17,7 @@ declare global {
 		icon?: string
 		bold?: boolean
 		mmenu?: boolean
+		children?: Array<RouteConfig>
 	}
 
 	interface VueComponent extends ComponentOptions<Vue> { }
