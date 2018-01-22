@@ -5,6 +5,7 @@ import * as Avts from 'av-ts'
 import Vue from 'vue'
 import _ from 'lodash'
 import lockr from 'lockr'
+import clipboard from 'copy-text-to-clipboard'
 import * as utils from '../../services/utils'
 import * as exchanges from '../../services/exchanges'
 import VMixin from '../../mixins/v-mixin'
@@ -25,12 +26,13 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	created() {
 		this.apiKey = Object.assign({}, this.exchange.apiKey)
 		if (process.DEVELOPMENT && process.$webpack[this.exchange.id]) {
-			// this.apiKey = Object.assign({}, process.$webpack[this.exchange.id])
+			this.apiKey = Object.assign({}, process.$webpack[this.exchange.id])
 		}
 	}
 
 	mounted() {
-		
+		// console.log('clipboard', clipboard)
+		clipboard('coppy this')
 	}
 
 	beforeDestroy() {
@@ -60,7 +62,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 
 
-	step = 1
+	step = 4
 	@Vts.Watch('step') w_step(to: number, from: number) {
 		if (to <= this.steps.length) return;
 		let key_input = (this.$refs.key_input as any) as HTMLInputElement
@@ -72,14 +74,13 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		let keys = ['API Key', 'API Secret']
 		if (this.apiKey.passphrase !== undefined) keys.push('Passphrase');
 		let last = keys.pop()
-		let words = keys.map(v => '<code>' + v + '</code>').join(', ')
-		steps.push(`Copy and paste the ${words} and <code>${last}</code> into the <code class="info white--text">API Key Pair</code> form at the top of this page`)
+		let words = keys.map(v => '<code class="info white--text">' + v + '</code>').join(', ')
+		steps.push(`Copy and paste the ${words} and <code class="info white--text">${last}</code> into the blue input fields pinned to the top of this page.`)
 		return steps
 	}
 
-	v_hrefSettingsUrl(keyurl: string) {
+	v_clickedUrl() {
 		if (this.step == 1) this.step++;
-		this.v_href(keyurl)
 	}
 
 

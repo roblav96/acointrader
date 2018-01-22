@@ -79,13 +79,13 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                     <v-tooltip right color="error" transition="false" open-delay="0" close-delay="0">
                         <v-list-tile v-ripple v-on:click v-on:dblclick="clearLocalStorage" slot="activator">
                             <v-list-tile-action>
-                                <v-icon medium>mdi-delete-forever</v-icon>
+                                <v-icon medium>mdi-bomb</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-content>
                                 <v-list-tile-title>Wipe Data, Hard Reload</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                        <span>Double click to wipe and reload</span>
+                        <span>Double-click to wipe and hard reload</span>
                     </v-tooltip>
                     <v-divider></v-divider>
                 </v-list>

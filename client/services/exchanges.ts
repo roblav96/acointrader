@@ -119,8 +119,8 @@ export class Coinbase extends ExchangeBuilder {
 			`In the <code>Accounts</code> section, click the <code>all</code> checkbox`,
 			`In the <code>Permissions</code> section, at the bottom of <code>API v2 permissions</code> click <code>Select all</code>`,
 			`
-			In the <code>Notifications</code> section, set the <code>Notification URL</code> to <code class="red--text">https://acointrader.com/api/coinbase/notifications</code><br>
-			In the <code>Security settings</code> section, set the <code>Allowed IP Addresses</code> to <code class="red--text">192.34.85.234</code><br>
+			In the <code>Notifications</code> section, set the <code>Notification URL</code> to <code class="white red--text">https://acointrader.com/api/coinbase/notifications</code><br>
+			In the <code>Security settings</code> section, set the <code>Allowed IP Addresses</code> to <code class="white red--text">192.34.85.234</code><br>
 			Click the <code>Create</code> button
 			`,
 		]
@@ -140,7 +140,7 @@ export class Gdax extends ExchangeBuilder {
 			`
 			In the <code>Permissions</code> section, select the checkboxes as shown below<br>
 			Input a <code>Passphrase</code> or use the one pre-filled<br>
-			Set the <code>IP Whitelist</code> to <code class="red--text">192.34.85.234</code><br>
+			Set the <code>IP Whitelist</code> to <code class="white red--text">192.34.85.234</code><br>
 			Click the <code>Create API Key</code> button
 			`,
 		]
@@ -153,14 +153,14 @@ export class Binance extends ExchangeBuilder {
 	getSteps() {
 		return [
 			`
-			Set the <code>API key label</code> to <code class="red--text">acointrader</code><br>
+			Set the <code>API key label</code> to <code class="white red--text">acointrader</code><br>
 			Click the <code>Create New Key</code> button
 			`,
 			`Click the <code>Edit</code> button`,
 			`
 			In the <code>Option</code> section, select all the checkboxes as shown below<br>
 			In the <code>IP Access Restriction</code> section, select <code>Restrict access to trusted IPs only</code><br>
-			Set the <code>Trusted IPs</code> to <code class="red--text">192.34.85.234</code><br>
+			Set the <code>Trusted IPs</code> to <code class="white red--text">192.34.85.234</code><br>
 			Click the <code>Save</code> button
 			`,
 		]

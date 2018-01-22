@@ -9,6 +9,15 @@ main.content {
     overflow: hidden;
 }
 
+main.content > div.content--wrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+main.content.content--scrollable > div.content--wrap {
+    overflow: auto;
+}
+
 
 /*
 	VUETIFY FIXES
@@ -24,6 +33,14 @@ code {
     margin-right: 2px;
 }
 
+button.btn.btn--outline.btn-bold {
+    border-width: 2px;
+}
+
+div.input-group.input-group--solo > div.input-group__input > i.icon:hover {
+	color: inherit;
+}
+
 div.input-group.input-group--solo span.input-group--text-field__prefix {
     margin-top: 0px;
     margin-right: 8px;
@@ -34,13 +51,14 @@ div.input-group.input-group--solo span.input-group--text-field__prefix {
 	SCROLLING
 */
 
-div.container.container--scrollable,
+
+/*div.container.container--scrollable,
 div.layout.layout--scrollable {
     width: 100%;
     overflow-x: hidden;
     height: 100%;
     overflow-y: auto;
-}
+}*/
 
 .scrollbar-mini::-webkit-scrollbar-thumb {
     border-radius: 2px;
