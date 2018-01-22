@@ -69,9 +69,6 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                         <v-list-tile-content>
                             <v-list-tile-title>Debug Breakpoints</v-list-tile-title>
                         </v-list-tile-content>
-                        <v-list-tile-action>
-                            <v-icon>chat_bubble</v-icon>
-                        </v-list-tile-action>
                     </v-list-tile>
                     <v-divider></v-divider>
                 </v-list>
@@ -79,8 +76,8 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
 
                 <v-list class="py-0">
                     <v-divider></v-divider>
-                    <v-tooltip top color="error" transition="false" open-delay="0" close-delay="0">
-                        <v-list-tile v-ripple v-on:click="preClear" v-on:dblclick="clearLocalStorage" slot="activator">
+                    <v-tooltip right color="error" transition="false" open-delay="0" close-delay="0">
+                        <v-list-tile v-ripple v-on:click v-on:dblclick="clearLocalStorage" slot="activator">
                             <v-list-tile-action>
                                 <v-icon medium>mdi-delete-forever</v-icon>
                             </v-list-tile-action>

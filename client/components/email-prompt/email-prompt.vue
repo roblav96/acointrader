@@ -12,8 +12,8 @@
 <template>
     <v-dialog scrollable max-width="400" content-class="scroll-y-none" v-model="show">
         <v-form class="card" v-on:submit.prevent="save">
-            <v-toolbar flat color="transparent">
-                <v-toolbar-title class="headline t-400">Recovery Email</v-toolbar-title>
+            <v-toolbar flat dark color="primary">
+                <v-toolbar-title class="headline">Recovery Email</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon flat large class="ma-0 mr-2" v-on:click="show = false">
                     <v-icon medium>mdi-close</v-icon>

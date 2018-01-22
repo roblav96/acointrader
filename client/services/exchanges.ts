@@ -261,6 +261,14 @@ export const exchanges = [
 		settingsUrl: 'https://bittrex.com',
 	} as ExchangeMetadata),
 
+	// new CoinsBank({
+	// 	id: 'coinsbank',
+	// 	name: 'CoinsBank',
+	// 	countryCode: 'GB',
+	// 	website: 'https://coinsbank.com',
+	// 	settingsUrl: 'https://coinsbank.com/app/user/api',
+	// } as ExchangeMetadata),
+
 ] as Array<ExchangeBuilder>
 
 exchanges.forEach((v, i) => v.index = i)

@@ -22,6 +22,8 @@
 	],
 	"exclude": [
 		"dist",
+		"client/public/dist",
+		"server/dist",
 		"tsc",
 		"node_modules"
 	]

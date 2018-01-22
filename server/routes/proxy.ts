@@ -22,7 +22,7 @@ export default utils.restifyRoute<any, any>(function(req, res, next) {
 
 		let host = purl.host.split('.').splice(-2).join('.')
 		let validhosts = [
-			'yahoo.com',
+			// '',
 		]
 		if (validhosts.indexOf(host) == -1) {
 			throw new errors.PreconditionFailedError('Invalid url')

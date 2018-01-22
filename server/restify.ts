@@ -9,6 +9,8 @@ import restify from 'restify'
 import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
+import redis from './adapters/redis'
+import r from './adapters/rethinkdb'
 
 
 
@@ -115,7 +117,7 @@ if (utils.isMaster()) {
 			if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
 			console.log('\n' +
 				clc.bold.underline(process.$dname) + '\n' +
-				'v' + process.$version + '\n' +
+				'v' + process.$version + ' ' +
 				clc.bold(process.$env) + '\n' +
 				clc.bold.green('@') + host + '\n' +
 				'/*===============================================\n' +
