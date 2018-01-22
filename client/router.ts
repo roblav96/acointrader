@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import * as store from './services/store'
+import * as security from './services/security'
 
 import Root from './root/root'
+// import Auth from './routes/auth/auth'
 import Accounts from './routes/accounts/accounts'
 import Connect from './routes/connect/connect'
 import Coins from './routes/coins/coins'
@@ -14,6 +16,12 @@ import Intro from './routes/intro/intro'
 
 
 export const routes = [
+
+	// {
+	// 	name: 'auth',
+	// 	path: '/auth',
+	// 	component: Auth,
+	// },
 
 	{
 		dname: 'My Exchange Accounts',
@@ -79,7 +87,13 @@ export const router = new VueRouter({
 Root.options.router = router
 Root.options.store = store.store
 
+
+
 new Root().$mount('#root')
+security.getReady().then(function() {
+	// new Root().$mount('#root')
+	return Promise.resolve()
+})
 
 
 

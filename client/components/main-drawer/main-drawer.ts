@@ -51,8 +51,7 @@ export default class MainDrawer extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 	clearLocalStorage() {
 		window.localStorage.clear()
-		Snackbar.push({ message: `Poof it's gone! Reloading...`, color: 'error', duration: 1000 })
-		_.delay(() => location.reload(true), 1000)
+		location.reload(true)
 	}
 
 

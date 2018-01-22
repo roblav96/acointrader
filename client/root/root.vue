@@ -36,6 +36,8 @@ div.debug--breakpoints {
                 <router-view></router-view>
             </v-fade-transition>
 
+            <!-- <register-dialog></register-dialog> -->
+
             <snackbar></snackbar>
 
 

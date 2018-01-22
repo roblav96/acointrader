@@ -73,6 +73,9 @@ server.use(utils.restifyRoute(function(req, res, next) {
 import api_ready from './routes/ready'
 server.post('/api/ready', api_ready)
 
+import api_set_email from './routes/set-email'
+server.post('/api/set-email', api_set_email)
+
 
 
 

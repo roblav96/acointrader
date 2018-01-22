@@ -60,7 +60,7 @@
                     <v-card>
                         <v-toolbar flat color="transparent">
                             <v-icon medium>mdi-book-open-page-variant</v-icon>
-                            <v-toolbar-title class="headline">Create an API Key Pair</v-toolbar-title>
+                            <v-toolbar-title class="headline">Create a {{ exchange.name }} API Key Pair</v-toolbar-title>
                             <v-spacer></v-spacer>
                         </v-toolbar>
                         <v-divider></v-divider>

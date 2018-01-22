@@ -7,16 +7,17 @@ import _ from 'lodash'
 import * as shared from '../../../shared/shared'
 import * as utils from '../../services/utils'
 import VMixin from '../../mixins/v-mixin'
+import phonelib from 'awesome-phonenumber'
 
 
 
 @Vts.Component(<VueComponent>{
-	name: 'EmailPrompt',
+	name: 'AuthPrompt',
 } as any)
-export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
+export default class AuthPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 	created() {
-
+		
 	}
 
 	mounted() {
@@ -29,12 +30,21 @@ export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 		this.$el.remove()
 	}
 
-
-
 	resolve: (email?: string) => void
 
+
+
 	email = ''
-	get valid() { return shared.isValidEmail(this.email) }
+	get isEmail() { return shared.isValidEmail(this.email) }
+
+	phone = ''
+	get isPhone() { return true } // utils.isValidPhone(this.email) }
+
+	get valid() {
+		return this.isEmail && this.isPhone
+	}
+
+
 
 	show = false
 	@Vts.Watch('show') w_show(to: boolean) {
@@ -43,10 +53,14 @@ export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 		_.delay(() => this.$destroy(), 300)
 	}
 
+
+
 	save() {
 		this.resolve(this.email)
 		this.show = false
 	}
+
+
 
 }
 
@@ -54,8 +68,8 @@ export default class EmailPrompt extends Avts.Mixin<Vue & VMixin>(Vue, VMixin) {
 
 export function prompt(email = '') {
 	return new Promise<string>(function(resolve, reject) {
-		let vue = new EmailPrompt().$mount()
-		if (process.DEVELOPMENT && !email) email = 'awesome@acointrader.com';
+		let vue = new AuthPrompt().$mount()
+		if (process.DEVELOPMENT) email = 'awesome@acointrader.com';
 		vue.email = email
 		vue.resolve = resolve
 		document.getElementById('root').appendChild(vue.$el)

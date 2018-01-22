@@ -22,7 +22,7 @@ process.PRODUCTION = process.$env == 'PRODUCTION'
 
 process.$host = process.$webpack.host
 process.$port = process.$webpack.port
-process.$dname = '𝛂CoinTrader'
+process.$dname = 'aCoinTrader' // '𝛂CoinTrader'
 process.$version = '1'
 
 process.env.NODE_HEAPDUMP_OPTIONS = 'nosignal'

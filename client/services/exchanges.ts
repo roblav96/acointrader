@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
-import * as scope from './scope'
+import * as security from './security'
 import * as http from './http'
 import Snackbar from '../components/snackbar/snackbar'
 
@@ -74,7 +74,7 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 	saveApiKey(apiKey: ExchangeApiKey): Promise<boolean> {
 		return Promise.resolve().then(() => {
-			if (!scope.state.email) return scope.askEmail();
+			if (!security.state.email) return security.askEmail();
 			return Promise.resolve(true)
 		}).then(result => {
 			if (!result) {

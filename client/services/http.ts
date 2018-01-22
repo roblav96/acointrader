@@ -3,7 +3,7 @@
 import _ from 'lodash'
 import axios from 'axios'
 import * as utils from './utils'
-import * as scope from './scope'
+import * as security from './security'
 import Snackbar from '../components/snackbar/snackbar'
 
 
@@ -28,10 +28,9 @@ function request(config: HttpRequestConfig): Promise<any> {
 		if (config.silent == true) config.params.silent = true;
 		let domain = config.production ? 'https://acointrader.com' : process.$domain
 		config.baseURL = domain + '/api'
-		Object.assign(config.headers, {
-			'Accept': '*/*',
-			'Accept-Encoding': 'deflate, gzip',
-			'x-finger': scope.getFinger(),
+		Object.assign(config.headers, security.getHeaders(), {
+			'x-finger': process.sls.get('security.finger'),
+			'x-email': process.sls.get('security.email'),
 			'x-version': process.$version,
 			'x-platform': 'web',
 		})

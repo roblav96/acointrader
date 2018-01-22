@@ -5,18 +5,19 @@ import Vuex, { Store } from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
 import * as utils from './utils'
-import * as scope from './scope'
+import * as security from './security'
 import * as exchanges from './exchanges'
 import MainDrawer from '../components/main-drawer/main-drawer'
 import Snackbar from '../components/snackbar/snackbar'
+// import RegisterDialog from '../components/register-dialog/register-dialog'
 
 
 
 class State {
-	
+
 	blockUI = false
 
-	scope = scope.state
+	security = security.state
 
 	apiKeys = exchanges.exchanges.map(v => v.apiKey)
 	// markets = exchanges.exchanges.map(v => v.market)
@@ -24,6 +25,7 @@ class State {
 
 	mainDrawer = MainDrawer.state
 	snackbar = Snackbar.state
+	// registerDialog = RegisterDialog.state
 
 }
 declare global { type StoreState = State }
@@ -67,7 +69,7 @@ export const store = new Vuex.Store<State>({
 })
 
 // console.log('store.state', store.state)
-// console.log('store.state.scope', store.state.scope)
+// console.log('store.state.security', store.state.security)
 // console.log('store.state.apiKeys', store.state.apiKeys)
 
 

@@ -71,10 +71,6 @@ if (utils.isMaster()) {
 	wss.on('connection', function(socket: Socket) {
 		socket.on('message', function(message: string) {
 			if (message == 'ping') return socket.send('pong');
-			if (message.indexOf(shared.ENUMS.BROADCAST + '|') == 0) {
-				process.ee3.emit(shared.ENUMS.BROADCAST, message.substring(shared.ENUMS.BROADCAST.length + 1))
-				return
-			}
 			wss.clients.forEach(function(socket: Socket) { socket.send(message) })
 		})
 	})
@@ -93,10 +89,6 @@ class RadioEmitter {
 			this.ee3.emit(message.event, message.data)
 		})
 		process.ee3.addListener(shared.EE3.TICK_5, () => this.ws.send('ping'))
-	}
-
-	broadcast(message: SocketMessage) {
-		this.ws.send(shared.ENUMS.BROADCAST + '|' + message.event + '|' + JSON.stringify(message))
 	}
 
 	emit(event: string, data?: any) {
