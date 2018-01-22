@@ -24,11 +24,17 @@ code {
     margin-right: 2px;
 }
 
+div.input-group.input-group--solo span.input-group--text-field__prefix {
+    margin-top: 0px;
+    margin-right: 8px;
+}
+
 
 /*
 	SCROLLING
 */
 
+div.container.container--scrollable,
 div.layout.layout--scrollable {
     width: 100%;
     overflow-x: hidden;

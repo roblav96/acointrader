@@ -25,16 +25,12 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	created() {
 		this.apiKey = Object.assign({}, this.exchange.apiKey)
 		if (process.DEVELOPMENT && process.$webpack[this.exchange.id]) {
-			this.apiKey = Object.assign({}, process.$webpack[this.exchange.id])
+			// this.apiKey = Object.assign({}, process.$webpack[this.exchange.id])
 		}
 	}
 
 	mounted() {
-		// _.delay(() => {
-		// 	console.log('this.$vuetify.breakpoint', JSON.stringify(this.$vuetify.breakpoint, null, 4))
-		// 	console.log('this.$vuetify.breakpoint', this.$vuetify.breakpoint)
-		// 	console.log('this.v_.name', this.v_.name)
-		// }, 100)
+		
 	}
 
 	beforeDestroy() {
@@ -77,7 +73,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		if (this.apiKey.passphrase !== undefined) keys.push('Passphrase');
 		let last = keys.pop()
 		let words = keys.map(v => '<code>' + v + '</code>').join(', ')
-		steps.push(`Copy and paste the ${words} and <code>${last}</code> into the <code class="info white--text">API Key Pair</code> form in the <code class="info white--text">left column</code>`)
+		steps.push(`Copy and paste the ${words} and <code>${last}</code> into the <code class="info white--text">API Key Pair</code> form at the top of this page`)
 		return steps
 	}
 

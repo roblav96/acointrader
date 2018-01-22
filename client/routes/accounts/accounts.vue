@@ -23,12 +23,6 @@
             </v-btn> -->
         </v-toolbar>
 
-        <!-- <v-container fluid grid-list-xl class="flex-0">
-            <v-card>
-                <h1>meh fixed?</h1>
-            </v-card>
-        </v-container> -->
-
         <v-layout column class="layout--scrollable">
             <v-container fluid grid-list-xl>
                 <v-card>
