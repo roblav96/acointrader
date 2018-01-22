@@ -1,14 +1,18 @@
 /**/
 
-
-/*html,
+html,
 body,
 div.application,
 main.content {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-}*/
+}
+
+
+/*
+	VUETIFY FIXES
+*/
 
 p {
     margin-bottom: 0px;
@@ -22,36 +26,15 @@ code {
 
 
 /*
-	VUETIFY
-*/
-
-
-/*ul.list:not(.list--two-line):not(.list--three-line) div.list__tile__title ~ div.list__tile__sub-title,
-ul.list:not(.list--two-line):not(.list--three-line) div.list__tile__sub-title ~ div.list__tile__title {
-    background-color: red !important;
-}*/
-
-
-/*
 	SCROLLING
 */
 
-
-/*main.content nav.toolbar.toolbar--fixed ~ div.container {
-    overflow-x: auto;
-}*/
-
-
-/*main.content nav.toolbar.toolbar--fixed ~ div.container.container--scrollable {*/
-
-
-/*div.container.container--scrollable {
+div.layout.layout--scrollable {
+    width: 100%;
+    overflow-x: hidden;
     height: 100%;
     overflow-y: auto;
-}*/
-
-
-/**/
+}
 
 .scrollbar-mini::-webkit-scrollbar-thumb {
     border-radius: 2px;

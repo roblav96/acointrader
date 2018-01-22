@@ -22,7 +22,7 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VTableMixin
 	}
 
 	mounted() {
-		
+
 	}
 
 	beforeDestroy() {
@@ -63,15 +63,6 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VTableMixin
 		exchange.deleteApiKey()
 		this.deletingDialog = false
 	}
-
-	// connectApiKey(id: string) {
-	// 	if (process.DEVELOPMENT && process.$webpack[id]) {
-	// 		let exchange = exchanges.exchanges.find(v => v.id == id)
-	// 		exchange.saveApiKey(process.$webpack[id])
-	// 		return
-	// 	}
-	// 	this.$router.push({ name: 'connect', params: { exchange: id } })
-	// }
 
 
 

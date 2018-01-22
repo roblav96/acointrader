@@ -26,7 +26,7 @@
             <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-container fluid fill-height grid-list-xl class="pa-0">
+        <v-container fluid grid-list-xl fill-height class="scroll-y">
             <v-layout row class="ma-0">
                 <v-flex lg3 md4 xs5 class="py-4 pl-4">
 

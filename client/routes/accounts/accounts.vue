@@ -23,6 +23,59 @@
             </v-btn> -->
         </v-toolbar>
 
+        <!-- <v-container fluid grid-list-xl class="flex-0">
+            <v-card>
+                <h1>meh fixed?</h1>
+            </v-card>
+        </v-container> -->
+
+        <v-layout column class="layout--scrollable">
+            <v-container fluid grid-list-xl>
+                <v-card>
+
+                    <v-data-table :headers="headers" :items="exchanges" :pagination.sync="pagination" hide-actions>
+                        <template slot="items" slot-scope="props">
+                            <td width="1">
+                                <v-btn large icon class="ma-0" :href="props.item.website" target="_blank">
+                                    <v-icon>mdi-open-in-new</v-icon>
+                                </v-btn>
+                            </td>
+                            <td width="1">
+                                <v-tooltip right transition="false" open-delay="0" close-delay="0">
+                                    <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.countryCode)" slot="activator">
+                                    <span>{{ props.item.countryCode }}</span>
+                                </v-tooltip>
+                            </td>
+                            <td width="1" class="py-3">
+                                <a :href="props.item.website" target="_blank">
+                                    <v-avatar size="48">
+                                        <img class="elevation-1" :src="v_exchange_png(props.item.id)">
+                                    </v-avatar>
+                                </a>
+                            </td>
+                            <td width="1" class="title">{{ props.item.name }}</td>
+                            <td class="body-1">{{ v_truncate(props.item.apiKey.key) }}</td>
+                            <td width="1">
+                                <v-btn v-if="props.item.connectable == false" block large disabled class="ma-0 t-transform-none">
+                                    <v-icon left medium>mdi-worker</v-icon>
+                                    WIP
+                                </v-btn>
+                                <v-btn v-else-if="props.item.apiKey.key" block large color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
+                                    <v-icon left medium>mdi-key-remove</v-icon>
+                                    Disconnect
+                                </v-btn>
+                                <v-btn v-else block large color="primary" class="ma-0 t-transform-none" :to="{ name: 'connect', params: { exchange: props.item.id } }">
+                                    <v-icon left medium>mdi-key-plus</v-icon>
+                                    Connect
+                                </v-btn>
+                            </td>
+                        </template>
+                    </v-data-table>
+
+                </v-card>
+            </v-container>
+        </v-layout>
+
         <v-dialog persistent lazy scrollable max-width="50%" content-class="scroll-y-none" v-model="deletingDialog">
             <v-card>
                 <v-toolbar flat dark color="error">
@@ -51,52 +104,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
-        <v-container fluid grid-list-xl class="container--scrollable">
-            <v-card>
-
-                <v-data-table :headers="headers" :items="exchanges" :pagination.sync="pagination" hide-actions>
-                    <template slot="items" slot-scope="props">
-                        <td width="1">
-                            <v-btn large icon class="ma-0" :href="props.item.website" target="_blank">
-                                <v-icon>mdi-open-in-new</v-icon>
-                            </v-btn>
-                        </td>
-                        <td width="1">
-                            <v-tooltip right transition="false" open-delay="0" close-delay="0">
-                                <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.countryCode)" slot="activator">
-                                <span>{{ props.item.countryCode }}</span>
-                            </v-tooltip>
-                        </td>
-                        <td width="1" class="py-3">
-                            <a :href="props.item.website" target="_blank">
-                                <v-avatar size="48">
-                                    <img class="elevation-1" :src="v_exchange_png(props.item.id)">
-                                </v-avatar>
-                            </a>
-                        </td>
-                        <td width="1" class="title">{{ props.item.name }}</td>
-                        <td class="body-1">{{ v_truncate(props.item.apiKey.key) }}</td>
-                        <td width="1">
-                            <v-btn v-if="props.item.connectable == false" block large disabled class="ma-0 t-transform-none">
-                                <v-icon left medium>mdi-worker</v-icon>
-                                WIP
-                            </v-btn>
-                            <v-btn v-else-if="props.item.apiKey.key" block large color="error" class="ma-0 t-transform-none" v-on:click="disconnectApiKey(props.item.id)">
-                                <v-icon left medium>mdi-key-remove</v-icon>
-                                Disconnect
-                            </v-btn>
-                            <v-btn v-else block large color="primary" class="ma-0 t-transform-none" :to="{ name: 'connect', params: { exchange: props.item.id } }">
-                                <!-- v-on:click="connectApiKey(props.item.id)"> -->
-                                <v-icon left medium>mdi-key-plus</v-icon>
-                                Connect
-                            </v-btn>
-                        </td>
-                    </template>
-                </v-data-table>
-
-            </v-card>
-        </v-container>
 
     </v-content>
 </template>
