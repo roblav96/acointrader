@@ -29,9 +29,9 @@ function request(config: HttpRequestConfig): Promise<any> {
 		let domain = config.production ? 'https://acointrader.com' : process.$domain
 		config.baseURL = domain + '/api'
 		Object.assign(config.headers, {
+			'Accept': '*/*',
+			'Accept-Encoding': 'deflate, gzip',
 			'x-finger': scope.getFinger(),
-			// 'x-email': scope.xEmail(),
-			// 'x-bytes': scope.xBytes(),
 			'x-version': process.$version,
 			'x-platform': 'web',
 		})

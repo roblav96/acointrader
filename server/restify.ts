@@ -1,14 +1,16 @@
 // 
 
-import os from 'os'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
 import moment from 'moment'
-import restify from 'restify'
 import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
+
+import os from 'os'
+import cluster from 'cluster'
+import restify from 'restify'
 import redis from './adapters/redis'
 import r from './adapters/rethinkdb'
 
@@ -18,20 +20,20 @@ const server = restify.createServer()
 
 
 
-server.opts(/.*/, utils.restifyRoute(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*')
-	res.header('Access-Control-Allow-Methods', req.header('Access-Control-Request-Method'))
-	res.header('Access-Control-Allow-Headers', req.header('Access-Control-Request-Headers'))
-	res.send(200)
-	return next()
-}))
+// server.opts(/.*/, utils.restifyRoute(function(req, res, next) {
+// 	res.header('Access-Control-Allow-Origin', '*')
+// 	res.header('Access-Control-Allow-Methods', req.header('Access-Control-Request-Method'))
+// 	res.header('Access-Control-Allow-Headers', req.header('Access-Control-Request-Headers'))
+// 	res.send(200)
+// 	return next()
+// }))
 
-server.use(utils.restifyRoute(function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*')
-	res.header('Access-Control-Allow-Methods', req.header('Access-Control-Request-Method'))
-	res.header('Access-Control-Allow-Headers', req.header('Access-Control-Request-Headers'))
-	return next()
-}))
+// server.use(utils.restifyRoute(function(req, res, next) {
+// 	res.header('Access-Control-Allow-Origin', '*')
+// 	res.header('Access-Control-Allow-Methods', req.header('Access-Control-Request-Method'))
+// 	res.header('Access-Control-Allow-Headers', req.header('Access-Control-Request-Headers'))
+// 	return next()
+// }))
 
 server.use(restify.plugins.fullResponse())
 server.use(restify.plugins.bodyParser())
@@ -76,7 +78,6 @@ server.post('/api/ready', api_ready)
 
 
 server.on('uncaughtException', function(req: RestifyRequest, res: RestifyResponse, route: restify.Route, error: any) {
-	console.error(clc.bold.redBright('/*==========  RESTIFY UNCAUGHT EXCEPTION  ==========*/'))
 	console.error('restify uncaughtException', errors.render(error))
 	res.send(new errors.InternalServerError(error.message))
 })
@@ -109,8 +110,21 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 
 if (utils.isMaster()) {
+
 	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' clusters...'))
+	let i: number, len = process.$instances
+	for (i = 0; i < len; i++) { cluster.fork() }
+	cluster.on('disconnect', function(worker) {
+		console.warn('cluster disconnect >', worker.id)
+		process.radio.emit(shared.ENUMS.RESTART)
+	})
+	cluster.on('exit', function(worker, code, signal) {
+		console.error('cluster exit >', worker.id, code, signal)
+		process.radio.emit(shared.ENUMS.RESTART)
+	})
+
 } else {
+
 	server.listen(process.$port, process.$host, function() {
 		if (utils.isPrimary()) {
 			let host = 'acointrader.com'
@@ -126,6 +140,7 @@ if (utils.isMaster()) {
 			)
 		}
 	})
+
 }
 
 

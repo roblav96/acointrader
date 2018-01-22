@@ -8,14 +8,14 @@ import ee3 from 'eventemitter3'
 
 
 
-export * from './ee3'
-
-
-
 export const ENUMS = {
 	BROADCAST: 'broadcast',
 	RESTART: 'restart',
 }
+
+
+
+export * from './ee3'
 
 
 

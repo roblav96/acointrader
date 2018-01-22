@@ -1,17 +1,17 @@
 // 
 
-import 'source-map-support/register'
-import os from 'os'
-import cluster from 'cluster'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
 import moment from 'moment'
 
+import os from 'os'
+import cluster from 'cluster'
+
+
+
 const eOpts = (eyes as any).defaults as eyes.EyesOptions
 eOpts.maxLength = 65536
-
-
 
 process.$instances = os.cpus().length
 process.$instance = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1
@@ -32,29 +32,12 @@ process.env.NODE_HEAPDUMP_OPTIONS = 'nosignal'
 process.$stack = null
 
 process.on('uncaughtException', function(error) {
-	console.error(clc.bold.redBright('/*==========  UNCAUGHT EXCEPTION  ==========*/'))
 	console.error('uncaughtExceptions > error', error)
 })
 
 process.on('unhandledRejection', function(error) {
-	console.error(clc.bold.redBright('/*==========  UNHANDLED REJECTION  ==========*/'))
 	console.error('unhandledRejection > error', error)
 })
-
-
-
-if (process.DEVELOPMENT) {
-	const dtsgen = require('dts-gen')
-	const clipboardy = require('clipboardy')
-	process.dtsgen = function(name, value) {
-		let results = dtsgen.generateIdentifierDeclarationFile(name, value)
-		clipboardy.write(results).then(function() {
-			console.info('coppied >', name)
-		}).catch(function(error) {
-			console.error('clipboardy.write > error', error)
-		})
-	}
-}
 
 
 
@@ -84,6 +67,21 @@ console.format = function(arg) {
 		cString = clc.redBright('=============================== ERROR ================================\n') + clc.red(time) + header
 	}
 	return '\n \n' + clc.underline(cString) + '\n'
+}
+
+
+
+if (process.DEVELOPMENT) {
+	const dtsgen = require('dts-gen')
+	const clipboardy = require('clipboardy')
+	process.dtsgen = function(name, value) {
+		let results = dtsgen.generateIdentifierDeclarationFile(name, value)
+		clipboardy.write(results).then(function() {
+			console.info('coppied >', name)
+		}).catch(function(error) {
+			console.error('clipboardy.write > error', error)
+		})
+	}
 }
 
 

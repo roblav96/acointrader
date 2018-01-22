@@ -1,17 +1,17 @@
 // 
 
-import os from 'os'
-import cluster from 'cluster'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
 import moment from 'moment'
+import * as errors from './services/errors'
+import * as utils from './services/utils'
+import * as shared from '../shared/shared'
+
 import cron from 'cron'
 import ci from 'correcting-interval'
 import ee3 from 'eventemitter3'
 import uws from 'uws'
-import * as utils from './services/utils'
-import * as shared from '../shared/shared'
 
 
 
@@ -53,18 +53,18 @@ Object.keys(shared.EE3).forEach(function(key) {
 declare global {
 	namespace NodeJS {
 		interface Process {
-			radio: PublicEmitter
+			radio: RadioEmitter
 		}
 	}
 }
 
-const pubport = process.$port - 1
+const radioPort = process.$port - 1
 
 if (utils.isMaster()) {
 
 	const wss = new uws.Server({
 		path: 'master',
-		port: pubport,
+		port: radioPort,
 		clientTracking: false,
 	})
 
@@ -79,22 +79,11 @@ if (utils.isMaster()) {
 		})
 	})
 
-	let i: number, len = os.cpus().length
-	for (i = 0; i < len; i++) { cluster.fork() }
-	cluster.on('disconnect', function(worker) {
-		console.warn('cluster disconnect >', worker.id)
-		process.radio.emit(shared.ENUMS.RESTART)
-	})
-	cluster.on('exit', function(worker, code, signal) {
-		console.error('cluster exit >', worker.id, code, signal)
-		process.radio.emit(shared.ENUMS.RESTART)
-	})
-
 }
 
-class PublicEmitter {
+class RadioEmitter {
 
-	private ws = new uws('ws://localhost:' + pubport + '/master')
+	private ws = new uws('ws://localhost:' + radioPort + '/master')
 	private ee3 = new ee3.EventEmitter()
 
 	constructor() {
@@ -131,7 +120,7 @@ class PublicEmitter {
 	}
 
 }
-process.radio = new PublicEmitter()
+process.radio = new RadioEmitter()
 
 
 

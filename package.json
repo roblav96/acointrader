@@ -18,6 +18,7 @@
 		"animate.css": "latest",
 		"av-ts": "latest",
 		"axios": "latest",
+		"bluebird": "latest",
 		"cli-color": "latest",
 		"cron": "latest",
 		"chartist": "latest",
@@ -63,6 +64,7 @@
 	},
 	"devDependencies": {
 		"@types/cli-color": "latest",
+		"@types/bluebird": "latest",
 		"@types/clipboardy": "latest",
 		"@types/core-js": "latest",
 		"@types/cron": "latest",
