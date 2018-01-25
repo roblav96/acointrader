@@ -12,15 +12,15 @@ import uws from 'uws'
 
 
 
-export default class WebSocket {
+export default class WebSocket extends ee3.EventEmitter {
 
 	private socket: uws
-	ee3 = new ee3.EventEmitter()
 
 	connecting() { return !!this.socket && this.socket.readyState == this.socket.CONNECTING }
 	ready() { return !!this.socket && this.socket.readyState == this.socket.OPEN }
 
-	constructor(private address: string) {
+	constructor(public address: string) {
+		super()
 		this.connect()
 		process.ee3.addListener(shared.enums.EE3.TICK_10, () => this.ping())
 	}
@@ -31,6 +31,7 @@ export default class WebSocket {
 		this.socket.removeAllListeners()
 		this.socket = null
 		if (reconnect) this.reconnect();
+		else this.removeAllListeners();
 	}
 
 	reconnect = _.throttle(this.connect, 1000, { leading: false, trailing: true })
@@ -64,17 +65,14 @@ export default class WebSocket {
 		this.socket.ping()
 	}
 	onping(data) {
-		console.log('websocket onping >')
-		eyes.inspect(data)
+
 	}
 	onpong(data) {
-		console.log('websocket onpong >')
-		eyes.inspect(data)
+
 	}
 
 	onmessage(data) {
-		console.log('websocket onmessage >')
-		this.ee3.emit('message', JSON.parse(data))
+		this.emit('message', JSON.parse(data))
 	}
 
 }
