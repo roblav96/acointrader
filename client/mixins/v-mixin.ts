@@ -53,7 +53,7 @@ export default class VMixin extends Vue {
 
 	v_flag_png(country: string) { return '/img/flags/' + country.toLowerCase() + '.png' }
 
-	v_exchange_png(id: string) { return '/img/exchanges/' + id + '-logo.png' }
+	v_exchange_png(id: string) { return '/img/exchanges/' + id + '.png' }
 
 
 

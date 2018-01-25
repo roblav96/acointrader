@@ -38,12 +38,32 @@ button.btn.btn--outline.btn-bold {
 }
 
 div.input-group.input-group--solo > div.input-group__input > i.icon:hover {
-	color: inherit;
+    color: inherit;
 }
 
 div.input-group.input-group--solo span.input-group--text-field__prefix {
     margin-top: 0px;
     margin-right: 8px;
+}
+
+
+/*
+	TABLES
+*/
+
+table.table.datatable tr > td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+table.table.datatable tr > th:first-child,
+table.table.datatable tr > td:first-child {
+    padding-left: 36px;
+}
+
+table.table.datatable tr > th:last-child,
+table.table.datatable tr > td:last-child {
+    padding-right: 36px;
 }
 
 

@@ -23,6 +23,7 @@
 		"cli-color": "latest",
 		"cron": "latest",
 		"chartist": "latest",
+		"cheerio": "latest",
 		"correcting-interval": "latest",
 		"copy-text-to-clipboard": "latest",
 		"debug-trace": "latest",
@@ -33,6 +34,7 @@
 		"eyes": "latest",
 		"fuzzy": "latest",
 		"fingerprintjs2": "latest",
+		"jimp": "latest",
 		"humanize-plus": "latest",
 		"ioredis": "latest",
 		"js-sha3": "latest",
@@ -66,6 +68,7 @@
 	},
 	"devDependencies": {
 		"@types/cli-color": "latest",
+		"@types/cheerio": "latest",
 		"@types/bluebird": "latest",
 		"@types/clipboardy": "latest",
 		"@types/core-js": "latest",

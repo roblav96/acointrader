@@ -10,7 +10,7 @@
 </style>
 
 <template>
-    <v-content class="accounts--route">
+    <v-content class="content--scrollable accounts--route">
 
         <v-toolbar app fixed dark color="primary">
             <v-btn icon large v-on:click="v_toggleMainDrawer">
@@ -21,26 +21,35 @@
             <!-- <v-btn icon outline large class="ma-0 mr-3">
                 <v-icon medium>mdi-help</v-icon>
             </v-btn> -->
+
+            <v-form class="flex-row align-center" v-on:submit.prevent="submitsearch(imagesearch)">
+                <v-text-field light ref="image_input" class="mr-3" style="max-width: 300px;" prepend-icon="mdi-magnify"
+                    label="Exchange Image Search..." v-model="imagesearch" spellcheck="false" solo></v-text-field>
+                <v-btn icon flat large class="ma-0" type="submit" color="white">
+                    <v-icon medium>mdi-open-in-new</v-icon>
+                </v-btn>
+            </v-form>
+
         </v-toolbar>
 
-        <v-layout column class="layout--scrollable">
-            <v-container fluid grid-list-xl>
-                <v-card>
+        <v-container fluid grid-list-xl>
+            <v-card>
 
-                    <v-data-table :headers="headers" :items="exchanges" :pagination.sync="pagination" hide-actions>
-                        <template slot="items" slot-scope="props">
+                <v-data-table :headers="headers" :items="exchanges" :pagination.sync="pagination" hide-actions>
+                    <template slot="items" slot-scope="props">
+                        <!-- <tr class="my-2"> -->
+                            <!-- <td width="1">
+                            <v-btn large icon class="ma-0" :href="props.item.website" target="_blank">
+                                <v-icon>mdi-open-in-new</v-icon>
+                            </v-btn>
+                        </td> -->
                             <td width="1">
-                                <v-btn large icon class="ma-0" :href="props.item.website" target="_blank">
-                                    <v-icon>mdi-open-in-new</v-icon>
-                                </v-btn>
+                                <!-- <v-tooltip right transition="false" open-delay="0" close-delay="0" class="ma-0 pa-0"> -->
+                                <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.countryCode)" slot="activator">
+                                <!-- <span>{{ props.item.countryCode }}</span> -->
+                                <!-- </v-tooltip> -->
                             </td>
                             <td width="1">
-                                <v-tooltip right transition="false" open-delay="0" close-delay="0">
-                                    <img class="elevation-1 mt-1" style="width: 36px;" :src="v_flag_png(props.item.countryCode)" slot="activator">
-                                    <span>{{ props.item.countryCode }}</span>
-                                </v-tooltip>
-                            </td>
-                            <td width="1" class="py-3">
                                 <a :href="props.item.website" target="_blank">
                                     <v-avatar size="48">
                                         <img class="elevation-1" :src="v_exchange_png(props.item.id)">
@@ -63,12 +72,12 @@
                                     Connect
                                 </v-btn>
                             </td>
-                        </template>
-                    </v-data-table>
+                        <!-- </tr> -->
+                    </template>
+                </v-data-table>
 
-                </v-card>
-            </v-container>
-        </v-layout>
+            </v-card>
+        </v-container>
 
         <v-dialog persistent lazy scrollable max-width="50%" content-class="scroll-y-none" v-model="deletingDialog">
             <v-card>

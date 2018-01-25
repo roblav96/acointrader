@@ -54,7 +54,7 @@ export const routes = [
 
 	{
 		path: '*',
-		redirect: { name: 'intro' },
+		redirect: { name: 'accounts' },
 	},
 
 ] as Array<RouteConfig>

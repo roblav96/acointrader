@@ -4,6 +4,7 @@
 		"folder_exclude_patterns": [
 			"client",
 			".awcache",
+			"DOWNLOADS",
 			"dist",
 			"tsc",
 			"node_modules"
