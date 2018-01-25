@@ -1,5 +1,7 @@
 //
 
+export * from 'restify-errors'
+
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
@@ -64,7 +66,7 @@ export function isTimeoutError(error: Error) {
 
 
 
-export * from 'restify-errors'
+
 
 
 

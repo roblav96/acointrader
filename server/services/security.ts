@@ -12,35 +12,55 @@ import { parse as parseUrl } from 'url'
 import requestip from 'request-ip'
 import sha3 from 'js-sha3'
 import forge from 'node-forge'
+import redis from '../adapters/redis'
+import r from '../adapters/rethinkdb'
 
 
 
-export function use(req: RestifyRequest) {
+export function use(req: RestifyRequest): Promise<void> {
+	return Promise.resolve().then(function() {
 
-	console.log('req.headers >')
-	eyes.inspect(req.headers)
+		// console.log('req.headers >')
+		// eyes.inspect(req.headers)
 
-	req.authed = false
-	req.ip = requestip.getClientIp(req)
-	req.conn = buildConn(req.headers)
+		req.doc = {
+			authed: false,
+			ip: requestip.getClientIp(req),
+			conn: buildConn(req.headers),
+			uuid: shared.parseId(req.headers['x-uuid']),
+			finger: shared.parseId(req.headers['x-finger']),
+			email: req.headers['x-email'],
+		} as SecurityDoc
 
-	req.uuid = req.headers['x-uuid']
-	console.log('req.uuid.length', req.uuid.length)
-	utils.validHeader('uuid', req.uuid, 44)
+		if (!req.doc.uuid || req.doc.uuid.length != 64) throw new errors.PreconditionFailedError('Invalid x-uuid');
+		if (!req.doc.finger || req.doc.finger.length != 64) throw new errors.PreconditionFailedError('Invalid x-finger');
+		if (req.doc.email && !shared.isValidEmail(req.doc.email)) throw new errors.PreconditionFailedError('Invalid x-email');
 
-	req.finger = shared.parseId(req.headers['x-finger'])
-	utils.validHeader('finger', req.finger, 32)
+		// console.log('req.doc >')
+		// eyes.inspect(req.doc)
 
-	if (req.headers['x-email']) {
-		req.email = req.headers['x-email']
-		if (!shared.isValidEmail(req.email)) throw new errors.PreconditionFailedError('Invalid x-email');
-	}
+		return redis.hgetall('security:' + req.doc.uuid)
+
+		// }).then(function(doc: SecurityDoc) {
+		// 	if (doc.privateKey) return Promise.resolve(doc);
+		// 	return shared.security.generateKeyPair(1024).then(function(keypair) {
+		// 		doc.publicKey
+		// 		return Promise.resolve(doc)
+		// 	})
+
+	}).then(function(doc: SecurityDoc) {
+		// console.log('doc >')
+		// eyes.inspect(doc)
+
+		return Promise.resolve()
+
+	})
 
 }
 
 
 
-export function buildConn(headers: HttpHeaders) {
+export function buildConn(headers: HttpHeaders): string {
 	let conn = headers['x-real-ip'] + headers['x-forwarded-for'] + headers['host'] + headers['hostname']
 	return shared.security.sha256(conn)
 }

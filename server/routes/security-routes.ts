@@ -10,6 +10,7 @@ import * as utils from '../services/utils'
 
 import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'
+import * as security from '../services/security'
 
 
 
@@ -19,6 +20,8 @@ export default {
 
 	'GET:token': utils.restifyRoute<any, any>(function(req, res, next) {
 		Promise.resolve().then(function() {
+
+
 
 			res.send()
 			return next()
@@ -39,11 +42,27 @@ export default {
 				throw new errors.PreconditionFailedError('Invalid email')
 			}
 
-			console.log('email >')
-			eyes.inspect(email)
+			return r.table('users').get(email).run().then(function(exists) {
+				if (exists) throw new errors.BadRequestError(`Email "${email}" already in use.`);
+				return shared.security.generatePemKeyPair(2048)
 
-			res.send()
-			return next()
+			}).then(function(keypair) {
+				return r.table('users').insert({
+					email,
+					uuids: [req.doc.uuid],
+					fingers: [req.doc.finger],
+					conns: [req.doc.conn],
+					ips: [req.doc.ip],
+					publicPem: keypair.publicPem,
+					privatePem: keypair.privatePem,
+				}).run().then(function() {
+					return Promise.resolve(keypair.publicPem)
+				})
+
+			}).then(function(publicPem) {
+				res.send({ email, publicPem })
+				return next()
+			})
 
 		}).catch(function(error) {
 			return next(errors.generate(error))

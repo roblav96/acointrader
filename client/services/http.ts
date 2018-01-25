@@ -2,6 +2,7 @@
 
 import _ from 'lodash'
 import axios from 'axios'
+import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as security from './security'
 import Snackbar from '../components/snackbar/snackbar'
@@ -34,6 +35,7 @@ function request(config: HttpRequestConfig): Promise<any> {
 			'x-version': process.$version,
 			'x-platform': 'web',
 		})
+		shared.object.compact(config.headers)
 
 		if (isproxy) {
 			// config.baseURL = 'https://acointrader.com/api'

@@ -61,10 +61,11 @@ server.use(utils.restifyRoute(function(req, res, next) {
 			throw new errors.PreconditionFailedError('Invalid host')
 		}
 
-		security.use(req)
+		return security.use(req)
 
+	}).then(function() {
 		return next()
-
+		
 	}).catch(function(error) {
 		return next(errors.generate(error))
 	})
@@ -77,6 +78,9 @@ server.use(utils.restifyRoute(function(req, res, next) {
 
 import security_routes from './routes/security-routes'
 utils.restifyBulkRoutes(server, 'security', security_routes)
+
+import apikey_routes from './routes/apikey-routes'
+utils.restifyBulkRoutes(server, 'apikey', apikey_routes)
 
 
 

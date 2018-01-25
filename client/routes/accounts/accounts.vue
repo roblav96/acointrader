@@ -18,6 +18,7 @@
             </v-btn>
             <v-toolbar-title>{{ v_routeDname }}</v-toolbar-title>
             <v-spacer></v-spacer>
+            <p class="t-18 mr-4">{{ $store.state.security.email }}</p>
             <!-- <v-btn icon outline large class="ma-0 mr-3">
                 <v-icon medium>mdi-help</v-icon>
             </v-btn> -->

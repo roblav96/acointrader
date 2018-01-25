@@ -4,10 +4,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import lockr from 'lockr'
+import forge from 'node-forge'
+import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as security from './security'
 import * as http from './http'
 import Snackbar from '../components/snackbar/snackbar'
+import EmailPrompt from '../components/email-prompt/email-prompt'
 
 
 
@@ -74,15 +77,15 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 	saveApiKey(apiKey: ExchangeApiKey): Promise<boolean> {
 		return Promise.resolve().then(() => {
-			if (!security.state.email) return security.askEmail();
+			if (!security.state.email) return EmailPrompt.prompt();
 			return Promise.resolve(true)
 		}).then(result => {
 			if (!result) {
 				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your crypto assets! Please try again.', color: 'warning' })
 				return Promise.resolve(false)
 			}
-			return http.post('/save-api-key', apiKey).then(response => {
-				console.log('response', response)
+			let encrypted = shared.security.encryptObject(apiKey, process.sls.get('security.publicPem'))
+			return http.post('/apikey/save', encrypted).then(response => {
 				process.sls.set('exchanges.' + this.id + '.apiKey', apiKey)
 				this.loadApiKey()
 				return Promise.resolve(true)
@@ -94,8 +97,8 @@ export class ExchangeBuilder extends ExchangeMetadata {
 	}
 
 	deleteApiKey() {
-		return http.post('/delete-api-key', this.apiKey).then(response => {
-			console.log('response', response)
+		let encrypted = shared.security.encryptObject(this.apiKey, process.sls.get('security.publicPem'))
+		return http.post('/apikey/delete', encrypted).then(response => {
 			process.sls.remove('exchanges.' + this.id + '.apiKey')
 			Object.keys(this.apiKey).forEach(key => {
 				if (key == 'id') return;

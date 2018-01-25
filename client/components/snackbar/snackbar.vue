@@ -11,7 +11,7 @@ div.snackbar--wrapper {
     top: 0px;
     right: 50%;
     transform: translateX(50%);
-    z-index: 99;
+    z-index: 999;
 }
 
 

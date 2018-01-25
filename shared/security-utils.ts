@@ -15,8 +15,58 @@ export function sha256(input: string): string {
 	return md.digest().toHex()
 }
 
-export function randomBytes(size: number): string {
-	return forge.util.bytesToHex(forge.random.getBytesSync(size))
+export function randomHex(size: number): string {
+	return forge.util.bytesToHex(forge.random.getBytesSync(Math.round(size * 0.5)))
+}
+
+export function generatePrime(size: number): Promise<string> {
+	return new Promise(function(resolve, reject) {
+		forge.prime.generateProbablePrime((size * 4), function(error, result) {
+			if (error) reject(error);
+			else resolve(result.toString(16));
+		})
+	})
+}
+
+declare global { interface PemKeyPair { publicPem: string, privatePem: string } }
+export function generatePemKeyPair(size: number): Promise<PemKeyPair> {
+	return new Promise(function(resolve, reject) {
+		if (process.CLIENT) {
+			resolve(forge.pki.rsa.generateKeyPair({ bits: size, e: 0x10001 }))
+		} else {
+			forge.pki.rsa.generateKeyPair({ bits: size }, function(error, keypair) {
+				if (error) reject(error);
+				else resolve(keypair);
+			})
+		}
+	}).then(function(keypair: forge.pki.KeyPair) {
+		return Promise.resolve({
+			publicPem: forge.pki.publicKeyToPem(keypair.publicKey),
+			privatePem: forge.pki.privateKeyToPem(keypair.privateKey),
+		} as PemKeyPair)
+	})
+}
+
+export function encryptObject<T>(decrypted: T, publicPem: string): T {
+	let publicKey = forge.pki.publicKeyFromPem(publicPem)
+	let encrypted = {} as T
+	Object.keys(decrypted).forEach(function(key) {
+		let value = decrypted[key]
+		if (value == null) return;
+		encrypted[key] = publicKey.encrypt(value)
+	})
+	return encrypted
+}
+
+export function decryptObject<T>(encrypted: T, privatePem: string): T {
+	let privateKey = forge.pki.privateKeyFromPem(privatePem)
+	let decrypted = {} as T
+	Object.keys(encrypted).forEach(function(key) {
+		let value = encrypted[key]
+		if (value == null) return;
+		decrypted[key] = privateKey.decrypt(value)
+	})
+	return decrypted
 }
 
 

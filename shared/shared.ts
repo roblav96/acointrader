@@ -30,6 +30,27 @@ export function isValidEmail(email: string) {
 
 
 
+export function isBad<T>(value: T): boolean {
+	return value == null || (typeof value == 'number' && !Number.isFinite(value as any))
+}
+
+export function isGood<T>(value: T): boolean {
+	return !isBad(value)
+}
+
+
+
+export const object = {
+	compact<T>(target: T): void {
+		Object.keys(target).forEach(function(k, i) {
+			if (target[k] == null) _.unset(target, k);
+			// if (isBad(target[k])) _.unset(target, k);
+		})
+	},
+}
+
+
+
 
 
 

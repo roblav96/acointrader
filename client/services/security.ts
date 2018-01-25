@@ -13,8 +13,7 @@ import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as store from './store'
 import * as http from './http'
-import * as EmailPrompt from '../components/email-prompt/email-prompt'
-import * as AuthPrompt from '../components/auth-prompt/auth-prompt'
+import EmailPrompt from '../components/email-prompt/email-prompt'
 
 
 
@@ -28,16 +27,32 @@ function initialize() {
 	return Promise.resolve().then(function() {
 
 		let uuid = process.sls.get('security.uuid') as string
-		if (!uuid) process.sls.set('security.uuid', shared.security.randomBytes(32));
+		if (uuid) return Promise.resolve();
+		return shared.security.generatePrime(64).then(function(prime) {
+			process.sls.set('security.uuid', prime)
+			return Promise.resolve()
+		})
+
+	}).then(function() {
 
 		let finger = process.sls.get('security.finger') as string
 		if (finger) return Promise.resolve();
 		return new Promise<void>(function(resolve) {
 			new Fingerprint2().get(finger => {
-				process.sls.set('security.finger', finger)
+				process.sls.set('security.finger', shared.security.sha256(finger))
 				resolve()
 			})
 		})
+
+		// }).then(function() {
+
+		// 	let publicKey = process.sls.get('security.publicKey') as string
+		// 	if (publicKey) return Promise.resolve();
+		// 	return shared.security.generateKeyPair(1024).then(function(keypair) {
+		// 		process.sls.set('security.publicKey', forge.pki.publicKeyToPem(keypair.publicKey))
+		// 		process.sls.set('security.privateKey', forge.pki.privateKeyToPem(keypair.privateKey))
+		// 		return Promise.resolve()
+		// 	})
 
 	})
 }
@@ -61,28 +76,33 @@ export function getReady() {
 
 
 export function getHeaders(): HttpHeaders {
-	return {
+	let headers = {
 		'x-uuid': process.sls.get('security.uuid'),
 		'x-finger': process.sls.get('security.finger'),
-		'x-email': process.sls.get('security.email'),
-	}
+		'x-email': process.sls.get('security.email') || undefined,
+	} as HttpHeaders
+	return headers
 }
 
 
 
-
-
-export function askEmail(): Promise<boolean> {
-	return EmailPrompt.prompt(state.email).then(function(email) {
-		if (!email) return Promise.resolve(false);
-		return http.post('/security/set-email', { email }).then(function(response) {
-			console.log('response', response)
-			// process.sls.set('security.email', email)
-			// state.email = email
-			return Promise.resolve(true)
-		})
-	})
+export function saveEmail(response) {
+	process.sls.set('security.email', response.email)
+	state.email = response.email
+	process.sls.set('security.publicPem', response.publicPem)
 }
+
+// export function askEmail(): Promise<boolean> {
+// 	return EmailPrompt.prompt(state.email).then(function(email) {
+// 		if (!email) return Promise.resolve(false);
+// 		return http.post('/security/set-email', { email }).then(function(response) {
+// 			console.log('response', response)
+// 			// process.sls.set('security.email', email)
+// 			// state.email = email
+// 			return Promise.resolve(true)
+// 		})
+// 	})
+// }
 
 
 

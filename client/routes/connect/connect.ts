@@ -26,13 +26,12 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 	created() {
 		this.apiKey = Object.assign({}, this.exchange.apiKey)
 		if (process.DEVELOPMENT && process.$webpack[this.exchange.id]) {
-			this.apiKey = Object.assign({}, process.$webpack[this.exchange.id])
+			Object.assign(this.apiKey, process.$webpack[this.exchange.id])
 		}
 	}
 
 	mounted() {
-		// console.log('clipboard', clipboard)
-		clipboard('coppy this')
+		
 	}
 
 	beforeDestroy() {

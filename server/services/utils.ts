@@ -65,11 +65,6 @@ export function validBody(body: any, keys: Array<string>): void {
 	})
 }
 
-export function validHeader(header: string, value: string, length = -1): void {
-	if (!value) throw new errors.PreconditionFailedError('Invalid x-uuid');
-	if (length >= 0 && value.length != length) throw new errors.LengthRequiredError('Invalid x-uuid');
-}
-
 
 
 
