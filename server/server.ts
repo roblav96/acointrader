@@ -7,6 +7,8 @@ require('./restify')
 
 // require('./scrapers/exchange-image-scraper')
 
+require('./exchanges/binance')
+
 
 
 // import eyes from 'eyes'
