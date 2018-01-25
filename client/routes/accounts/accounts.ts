@@ -66,19 +66,19 @@ export default class Accounts extends Avts.Mixin<Vue & RouterMixin & VTableMixin
 
 
 
-	imagesearch = ''
-	submitsearch(query: string) {
-		if (!query) return;
-		query = query.toLowerCase().trim()
-		// query = encodeURIComponent(query)
-		// window.open('https://yandex.com/images/search?text=' + query + '&isize=large')
-		// window.open('https://searx.me/?q=' + query + '&categories=images&language=en-US')
-		// window.open('https://www.qwant.com/?q=' + query + '&t=images&size=large')
-		// window.open('https://images.search.yahoo.com/search/images?p=' + query + '&imgsz=large')
-		window.open('https://www.google.com/search?q=' + query + '&source=lnms&tbm=isch&tbs=isz:l')
-		window.open('https://duckduckgo.com/?q=' + query + '&ia=images&iar=images&iax=images&iaf=size%3Aimagesize-large')
-		window.open('https://www.bing.com/images/search?q=' + query + '&qft=+filterui:imagesize-large')
-	}
+	// imagesearch = ''
+	// submitsearch(query: string) {
+	// 	if (!query) return;
+	// 	query = query.toLowerCase().trim()
+	// 	// query = encodeURIComponent(query)
+	// 	// window.open('https://yandex.com/images/search?text=' + query + '&isize=large')
+	// 	// window.open('https://searx.me/?q=' + query + '&categories=images&language=en-US')
+	// 	// window.open('https://www.qwant.com/?q=' + query + '&t=images&size=large')
+	// 	// window.open('https://images.search.yahoo.com/search/images?p=' + query + '&imgsz=large')
+	// 	window.open('https://www.google.com/search?q=' + query + '&source=lnms&tbm=isch&tbs=isz:l')
+	// 	window.open('https://duckduckgo.com/?q=' + query + '&ia=images&iar=images&iax=images&iaf=size%3Aimagesize-large')
+	// 	window.open('https://www.bing.com/images/search?q=' + query + '&qft=+filterui:imagesize-large')
+	// }
 
 
 }

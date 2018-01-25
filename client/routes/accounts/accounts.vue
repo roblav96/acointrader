@@ -22,13 +22,13 @@
                 <v-icon medium>mdi-help</v-icon>
             </v-btn> -->
 
-            <v-form class="flex-row align-center" v-on:submit.prevent="submitsearch(imagesearch)">
+            <!-- <v-form class="flex-row align-center" v-on:submit.prevent="submitsearch(imagesearch)">
                 <v-text-field light ref="image_input" class="mr-3" style="max-width: 300px;" prepend-icon="mdi-magnify"
                     label="Exchange Image Search..." v-model="imagesearch" spellcheck="false" solo></v-text-field>
                 <v-btn icon flat large class="ma-0" type="submit" color="white">
                     <v-icon medium>mdi-open-in-new</v-icon>
                 </v-btn>
-            </v-form>
+            </v-form> -->
 
         </v-toolbar>
 
