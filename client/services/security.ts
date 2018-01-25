@@ -5,8 +5,11 @@ import * as Avts from 'av-ts'
 import Vue from 'vue'
 import _ from 'lodash'
 import sha3 from 'js-sha3'
+import forge from 'node-forge'
+{ (window as any).forge = forge }
 import Fingerprint2 from 'fingerprintjs2'
 import pdelay from 'delay'
+import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as store from './store'
 import * as http from './http'
@@ -22,19 +25,21 @@ export const state = {
 
 
 function initialize() {
+	return Promise.resolve().then(function() {
 
-	let uuid = process.sls.get('security.uuid') as string
-	if (!uuid) process.sls.set('security.uuid', utils.randomBytes());
+		let uuid = process.sls.get('security.uuid') as string
+		if (!uuid) process.sls.set('security.uuid', shared.security.randomBytes(32));
 
-	let finger = process.sls.get('security.finger') as string
-	if (finger) return Promise.resolve();
-	return new Promise<void>(function(resolve) {
-		new Fingerprint2().get(finger => {
-			process.sls.set('security.finger', finger)
-			resolve()
+		let finger = process.sls.get('security.finger') as string
+		if (finger) return Promise.resolve();
+		return new Promise<void>(function(resolve) {
+			new Fingerprint2().get(finger => {
+				process.sls.set('security.finger', finger)
+				resolve()
+			})
 		})
-	})
 
+	})
 }
 
 function syncToken() {

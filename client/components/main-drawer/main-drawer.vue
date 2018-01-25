@@ -4,11 +4,6 @@
 <style>
 /**/
 
-aside.main--drawer ul.list img {
-    width: 24px;
-    height: 24px;
-}
-
 aside.main--drawer a.list__tile.list__tile--active div.list__tile__title {
     font-weight: 500;
 }
@@ -23,11 +18,6 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
     transition: opacity 0.2s ease;
     opacity: 0;
 }
-
-
-/*aside.main--drawer.navigation-drawer--mini-variant hr.divider.divider--inset {
-    opacity: 0;
-}*/
 
 
 /**/
@@ -53,13 +43,13 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                 </template>
             </v-list>
 
+            <v-spacer></v-spacer>
+
 
 
 
 
             <template v-if="v_development">
-                <v-spacer></v-spacer>
-
                 <v-list class="py-0">
                     <v-divider></v-divider>
                     <v-list-tile v-ripple v-on:click="state.debugBreakpoints = !state.debugBreakpoints">
@@ -70,11 +60,6 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                             <v-list-tile-title>Debug Breakpoints</v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                    <v-divider></v-divider>
-                </v-list>
-                <v-spacer></v-spacer>
-
-                <v-list class="py-0">
                     <v-divider></v-divider>
                     <v-tooltip right color="error" transition="false" open-delay="0" close-delay="0">
                         <v-list-tile v-ripple v-on:click v-on:dblclick="clearLocalStorage" slot="activator">
@@ -90,10 +75,7 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                     <v-divider></v-divider>
                 </v-list>
                 <v-spacer></v-spacer>
-
             </template>
-
-            <v-spacer v-else></v-spacer>
 
 
 

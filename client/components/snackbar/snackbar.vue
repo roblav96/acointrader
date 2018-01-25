@@ -21,7 +21,7 @@ div.snackbar--wrapper {
 
 <template>
     <transition-group class="snackbar--wrapper" name="slide-y-transition" tag="div">
-        <v-alert v-for="item in items" :key="item.id" :color="item.color" class="br-2 elevation-4 ma-0 mt-3 py-0 pl-4 pr-3"
+        <v-alert v-for="item in items" :key="item.message" :color="item.color" class="br-2 elevation-4 ma-0 mt-3 py-0 pl-4 pr-3"
             :value="true" v-on:click="splice(item.id)" v-on:mouseenter="onmouseenter(item.id)">
             <v-layout row align-center>
                 <v-icon v-if="item.icon" dark medium class="mr-4">{{ item.icon }}</v-icon>

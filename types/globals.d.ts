@@ -43,15 +43,7 @@ declare global {
 
 
 
-// declare module 'node-forge' {
-// 	var md: any
-// 	var hmac: any
-// 	var random: any
-// 	var prime: any
-// 	namespace pki {
-// 		function privateKeyFromPem(pem: PEM): Key
-// 	}
-// }
+
 
 
 

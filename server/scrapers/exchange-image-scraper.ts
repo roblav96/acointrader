@@ -13,17 +13,22 @@ import axios from 'axios'
 
 
 
+export function scrape() {
+	return scrapePage()
+}
+
 function saveImage(name: string, url: string) {
 	return Promise.resolve().then(function() {
 		return jimp.read(url)
 	}).then(function(img) {
 		return img.write('DOWNLOADS/' + name + '.png')
+		// return img.resize(300, 300).write('DOWNLOADS/' + name + '.png')
 	}).then(function() {
 		return Promise.resolve()
 	})
 }
 
-function scrapePage(page = 0) {
+function scrapePage(page = 0): Promise<void> {
 	return Promise.resolve().then(function() {
 		return axios.get('https://coinclarity.com/exchanges/?fwp_paged=' + page)
 	}).then(function({ data }) {
@@ -42,7 +47,7 @@ function scrapePage(page = 0) {
 			let srcs = $li.find('div.thumb img').attr('data-lazy-srcset')
 			if (!srcs) return;
 			let imgurl = srcs.split(',').map(v => v.trim().split(' ')[0]).pop()
-			console.log('imgurl', imgurl)
+			// console.log('imgurl', imgurl)
 
 			proms.push(saveImage(name, imgurl))
 
@@ -52,7 +57,9 @@ function scrapePage(page = 0) {
 
 	}).then(function() {
 		console.warn('DONE >', page)
-		return scrapePage(page + 1)
+		page++
+		if (page <= 8) return scrapePage(page);
+		return Promise.resolve()
 
 	}).catch(function(error) {
 		console.error('scrapePage > error', error)
@@ -60,7 +67,6 @@ function scrapePage(page = 0) {
 	})
 }
 
-// scrapePage()
 
 
 

@@ -30,8 +30,8 @@ function ee3start(topic: string, tick: number) {
 		process.ee3.emit(topic, ee3is[topic])
 	}, tick * 1000)
 }
-Object.keys(shared.EE3).forEach(function(key) {
-	let topic = shared.EE3[key]
+Object.keys(shared.enums.EE3).forEach(function(key) {
+	let topic = shared.enums.EE3[key]
 	let tick = Number.parseInt(key.split('_').pop())
 	if (key == 'TICK_01') tick = 0.1;
 	if (key == 'TICK_025') tick = 0.25;
@@ -88,7 +88,7 @@ class RadioEmitter {
 			message = JSON.parse(message as any)
 			this.ee3.emit(message.event, message.data)
 		})
-		process.ee3.addListener(shared.EE3.TICK_5, () => this.ws.send('ping'))
+		process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ws.send('ping'))
 	}
 
 	emit(event: string, data?: any) {
@@ -126,8 +126,8 @@ if (utils.isMaster()) {
 		console.warn('restart')
 		process.nextTick(() => process.exit(0))
 	})
-	process.ee3.once(shared.ENUMS.RESTART, restart)
-	process.radio.once(shared.ENUMS.RESTART, restart)
+	process.ee3.once(shared.enums.RESTART, restart)
+	process.radio.once(shared.enums.RESTART, restart)
 }
 
 

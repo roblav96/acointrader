@@ -168,17 +168,6 @@ export class Binance extends ExchangeBuilder {
 
 }
 
-export class HitBTC extends ExchangeBuilder {
-
-	getSteps() {
-		return [
-			`Click the <code>New API Key</code> button`,
-			`In the <code>Access Rights</code> column, select all checkboxes as shown below`,
-		]
-	}
-
-}
-
 export class KuCoin extends ExchangeBuilder {
 
 	getSteps() {
@@ -186,18 +175,6 @@ export class KuCoin extends ExchangeBuilder {
 			`Click the <code>Create</code> button`,
 		]
 	}
-
-}
-
-export class Bitfinex extends ExchangeBuilder {
-
-	connectable = false
-
-}
-
-export class Bittrex extends ExchangeBuilder {
-
-	connectable = false
 
 }
 
@@ -229,14 +206,6 @@ export const exchanges = [
 		settingsUrl: 'https://www.binance.com/userCenter/createApi.html',
 	} as ExchangeMetadata),
 
-	new HitBTC({
-		id: 'hitbtc',
-		name: 'HitBTC',
-		countryCode: 'DK',
-		website: 'https://hitbtc.com',
-		settingsUrl: 'https://hitbtc.com/settings/api-keys',
-	} as ExchangeMetadata),
-
 	new KuCoin({
 		id: 'kucoin',
 		name: 'KuCoin',
@@ -245,37 +214,49 @@ export const exchanges = [
 		settingsUrl: 'https://www.kucoin.com/#/user/setting/api',
 	} as ExchangeMetadata),
 
-	new Bitfinex({
-		id: 'bitfinex',
-		name: 'Bitfinex',
-		countryCode: 'HK',
-		website: 'https://www.bitfinex.com',
-		settingsUrl: 'https://www.bitfinex.com/api',
-	} as ExchangeMetadata),
-
-	new Bittrex({
-		id: 'bittrex',
-		name: 'Bittrex',
-		countryCode: 'US',
-		website: 'https://bittrex.com',
-		settingsUrl: 'https://bittrex.com',
-	} as ExchangeMetadata),
-
-	// new CoinsBank({
-	// 	id: 'coinsbank',
-	// 	name: 'CoinsBank',
-	// 	countryCode: 'GB',
-	// 	website: 'https://coinsbank.com',
-	// 	settingsUrl: 'https://coinsbank.com/app/user/api',
-	// } as ExchangeMetadata),
-
 ] as Array<ExchangeBuilder>
 
 exchanges.forEach((v, i) => v.index = i)
 
-console.log('exchanges', exchanges)
+// console.log('exchanges', exchanges)
 
 
+
+
+
+
+
+// new HitBTC({
+// 	id: 'hitbtc',
+// 	name: 'HitBTC',
+// 	countryCode: 'DK',
+// 	website: 'https://hitbtc.com',
+// 	settingsUrl: 'https://hitbtc.com/settings/api-keys',
+// } as ExchangeMetadata),
+
+// new Bitfinex({
+// 	id: 'bitfinex',
+// 	name: 'Bitfinex',
+// 	countryCode: 'HK',
+// 	website: 'https://www.bitfinex.com',
+// 	settingsUrl: 'https://www.bitfinex.com/api',
+// } as ExchangeMetadata),
+
+// new Bittrex({
+// 	id: 'bittrex',
+// 	name: 'Bittrex',
+// 	countryCode: 'US',
+// 	website: 'https://bittrex.com',
+// 	settingsUrl: 'https://bittrex.com',
+// } as ExchangeMetadata),
+
+// new CoinsBank({
+// 	id: 'coinsbank',
+// 	name: 'CoinsBank',
+// 	countryCode: 'GB',
+// 	website: 'https://coinsbank.com',
+// 	settingsUrl: 'https://coinsbank.com/app/user/api',
+// } as ExchangeMetadata),
 
 
 

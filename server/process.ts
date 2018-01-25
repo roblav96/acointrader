@@ -7,6 +7,7 @@ import moment from 'moment'
 
 import os from 'os'
 import cluster from 'cluster'
+import ee3 from 'eventemitter3'
 
 
 
@@ -43,6 +44,10 @@ process.on('uncaughtException', function(error) {
 process.on('unhandledRejection', function(error) {
 	console.error('unhandledRejection > error', error)
 })
+
+
+
+process.ee3 = new ee3.EventEmitter()
 
 
 

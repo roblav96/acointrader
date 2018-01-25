@@ -25,7 +25,7 @@ main.connect--route div.stepper.stepper--vertical span.stepper__step__step {
             </v-avatar>
             <v-toolbar-title>
                 <p class="t-lh2 headline t-500">{{ exchange.name }}</p>
-                <p class="t-lh2 subheading t-300 mb-1">Connect via API Key Pair</p>
+                <p class="t-lh2 subheading t-300 mb-1">Connect with API Key Pair</p>
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -45,11 +45,11 @@ main.connect--route div.stepper.stepper--vertical span.stepper__step__step {
                     <v-form v-on:submit.prevent="save">
                         <v-layout row align-center class="ma-0 pa-2">
                             <v-text-field ref="key_input" class="mr-2" color="info" prepend-icon="mdi-key" label="API Key" v-model="apiKey.key"
-                                clearable solo hide-details></v-text-field>
+                                spellcheck="false" clearable solo hide-details></v-text-field>
                             <v-text-field class="mr-2" color="info" prepend-icon="mdi-eye-off" label="API Secret" v-model="apiKey.secret"
-                                type="password" clearable solo hide-details></v-text-field>
+                                type="password" spellcheck="false" clearable solo hide-details></v-text-field>
                             <v-text-field v-if="apiKey.passphrase !== undefined" class="mr-2" color="info" prepend-icon="mdi-lock"
-                                label="Passphrase" v-model="apiKey.passphrase" type="password" clearable
+                                label="Passphrase" v-model="apiKey.passphrase" type="password" spellcheck="false" clearable
                                 solo hide-details></v-text-field>
                             <v-btn :large="valid" outline dark class="ma-0 btn-bold" type="submit" color="white" :disabled="disabled"
                                 :loading="saving">
@@ -83,7 +83,7 @@ main.connect--route div.stepper.stepper--vertical span.stepper__step__step {
                         <v-stepper-step :step="1" :editable="step != 1" class="subheading">
                             Click the following link to your {{ exchange.name }} API settings:
                             <br>
-                            <a class="t-bold" :href="exchange.settingsUrl" target="_blank">
+                            <a class="t-bold" :href="exchange.settingsUrl" target="_blank" v-on:click="clickedUrl">
                                 {{ exchange.settingsUrl }}
                             </a>
                             <!-- <div class="flex-row align-center mb-2">

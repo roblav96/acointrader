@@ -45,8 +45,8 @@ server.use(restify.plugins.queryParser())
 
 
 
-import api_proxy from './routes/proxy'
-server.post('/api/proxy', api_proxy)
+// import api_proxy from './routes/proxy'
+// server.post('/api/proxy', api_proxy)
 
 
 
@@ -55,11 +55,13 @@ server.post('/api/proxy', api_proxy)
 server.use(utils.restifyRoute(function(req, res, next) {
 
 	Promise.resolve().then(function() {
-		if (!req.route) throw new errors.NotFoundError('Undefined request route');
+		if (!req.route) throw new errors.NotFoundError('Unable to find route');
 
-		security.reqBuild(req)
+		if (req.headers['host'] != parseUrl(process.$domain).host) {
+			throw new errors.PreconditionFailedError('Invalid host')
+		}
 
-
+		security.use(req)
 
 		return next()
 
@@ -119,11 +121,11 @@ if (utils.isMaster()) {
 	for (i = 0; i < len; i++) { cluster.fork() }
 	cluster.on('disconnect', function(worker) {
 		console.warn('cluster disconnect >', worker.id)
-		process.radio.emit(shared.ENUMS.RESTART)
+		process.radio.emit(shared.enums.RESTART)
 	})
 	cluster.on('exit', function(worker, code, signal) {
 		console.error('cluster exit >', worker.id, code, signal)
-		process.radio.emit(shared.ENUMS.RESTART)
+		process.radio.emit(shared.enums.RESTART)
 	})
 
 } else {

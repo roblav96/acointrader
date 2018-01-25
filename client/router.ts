@@ -71,9 +71,9 @@ Root.options.store = store.store
 
 
 
-new Root().$mount('#root')
+// new Root().$mount('#root')
 security.getReady().then(function() {
-	// new Root().$mount('#root')
+	new Root().$mount('#root')
 	return Promise.resolve()
 })
 

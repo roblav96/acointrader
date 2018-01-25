@@ -62,7 +62,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 
 
 
-	step = 4
+	step = 1
 	@Vts.Watch('step') w_step(to: number, from: number) {
 		if (to <= this.steps.length) return;
 		let key_input = (this.$refs.key_input as any) as HTMLInputElement
@@ -79,7 +79,7 @@ export default class Connect extends Avts.Mixin<Vue & RouterMixin & VMixin>(Vue,
 		return steps
 	}
 
-	v_clickedUrl() {
+	clickedUrl() {
 		if (this.step == 1) this.step++;
 	}
 
