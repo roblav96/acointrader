@@ -15,6 +15,12 @@ import WebSocket from '../adapters/websocket'
 
 
 
+declare global {
+	interface BinanceSocketDepth {
+		event: string
+	}
+}
+
 export class WS extends WebSocket {
 
 	static ee3 = new ee3.EventEmitter()
@@ -35,7 +41,7 @@ export class WS extends WebSocket {
 
 	constructor(
 		public type: string,
-		public address: string,
+		address: string,
 	) {
 		super(address)
 		this.addListener('message', data => {

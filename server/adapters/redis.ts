@@ -26,11 +26,15 @@ declare global {
 class Redis extends ioredis {
 
 	static getOpts() {
-		let opts = Object.assign({
+		let opts = {
 			db: 0,
 			dropBufferSupport: true,
-			connectionName: '[' + process.$instance + '][aCoinTrader]' + process.$env,
-		} as ioredis.RedisOptions, process.$webpack.redis) as ioredis.RedisOptions
+			connectionName: '[' + process.$instance + '][' + process.$dname + ']' + process.$env,
+			connectTimeout: 5000,
+			lazyConnect: true,
+		} as ioredis.RedisOptions
+
+		Object.assign(opts, process.$webpack.redis)
 
 		if (process.PRODUCTION) {
 			opts.path = '/var/run/redis_' + opts.port + '.sock'
@@ -46,7 +50,8 @@ class Redis extends ioredis {
 	constructor() {
 		super(Redis.getOpts())
 
-		this.ping()
+		// this.ping()
+		// _.delay(() => this.ping(), 1000)
 		process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ping())
 
 		const cleanup = _.once(() => this.disconnect())
@@ -54,6 +59,16 @@ class Redis extends ioredis {
 		process.on('exit', cleanup)
 
 	}
+
+
+
+	// ping() {
+	// 	console.log('ping')
+	// 	super.ping().then(function(pong) {
+	// 		console.log('pong >')
+	// 		eyes.inspect(pong)
+	// 	})
+	// }
 
 
 

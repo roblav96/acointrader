@@ -12,6 +12,7 @@ import cron from 'cron'
 import ci from 'correcting-interval'
 import ee3 from 'eventemitter3'
 import uws from 'uws'
+import WebSocket from './adapters/websocket'
 
 
 
@@ -56,63 +57,98 @@ declare global {
 			radio: RadioEmitter
 		}
 	}
+	interface UwsClient extends uws {
+		events: Array<string>
+	}
+	interface RadioMessage {
+		action?: string
+		event?: string
+		data?: any
+	}
 }
 
-const radioPort = process.$port - 1
+const radioOpts = {
+	path: 'radio',
+	port: process.$port - 1,
+}
 
 if (utils.isMaster()) {
 
-	const wss = new uws.Server({
-		path: 'master',
-		port: radioPort,
-		clientTracking: false,
-	})
+	const wss = new uws.Server(Object.assign({
+		clientTracking: true,
+		verifyClient(client, next) {
+			let host = client.req.headers['host']
+			next(host == 'localhost')
+		},
+	} as uws.IServerOptions, radioOpts))
+	
+	// console.log('wss.startAutoPing >')
+	// eyes.inspect(wss.startAutoPing)
 
-	wss.on('connection', function(socket: Socket) {
-		socket.on('message', function(message: string) {
-			if (message == 'ping') return socket.send('pong');
-			wss.clients.forEach(function(socket: Socket) { socket.send(message) })
+	const cleanup = _.once(() => wss.close())
+	process.on('beforeExit', cleanup)
+	process.on('exit', cleanup)
+
+	wss.on('connection', function(client: UwsClient) {
+		client.on('message', function(message: string) {
+			wss.clients.forEach(function(client: UwsClient) { client.send(message) })
 		})
 	})
 
+	// wss.on('ping', function(data) {
+	// 	console.info('ping > data', data)
+	// })
+	// wss.on('pong', function(data) {
+	// 	console.info('pong > data', data)
+	// })
+
 }
 
-class RadioEmitter {
+class RadioEmitter extends WebSocket {
 
-	private ws = new uws('ws://localhost:' + radioPort + '/master')
-	private ee3 = new ee3.EventEmitter()
-
-	constructor() {
-		this.ws.on('message', (message: SocketMessage) => {
-			if (message == 'pong') return;
-			message = JSON.parse(message as any)
-			this.ee3.emit(message.event, message.data)
-		})
-		process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ws.send('ping'))
-	}
-
-	emit(event: string, data?: any) {
-		this.ws.send(JSON.stringify({ event, data } as SocketMessage))
-	}
-
-	once(event: string, fn: (data?: any) => void) {
-		this.ee3.once(event, fn)
-	}
-
-	addListener(event: string, fn: (data?: any) => void) {
-		this.ee3.addListener(event, fn)
-	}
-
-	removeListener(event: string, fn?: (data?: any) => void) {
-		this.ee3.removeListener(event, fn)
-	}
-
-	removeAllListeners(event?: string) {
-		this.ee3.removeAllListeners(event)
+	constructor(address: string) {
+		super(address)
 	}
 
 }
-process.radio = new RadioEmitter()
+process.radio = new RadioEmitter('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+
+// class RadioEmitter {
+
+// 	private ws = new uws('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+// 	private ee3 = new ee3.EventEmitter()
+
+// 	constructor() {
+// 		this.ws.on('message', (message: RadioMessage) => {
+// 			message = JSON.parse(message as any)
+// 			console.log('message >')
+// 			eyes.inspect(message)
+// 			// this.ee3.emit(message.event, message.data)
+// 		})
+// 		// process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ws.send('ping'))
+// 	}
+
+// 	emit(event: string, data?: any) {
+// 		this.ws.send(JSON.stringify({ event, data } as RadioMessage))
+// 	}
+
+// 	once(event: string, fn: (data?: any) => void) {
+// 		this.ee3.once(event, fn)
+// 	}
+
+// 	addListener(event: string, fn: (data?: any) => void) {
+// 		this.ee3.addListener(event, fn)
+// 	}
+
+// 	removeListener(event: string, fn?: (data?: any) => void) {
+// 		this.ee3.removeListener(event, fn)
+// 	}
+
+// 	removeAllListeners(event?: string) {
+// 		this.ee3.removeAllListeners(event)
+// 	}
+
+// }
 
 
 
@@ -122,8 +158,8 @@ process.radio = new RadioEmitter()
 
 if (utils.isMaster()) {
 	const restart = _.once(function() {
-		// if (process.DEVELOPMENT) return;
 		console.warn('restart')
+		// if (process.DEVELOPMENT) return;
 		process.nextTick(() => process.exit(0))
 	})
 	process.ee3.once(shared.enums.RESTART, restart)

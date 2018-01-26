@@ -27,8 +27,8 @@ export function use(req: RestifyRequest): Promise<void> {
 			authed: false,
 			ip: requestip.getClientIp(req),
 			conn: buildConn(req.headers),
-			uuid: shared.parseId(req.headers['x-uuid']),
-			finger: shared.parseId(req.headers['x-finger']),
+			uuid: shared.string.toId(req.headers['x-uuid']),
+			finger: shared.string.toId(req.headers['x-finger']),
 			email: req.headers['x-email'],
 		} as SecurityDoc
 

@@ -19,7 +19,7 @@ const r = rethinkdbdash(Object.assign({
 
 
 
-r.expr(1).run()
+// r.expr(1).run()
 process.ee3.addListener(shared.enums.EE3.TICK_5, function() { r.expr(1).run() })
 
 

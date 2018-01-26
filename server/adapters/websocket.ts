@@ -14,7 +14,7 @@ import uws from 'uws'
 
 export default class WebSocket extends ee3.EventEmitter {
 
-	private socket: uws
+	socket: uws
 
 	connecting() { return !!this.socket && this.socket.readyState == this.socket.CONNECTING }
 	ready() { return !!this.socket && this.socket.readyState == this.socket.OPEN }
@@ -22,7 +22,7 @@ export default class WebSocket extends ee3.EventEmitter {
 	constructor(public address: string) {
 		super()
 		this.connect()
-		process.ee3.addListener(shared.enums.EE3.TICK_10, () => this.ping())
+		process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ping())
 	}
 
 	purge(reconnect = false) {
@@ -65,10 +65,10 @@ export default class WebSocket extends ee3.EventEmitter {
 		this.socket.ping()
 	}
 	onping(data) {
-
+		console.log('onping', data)
 	}
 	onpong(data) {
-
+		console.log('onpong', data)
 	}
 
 	onmessage(data) {

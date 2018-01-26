@@ -24,16 +24,6 @@ declare global {
 		}
 	}
 	
-	interface Socket extends uws {
-		events: Array<string>
-	}
-	
-	interface SocketMessage {
-		action?: string
-		event?: string
-		data?: any
-	}
-	
 	interface HttpRequestConfig extends axios.AxiosRequestConfig {
 		silent?: boolean
 		production?: boolean
