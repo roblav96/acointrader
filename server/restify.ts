@@ -120,8 +120,11 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 if (utils.isMaster()) {
 
-	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' workers in cluster...'))
+	// console.log('module.paths', module.paths)
+	// console.log('module.children >')
+	// eyes.inspect(module.children)
 
+	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' workers in cluster...'))
 	let i: number, len = process.$instances
 	for (i = 0; i < len; i++) { cluster.fork() }
 	cluster.on('disconnect', function(worker) {
@@ -132,6 +135,7 @@ if (utils.isMaster()) {
 		console.error('cluster exit >', worker.id, code, signal)
 		process.radio.emit(shared.enums.RESTART)
 	})
+	utils.ready.restify.next(true)
 
 } else {
 
@@ -149,6 +153,7 @@ if (utils.isMaster()) {
 				'===============================================*/'
 			)
 		}
+		utils.ready.restify.next(true)
 	})
 
 }

@@ -44,7 +44,7 @@ export class WS extends UWebSocket {
 		address: string,
 	) {
 		super(address)
-		this.addListener('message', data => {
+		this.emitter.addListener('message', data => {
 			WS.emitter.emit('message', WS.parsers[this.type](data))
 		})
 	}
@@ -65,7 +65,7 @@ export function start() {
 	// let socket = new WS('depth', 'wss://stream.binance.com:9443/ws/iostbtc@depth')
 	// let socket = new UWebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
 	let socket = new UWebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
-	socket.addListener('message', data => {
+	socket.emitter.addListener('message', data => {
 		console.log('data >')
 		// eyes.inspect(data)
 	})

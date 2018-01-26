@@ -8,12 +8,13 @@ import moment from 'moment'
 import restify from 'restify'
 import errors from 'restify-errors'
 
+import rx from 'rxjs/Rx'
+
 
 
 export const ready = {
-	radios(radios: Array<number>) {
-		return radios.length == process.$instances
-	},
+	emitters: new rx.BehaviorSubject(false),
+	restify: new rx.BehaviorSubject(false),
 }
 
 

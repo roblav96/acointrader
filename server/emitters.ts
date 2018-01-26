@@ -96,6 +96,7 @@ class RadioEmitter {
 	isReady() { return this._ready }
 
 	constructor() {
+		this._wsc.verbose = false
 		this._wsc.emitter.once('connected', () => this._ready = true)
 		this._wsc.emitter.addListener('message', (message: RadioMessage) => {
 			this._ee3.emit(message.event, message.data)
@@ -110,6 +111,21 @@ class RadioEmitter {
 
 }
 process.radio = new RadioEmitter()
+
+
+
+const allradios = {} as Dict<boolean>
+function onradio(radio: Dict<boolean>) {
+	shared.object.merge(allradios, radio)
+	if (Object.keys(allradios).length < process.$instances) return;
+	process.radio.removeListener('radio.ready')
+	process.ee3.removeListener(shared.enums.EE3.TICK_01, loopready)
+	utils.ready.emitters.next(true)
+}
+process.radio.addListener('radio.ready', onradio)
+
+function loopready() { process.radio.emit('radio.ready', { [process.$instance]: process.radio.isReady() }) }
+process.ee3.addListener(shared.enums.EE3.TICK_01, loopready)
 
 
 
