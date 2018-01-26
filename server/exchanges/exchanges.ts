@@ -13,6 +13,7 @@ import fs from 'fs'
 
 
 if (utils.isMaster()) {
+	console.log('process.cwd()s', process.cwd())
 	console.log('__dirname', __dirname)
 	console.log('__filename', __filename)
 	fs.readdirSync(__dirname).forEach(function(file) {

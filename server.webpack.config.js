@@ -5,8 +5,10 @@ const webpack = require('webpack')
 const path = require('path')
 const NodeExternals = require('webpack-node-externals')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+const CircularDependencyPlugin = require('circular-dependency-plugin')
+const WebpackShellPlugin = require('webpack-shell-plugin')
 
-const env = require('./server/env.json')[process.env.NODE_ENV]
+const env = require('./server.env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
 
 
@@ -33,33 +35,37 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					// reportFiles: ['server/**/*.ts'],
+					reportFiles: ['server/**/*.ts', 'shared/**/*.ts', 'types/**/*.d.ts'],
 					// context: __dirname,
-					context: './',
+					// context: './',
 				},
 			},
 		],
 	},
 
 	plugins: [
-		new webpack.IgnorePlugin(/typescript/),
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
+		// new CircularDependencyPlugin({ exclude: /\.vue$/, failOnError: true, cwd: process.cwd() })
 	],
+
+	devtool: 'source-map',
 
 }
 
 
 
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	config.devtool = 'source-map'
 	config.watchOptions = { ignored: /node_modules/ }
+	config.plugins.push(new WebpackShellPlugin({
+		onBuildEnd: ['npm run server:boot:development'],
+	}))
 	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
 }
 
 
 
 if (process.env.NODE_ENV == 'PRODUCTION') {
-	config.devtool = 'inline-source-map'
+
 }
 
 

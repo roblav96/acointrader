@@ -1,26 +1,28 @@
 {
 	"scripts": {
-		"i": "npm install && npm run fixdts && npm run rm:dists",
+		"i": "npm install && npm run fixdts",
 		"fixdts": "rm -f node_modules/vuex/types/vue.d.ts && rm -f node_modules/@types/echarts/index.d.ts",
 		"rm": "npm run rm:flush",
 		"rm:flush": "rm -rf node_modules && npm run rm:dists",
-		"rm:dists": "npm-run-all --parallel client:rm:dist server:rm:dist",
-		
-		"rc": "npm run client:rm:dist && npm run client:dev",
+		"rm:dists": "rm -rf dist && npm-run-all --parallel client:rm:dist server:rm:dist",
+
+		"rc": "npm run client:rm:dist && npm run client:webpack:dev",
 		"client:rm:dist": "rm -rf client/public/dist",
-		"client:dev": "cd client && cross-env NODE_ENV=DEVELOPMENT webpack --progress --hide-modules --watch --colors",
-		"client:build": "cd client && cross-env NODE_ENV=PRODUCTION webpack --progress --hide-modules --colors",
-		
-		"rs": "npm run server:kill && npm run server:rm:dist && npm run server:dev",
+		"client:webpack:dev": "cross-env NODE_ENV=DEVELOPMENT webpack --config client.webpack.config --progress --hide-modules --colors --watch",
+		"client:webpack:build": "cross-env NODE_ENV=PRODUCTION webpack --config client.webpack.config --progress --hide-modules --colors",
+
+		"rs": "npm run server:kill && npm run server:rm:dist && npm run server:webpack:dev",
 		"k": "npm run server:kill",
 		"server:kill": "forever stop acointrader-development || true && forever stop acointrader-production || true && npm run server:rm:logs",
-		"server:rm:dist": "rm -rf dist",
+		"server:rm:dist": "rm -rf server/dist",
 		"server:rm:logs": "rm -f ~/.forever/acointrader-development.log || true && rm -f ~/.forever/acointrader-production.log || true",
-		
-		"server:dev": "tsc-watch --onFirstSuccess \"npm run server:boot:development\"",
-		"server:boot:development": "npm run server:kill && forever start -c 'node --expose-gc --max_old_space_size=512' forever-development.json && tail -F ~/.forever/acointrader-development.log",
+
+		"server:webpack:dev": "cross-env NODE_ENV=DEVELOPMENT webpack --config server.webpack.config --progress --hide-modules --colors --watch",
+		"server:webpack:build": "cross-env NODE_ENV=PRODUCTION webpack --config server.webpack.config --progress --hide-modules --colors",
+
+		"server:boot:development": "npm run server:kill && forever start -c 'node --expose-gc --max_old_space_size=512' forever-development.json",
 		"server:boot:production": "npm run server:kill && forever start -c 'node --expose-gc --max_old_space_size=512' forever-production.json && tail -F ~/.forever/acointrader-production.log",
-		
+
 		"terminal:clear": "clear && printf \"\\e[3J\""
 	},
 	"dependencies": {
@@ -129,3 +131,4 @@
 		"webpack": "latest"
 	}
 }
+

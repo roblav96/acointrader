@@ -5,7 +5,7 @@
 	"append": true,
 	"killTree": true,
 	"watch": true,
-	"watchDirectory": "dist/server",
-	"script": "dist/server/server.js"
+	"watchDirectory": "server/dist/build.js",
+	"script": "server/dist/build.js"
 }
 

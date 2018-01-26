@@ -1,8 +1,10 @@
 {
 	"uid": "acointrader-production",
+	"minUptime": 1000,
+	"spinSleepTime": 1000,
 	"append": true,
 	"killTree": true,
 	"watch": false,
-	"script": "dist/server/server.js"
+	"script": "server/dist/build.js"
 }
 
