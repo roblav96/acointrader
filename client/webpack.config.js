@@ -5,19 +5,21 @@ const webpack = require('webpack')
 const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+const CircularDependencyPlugin = require('circular-dependency-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin')
 
-const env = require('./client.env.json')[process.env.NODE_ENV]
+const env = require('./env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
 
 
 
 const config = {
 
-	entry: './client/client.ts',
+	// context: __dirname,
+	entry: './client.ts',
 	output: {
-		path: path.resolve(__dirname, './client/public/dist'),
-		publicPath: '/client/public/dist/',
+		path: path.resolve(__dirname, './public/dist'),
+		publicPath: '/public/dist/',
 		filename: 'build.js',
 	},
 
@@ -35,7 +37,7 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					// reportFiles: ['client/**/*.ts'],
+					reportFiles: ['./**/*.ts'],
 				},
 			},
 			{
@@ -66,6 +68,7 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
+		// new CircularDependencyPlugin({ exclude: /\.vue$/, failOnError: true, cwd: process.cwd() })
 	],
 
 }

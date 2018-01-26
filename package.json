@@ -7,8 +7,8 @@
 		"rm:dists": "npm-run-all --parallel client:rm:dist server:rm:dist",
 		"rc": "npm run client:rm:dist && npm run client:dev",
 		"client:rm:dist": "rm -rf client/public/dist",
-		"client:dev": "cross-env NODE_ENV=DEVELOPMENT webpack --progress --hide-modules --watch --colors",
-		"client:build": "cross-env NODE_ENV=PRODUCTION webpack --progress --hide-modules --colors",
+		"client:dev": "cd client && cross-env NODE_ENV=DEVELOPMENT webpack --progress --hide-modules --watch --colors",
+		"client:build": "cd client && cross-env NODE_ENV=PRODUCTION webpack --progress --hide-modules --colors",
 		"rs": "npm run server:kill && npm run server:rm:dist && npm run server:dev",
 		"k": "npm run server:kill",
 		"server:kill": "forever stop acointrader-development || true && forever stop acointrader-production || true && npm run server:rm:logs",
@@ -122,6 +122,7 @@
 		"webpack-livereload-plugin": "latest",
 		"webpack-node-externals": "latest",
 		"webpack-shell-plugin": "latest",
+		"circular-dependency-plugin": "latest",
 		"webpack": "latest"
 	}
 }

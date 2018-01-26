@@ -9,8 +9,7 @@
 			"client/public/*"
 		],
 		"file_exclude_patterns": [
-			"*server.*",
-			"forever-*.json"
+			"*server.*"
 		]
 	}]
 }
