@@ -1,11 +1,13 @@
 {
 	"scripts": {
+		"r": "npm run clear && npm run clean && tsc-watch -p server.tsconfig.json",
 		"i": "npm install && npm run client:fixdts && npm run clean",
 		"rc": "npm run client:dev",
 		"rs": "npm-run-all --parallel server:dev server:start",
 		"rm": "rm -rf node_modules && npm run clean",
 		"clean": "rm -rf tsc && rm -rf client/public/dist && rm -rf server/dist",
 		"k": "npm run server:kill",
+		"clear": "clear && printf \"\\e[3J\"",
 		"client:fixdts": "rm -f node_modules/vuex/types/vue.d.ts && rm -f node_modules/@types/echarts/index.d.ts",
 		"client:dev": "cross-env NODE_ENV=DEVELOPMENT webpack --config client.webpack.config --progress --hide-modules --watch --colors",
 		"client:build": "cross-env NODE_ENV=PRODUCTION webpack --config client.webpack.config --progress --hide-modules --colors",
