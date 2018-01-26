@@ -2,15 +2,13 @@
 	"folders": [{
 		"path": ".",
 		"folder_exclude_patterns": [
-			"client/public/*",
 			"server",
 			".awcache",
 			"dist",
-			"tsc",
-			"node_modules"
+			"node_modules",
+			"client/public/*"
 		],
 		"file_exclude_patterns": [
-			"client.tsconfig.json",
 			"*server.*"
 		]
 	}]

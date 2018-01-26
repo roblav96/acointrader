@@ -1,8 +1,0 @@
-{
-	"uid": "acoin-production",
-	"append": true,
-	"killTree": true,
-	"watch": false,
-	"script": "dist/build.js"
-}
-

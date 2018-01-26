@@ -1,0 +1,8 @@
+{
+	"uid": "acointrader-production",
+	"append": true,
+	"killTree": true,
+	"watch": false,
+	"script": "dist/server/server.js"
+}
+

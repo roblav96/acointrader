@@ -6,7 +6,7 @@ const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 
-const env = require('./client/env.json')[process.env.NODE_ENV]
+const env = require('./client.env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
 
 
@@ -34,8 +34,7 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					// configFile: 'client.tsconfig.json',
-					reportFiles: ['client/**/*.ts'],
+					// reportFiles: ['client/**/*.ts'],
 				},
 			},
 			{
@@ -94,7 +93,7 @@ config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
 
 
 
-// console.log('client.webpack.config.js >'); eyes.inspect(config);
+// console.log('webpack.config.js >'); eyes.inspect(config);
 
 module.exports = config
 

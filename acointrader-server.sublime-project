@@ -5,11 +5,9 @@
 			"client",
 			".awcache",
 			"dist",
-			"tsc",
 			"node_modules"
 		],
 		"file_exclude_patterns": [
-			"server.tsconfig.json",
 			"*client.*"
 		]
 	}]

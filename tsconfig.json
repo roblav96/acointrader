@@ -12,7 +12,7 @@
 		"removeComments": true,
 		"pretty": true,
 		"sourceMap": true,
-		"outDir": "tsc"
+		"outDir": "dist"
 	},
 	"include": [
 		"types/**/*.d.ts",
@@ -22,10 +22,7 @@
 	],
 	"exclude": [
 		"node_modules",
-		"dist",
-		"tsc",
-		"server/dist",
-		"client/public/dist"
+		"dist"
 	]
 }
 
