@@ -48,23 +48,12 @@ Object.keys(shared.enums.EE3).forEach(function(key) {
 
 
 /*█████████████████████████████████████
-█            CLUSTER RADIO            █
+█            RADIO EMITTER            █
 █████████████████████████████████████*/
 
 declare global {
-	namespace NodeJS {
-		interface Process {
-			radio: RadioEmitter
-		}
-	}
-	interface UwsClient extends uws {
-		events: Array<string>
-	}
-	interface RadioMessage {
-		action?: string
-		event?: string
-		data?: any
-	}
+	namespace NodeJS { interface Process { radio: RadioEmitter } }
+	interface RadioMessage<T = any> { action?: string, event?: string, data?: T }
 }
 
 const radioOpts = {
@@ -86,20 +75,27 @@ if (utils.isMaster()) {
 	process.on('beforeExit', cleanup)
 	process.on('exit', cleanup)
 
-	wss.on('connection', function(client: UwsClient) {
+	wss.on('connection', function(client) {
 		client.on('message', function(message: string) {
-			wss.clients.forEach(function(client: UwsClient) { client.send(message) })
+			wss.clients.forEach(function(v) { v.send(message) })
 		})
+	})
+
+	wss.on('error', function(error) {
+		console.error('uws.Server > error', errors.render(error as any))
 	})
 
 }
 
-class RadioEmitter extends ee3.EventEmitter {
+class RadioEmitter {
 
-	wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+	private ee3 = new ee3.EventEmitter()
+	private wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
 
 	constructor() {
-		super()
+		this.wsc.addListener('message', function(data: RadioMessage) {
+
+		})
 	}
 
 }
