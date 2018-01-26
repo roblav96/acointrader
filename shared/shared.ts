@@ -14,7 +14,7 @@ import _ from 'lodash'
 import moment from 'moment'
 
 
-
+console.warn('export function noop')
 export function noop(): void { }
 
 
@@ -81,7 +81,7 @@ export const object = {
 		})
 	},
 }
-
+if (process.CLIENT) (global as any).object = object;
 
 
 

@@ -23,7 +23,7 @@ declare global {
 
 export class WS extends UWebSocket {
 
-	static ee3 = new ee3.EventEmitter()
+	static emitter = new ee3.EventEmitter()
 
 	static parsers = {
 		['depth'](data) {
@@ -45,7 +45,7 @@ export class WS extends UWebSocket {
 	) {
 		super(address)
 		this.addListener('message', data => {
-			WS.ee3.emit('message', WS.parsers[this.type](data))
+			WS.emitter.emit('message', WS.parsers[this.type](data))
 		})
 	}
 

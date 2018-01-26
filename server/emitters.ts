@@ -53,7 +53,7 @@ Object.keys(shared.enums.EE3).forEach(function(key) {
 
 declare global {
 	namespace NodeJS { interface Process { radio: RadioEmitter } }
-	interface RadioMessage<T = any> { action?: string, event?: string, data?: T }
+	interface RadioMessage { event?: string, data?: any, action?: string }
 }
 
 const radioOpts = {
@@ -89,56 +89,27 @@ if (utils.isMaster()) {
 
 class RadioEmitter {
 
-	private ee3 = new ee3.EventEmitter()
-	private wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+	private _ee3 = new ee3.EventEmitter()
+	private _wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+
+	private _ready = null as boolean
+	isReady() { return this._ready }
 
 	constructor() {
-		this.wsc.addListener('message', function(data: RadioMessage) {
-
+		this._wsc.emitter.once('connected', () => this._ready = true)
+		this._wsc.emitter.addListener('message', (message: RadioMessage) => {
+			this._ee3.emit(message.event, message.data)
 		})
 	}
 
+	emit(event: string, data?: any) { this._wsc.send({ event, data } as RadioMessage) }
+	once(event: string, fn: (data?: any) => void) { this._ee3.once(event, fn) }
+	addListener(event: string, fn: (data?: any) => void) { this._ee3.addListener(event, fn) }
+	removeListener(event: string, fn?: (data?: any) => void) { this._ee3.removeListener(event, fn) }
+	removeAllListeners(event?: string) { this._ee3.removeAllListeners(event) }
+
 }
 process.radio = new RadioEmitter()
-
-
-
-// class RadioEmitter {
-
-// 	private ws = new uws('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
-// 	private ee3 = new ee3.EventEmitter()
-
-// 	constructor() {
-// 		this.ws.on('message', (message: RadioMessage) => {
-// 			message = JSON.parse(message as any)
-// 			console.log('message >')
-// 			eyes.inspect(message)
-// 			// this.ee3.emit(message.event, message.data)
-// 		})
-// 		// process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ws.send('ping'))
-// 	}
-
-// 	emit(event: string, data?: any) {
-// 		this.ws.send(JSON.stringify({ event, data } as RadioMessage))
-// 	}
-
-// 	once(event: string, fn: (data?: any) => void) {
-// 		this.ee3.once(event, fn)
-// 	}
-
-// 	addListener(event: string, fn: (data?: any) => void) {
-// 		this.ee3.addListener(event, fn)
-// 	}
-
-// 	removeListener(event: string, fn?: (data?: any) => void) {
-// 		this.ee3.removeListener(event, fn)
-// 	}
-
-// 	removeAllListeners(event?: string) {
-// 		this.ee3.removeAllListeners(event)
-// 	}
-
-// }
 
 
 

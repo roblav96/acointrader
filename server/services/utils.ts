@@ -10,6 +10,14 @@ import errors from 'restify-errors'
 
 
 
+export const ready = {
+	radios(radios: Array<number>) {
+		return radios.length == process.$instances
+	},
+}
+
+
+
 export function isPrimary() {
 	return process.$instance == 0
 }

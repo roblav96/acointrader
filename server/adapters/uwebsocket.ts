@@ -17,29 +17,24 @@ declare global {
 		events: Array<string>
 	}
 	interface UwsEmitter extends ee3.EventEmitter {
-		addListener(event: 'connecting', fn: () => void): this
-		addListener(event: 'connected', fn: () => void): this
-		addListener(event: 'disconnected', fn: (code: number, message: string) => void): this
-		addListener(event: 'purged', fn: () => void): this
-		addListener(event: 'error', fn: (error: any) => void): this
-		addListener<T = any>(event: 'message', fn: (data: T) => void): this
-		addListener<T = any>(event: string, fn: (...args: Array<T>) => void): this
-		addListener(event: string, fn: (...args: Array<any>) => void): this
-		emit<T = any>(event: string, ...args: Array<T>): boolean
-		emit(event: string, ...args: Array<any>): boolean
+		emit(event: keyof typeof UWebSocket, ...args: Array<any>): boolean
+		once(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
+		addListener(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
+		removeListener(event: keyof typeof UWebSocket, fn?: (data?: any) => void): this
+		removeAllListeners(event?: keyof typeof UWebSocket): this
 	}
 }
 
 export default class UWebSocket {
 
-	static readonly CONNECTING = 'connecting'
-	static readonly CONNECTED = 'connected'
-	static readonly DISCONNECTED = 'disconnected'
-	static readonly PURGED = 'purged'
-	static readonly ERROR = 'error'
-	static readonly MESSAGE = 'message'
+	static readonly connecting = 'connecting'
+	static readonly connected = 'connected'
+	static readonly disconnected = 'disconnected'
+	static readonly purged = 'purged'
+	static readonly error = 'error'
+	static readonly message = 'message'
 
-	ee3 = new ee3.EventEmitter() as UwsEmitter
+	emitter = new ee3.EventEmitter() as UwsEmitter
 
 	verbose = true
 	warnings = true
@@ -64,8 +59,8 @@ export default class UWebSocket {
 		this.socket.terminate()
 		this.socket.removeAllListeners()
 		this.socket = null
-		this.ee3.emit('purged')
-		if (destroy) this.ee3.removeAllListeners();
+		this.emitter.emit('purged')
+		if (destroy) this.emitter.removeAllListeners();
 		else if (this.autopilot) this.reconnect();
 	}
 
@@ -77,28 +72,32 @@ export default class UWebSocket {
 		this.socket.on('close', (code, message) => this.onclose(code, message))
 		this.socket.on('error', error => this.onerror(error))
 		this.socket.on('message', data => this.onmessage(data))
-		this.ee3.emit('connecting')
+		this.emitter.emit('connecting')
 	}
 
 	private onopen() {
 		if (this.verbose) console.info(this.address, '> onopen');
-		this.ee3.emit('connected')
+		this.emitter.emit('connected')
 	}
 
 	private onclose(code: number, message: string) {
 		if (this.warnings) console.warn(this.address, '> onclose >', code, message);
-		this.ee3.emit('disconnected', code, message)
+		this.emitter.emit('disconnected', code, message)
 		this.purge(false)
 	}
 
 	private onerror(error) {
 		if (this.errors) console.error(this.address, '> onerror >', errors.render(error));
-		this.ee3.emit('error', error)
+		this.emitter.emit('error', error)
 		this.purge(false)
 	}
 
 	private onmessage(message) {
-		this.ee3.emit('message', shared.json.safeParse(message))
+		this.emitter.emit('message', shared.json.safeParse(message))
+	}
+
+	send(message: any) {
+		this.socket.send(JSON.stringify(message))
 	}
 
 	// private emit<T = any>(event: string, ...args: Array<T>) { this.ee3.emit(event, ...args) }

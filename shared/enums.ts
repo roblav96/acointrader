@@ -9,6 +9,7 @@ import moment from 'moment'
 
 export default {
 
+	READY: 'ready',
 	RESTART: 'restart',
 
 	EE3: {
