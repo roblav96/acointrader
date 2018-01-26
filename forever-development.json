@@ -4,6 +4,7 @@
 	"spinSleepTime": 1000,
 	"append": true,
 	"killTree": true,
+	"killSignal": "SIGTERM",
 	"watch": true,
 	"watchDirectory": "server/dist/build.js",
 	"script": "server/dist/build.js"
