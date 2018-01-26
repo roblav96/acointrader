@@ -109,7 +109,7 @@
 		"style-loader": "latest",
 		"stylus": "latest",
 		"stylus-loader": "latest",
-		"typescript": "latest",
+		"typescript": "rc",
 		"ts-loader": "latest",
 		"vue-loader": "latest",
 		"vue-template-compiler": "latest",

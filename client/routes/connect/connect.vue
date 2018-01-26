@@ -25,7 +25,7 @@ main.connect--route div.stepper.stepper--vertical span.stepper__step__step {
             </v-avatar>
             <v-toolbar-title>
                 <p class="t-lh2 headline t-500">{{ exchange.name }}</p>
-                <p class="t-lh2 subheading t-300 mb-1">Connect with API Key Pair</p>
+                <p class="t-lh2 subheading mb-1">Connect with API Key Pair</p>
             </v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>

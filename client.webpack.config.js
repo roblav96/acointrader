@@ -39,7 +39,8 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					
+					configFile: 'client.tsconfig.json',
+					reportFiles: ['client/**/*.ts'],
 				},
 			},
 			{
@@ -69,6 +70,7 @@ const config = {
 
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
+		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	],
 
 	devtool: 'source-map',
@@ -86,7 +88,7 @@ if (process.env.NODE_ENV == 'DEVELOPMENT') {
 
 
 if (process.env.NODE_ENV == 'PRODUCTION') {
-	
+
 }
 
 
