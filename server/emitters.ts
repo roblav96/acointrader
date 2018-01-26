@@ -12,7 +12,7 @@ import cron from 'cron'
 import ci from 'correcting-interval'
 import ee3 from 'eventemitter3'
 import uws from 'uws'
-import WebSocket from './adapters/websocket'
+import UWebSocket from './adapters/uwebsocket'
 
 
 
@@ -94,16 +94,18 @@ if (utils.isMaster()) {
 
 }
 
-class RadioEmitter extends WebSocket {
+class RadioEmitter extends ee3.EventEmitter {
 
-	// silent = true
+	wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
 
 	constructor() {
-		super('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+		super()
 	}
 
 }
 process.radio = new RadioEmitter()
+
+
 
 // class RadioEmitter {
 

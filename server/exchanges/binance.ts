@@ -11,7 +11,7 @@ import * as utils from '../services/utils'
 import ee3 from 'eventemitter3'
 import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'
-import WebSocket from '../adapters/websocket'
+import UWebSocket from '../adapters/uwebsocket'
 
 
 
@@ -21,7 +21,7 @@ declare global {
 	}
 }
 
-export class WS extends WebSocket {
+export class WS extends UWebSocket {
 
 	static ee3 = new ee3.EventEmitter()
 
@@ -63,8 +63,8 @@ export function start() {
 	// })
 
 	// let socket = new WS('depth', 'wss://stream.binance.com:9443/ws/iostbtc@depth')
-	let socket = new WebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
-	// let socket = new WebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
+	// let socket = new UWebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
+	let socket = new UWebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
 	socket.addListener('message', data => {
 		console.log('data >')
 		// eyes.inspect(data)
