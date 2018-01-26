@@ -65,7 +65,7 @@ server.use(utils.restifyRoute(function(req, res, next) {
 
 	}).then(function() {
 		return next()
-		
+
 	}).catch(function(error) {
 		return next(errors.generate(error))
 	})
@@ -120,7 +120,8 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 if (utils.isMaster()) {
 
-	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' clusters...'))
+	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' workers in cluster...'))
+
 	let i: number, len = process.$instances
 	for (i = 0; i < len; i++) { cluster.fork() }
 	cluster.on('disconnect', function(worker) {
