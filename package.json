@@ -1,8 +1,8 @@
 {
 	"scripts": {
-		"i": "npm install && npm run client:fixdts && npm run clean",
-		"rm": "rm -rf node_modules && npm run clean",
-		"clean": "npm-run-all --parallel client:clean server:clean",
+		"i": "npm install && npm run client:fixdts && npm run rm:dists",
+		"rm": "rm -rf node_modules && npm run rm:dists",
+		"rm:dists": "npm-run-all --parallel client:rm:dist server:rm:dist",
 		"rc": "npm run client:dev",
 		"client:clean": "rm -rf tsc && rm -rf client/public/dist",
 		"client:fixdts": "rm -f node_modules/vuex/types/vue.d.ts && rm -f node_modules/@types/echarts/index.d.ts",
@@ -100,6 +100,7 @@
 		"@types/restify-errors": "latest",
 		"@types/uws": "latest",
 		"dts-gen": "latest",
+		"gulp": "next",
 		"forever": "latest",
 		"clipboardy": "latest",
 		"source-map-support": "latest",
