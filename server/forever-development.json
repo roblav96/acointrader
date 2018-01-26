@@ -1,5 +1,7 @@
 {
 	"uid": "acointrader-development",
+	"minUptime": 1000,
+	"spinSleepTime": 1000,
 	"append": true,
 	"killTree": true,
 	"watch": true,
