@@ -2,15 +2,15 @@
 	"extends": "./tsconfig",
 	"include": [
 		"types/**/*.d.ts",
-		"client/**/*.ts",
+		"server/**/*.ts",
 		"shared/**/*.ts"
 	],
 	"exclude": [
 		"node_modules",
 		"dist",
 		"tsc",
-		"server",
-		"client/public/dist"
+		"client",
+		"server/dist"
 	]
 }
 
