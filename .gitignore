@@ -1,16 +1,12 @@
 # 
 
-/env.json
-/client.env.json
-/server.env.json
-/client/env.json
-/server/env.json
-
-/client/public/dist/
-/node_modules/
-/dist/
+node_modules
+dist
+*env.json
 
 .awcache
 *.heapsnapshot
 *.DS_STORE
 *.log
+
+
