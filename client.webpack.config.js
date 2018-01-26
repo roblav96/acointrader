@@ -1,7 +1,6 @@
 // 
 
 const eyes = require('eyes')
-const clc = require('cli-color')
 const webpack = require('webpack')
 const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
@@ -21,15 +20,11 @@ const config = {
 		filename: 'build.js',
 	},
 
-	node: {
-		fs: 'empty',
-	},
+	node: { fs: 'empty' },
 
 	resolve: {
 		extensions: ['.vue', '.ts', '.js'],
-		alias: {
-			'vue$': 'vue/dist/vue.esm.js',
-		},
+		// alias: { 'vue$': 'vue/dist/vue.esm.js' },
 	},
 
 	module: {
@@ -39,8 +34,8 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					configFile: 'client.tsconfig.json',
-					reportFiles: ['client/**/*.ts'],
+					// configFile: 'client.tsconfig.json',
+					// reportFiles: ['client/**/*.ts'],
 				},
 			},
 			{
@@ -73,13 +68,12 @@ const config = {
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	],
 
-	devtool: 'source-map',
-
 }
 
 
 
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
+	config.devtool = 'source-map'
 	config.watchOptions = { ignored: /node_modules/ }
 	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
 	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
@@ -88,7 +82,7 @@ if (process.env.NODE_ENV == 'DEVELOPMENT') {
 
 
 if (process.env.NODE_ENV == 'PRODUCTION') {
-
+	config.devtool = 'inline-source-map'
 }
 
 
@@ -100,7 +94,7 @@ config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
 
 
 
-// console.log(clc.bold.blue('client.webpack.config.js >')); eyes.inspect(config);
+// console.log('client.webpack.config.js >'); eyes.inspect(config);
 
 module.exports = config
 

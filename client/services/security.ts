@@ -63,7 +63,7 @@ function syncToken() {
 		return Promise.resolve()
 	}).catch(function(error) {
 		console.error('syncToken > error', error)
-		return pdelay(process.DEVELOPMENT ? 3000 : 1000).then(syncToken)
+		return pdelay(process.DEVELOPMENT ? 5000 : 1000).then(syncToken)
 	})
 }
 
