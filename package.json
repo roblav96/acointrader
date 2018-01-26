@@ -5,18 +5,22 @@
 		"rm": "npm run rm:flush",
 		"rm:flush": "rm -rf node_modules && npm run rm:dists",
 		"rm:dists": "npm-run-all --parallel client:rm:dist server:rm:dist",
+		
 		"rc": "npm run client:rm:dist && npm run client:dev",
 		"client:rm:dist": "rm -rf client/public/dist",
 		"client:dev": "cd client && cross-env NODE_ENV=DEVELOPMENT webpack --progress --hide-modules --watch --colors",
 		"client:build": "cd client && cross-env NODE_ENV=PRODUCTION webpack --progress --hide-modules --colors",
+		
 		"rs": "npm run server:kill && npm run server:rm:dist && npm run server:dev",
 		"k": "npm run server:kill",
 		"server:kill": "forever stop acointrader-development || true && forever stop acointrader-production || true && npm run server:rm:logs",
 		"server:rm:dist": "rm -rf dist",
 		"server:rm:logs": "rm -f ~/.forever/acointrader-development.log || true && rm -f ~/.forever/acointrader-production.log || true",
+		
 		"server:dev": "tsc-watch --onFirstSuccess \"npm run server:boot:development\"",
 		"server:boot:development": "npm run server:kill && forever start -c 'node --expose-gc --max_old_space_size=512' forever-development.json && tail -F ~/.forever/acointrader-development.log",
 		"server:boot:production": "npm run server:kill && forever start -c 'node --expose-gc --max_old_space_size=512' forever-production.json && tail -F ~/.forever/acointrader-production.log",
+		
 		"terminal:clear": "clear && printf \"\\e[3J\""
 	},
 	"dependencies": {
@@ -102,7 +106,6 @@
 		"@types/restify-errors": "latest",
 		"@types/uws": "latest",
 		"dts-gen": "latest",
-		"forever": "latest",
 		"clipboardy": "latest",
 		"source-map-support": "latest",
 		"babel-core": "latest",
