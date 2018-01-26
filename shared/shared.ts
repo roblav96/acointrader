@@ -15,6 +15,10 @@ import moment from 'moment'
 
 
 
+export function noop(): void { }
+
+
+
 export function isValidEmail(email: string) {
 	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
 }
@@ -27,6 +31,16 @@ export function isBad<T>(value: T): boolean {
 
 export function isGood<T>(value: T): boolean {
 	return !isBad(value)
+}
+
+
+
+export const json = {
+	safeParse<T>(target: T): T {
+		if (target == null || !_.isString(target)) return target;
+		if (target.charAt(0) != '{' || target.charAt(target.length - 1) != '}') return target;
+		return JSON.parse(target)
+	},
 }
 
 

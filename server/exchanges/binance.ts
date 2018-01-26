@@ -63,15 +63,14 @@ export function start() {
 	// })
 
 	// let socket = new WS('depth', 'wss://stream.binance.com:9443/ws/iostbtc@depth')
-	// let socket = new WebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
-	let socket = new WebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
+	let socket = new WebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
+	// let socket = new WebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
 	socket.addListener('message', data => {
 		console.log('data >')
-		eyes.inspect(data)
+		// eyes.inspect(data)
 	})
 
 }
-if (utils.isMaster()) start();
 
 
 

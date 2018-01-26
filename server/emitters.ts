@@ -81,9 +81,6 @@ if (utils.isMaster()) {
 			next(host == 'localhost')
 		},
 	} as uws.IServerOptions, radioOpts))
-	
-	// console.log('wss.startAutoPing >')
-	// eyes.inspect(wss.startAutoPing)
 
 	const cleanup = _.once(() => wss.close())
 	process.on('beforeExit', cleanup)
@@ -95,23 +92,18 @@ if (utils.isMaster()) {
 		})
 	})
 
-	// wss.on('ping', function(data) {
-	// 	console.info('ping > data', data)
-	// })
-	// wss.on('pong', function(data) {
-	// 	console.info('pong > data', data)
-	// })
-
 }
 
 class RadioEmitter extends WebSocket {
 
-	constructor(address: string) {
-		super(address)
+	// silent = true
+
+	constructor() {
+		super('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
 	}
 
 }
-process.radio = new RadioEmitter('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+process.radio = new RadioEmitter()
 
 // class RadioEmitter {
 

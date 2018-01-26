@@ -85,9 +85,10 @@ if (process.DEVELOPMENT) {
 	const dtsgen = require('dts-gen')
 	const clipboardy = require('clipboardy')
 	process.dtsgen = function(name, value) {
+		name = name.replace(/\W+/g, '').trim()
 		let results = dtsgen.generateIdentifierDeclarationFile(name, value)
 		clipboardy.write(results).then(function() {
-			console.info('coppied >', name)
+			console.info('/*████  DTS COPPIED > "' + clc.bold(name) + '"  ████*/')
 		}).catch(function(error) {
 			console.error('clipboardy.write > error', error)
 		})

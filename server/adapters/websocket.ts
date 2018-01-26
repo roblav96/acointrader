@@ -14,15 +14,19 @@ import uws from 'uws'
 
 export default class WebSocket extends ee3.EventEmitter {
 
+	silent = false
+
 	socket: uws
 
 	connecting() { return !!this.socket && this.socket.readyState == this.socket.CONNECTING }
 	ready() { return !!this.socket && this.socket.readyState == this.socket.OPEN }
 
-	constructor(public address: string) {
+	constructor(
+		public address: string,
+	) {
 		super()
 		this.connect()
-		process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ping())
+		process.ee3.addListener(shared.enums.EE3.TICK_10, () => this.ping())
 	}
 
 	purge(reconnect = false) {
@@ -41,38 +45,38 @@ export default class WebSocket extends ee3.EventEmitter {
 		this.socket.on('open', () => this.onopen())
 		this.socket.on('close', (code, message) => this.onclose(code, message))
 		this.socket.on('error', error => this.onerror(error))
-		this.socket.on('ping', data => this.onping(data))
-		this.socket.on('pong', data => this.onpong(data))
 		this.socket.on('message', data => this.onmessage(data))
+		// this.socket.on('ping', data => this.onping(data))
+		// this.socket.on('pong', data => this.onpong(data))
 	}
 
 	onopen() {
-		console.info('websocket onopen >', this.address)
+		if (!this.silent) console.info(this.address, '> onopen');
 	}
 
 	onclose(code: number, message: string) {
-		console.warn('websocket onclose >', code, message)
+		console.warn(this.address, '> onclose >', code, message)
 		this.purge(true)
 	}
 
 	onerror(error) {
-		console.error('websocket onerror > error', errors.render(error))
+		console.error(this.address, '> onerror >', errors.render(error))
 		this.purge(true)
 	}
 
 	ping() {
 		if (!this.ready()) return;
-		this.socket.ping()
+		this.socket.ping('ping')
 	}
-	onping(data) {
-		console.log('onping', data)
-	}
-	onpong(data) {
-		console.log('onpong', data)
-	}
+	// onping(data) {
+	// 	if (!this.silent) console.log(this.address, '> onping data >', data);
+	// }
+	// onpong(data) {
+	// 	if (!this.silent) console.log(this.address, '> onpong data >', data);
+	// }
 
 	onmessage(data) {
-		this.emit('message', JSON.parse(data))
+		this.emit('message', shared.json.safeParse(data))
 	}
 
 }
