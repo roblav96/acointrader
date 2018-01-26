@@ -12,9 +12,13 @@ import fs from 'fs'
 
 
 
-fs.readdirSync(__dirname).forEach(function (file) {
-	console.log('file', file)
-})
+if (utils.isMaster()) {
+	console.log('__dirname', __dirname)
+	console.log('__filename', __filename)
+	fs.readdirSync(__dirname).forEach(function(file) {
+		console.log('file', file)
+	})
+}
 
 
 

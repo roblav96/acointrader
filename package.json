@@ -14,7 +14,7 @@
 		"server:cleanlogs": "rm -f ~/.forever/acoin-development.log || true && rm -f ~/.forever/acoin-production.log || true",
 		"server:dev": "cross-env NODE_ENV=DEVELOPMENT webpack --config server.webpack.config --progress --hide-modules --watch --colors",
 		"server:kill": "forever stop acoin-development || true && forever stop acoin-production || true && npm run server:cleanlogs",
-		"server:start": "npm run server:kill && npm run server:clean && sleep 5 && cd server && forever start -c 'node --expose-gc --max_old_space_size=512' forever-acoin-development.json && tail -F ~/.forever/acoin-development.log",
+		"server:start": "npm run server:kill && cd server && forever start -c 'node --expose-gc --max_old_space_size=512' forever-acoin-development.json && tail -F ~/.forever/acoin-development.log",
 		"terminal:clear": "clear && printf \"\\e[3J\""
 	},
 	"dependencies": {

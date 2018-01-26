@@ -22,7 +22,7 @@ const config = {
 	},
 
 	target: 'node',
-	node: { __filename: true },
+	// node: { __filename: true },
 	externals: [NodeExternals()],
 	resolve: { extensions: ['.ts', '.js'] },
 
@@ -33,7 +33,9 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-					reportFiles: ['server/**/*.ts'],
+					// reportFiles: ['server/**/*.ts'],
+					// context: __dirname,
+					context: './',
 				},
 			},
 		],
