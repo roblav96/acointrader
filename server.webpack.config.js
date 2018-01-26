@@ -1,7 +1,6 @@
 // 
 
 const eyes = require('eyes')
-const clc = require('cli-color')
 const webpack = require('webpack')
 const path = require('path')
 const NodeExternals = require('webpack-node-externals')
@@ -14,6 +13,7 @@ env.env = process.env.NODE_ENV
 
 const config = {
 
+	context: __dirname,
 	entry: './server/server.ts',
 	output: {
 		path: path.resolve(__dirname, './server/dist'),
@@ -22,12 +22,9 @@ const config = {
 	},
 
 	target: 'node',
-
+	node: { __filename: true },
 	externals: [NodeExternals()],
-
-	resolve: {
-		extensions: ['.ts', '.js'],
-	},
+	resolve: { extensions: ['.ts', '.js'] },
 
 	module: {
 		rules: [
@@ -36,7 +33,7 @@ const config = {
 				exclude: /node_modules/,
 				loader: 'ts-loader',
 				options: {
-
+					reportFiles: ['server/**/*.ts'],
 				},
 			},
 		],
@@ -44,15 +41,15 @@ const config = {
 
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
+		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	],
-
-	devtool: 'source-map',
 
 }
 
 
 
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
+	config.devtool = 'source-map'
 	config.watchOptions = { ignored: /node_modules/ }
 	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
 }
@@ -60,7 +57,7 @@ if (process.env.NODE_ENV == 'DEVELOPMENT') {
 
 
 if (process.env.NODE_ENV == 'PRODUCTION') {
-	
+	config.devtool = 'inline-source-map'
 }
 
 
@@ -72,7 +69,7 @@ config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
 
 
 
-// console.log(clc.bold.blue('client.webpack.config.js >')); eyes.inspect(config);
+// console.log('server.webpack.config.js >'); eyes.inspect(config);
 
 module.exports = config
 

@@ -35,7 +35,7 @@ const config = {
 				loader: 'ts-loader',
 				options: {
 					// configFile: 'client.tsconfig.json',
-					// reportFiles: ['client/**/*.ts'],
+					reportFiles: ['client/**/*.ts'],
 				},
 			},
 			{
