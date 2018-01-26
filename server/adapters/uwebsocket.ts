@@ -23,12 +23,19 @@ export default interface UWebSocket {
 
 export default class UWebSocket extends ee3.EventEmitter {
 
+	static CONNECTING = 'connecting'
+	static CONNECTED = 'connected'
+	static DISCONNECTED = 'disconnected'
+	static PURGED = 'purged'
+	static ERROR = 'error'
+	static MESSAGE = 'message'
+
 	verbose = true
 	warnings = true
 	errors = true
 	autopilot = true
 
-	socket: uws
+	private socket: uws
 
 	connecting() { return !!this.socket && this.socket.readyState == this.socket.CONNECTING }
 	ready() { return !!this.socket && this.socket.readyState == this.socket.OPEN }
@@ -40,6 +47,10 @@ export default class UWebSocket extends ee3.EventEmitter {
 		this.connect()
 		process.ee3.addListener(shared.enums.EE3.TICK_10, () => this.ping())
 	}
+
+	// private emit(event: string, ...args: Array<any>) { this.ee3.emit(event, ...args) }
+	// private removeAllListeners() { this.ee3.removeAllListeners() }
+	// addListener(event: string, fn: (...args: Array<any>) => void) { this.ee3.addListener(event, fn) }
 
 	purge(destroy = true) {
 		this.socket.close()
