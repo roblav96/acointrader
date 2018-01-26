@@ -16,28 +16,31 @@ declare global {
 	interface UwsClient extends uws {
 		events: Array<string>
 	}
-}
-
-export default interface UWebSocket {
-	addListener(event: 'connecting', fn: () => void): this
-	addListener(event: 'connected', fn: () => void): this
-	addListener(event: 'disconnected', fn: (code: number, message: string) => void): this
-	addListener(event: 'purged', fn: () => void): this
-	addListener(event: 'error', fn: (error: any) => void): this
-	addListener<T = any>(event: 'message', fn: (data: T) => void): this
-	addListener<T = any>(event: string, fn: (...args: Array<T>) => void): this
+	interface UwsEmitter extends ee3.EventEmitter {
+		addListener(event: 'connecting', fn: () => void): this
+		addListener(event: 'connected', fn: () => void): this
+		addListener(event: 'disconnected', fn: (code: number, message: string) => void): this
+		addListener(event: 'purged', fn: () => void): this
+		addListener(event: 'error', fn: (error: any) => void): this
+		addListener<T = any>(event: 'message', fn: (data: T) => void): this
+		addListener<T = any>(event: string, fn: (...args: Array<T>) => void): this
+		addListener(event: string, fn: (...args: Array<any>) => void): this
+		emit<T = any>(event: string, ...args: Array<T>): boolean
+		emit(event: string, ...args: Array<any>): boolean
+	}
 }
 
 export default class UWebSocket {
 
-	// static CONNECTING = 'connecting'
-	// static CONNECTED = 'connected'
-	// static DISCONNECTED = 'disconnected'
-	// static PURGED = 'purged'
-	// static ERROR = 'error'
-	// static MESSAGE = 'message'
+	static readonly CONNECTING = 'connecting'
+	static readonly CONNECTED = 'connected'
+	static readonly DISCONNECTED = 'disconnected'
+	static readonly PURGED = 'purged'
+	static readonly ERROR = 'error'
+	static readonly MESSAGE = 'message'
 
-	ee3 = new ee3.EventEmitter()
+	ee3 = new ee3.EventEmitter() as UwsEmitter
+
 	verbose = true
 	warnings = true
 	errors = true
@@ -55,10 +58,6 @@ export default class UWebSocket {
 	}
 
 	private ping() { if (this.ready()) this.socket.ping('ping'); }
-
-	// addListener(event: string, fn: (...args: Array<any>) => void) {
-	// 	this.ee3.addListener(event, fn)
-	// }
 
 	purge(destroy = true) {
 		this.socket.close()

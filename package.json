@@ -1,9 +1,9 @@
 {
 	"scripts": {
-		"i": "npm install && npm run client:fixdts",
+		"i": "npm install && npm run client:fixdts && npm run clean",
 		"rc": "npm run client:dev",
 		"rs": "npm-run-all --parallel server:dev server:start",
-		"rm": "sudo rm -rf node_modules && npm run clean",
+		"rm": "rm -rf node_modules && npm run clean",
 		"clean": "rm -rf tsc && rm -rf client/public/dist && rm -rf server/dist",
 		"k": "npm run server:kill",
 		"client:fixdts": "rm -f node_modules/vuex/types/vue.d.ts && rm -f node_modules/@types/echarts/index.d.ts",
@@ -119,4 +119,3 @@
 		"webpack": "latest"
 	}
 }
-
