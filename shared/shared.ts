@@ -60,7 +60,12 @@ export const string = {
 	},
 	parseExchangeId(website: string) {
 		let parsed = url.parse(website)
-		return parsed.hostname.split('.').splice(-2)[0]
+		let split = parsed.hostname.split('.')
+		if (split[0] == 'www') split.shift();
+		return string.toId(split[0], true)
+	},
+	parseUrl(website: string) {
+		return url.parse(website)
 	},
 }
 if (process.CLIENT) (global as any).string = string;
@@ -73,7 +78,7 @@ export const object = {
 	},
 	compact<T>(target: T): void {
 		Object.keys(target).forEach(function(k, i) {
-			if (target[k] == null) _.unset(target, k);
+			if (!target[k]) _.unset(target, k);
 		})
 	},
 	merge<T>(target: T, source: T): void {

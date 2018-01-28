@@ -47,17 +47,27 @@ function scrapeExchangeMeta(meta: CoinClarityExchangeMeta) {
 
 		let $a = $('.profile-sidebar-section a').first()
 		let href = $a.attr('href')
+		if (!href) href = $a.text();
 		let id = shared.string.parseExchangeId(href)
 		let parsed = url.parse(href)
 		let website = parsed.protocol + '//' + parsed.hostname
 
+		let year = $('.profile-sidebar-section span').last().text()
+		let inaugurated = shared.string.parseInt(year)
+
 		let description = $('blockquote').text().trim()
 		if (description.charAt(description.length - 1) != '.') description += '.';
 
-		let item = { id, name, website, logoSquare: meta.logoSquare, description } as ExchangeItem
-		console.log('item >')
-		eyes.inspect(item)
+		let item = {
+			id, name, website, inaugurated, description,
+			logoSquare: meta.logoSquare,
+			coinclarity: meta.href,
+		} as ExchangeItem
+		shared.object.compact(item)
+		return r.table('exchanges').insert(item, { conflict: 'update' }).run()
 
+	}).then(function() {
+		return Promise.resolve(true)
 	})
 }
 
@@ -65,9 +75,8 @@ function scrapeExchangeMeta(meta: CoinClarityExchangeMeta) {
 
 function scrapePage(page: number) {
 	return Promise.resolve().then(function() {
-		return http.scrape('https://coinclarity.com/exchanges/', {
-			fwp_paged: page,
-		})
+		if (page == -1) return http.scrape('https://coinclarity.com/exchanges/');
+		return http.scrape('https://coinclarity.com/exchanges/', { fwp_paged: page })
 
 	}).then(function(html: string) {
 		let metas = [] as Array<CoinClarityExchangeMeta>
@@ -89,15 +98,17 @@ function scrapePage(page: number) {
 
 		})
 
-		return scrapeExchangeMeta(metas[0])
-		// return pall(metas.map(meta => () => scrapeExchangeMeta(meta)), { concurrency: 1 })
+		return pall(metas.map(meta => () => scrapeExchangeMeta(meta)), { concurrency: 1 })
+		// return scrapeExchangeMeta(metas[0])
 
+	}).then(function() {
+		return Promise.resolve(true)
 	})
 }
 
 
 
-function getExchangeCount(): Promise<number> {
+function getExchangeCount() {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinclarity.com/exchanges/')
 	}).then(function(html: string) {
@@ -112,24 +123,27 @@ function getExchangeCount(): Promise<number> {
 
 export const exchanges = {
 
-	sync(): Promise<boolean> {
+	sync() {
 		return Promise.resolve().then(function() {
-			// 	return getExchangeCount()
+			return getExchangeCount()
 
-			// }).then(function(count) {
-			// 	let pages = _.ceil(count / PAGE_LIMIT)
-			// 	let fns = Array.from(Array(pages + 1), (v, i) => i)
+		}).then(function(count) {
+			let total = _.ceil(count / PAGE_LIMIT)
+			let pages = Array.from(Array(total + 1), (v, i) => i)
+			pages.unshift(-1)
+			pages.push(...shared.object.clone(pages), ...shared.object.clone(pages))
+			return pall(pages.map(page => () => scrapePage(page)), { concurrency: 1 })
 			// return scrapePage(0)
-			// return pall(fns.map(page => () => scrapePage(page)), { concurrency: 1 })
-
-			return scrapeExchangeMeta({
-				id: 'binance',
-				href: 'https://coinclarity.com/exchange/binance/',
-				logoSquare: 'https://coinclarity.com/wp-content/uploads/2017/11/Screenshot-2017-11-17-22.50.06-280x280.png',
-			})
+			// return scrapeExchangeMeta({
+			// 	id: 'binance',
+			// 	href: 'https://coinclarity.com/exchange/binance/',
+			// 	logoSquare: 'https://coinclarity.com/wp-content/uploads/2017/11/Screenshot-2017-11-17-22.50.06-280x280.png',
+			// })
 
 		}).then(function() {
+			console.warn('exchanges.sync > DONE')
 			return Promise.resolve(true)
+
 		}).catch(function(error) {
 			console.error('exchanges.sync > error', errors.render(error))
 			return Promise.resolve(false)
