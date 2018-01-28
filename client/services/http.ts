@@ -27,10 +27,10 @@ function request(config: HttpRequestConfig): Promise<any> {
 
 		if (!config.params) config.params = {};
 		if (config.silent == true) config.params.silent = true;
-		
+
 		let domain = config.production ? 'https://acointrader.com' : process.$domain
 		config.baseURL = domain + '/api'
-		
+
 		Object.assign(config.headers, security.getHeaders(), {
 			'x-version': process.$version,
 			'x-platform': 'web',

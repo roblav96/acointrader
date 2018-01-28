@@ -23,7 +23,7 @@ declare global {
 
 
 
-export class Socket extends UWebSocket {
+class Socket extends UWebSocket {
 
 	static emitter = new ee3.EventEmitter()
 
@@ -43,15 +43,15 @@ export class Socket extends UWebSocket {
 
 	}
 
-	// constructor(
-	// 	public type: string,
-	// 	address: string,
-	// ) {
-	// 	super(address)
-	// 	this.emitter.addListener('message', data => {
-	// 		WS.emitter.emit('message', WS.parsers[this.type](data))
-	// 	})
-	// }
+	constructor(
+		public address: string,
+		public type: string,
+	) {
+		super(address)
+		this.emitter.addListener('message', data => {
+			// WS.emitter.emit('message', WS.parsers[this.type](data))
+		})
+	}
 
 
 
@@ -60,6 +60,7 @@ export class Socket extends UWebSocket {
 
 
 export function start() {
+	console.warn('binance > start')
 
 	// WS.ee3.addListener('message', function(data) {
 	// 	console.log('data >')
@@ -79,7 +80,7 @@ export function start() {
 // if (utils.isMaster()) {
 // 	let socket = new UWebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
 // 	socket.emitter.addListener('message', function(data) {
-		
+
 // 	})
 // }
 

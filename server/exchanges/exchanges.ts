@@ -8,8 +8,7 @@ import * as errors from '../services/errors'
 import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
-import './binance'
-// import * as binance from './binance'
+import * as binance from './binance'
 
 
 
@@ -31,6 +30,12 @@ declare global {
 		coinclarity: string
 	}
 	
+}
+
+
+
+if (utils.isMaster()) {
+	binance.start()
 }
 
 

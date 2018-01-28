@@ -7,7 +7,7 @@ import moment from 'moment'
 
 
 
-export default {
+export const enums = {
 
 	RESTART: 'restart',
 

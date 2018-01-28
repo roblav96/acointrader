@@ -85,6 +85,7 @@ export default class UWebSocket {
 	}
 
 	private onerror(error) {
+		if (!error) return;
 		if (this.errors) console.error(this.address, '> onerror >', errors.render(error));
 		this.emitter.emit('error', error)
 		this.purge(false)
@@ -95,7 +96,11 @@ export default class UWebSocket {
 	}
 
 	send(message: any) {
-		this.socket.send(JSON.stringify(message))
+		this.socket.send(JSON.stringify(message), error => {
+			if (!error) return;
+			if (this.errors) console.error(this.address, '> send error >', errors.render(error as any));
+			this.emitter.emit('error', error)
+		})
 	}
 
 	// private emit<T = any>(event: string, ...args: Array<T>) { this.ee3.emit(event, ...args) }
