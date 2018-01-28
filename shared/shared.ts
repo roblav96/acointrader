@@ -12,6 +12,7 @@ import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
 import moment from 'moment'
+import url from 'url'
 
 
 
@@ -46,7 +47,7 @@ export const json = {
 
 
 export const string = {
-	toId(id: string, toLowerCase = false): string {
+	toId(id: string, toLowerCase = false) {
 		if (!_.isString(id)) return id;
 		id = id.replace(/\W+/g, '').trim()
 		return !toLowerCase ? id : id.toLowerCase()
@@ -56,6 +57,10 @@ export const string = {
 	},
 	parseFloat(input: string) {
 		return Number.parseFloat(input.replace(/[^0-9\.]/g, ''))
+	},
+	parseExchangeId(website: string) {
+		let parsed = url.parse(website)
+		return parsed.hostname.split('.').splice(-2)[0]
 	},
 }
 if (process.CLIENT) (global as any).string = string;

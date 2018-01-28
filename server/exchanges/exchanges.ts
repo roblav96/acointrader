@@ -16,14 +16,13 @@ import './binance'
 declare global {
 	
 	interface ExchangeItem {
-		hostname: string
+		id: string
 		name: string
-		logoSquareSD: string
-		logoSquareHD: string
-		logoSquare4K: string
-		logoWideSD: string
-		logoWideHD: string
-		logoWide4K: string
+		website: string
+		logoSquare: string
+		logoWide: string
+		logoBanner: string
+		description: string
 	}
 	
 }

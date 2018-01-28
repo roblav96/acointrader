@@ -42,7 +42,7 @@ export default r
 
 r.db('acointrader').tableCreate('users', { primaryKey: 'email', durability: 'hard' });
 
-r.db('acointrader').tableCreate('exchanges', { primaryKey: 'hostname', durability: 'soft' });
+r.db('acointrader').tableCreate('exchanges', { primaryKey: 'id', durability: 'soft' });
 // r.db('acointrader').table('ib_positions').indexCreate('stamp');
 
 
