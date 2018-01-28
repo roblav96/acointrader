@@ -25,6 +25,7 @@ declare namespace Items {
 		id: string
 		slug: string
 		name: string
+		logo: string
 		fiat: boolean
 		crypto: boolean
 		coin: boolean

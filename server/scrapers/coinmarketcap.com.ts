@@ -15,6 +15,40 @@ import * as http from '../services/http'
 
 
 
+declare global {
+	namespace CoinMarketCap {
+
+		interface SearchResult {
+			name: string
+			rank: number
+			slug: string
+			symbol: string
+			tokens: Array<string>
+		}
+
+		interface Ticker {
+			'24h_volume_usd': string
+			available_supply: string
+			id: string
+			last_updated: string
+			market_cap_usd: string
+			max_supply: string
+			name: string
+			percent_change_1h: string
+			percent_change_24h: string
+			percent_change_7d: string
+			price_btc: string
+			price_usd: string
+			rank: string
+			symbol: string
+			total_supply: string
+		}
+
+	}
+}
+
+
+
 export function sync() {
 	return pall([
 		() => syncAssets(),

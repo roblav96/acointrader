@@ -4,7 +4,7 @@ require('source-map-support/register')
 import './process'
 import './emitters'
 import './restify'
-import './exchanges/exchanges'
 import './scrapers/scrapers'
+import './exchanges/exchanges'
 
 

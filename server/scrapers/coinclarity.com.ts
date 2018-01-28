@@ -21,9 +21,9 @@ const PAGE_LIMIT = 25
 
 
 
-interface CoinClarityExchangeMeta { id: string, href: string, logoSquare: string }
+interface ExchangeMeta { id: string, href: string, logoSquare: string }
 
-function scrapeExchangeMeta(meta: CoinClarityExchangeMeta) {
+function scrapeExchangeMeta(meta: ExchangeMeta) {
 	return Promise.resolve().then(function() {
 		return http.scrape(meta.href)
 
@@ -67,7 +67,7 @@ function scrapePage(page: number) {
 		return http.scrape('https://coinclarity.com/exchanges/', { fwp_paged: page })
 
 	}).then(function(html: string) {
-		let metas = [] as Array<CoinClarityExchangeMeta>
+		let metas = [] as Array<ExchangeMeta>
 
 		let $ = cheerio.load(html)
 		let lis = $('[data-name="exchanges"] li')
@@ -142,7 +142,16 @@ export const exchanges = {
 
 
 
-
+// function saveImage(name: string, url: string) {
+// 	return Promise.resolve().then(function() {
+// 		return jimp.read(url)
+// 	}).then(function(img) {
+// 		return img.write('DOWNLOADS/' + name + '.png')
+// 		// return img.resize(300, 300).write('DOWNLOADS/' + name + '.png')
+// 	}).then(function() {
+// 		return Promise.resolve()
+// 	})
+// }
 
 
 
