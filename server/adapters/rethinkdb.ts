@@ -33,3 +33,23 @@ process.ee3.addListener(shared.enums.EE3.TICK_5, function() { r.expr(1).run() })
 export default r
 
 
+
+
+
+/*████████████████████████████████████████
+█            TABLES & INDEXES            █
+████████████████████████████████████████*/
+
+r.db('acointrader').tableCreate('users', { primaryKey: 'email', durability: 'hard' });
+
+r.db('acointrader').tableCreate('exchanges', { primaryKey: 'hostname', durability: 'soft' });
+// r.db('acointrader').table('ib_positions').indexCreate('stamp');
+
+
+
+
+
+
+
+
+

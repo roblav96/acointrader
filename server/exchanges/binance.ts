@@ -17,16 +17,19 @@ import UWebSocket from '../adapters/uwebsocket'
 
 declare global {
 	interface BinanceSocketDepth {
-		event: string
+
 	}
 }
 
-export class WS extends UWebSocket {
+
+
+export class Socket extends UWebSocket {
 
 	static emitter = new ee3.EventEmitter()
 
 	static parsers = {
-		['depth'](data) {
+
+		depth(data) {
 			return {
 				event: data.e,
 				stamp: data.E,
@@ -36,18 +39,19 @@ export class WS extends UWebSocket {
 				bidDepth: data.b.map(b => _.zipObject(['price', 'size'], b)),
 				askDepth: data.a.map(a => _.zipObject(['price', 'size'], a)),
 			}
-		}
+		},
+
 	}
 
-	constructor(
-		public type: string,
-		address: string,
-	) {
-		super(address)
-		this.emitter.addListener('message', data => {
-			WS.emitter.emit('message', WS.parsers[this.type](data))
-		})
-	}
+	// constructor(
+	// 	public type: string,
+	// 	address: string,
+	// ) {
+	// 	super(address)
+	// 	this.emitter.addListener('message', data => {
+	// 		WS.emitter.emit('message', WS.parsers[this.type](data))
+	// 	})
+	// }
 
 
 
@@ -64,13 +68,20 @@ export function start() {
 
 	// let socket = new WS('depth', 'wss://stream.binance.com:9443/ws/iostbtc@depth')
 	// let socket = new UWebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
-	let socket = new UWebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
-	socket.emitter.addListener('message', data => {
-		console.log('data >')
-		// eyes.inspect(data)
-	})
+	// let socket = new UWebSocket('wss://stream.binance.com:9443/ws/iostbtc@aggTrade')
+	// socket.emitter.addListener('message', data => {
+	// 	console.log('data >')
+	// 	// eyes.inspect(data)
+	// })
 
 }
+
+// if (utils.isMaster()) {
+// 	let socket = new UWebSocket('wss://stream.binance.com:9443/ws/!ticker@arr')
+// 	socket.emitter.addListener('message', function(data) {
+		
+// 	})
+// }
 
 
 

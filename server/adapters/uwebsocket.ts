@@ -13,9 +13,9 @@ import uws from 'uws'
 
 
 declare global {
-	interface UwsClient extends uws {
-		events: Array<string>
-	}
+	// interface UwsClient extends uws {
+	// 	events: Array<string>
+	// }
 	interface UwsEmitter extends ee3.EventEmitter {
 		emit(event: keyof typeof UWebSocket, ...args: Array<any>): boolean
 		once(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
@@ -30,7 +30,7 @@ export default class UWebSocket {
 	static readonly connecting = 'connecting'
 	static readonly connected = 'connected'
 	static readonly disconnected = 'disconnected'
-	static readonly purged = 'purged'
+	static readonly destroyed = 'destroyed'
 	static readonly error = 'error'
 	static readonly message = 'message'
 
@@ -45,21 +45,17 @@ export default class UWebSocket {
 	connecting() { return !!this.socket && this.socket.readyState == this.socket.CONNECTING }
 	ready() { return !!this.socket && this.socket.readyState == this.socket.OPEN }
 
-	constructor(
-		public address: string,
-	) {
+	constructor(public address: string) {
 		this.connect()
-		process.ee3.addListener(shared.enums.EE3.TICK_10, () => this.ping())
+		process.ee3.addListener(shared.enums.EE3.TICK_10, () => this.socket.ping())
 	}
-
-	private ping() { if (this.ready()) this.socket.ping('ping'); }
 
 	purge(destroy = true) {
 		this.socket.close()
 		this.socket.terminate()
 		this.socket.removeAllListeners()
 		this.socket = null
-		this.emitter.emit('purged')
+		this.emitter.emit('destroyed')
 		if (destroy) this.emitter.removeAllListeners();
 		else if (this.autopilot) this.reconnect();
 	}
@@ -73,10 +69,12 @@ export default class UWebSocket {
 		this.socket.on('error', error => this.onerror(error))
 		this.socket.on('message', data => this.onmessage(data))
 		this.emitter.emit('connecting')
+		// this.socket.on('ping', data => console.warn(this.address, '> ping'))
+		// this.socket.on('pong', data => console.warn(this.address, '> pong'))
 	}
 
 	private onopen() {
-		if (this.verbose) console.info(this.address, '> onopen');
+		if (this.verbose) console.info(this.address, '> connected');
 		this.emitter.emit('connected')
 	}
 

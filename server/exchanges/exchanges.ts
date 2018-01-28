@@ -8,21 +8,25 @@ import * as errors from '../services/errors'
 import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
-import fs from 'fs'
+import './binance'
+// import * as binance from './binance'
 
 
 
-if (utils.isMaster()) {
-	console.log('process.cwd()s', process.cwd())
-	console.log('__dirname', __dirname)
-	console.log('__filename', __filename)
-	fs.readdirSync(__dirname).forEach(function(file) {
-		console.log('file', file)
-	})
+declare global {
+	
+	interface ExchangeItem {
+		hostname: string
+		name: string
+		logoSquareSD: string
+		logoSquareHD: string
+		logoSquare4K: string
+		logoWideSD: string
+		logoWideHD: string
+		logoWide4K: string
+	}
+	
 }
-
-
-
 
 
 

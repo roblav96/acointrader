@@ -8,7 +8,7 @@ import * as errors from './errors'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
 
-import { parse as parseUrl } from 'url'
+import url from 'url'
 import axios from 'axios'
 
 
@@ -18,7 +18,7 @@ axios.defaults.timeout = 10000
 function request(config: HttpRequestConfig): Promise<any> {
 	return Promise.resolve().then(function() {
 
-		let parsed = parseUrl(config.url)
+		let parsed = url.parse(config.url)
 
 		if (!Number.isFinite(config.timeout)) config.timeout = axios.defaults.timeout;
 

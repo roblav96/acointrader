@@ -5,5 +5,6 @@ import './process'
 import './emitters'
 import './restify'
 import './exchanges/exchanges'
+import './scrapers/scrapers'
 
 

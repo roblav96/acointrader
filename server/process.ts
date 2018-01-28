@@ -7,6 +7,7 @@ import moment from 'moment'
 
 import os from 'os'
 import cluster from 'cluster'
+import url from 'url'
 import ee3 from 'eventemitter3'
 
 
@@ -93,6 +94,24 @@ if (process.DEVELOPMENT) {
 			console.error('clipboardy.write > error', error)
 		})
 	}
+}
+
+
+
+if (cluster.isMaster) {
+	process.stdout.write((clc as any).erase.screen)
+	let host = url.parse(process.$domain).host
+	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
+	console.log('\n' +
+		clc.bold.underline(process.$dname) + '\n' +
+		'v' + process.$version + ' ' +
+		clc.bold(process.$env) + '\n' +
+		clc.bold.green('@') + host + '\n' +
+		'/*===============================================\n' +
+		'=========           ' + clc.bold(moment().format('hh:mm:ss')) + '           ==========\n' +
+		'===============================================*/\n\n' +
+		clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' nodes in cluster...') // + '\n'
+	)
 }
 
 

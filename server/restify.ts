@@ -11,7 +11,7 @@ import * as shared from '../shared/shared'
 import os from 'os'
 import cluster from 'cluster'
 import restify from 'restify'
-import { parse as parseUrl } from 'url'
+import url from 'url'
 import redis from './adapters/redis'
 import r from './adapters/rethinkdb'
 import * as security from './services/security'
@@ -57,7 +57,7 @@ server.use(utils.restifyRoute(function(req, res, next) {
 	Promise.resolve().then(function() {
 		if (!req.route) throw new errors.NotFoundError('Unable to find route');
 
-		if (req.headers['host'] != parseUrl(process.$domain).host) {
+		if (req.headers['host'] != url.parse(process.$domain).host) {
 			throw new errors.PreconditionFailedError('Invalid host')
 		}
 
@@ -118,13 +118,8 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 
 
-if (utils.isMaster()) {
+if (cluster.isMaster) {
 
-	// console.log('module.paths', module.paths)
-	// console.log('module.children >')
-	// eyes.inspect(module.children)
-
-	console.log(clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' workers in cluster...'))
 	let i: number, len = process.$instances
 	for (i = 0; i < len; i++) { cluster.fork() }
 	cluster.on('disconnect', function(worker) {
@@ -140,19 +135,6 @@ if (utils.isMaster()) {
 } else {
 
 	server.listen(process.$port, process.$host, function() {
-		if (utils.isPrimary()) {
-			let host = parseUrl(process.$domain).host
-			if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
-			console.log('\n' +
-				clc.bold.underline(process.$dname) + '\n' +
-				'v' + process.$version + ' ' +
-				clc.bold(process.$env) + '\n' +
-				clc.bold.green('@') + host + '\n' +
-				'/*===============================================\n' +
-				'=========           ' + clc.bold(moment().format('hh:mm:ss')) + '           ==========\n' +
-				'===============================================*/'
-			)
-		}
 		utils.ready.restify.next(true)
 	})
 
