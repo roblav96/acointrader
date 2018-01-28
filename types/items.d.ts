@@ -41,6 +41,7 @@ declare namespace Items {
 		base: string
 		quote: string
 		symbol: string
+		name: string
 		exchange: string
 		bidPrice: number
 		bidSize: number
@@ -50,6 +51,7 @@ declare namespace Items {
 		change: number
 		changePercent: number
 		updated: number
+		stamp: number
 	}
 
 

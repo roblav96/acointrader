@@ -91,8 +91,10 @@ export const object = {
 		return JSON.parse(JSON.stringify(target))
 	},
 	compact<T>(target: T): void {
-		Object.keys(target).forEach(function(k, i) {
-			if (!target[k]) _.unset(target, k);
+		Object.keys(target).forEach(function(key) {
+			let value = target[key]
+			if (Number.isFinite(value)) return;
+			if (!value) _.unset(target, key);
 		})
 	},
 	merge<T>(target: T, source: T): void {

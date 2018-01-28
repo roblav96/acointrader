@@ -60,8 +60,8 @@ export function initAssets() {
 
 function syncYahooQuotes(first = false) {
 	return Promise.resolve().then(function() {
-		if (utils.isPrimary() && first == true) return Promise.resolve();
-		return pevent(process.ee3, shared.enums.EE3.TICK_60)
+		if (first == true && utils.isPrimary()) return Promise.resolve();
+		return pevent(process.ee3, shared.enums.EE3.TICK_30)
 
 	}).then(function() {
 		return http.get('https://query1.finance.yahoo.com/v7/finance/quote', {
@@ -70,14 +70,14 @@ function syncYahooQuotes(first = false) {
 
 	}).then(function(response) {
 		let fxquotes = response.quoteResponse.result as Array<Yahoo.ForexQuote>
-
 		let items = fxquotes.filter(v => !!v).map(function(fxquote) {
-			let split = fxquote.shortName.split('/')
+			let pair = fxquote.symbol.split('=').shift()
 			return {
-				pair: fxquote.symbol.split('=').shift(),
-				base: split[0],
-				quote: split[1],
+				pair,
+				base: pair.replace(fxquote.currency, ''),
+				quote: fxquote.currency,
 				symbol: fxquote.symbol,
+				name: fxquote.shortName,
 				exchange: fxquote.exchange,
 				bidPrice: fxquote.bid,
 				bidSize: fxquote.bidSize,
@@ -87,12 +87,13 @@ function syncYahooQuotes(first = false) {
 				change: fxquote.regularMarketChange,
 				changePercent: fxquote.regularMarketChangePercent,
 				updated: fxquote.regularMarketTime * 1000,
+				stamp: Date.now(),
 			} as Items.ForexQuote
 		})
 		items.forEach(shared.object.compact)
 
-		// redis
-
+		let coms = items.map(v => ['hmset', 'fx:' + v.pair, v])
+		return redis.pipelinecoms(coms as any)
 
 	}).catch(function(error) {
 		console.error('syncYahooQuotes > error', error)
