@@ -18,8 +18,6 @@ import * as http from '../services/http'
 declare global {
 	namespace Coinhills {
 
-
-
 	}
 }
 

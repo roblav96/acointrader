@@ -49,13 +49,13 @@ declare global {
 
 
 
-export function sync() {
+export function syncAssets() {
 	return pall([
-		() => syncAssets(),
+		() => syncTickers(),
 		() => syncCoins(),
 		() => syncTokens(),
 	], { concurrency: 1 }).then(function() {
-		console.warn('sync > DONE')
+		console.info('sync > DONE')
 		return Promise.resolve(true)
 	}).catch(function(error) {
 		console.error('sync > error', errors.render(error))
@@ -65,7 +65,7 @@ export function sync() {
 
 
 
-export function syncAssets() {
+export function syncTickers() {
 	return Promise.resolve().then(function() {
 		return http.get('https://api.coinmarketcap.com/v1/ticker/', {
 			limit: -1,
@@ -88,11 +88,11 @@ export function syncAssets() {
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
-		console.warn('syncAssets > DONE')
+		console.info('syncTickers > DONE')
 		return Promise.resolve(true)
 
 	}).catch(function(error) {
-		console.error('syncAssets > error', errors.render(error))
+		console.error('syncTickers > error', errors.render(error))
 		return Promise.resolve(false)
 	})
 }
@@ -120,7 +120,7 @@ export function syncCoins() {
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
-		console.warn('syncCoins > DONE')
+		console.info('syncCoins > DONE')
 		return Promise.resolve(true)
 
 	}).catch(function(error) {
@@ -152,7 +152,7 @@ export function syncTokens() {
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
-		console.warn('syncTokens > DONE')
+		console.info('syncTokens > DONE')
 		return Promise.resolve(true)
 
 	}).catch(function(error) {

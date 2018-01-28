@@ -14,22 +14,34 @@ import * as http from './http'
 
 
 
-export const CURRENCIES = ['AUD', 'BGN', 'BRL', 'CAD', 'CHF', 'CNY', 'DKK', 'EUR', 'GBP', 'HKD', 'HRK', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PLN', 'RON', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'USD', 'ZAR']
+export const FIATS = [] as Array<string>
 export const PAIRS = [] as Array<string>
 
 
 
-if (utils.isMaster()) {
-	CURRENCIES.forEach(function(base, i) {
-		CURRENCIES.forEach(function(quote, i) {
-			if (base == quote) return;
-			PAIRS.push(base + quote + '=X')
-		})
+export function start() {
+	return Promise.resolve().then(function() {
+		return r.table('assets').filter(r.row('fiat').eq(true)).run()
+
+	}).then(function(assets: Array<Items.Asset>) {
+		console.log('assets >')
+		eyes.inspect(assets)
+
+	}).then(function() {
+		console.warn('syncAssets > DONE')
+		return Promise.resolve(true)
+
+	}).catch(function(error) {
+		console.error('syncAssets > error', errors.render(error))
+		return Promise.resolve(false)
 	})
-	
-	console.log('PAIRS >')
-	eyes.inspect(PAIRS)
-	
+}
+
+
+
+if (utils.isMaster()) {
+
+
 }
 
 
