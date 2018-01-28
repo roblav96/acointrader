@@ -27,6 +27,7 @@ declare global {
 	interface HttpRequestConfig extends axios.AxiosRequestConfig {
 		silent?: boolean
 		production?: boolean
+		scraper?: boolean
 	}
 
 }

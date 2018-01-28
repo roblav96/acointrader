@@ -33,8 +33,14 @@ function request(config: HttpRequestConfig): Promise<any> {
 			// 'Connection': 'keep-alive',
 		})
 
-		return axios.request(config).then(function({ data }) {
-			return Promise.resolve(data)
+		if (config.scraper) {
+			config.headers['User-Agent'] = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)'
+		}
+
+		return axios.request(config).then(function(response) {
+			// console.log('response.config >')
+			// eyes.inspect(response.config)
+			return Promise.resolve(response.data)
 		})
 
 	})
@@ -53,6 +59,11 @@ export function post<D = any, T = any>(url: string, data?: D, config = {} as Htt
 	config.method = 'POST'
 	if (data) config.data = data;
 	return request(config) as Promise<T>
+}
+
+export function scrape<T = any>(url: string, params?: any, config = {} as HttpRequestConfig) {
+	config.scraper = true
+	return get(url, params, config) as Promise<T>
 }
 
 

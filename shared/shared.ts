@@ -51,6 +51,12 @@ export const string = {
 		id = id.replace(/\W+/g, '').trim()
 		return !toLowerCase ? id : id.toLowerCase()
 	},
+	parseInt(input: string) {
+		return Number.parseInt(input.replace(/[^0-9\.]/g, ''))
+	},
+	parseFloat(input: string) {
+		return Number.parseFloat(input.replace(/[^0-9\.]/g, ''))
+	},
 }
 if (process.CLIENT) (global as any).string = string;
 

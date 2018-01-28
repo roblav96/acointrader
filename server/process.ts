@@ -99,10 +99,10 @@ if (process.DEVELOPMENT) {
 
 
 if (cluster.isMaster) {
-	process.stdout.write((clc as any).erase.screen)
+	// process.stdout.write((clc as any).erase.screen)
 	let host = url.parse(process.$domain).host
 	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
-	console.log('\n' +
+	console.log('\n\n\n\n' +
 		clc.bold.underline(process.$dname) + '\n' +
 		'v' + process.$version + ' ' +
 		clc.bold(process.$env) + '\n' +

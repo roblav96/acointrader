@@ -70,7 +70,7 @@ aside.main--drawer.navigation-drawer--mini-variant hr.divider {
                                 <v-list-tile-title>Wipe Data, Hard Reload</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
-                        <span>Double-click to wipe and hard reload</span>
+                        <span>Double-click to execute</span>
                     </v-tooltip>
                     <v-divider></v-divider>
                 </v-list>
