@@ -1,5 +1,7 @@
 // 
 
+
+
 declare namespace Items {
 
 	interface Exchange {
@@ -18,13 +20,19 @@ declare namespace Items {
 		coinclarity: string
 	}
 
-	type Coin = CoinMeta & { [exchange: string]: Array<string> }
-	interface CoinMeta {
+	type ExchangesIndex = {[exchange in keyof AllExchanges]: Array<string>}
+	interface Asset extends ExchangesIndex {
 		id: string
+		slug: string
 		name: string
-		available: number
-		total: number
-		max: number
+		fiat: boolean
+		crypto: boolean
+		coin: boolean
+		token: string
+		mineable: boolean
+		availableSupply: number
+		totalSupply: number
+		maxSupply: number
 	}
 
 

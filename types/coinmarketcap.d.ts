@@ -2,6 +2,14 @@
 
 declare namespace CoinMarketCap {
 
+	interface SearchResult {
+		name: string
+		rank: number
+		slug: string
+		symbol: string
+		tokens: Array<string>
+	}
+
 	interface Ticker {
 		'24h_volume_usd': string
 		available_supply: string
@@ -19,11 +27,6 @@ declare namespace CoinMarketCap {
 		symbol: string
 		total_supply: string
 	}
-
-
-
-
-
 
 }
 

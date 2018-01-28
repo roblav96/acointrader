@@ -15,7 +15,7 @@ import * as http from '../services/http'
 
 
 
-const ID = 'binance'
+export const ID = 'binance'
 
 
 
@@ -88,14 +88,14 @@ export function syncInfo() {
 
 	}).then(function(response: Binance.ExchangeInfoResponse) {
 
-		let coins = [] as Array<{ id: string, binance: Array<string> }>
+		let coins = [] as Array<Items.Asset>
 		response.symbols.forEach(function(symbol) {
 			let exists = coins.find(v => v.id == symbol.baseAsset)
-			if (exists) return exists.binance.push(symbol.quoteAsset);
+			if (exists) return exists[ID].push(symbol.quoteAsset);
 			coins.push({
 				id: symbol.baseAsset,
-				binance: [symbol.quoteAsset],
-			})
+				[ID]: [symbol.quoteAsset],
+			} as Items.Asset)
 		})
 
 		return Promise.all([
@@ -103,7 +103,11 @@ export function syncInfo() {
 		])
 
 	}).then(function() {
+		console.warn('syncInfo > DONE')
 		return Promise.resolve(true)
+	}).catch(function(error) {
+		console.error('syncInfo > error', errors.render(error))
+		return Promise.resolve(false)
 	})
 }
 

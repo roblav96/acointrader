@@ -17,7 +17,7 @@ import * as coinmarketcap from './coinmarketcap.com'
 if (utils.isMaster()) {
 	// cryptominded.exchanges.sync()
 	// coinclarity.exchanges.sync()
-	// coinmarketcap.coins.sync()
+	coinmarketcap.sync()
 }
 
 
