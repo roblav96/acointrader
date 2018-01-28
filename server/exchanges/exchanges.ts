@@ -35,7 +35,8 @@ declare global {
 
 
 if (utils.isMaster()) {
-	binance.start()
+	// binance.start()
+	binance.syncInfo()
 }
 
 

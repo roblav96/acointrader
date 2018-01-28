@@ -3,7 +3,6 @@
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import restify from 'restify'
 import * as errors from '../services/errors'
 import * as shared from '../../shared/shared'
 import * as utils from '../services/utils'
@@ -12,14 +11,11 @@ import ee3 from 'eventemitter3'
 import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'
 import UWebSocket from '../adapters/uwebsocket'
+import * as http from '../services/http'
 
 
 
-declare global {
-	interface BinanceSocketDepth {
-
-	}
-}
+const ID = 'binance'
 
 
 
@@ -84,6 +80,32 @@ export function start() {
 // 	})
 // }
 
+
+
+export function syncInfo() {
+	return Promise.resolve().then(function() {
+		return http.get('https://api.binance.com/api/v1/exchangeInfo')
+
+	}).then(function(response: Binance.ExchangeInfoResponse) {
+
+		let coins = [] as Array<{ id: string, binance: Array<string> }>
+		response.symbols.forEach(function(symbol) {
+			let exists = coins.find(v => v.id == symbol.baseAsset)
+			if (exists) return exists.binance.push(symbol.quoteAsset);
+			coins.push({
+				id: symbol.baseAsset,
+				binance: [symbol.quoteAsset],
+			})
+		})
+
+		return Promise.all([
+			r.table('coins').insert(coins, { conflict: 'update' }).run(),
+		])
+
+	}).then(function() {
+		return Promise.resolve(true)
+	})
+}
 
 
 

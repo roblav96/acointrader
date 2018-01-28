@@ -36,15 +36,23 @@ export default r
 
 
 
-/*████████████████████████████████████████
-█            TABLES & INDEXES            █
-████████████████████████████████████████*/
+function init() {
 
-r.db('acointrader').tableCreate('users', { primaryKey: 'email', durability: 'hard' });
+	/*████████████████████████████████████████
+	█            TABLES & INDEXES            █
+	████████████████████████████████████████*/
 
-r.db('acointrader').tableCreate('exchanges', { primaryKey: 'id', durability: 'soft' });
-// r.db('acointrader').table('ib_positions').indexCreate('stamp');
+	r.db('acointrader').tableCreate('users', { primaryKey: 'email', durability: 'hard' });
 
+	r.db('acointrader').tableCreate('exchanges', { primaryKey: 'id', durability: 'soft' });
+
+	r.db('acointrader').tableCreate('coins', { primaryKey: 'id', durability: 'soft' });
+
+	r.db('acointrader').tableCreate('pairs', { primaryKey: 'id', durability: 'soft' });
+
+
+
+}
 
 
 
