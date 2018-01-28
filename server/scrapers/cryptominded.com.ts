@@ -29,18 +29,22 @@ export const exchanges = {
 		}).then(function(response) {
 			let results = response.results as Array<any>
 			let items = results.map(function(result) {
-				return {
+				let item = {
 					id: shared.string.parseExchangeId(result.url.homepage),
 					logoWide: result.url.logo,
 					mobileapp: !!result.properties.mobile_app,
 					fees: result.rating.fees,
 					usability: result.rating.ease_of_use,
 				} as ExchangeItem
+				shared.object.compact(item)
+				return item
 			})
 			return r.table('exchanges').insert(items, { conflict: 'update' }).run()
 
 		}).then(function() {
+			console.warn('exchanges.sync > DONE')
 			return Promise.resolve(true)
+			
 		}).catch(function(error) {
 			console.error('exchanges.sync > error', errors.render(error))
 			return Promise.resolve(false)
