@@ -10,12 +10,14 @@ import * as shared from '../../shared/shared'
 
 import * as cryptominded from './cryptominded.com'
 import * as coinclarity from './coinclarity.com'
+import * as coinmarketcap from './coinmarketcap.com'
 
 
 
 if (utils.isMaster()) {
 	// cryptominded.exchanges.sync()
 	// coinclarity.exchanges.sync()
+	// coinmarketcap.coins.sync()
 }
 
 

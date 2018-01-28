@@ -34,6 +34,22 @@ export function isGood<T>(value: T): boolean {
 
 
 
+export function fixResponse(response: any): void {
+	if (_.isEmpty(response)) return;
+	Object.keys(response).forEach(function(key) {
+		// if (key == 'id') return;
+		let value = response[key] as string
+		if (typeof value != 'string' || value === '') return;
+		if (!isNaN(value as any) && value.match(/[^0-9.-]/) == null) {
+			response[key] = Number.parseFloat(value)
+		} else if (['true', 'false'].indexOf(value) == 0) {
+			response[key] = JSON.parse(value)
+		}
+	})
+}
+
+
+
 export const json = {
 	safeParse<T>(target: T): T {
 		if (target == null || !_.isString(target)) return target;

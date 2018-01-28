@@ -12,31 +12,9 @@ import * as binance from './binance'
 
 
 
-declare global {
-	
-	interface ExchangeItem {
-		id: string
-		name: string
-		website: string
-		hostname: string
-		logoSquare: string
-		logoWide: string
-		logoBanner: string
-		inaugurated: number
-		description: string
-		mobileapp: boolean
-		fees: number
-		usability: number
-		coinclarity: string
-	}
-	
-}
-
-
-
 if (utils.isMaster()) {
 	// binance.start()
-	binance.syncInfo()
+	// binance.syncInfo()
 }
 
 

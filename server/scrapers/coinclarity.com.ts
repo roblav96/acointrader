@@ -21,19 +21,11 @@ import * as http from '../services/http'
 
 
 
-declare global {
-	interface CoinClarityExchangeMeta {
-		id: string
-		href: string
-		logoSquare: string
-	}
-}
-
-
-
 const PAGE_LIMIT = 25
 
 
+
+interface CoinClarityExchangeMeta { id: string, href: string, logoSquare: string }
 
 function scrapeExchangeMeta(meta: CoinClarityExchangeMeta) {
 	return Promise.resolve().then(function() {
@@ -62,7 +54,7 @@ function scrapeExchangeMeta(meta: CoinClarityExchangeMeta) {
 			id, name, website, inaugurated, description,
 			logoSquare: meta.logoSquare,
 			coinclarity: meta.href,
-		} as ExchangeItem
+		} as Items.Exchange
 		shared.object.compact(item)
 		return r.table('exchanges').insert(item, { conflict: 'update' }).run()
 
