@@ -15,7 +15,7 @@ import * as coinclarity from './coinclarity.com'
 
 if (utils.isMaster()) {
 	// cryptominded.exchanges.sync()
-	coinclarity.exchanges.sync()
+	// coinclarity.exchanges.sync()
 }
 
 
