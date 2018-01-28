@@ -21,6 +21,10 @@ import * as yahoo from './yahoo.com'
 
 
 
+forex.initAssets()
+
+
+
 export function syncAssets() {
 	return pall([
 		// () => r.table('assets').delete().run(),
@@ -45,8 +49,9 @@ if (utils.isMaster()) {
 	// localbitcoins.syncAssets()
 	// syncAssets()
 	// yahoo.start()
-	forex.start()
+
 }
+
 
 
 

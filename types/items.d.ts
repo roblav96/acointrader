@@ -35,6 +35,22 @@ declare namespace Items {
 		totalSupply: number
 		maxSupply: number
 	}
+	
+	interface ForexQuote {
+		pair: string
+		base: string
+		quote: string
+		symbol: string
+		exchange: string
+		bidPrice: number
+		bidSize: number
+		askPrice: number
+		askSize: number
+		price: number
+		change: number
+		changePercent: number
+		updated: number
+	}
 
 
 

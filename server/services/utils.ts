@@ -15,6 +15,7 @@ import rx from 'rxjs/Rx'
 export const ready = {
 	emitters: new rx.BehaviorSubject(false),
 	restify: new rx.BehaviorSubject(false),
+	forex: new rx.BehaviorSubject(false),
 }
 
 
