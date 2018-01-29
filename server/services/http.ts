@@ -16,6 +16,7 @@ import axios from 'axios'
 axios.defaults.timeout = 10000
 
 function request(config: HttpRequestConfig): Promise<any> {
+	let cached = config.retry ? shared.object.clone(config) : null
 	return Promise.resolve().then(function() {
 
 		let parsed = url.parse(config.url)
@@ -38,11 +39,14 @@ function request(config: HttpRequestConfig): Promise<any> {
 		}
 
 		return axios.request(config).then(function(response) {
-			// console.log('response.config >')
-			// eyes.inspect(response.config)
 			return Promise.resolve(response.data)
 		})
 
+	}).catch(function(error) {
+		if (config.retry && errors.isTimeoutError(error)) {
+			return request(cached)
+		}
+		return Promise.reject(error)
 	})
 
 }

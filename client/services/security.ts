@@ -123,26 +123,5 @@ export function saveEmail(response) {
 
 
 
-export function syncInfo() {
-	return Promise.resolve().then(function() {
-		return http.get('https://ccx.upbit.com/api/v1/market_status/all')
-
-	}).then(function(response: Upbit.MarketStatusResponse) {
-
-		
-
-		return Promise.all([
-			// r.table('coins').insert(coins, { conflict: 'update' }).run(),
-		])
-
-	}).then(function() {
-		console.warn('syncInfo > DONE')
-		return Promise.resolve(true)
-	}).catch(function(error) {
-		console.error('syncInfo > error', errors.render(error))
-		return Promise.resolve(false)
-	})
-}
-
 
 

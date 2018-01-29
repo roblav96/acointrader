@@ -28,6 +28,7 @@ declare global {
 		silent?: boolean
 		production?: boolean
 		scraper?: boolean
+		retry?: boolean
 	}
 
 }

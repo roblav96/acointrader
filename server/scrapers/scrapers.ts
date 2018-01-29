@@ -8,6 +8,7 @@ import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
 import pall from 'p-all'
+import pforever from 'p-forever'
 import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'
 import * as forex from '../services/forex'
@@ -21,6 +22,10 @@ import * as yahoo from './yahoo.com'
 
 
 
+utils.ready.forex.skip(1).subscribe(function() {
+	if (utils.isMaster()) return;
+	pforever(yahoo.syncForexQuotes, true)
+})
 forex.initAssets()
 
 
