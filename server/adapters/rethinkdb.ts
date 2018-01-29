@@ -8,19 +8,39 @@ import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
 import rethinkdbdash from 'rethinkdbdash'
+import pforever from 'p-forever'
+import pevent from 'p-event'
 
 
 
 const r = rethinkdbdash(Object.assign({
 	silent: true,
+	// discovery: true,
+	// pingInterval: 1000,
 	// log: function(message) { console.log(message) },
 	// discovery: true,
 }, process.$webpack.rethinkdb)) as rethinkdbdash.RDash
 
 
 
-r.expr(1).run()
-process.ee3.addListener(shared.enums.EE3.TICK_5, function() { r.expr(1).run() })
+// function ping() {
+// 	let t = Date.now()
+// 	return Promise.resolve().then(function() {
+// 		return r.expr(1).run()
+// 	}).then(function() {
+// 		if (!utils.ready.r.value) {
+// 			console.log('ping', Date.now() - t, 'ms')
+// 			utils.ready.r.next(true)
+// 		}
+// 		return Promise.resolve()
+// 	}).catch(function(error) {
+// 		console.error('ping > error', error)
+// 		return Promise.resolve()
+// 	}).then(function() {
+// 		return pevent(process.ee3, shared.enums.EE3.TICK_10)
+// 	})
+// }
+// pforever(ping)
 
 
 
@@ -36,7 +56,7 @@ export default r
 
 
 
-function init() {
+function _init() {
 
 	/*████████████████████████████████████████
 	█            TABLES & INDEXES            █

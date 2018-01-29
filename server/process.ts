@@ -83,6 +83,7 @@ console.format = function(arg) {
 
 
 if (process.DEVELOPMENT) {
+	if (cluster.isMaster) setInterval(process.stdout.write, 1000, (clc as any).erase.line);
 	const dtsgen = require('dts-gen')
 	const clipboardy = require('clipboardy')
 	process.dtsgen = function(name, value) {

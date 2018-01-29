@@ -8,16 +8,20 @@ import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
 import ioredis from 'ioredis'
+import pforever from 'p-forever'
+import pevent from 'p-event'
 
 
 
 declare global {
-	type RedisInstance = Redis
-	type RedisComs = Array<Array<string>>
-	type RedisResolved = Array<Array<string>>
-	interface RedisPublishEvent<T = any> {
-		name: string
-		data: T
+	namespace Redis {
+		type Instance = Redis
+		type Coms = Array<Array<string>>
+		type Resolved = Array<Array<string>>
+		interface PublishEvent<T = any> {
+			name: string
+			data: T
+		}
 	}
 }
 
@@ -52,7 +56,7 @@ class Redis extends ioredis {
 
 		// this.ping()
 		// _.delay(() => this.ping(), 1000)
-		process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ping())
+		// process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ping())
 
 		const cleanup = _.once(() => this.disconnect())
 		process.on('beforeExit', cleanup)
@@ -62,17 +66,7 @@ class Redis extends ioredis {
 
 
 
-	// ping() {
-	// 	console.log('ping')
-	// 	super.ping().then(function(pong) {
-	// 		console.log('pong >')
-	// 		eyes.inspect(pong)
-	// 	})
-	// }
-
-
-
-	pipelinecoms(coms: RedisComs, fixPipeline = true): Promise<Array<any>> {
+	pipelinecoms(coms: Redis.Coms, fixPipeline = true): Promise<Array<any>> {
 		return super.pipeline(coms).exec().then(function(resolved) {
 			if (fixPipeline == true && Array.isArray(resolved)) {
 				let i: number, len = resolved.length
@@ -97,6 +91,31 @@ class Redis extends ioredis {
 
 
 export default new Redis()
+
+
+
+// const redis = new Redis()
+
+
+
+// function ping() {
+// 	return Promise.resolve().then(function() {
+// 		return redis.ping()
+// 	}).then(function() {
+// 		utils.ready.redis.next(true)
+// 		return Promise.resolve()
+// 	}).catch(function(error) {
+// 		console.error('ping > error', error)
+// 		return Promise.resolve()
+// 	}).then(function() {
+// 		return pevent(process.ee3, shared.enums.EE3.TICK_10)
+// 	})
+// }
+// pforever(ping)
+
+
+
+// export default redis
 
 
 

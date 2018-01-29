@@ -80,7 +80,7 @@ export function syncForexQuotes(first = false) {
 	}).then(function() {
 		return http.get('https://query1.finance.yahoo.com/v7/finance/quote', {
 			symbols: forex.SYMBOLS.join(','),
-		}, { silent: false })
+		}, { silent: true })
 
 	}).then(function(response) {
 		let fxquotes = response.quoteResponse.result as Array<Yahoo.ForexQuote>

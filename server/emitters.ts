@@ -8,7 +8,6 @@ import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
-import cron from 'cron'
 import ci from 'correcting-interval'
 import ee3 from 'eventemitter3'
 import uws from 'uws'
@@ -20,29 +19,33 @@ import UWebSocket from './adapters/uwebsocket'
 █            EE3 TICKS            █
 █████████████████████████████████*/
 
-let ee3ts = {} as { [topic: string]: NodeJS.Timer }
-let ee3is = {} as { [topic: string]: number }
-function ee3start(topic: string, tick: number) {
+const ee3ts = {} as { [topic: string]: NodeJS.Timer }
+const ee3is = {} as { [topic: string]: number }
+function ee3start(topic: string, ms: number) {
 	ee3ts[topic].unref(); clearTimeout(ee3ts[topic]); ee3ts[topic] = null; _.unset(ee3ts, topic);
 	ee3is[topic] = 0
 	process.ee3.emit(topic, ee3is[topic])
 	ci.setCorrectingInterval(function() {
 		ee3is[topic]++
 		process.ee3.emit(topic, ee3is[topic])
-	}, tick * 1000)
+	}, ms)
 }
-Object.keys(shared.enums.EE3).forEach(function(key) {
-	let topic = shared.enums.EE3[key]
-	let tick = Number.parseInt(key.split('_').pop())
-	if (key == 'TICK_01') tick = 0.1;
-	if (key == 'TICK_025') tick = 0.25;
-	if (key == 'TICK_05') tick = 0.5;
-	let now = Date.now()
-	let second = moment(now).endOf('second').second()
-	let addsec = tick - ((second + 1) % tick)
-	let next = moment(now).endOf('second').add(addsec, 'seconds').valueOf() - now + 1  // + 1 for execution latency
-	let start = next + utils.instanceSecs(tick)
-	ee3ts[topic] = _.delay(ee3start, start, topic, tick) as any
+setImmediate(function() {
+	Object.keys(shared.enums.EE3).forEach(function(key, i) {
+		let topic = shared.enums.EE3[key]
+		let tick = Number.parseInt(key.split('_').pop())
+		if (key == 'TICK_01') tick = 0.1;
+		if (key == 'TICK_025') tick = 0.25;
+		if (key == 'TICK_05') tick = 0.5;
+		let ms = tick * 1000
+		let now = Date.now()
+		let start = now - (now % ms)
+		let end = start + ms
+		let ims = utils.instanceMs(ms)
+		let delayms = (start + ims) - now
+		if (delayms <= 0) delayms = (end + ims) - now;
+		ee3ts[topic] = _.delay(ee3start, delayms, topic, ms) as any
+	})
 })
 
 
@@ -82,7 +85,7 @@ if (utils.isMaster()) {
 	})
 
 	wss.on('error', function(error) {
-		console.error('uws.Server > error', errors.render(error as any))
+		console.error('uws.Server > radio error', errors.render(error as any))
 	})
 
 }

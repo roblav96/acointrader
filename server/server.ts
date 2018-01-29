@@ -1,6 +1,7 @@
 // 
 
 require('source-map-support/register')
+require('correcting-interval')
 import './process'
 import './emitters'
 import './restify'

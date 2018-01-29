@@ -9,9 +9,11 @@ import * as shared from '../../shared/shared'
 
 import pall from 'p-all'
 import pforever from 'p-forever'
-import redis from '../adapters/redis'
+import rx from 'rxjs/Rx'
 import r from '../adapters/rethinkdb'
+import redis from '../adapters/redis'
 import * as forex from '../services/forex'
+
 import * as cryptominded from './cryptominded.com'
 import * as coinclarity from './coinclarity.com'
 import * as coinmarketcap from './coinmarketcap.com'
@@ -22,11 +24,10 @@ import * as yahoo from './yahoo.com'
 
 
 
-utils.ready.forex.skip(1).subscribe(function() {
-	if (utils.isMaster()) return;
-	pforever(yahoo.syncForexQuotes, true)
+forex.initAssets().then(function() {
+	if (utils.isMaster()) return Promise.resolve();
+	return pforever(yahoo.syncForexQuotes, true)
 })
-forex.initAssets()
 
 
 

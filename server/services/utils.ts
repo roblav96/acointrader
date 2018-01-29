@@ -32,24 +32,12 @@ export function isCaboose() {
 
 
 
-export function nextSecond(add = 0) {
-	return moment().endOf('second').add(add, 'seconds').valueOf()
-}
-export function tillNextSecond(add = 0) {
-	return nextSecond(add) - Date.now()
+export function dispersedMs(ms: number, i: number, length: number) {
+	return Math.round(i * (ms / length))
 }
 export function instanceMs(ms: number) {
-	let instance = Math.max(process.$instance, 0)
-	return _.round(instance * (ms / process.$instances))
-}
-export function instanceSecs(secs: number) {
-	return instanceMs(secs * 1000)
-}
-export function dispersedMs(ms: number, i: number, length: number) {
-	return _.round(i * (ms / length))
-}
-export function dispersedSecs(secs: number, i: number, length: number) {
-	return dispersedMs(secs * 1000, i, length)
+	// return dispersedMs(ms, Math.max(process.$instance, 0), process.$instances)
+	return Math.round(Math.max(process.$instance, 0) * (ms / process.$instances))
 }
 
 

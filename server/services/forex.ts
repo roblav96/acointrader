@@ -12,6 +12,7 @@ import pforever from 'p-forever'
 import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'
 import * as http from './http'
+import * as yahoo from '../scrapers/yahoo.com'
 
 
 
@@ -22,7 +23,7 @@ export const CURRENCIES = ['USD', 'XAU', 'XAG', 'DKK', 'JPY', 'PLN', 'AUD', 'EUR
 
 
 
-export function initAssets() {
+export function initAssets(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return r.table('assets').filter(r.row('fiat').eq(true)).run()
 
@@ -47,11 +48,11 @@ export function initAssets() {
 
 		utils.ready.forex.next(true)
 
-		return Promise.resolve(true)
+		return Promise.resolve()
 
 	}).catch(function(error) {
 		console.error('initAssets > error', errors.render(error))
-		return Promise.resolve(false)
+		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(initAssets)
 	})
 }
 

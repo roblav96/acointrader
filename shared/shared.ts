@@ -16,6 +16,8 @@ import url from 'url'
 
 export function noop(): void { }
 
+export const isNode = new Function('try { return this === global; } catch(e) { return false }')
+
 
 
 export function isValidEmail(email: string) {
