@@ -8,8 +8,8 @@ import * as errors from '../services/errors'
 import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
-import * as binance from './binance'
-import * as upbit from './upbit'
+import Exchange from './exchange'
+import Binance from './binance'
 
 
 
@@ -22,11 +22,32 @@ declare global {
 
 
 
-if (utils.isMaster()) {
-	// binance.start()
-	// binance.syncInfo()
-	// upbit.syncAssets()
+const exchanges = {
+	binance: new Binance(),
 }
+
+export default exchanges
+
+export const allexchanges = Object.keys(exchanges).map(k => exchanges[k]) as Array<Exchange>
+
+
+
+// utils.ready.radios.filter(v => !!v).take(1).subscribe(function() {
+// 	allexchanges.forEach(function(exchange) {
+// 		if (utils.isMaster()) {
+// 			exchange.syncAssets().then(function() {
+// 				process.radio.emit(exchange.id + ':start')
+// 			})
+// 		} else {
+// 			process.radio.once(exchange.id + ':start', function() {
+// 				exchange.start()
+// 			})
+// 		}
+// 	})
+// })
+
+
+
 
 
 

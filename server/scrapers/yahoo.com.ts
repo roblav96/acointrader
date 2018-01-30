@@ -110,7 +110,7 @@ export function syncForexQuotes(first = false) {
 		return redis.pipelinecoms(coms as any)
 
 	}).catch(function(error) {
-		console.error('syncYahooQuotes > error', error)
+		console.error('syncForexQuotes > error', errors.render(error))
 		return Promise.resolve()
 	})
 }

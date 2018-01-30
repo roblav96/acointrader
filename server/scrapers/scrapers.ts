@@ -21,17 +21,18 @@ import * as coinapi from './coinapi.io'
 import * as coinhills from './coinhills.com'
 import * as localbitcoins from './localbitcoins.com'
 import * as yahoo from './yahoo.com'
+import * as restcountries from './restcountries.eu'
 
 
 
 forex.initAssets().then(function() {
 	if (utils.isMaster()) return Promise.resolve();
-	return pforever(yahoo.syncForexQuotes, true)
+	// return pforever(yahoo.syncForexQuotes, true)
 })
 
 
 
-export function syncAssets() {
+function syncAssets() {
 	return pall([
 		// () => r.table('assets').delete().run(),
 		() => coinmarketcap.syncAssets(),
@@ -48,6 +49,8 @@ export function syncAssets() {
 
 
 if (utils.isMaster()) {
+	// restcountries.syncCountries()
+	// countries.syncCountries()
 	// cryptominded.exchanges.sync()
 	// coinclarity.exchanges.sync()
 	// coinmarketcap.sync()

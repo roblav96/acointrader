@@ -54,7 +54,7 @@ export default class UWebSocket {
 		this.socket.close()
 		this.socket.terminate()
 		this.socket.removeAllListeners()
-		this.socket = null
+		// this.socket = null
 		this.emitter.emit('destroyed')
 		if (destroy) this.emitter.removeAllListeners();
 		else if (this.autopilot) this.reconnect();
@@ -92,7 +92,7 @@ export default class UWebSocket {
 	}
 
 	private onmessage(message) {
-		this.emitter.emit('message', shared.json.safeParse(message))
+		this.emitter.emit('message', shared.json.parse(message))
 	}
 
 	send(message: any) {

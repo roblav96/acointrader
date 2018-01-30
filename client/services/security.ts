@@ -9,6 +9,7 @@ import forge from 'node-forge'
 { (window as any).forge = forge }
 import Fingerprint2 from 'fingerprintjs2'
 import pdelay from 'delay'
+import axios from 'axios'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as store from './store'
@@ -23,39 +24,37 @@ export const state = {
 
 
 
-function initialize() {
-	return Promise.resolve().then(function() {
-
-		let uuid = process.sls.get('security.uuid') as string
-		if (uuid) return Promise.resolve();
-		return shared.security.generatePrime(64).then(function(prime) {
-			process.sls.set('security.uuid', prime)
-			return Promise.resolve()
-		})
-
-	}).then(function() {
-
-		let finger = process.sls.get('security.finger') as string
-		if (finger) return Promise.resolve();
-		return new Promise<void>(function(resolve) {
-			new Fingerprint2().get(finger => {
-				process.sls.set('security.finger', shared.security.sha256(finger))
-				resolve()
-			})
-		})
-
-		// }).then(function() {
-
-		// 	let publicKey = process.sls.get('security.publicKey') as string
-		// 	if (publicKey) return Promise.resolve();
-		// 	return shared.security.generateKeyPair(1024).then(function(keypair) {
-		// 		process.sls.set('security.publicKey', forge.pki.publicKeyToPem(keypair.publicKey))
-		// 		process.sls.set('security.privateKey', forge.pki.privateKeyToPem(keypair.privateKey))
-		// 		return Promise.resolve()
-		// 	})
-
+function initUuid() {
+	let uuid = process.sls.get('security.uuid') as string
+	if (uuid) return Promise.resolve();
+	return shared.security.generatePrime(64).then(function(prime) {
+		process.sls.set('security.uuid', prime)
+		return Promise.resolve()
 	})
 }
+
+function initFinger() {
+	let finger = process.sls.get('security.finger') as string
+	if (finger) return Promise.resolve();
+	return new Promise<void>(function(resolve) {
+		new Fingerprint2().get(finger => {
+			process.sls.set('security.finger', shared.security.sha256(finger))
+			resolve()
+		})
+	})
+}
+
+function initPemKeys() {
+	let publicPem = process.sls.get('security.publicPem') as string
+	if (publicPem) return Promise.resolve();
+	return shared.security.generatePemKeyPair(1024).then(function(keypair) {
+		process.sls.set('security.publicPem', keypair.publicPem)
+		process.sls.set('security.privatePem', keypair.privatePem)
+		return Promise.resolve()
+	})
+}
+
+
 
 function syncToken() {
 	return http.get('/security/token').then(response => {
@@ -63,12 +62,16 @@ function syncToken() {
 		return Promise.resolve()
 	}).catch(function(error) {
 		console.error('syncToken > error', error)
-		return pdelay(process.DEVELOPMENT ? 5000 : 1000).then(syncToken)
+		return pdelay(process.DEVELOPMENT ? 3000 : 1000).then(syncToken)
 	})
 }
 
 export function getReady() {
-	return Promise.resolve().then(initialize).then(syncToken).then(function() {
+	return Promise.resolve().then(function() {
+		return Promise.all([
+			initUuid(), initFinger(), initPemKeys(),
+		])
+	}).then(syncToken).then(function() {
 		return Promise.resolve()
 	})
 }

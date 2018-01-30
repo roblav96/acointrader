@@ -19,7 +19,7 @@ import * as yahoo from '../scrapers/yahoo.com'
 export const IDS = [] as Array<string>
 export const PAIRS = [] as Array<string>
 export const SYMBOLS = [] as Array<string>
-export const CURRENCIES = ['USD', 'XAU', 'XAG', 'DKK', 'JPY', 'PLN', 'AUD', 'EUR', 'KRW', 'RUB', 'BRL', 'GBP', 'MXN', 'SEK', 'CAD', 'HKD', 'MYR', 'SGD', 'CHF', 'HUF', 'NOK', 'THB', 'CLP', 'IDR', 'NZD', 'TRY', 'CNY', 'ILS', 'PHP', 'TWD', 'CZK', 'INR', 'PKR', 'ZAR']
+export const CURRENCIES = ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'XAG', 'XAU', 'ZAR']
 
 
 

@@ -53,10 +53,11 @@ export function fixResponse(response: any): void {
 
 
 export const json = {
-	safeParse<T>(target: T): T {
+	parse<T>(target: T): T {
 		if (target == null || !_.isString(target)) return target;
-		if (target.charAt(0) != '{' || target.charAt(target.length - 1) != '}') return target;
-		return JSON.parse(target)
+		if (target.charAt(0) == '{' && target.charAt(target.length - 1) == '}') return JSON.parse(target);
+		if (target.charAt(0) == '[' && target.charAt(target.length - 1) == ']') return JSON.parse(target);
+		return target
 	},
 }
 
@@ -116,6 +117,17 @@ export const object = {
 	},
 }
 if (process.CLIENT) (global as any).object = object;
+
+
+
+export const array = {
+	chunks<T>(items: Array<T>, nchunks: number): Array<Array<T>> {
+		let chunks = Array.from(Array(nchunks), v => []) as Array<Array<T>>
+		items.forEach((v, i) => chunks[i % chunks.length].push(v))
+		return chunks
+	},
+}
+if (process.CLIENT) (global as any).array = array;
 
 
 

@@ -58,9 +58,9 @@ class Redis extends ioredis {
 		// _.delay(() => this.ping(), 1000)
 		// process.ee3.addListener(shared.enums.EE3.TICK_5, () => this.ping())
 
-		const cleanup = _.once(() => this.disconnect())
-		process.on('beforeExit', cleanup)
-		process.on('exit', cleanup)
+		// const cleanup = _.once(() => this.disconnect())
+		// process.on('beforeExit', cleanup)
+		// process.on('exit', cleanup)
 
 	}
 

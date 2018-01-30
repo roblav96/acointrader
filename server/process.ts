@@ -9,6 +9,7 @@ import os from 'os'
 import cluster from 'cluster'
 import url from 'url'
 import ee3 from 'eventemitter3'
+import * as errors from './services/errors'
 
 
 
@@ -39,11 +40,11 @@ process.env.NODE_HEAPDUMP_OPTIONS = 'nosignal'
 process.$stack = null
 
 process.on('uncaughtException', function(error) {
-	console.error('uncaughtExceptions > error', error)
+	console.error('uncaughtExceptions > error', errors.render(error as any))
 })
 
 process.on('unhandledRejection', function(error) {
-	console.error('unhandledRejection > error', error)
+	console.error('unhandledRejection > error', errors.render(error as any))
 })
 
 

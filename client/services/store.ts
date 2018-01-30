@@ -7,6 +7,7 @@ import lockr from 'lockr'
 import * as utils from './utils'
 import * as security from './security'
 import * as exchanges from './exchanges'
+import * as user from './user'
 import MainDrawer from '../components/main-drawer/main-drawer'
 import Snackbar from '../components/snackbar/snackbar'
 // import RegisterDialog from '../components/register-dialog/register-dialog'
@@ -18,6 +19,7 @@ class State {
 	blockUI = false
 
 	security = security.state
+	user = user.state
 
 	apiKeys = exchanges.exchanges.map(v => v.apiKey)
 	// markets = exchanges.exchanges.map(v => v.market)

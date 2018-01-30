@@ -62,7 +62,9 @@ function _init() {
 	█            TABLES & INDEXES            █
 	████████████████████████████████████████*/
 
-	r.db('acointrader').tableCreate('users', { primaryKey: 'email', durability: 'hard' });
+	r.db('acointrader').tableCreate('users', { primaryKey: 'id', durability: 'hard' });
+
+	r.db('acointrader').tableCreate('countries', { primaryKey: 'alpha3Code', durability: 'soft' });
 
 	r.db('acointrader').tableCreate('exchanges', { primaryKey: 'id', durability: 'soft' });
 

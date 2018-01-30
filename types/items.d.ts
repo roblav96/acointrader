@@ -53,6 +53,17 @@ declare namespace Items {
 		updated: number
 		stamp: number
 	}
+	
+	interface MarketTrade {
+		id: string
+		pair: string
+		exchange: keyof AllExchanges
+		side: 'BUY' | 'SELL'
+		price: number
+		size: number
+		executed: number
+		
+	}
 
 
 

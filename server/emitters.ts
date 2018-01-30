@@ -67,21 +67,19 @@ const radioOpts = {
 if (utils.isMaster()) {
 
 	const wss = new uws.Server(Object.assign({
-		clientTracking: true,
 		verifyClient(client, next) {
 			let host = client.req.headers['host']
 			next(host == 'localhost')
 		},
 	} as uws.IServerOptions, radioOpts))
 
-	const cleanup = _.once(() => wss.close())
-	process.on('beforeExit', cleanup)
-	process.on('exit', cleanup)
-
 	wss.on('connection', function(client) {
 		client.on('message', function(message: string) {
 			wss.clients.forEach(function(v) { v.send(message) })
 		})
+		if (wss.clients.length == (process.$instances + 1)) {
+			process.radio.emit('radios.ready')
+		}
 	})
 
 	wss.on('error', function(error) {
@@ -95,12 +93,8 @@ class RadioEmitter {
 	private _ee3 = new ee3.EventEmitter()
 	private _wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
 
-	private _ready = null as boolean
-	isReady() { return this._ready }
-
 	constructor() {
 		this._wsc.verbose = false
-		this._wsc.emitter.once('connected', () => this._ready = true)
 		this._wsc.emitter.addListener('message', (message: RadioMessage) => {
 			this._ee3.emit(message.event, message.data)
 		})
@@ -115,20 +109,7 @@ class RadioEmitter {
 }
 process.radio = new RadioEmitter()
 
-
-
-const allradios = {} as Dict<boolean>
-function onradio(radio: Dict<boolean>) {
-	shared.object.merge(allradios, radio)
-	if (Object.keys(allradios).length < process.$instances) return;
-	process.radio.removeListener('radio.ready')
-	process.ee3.removeListener(shared.enums.EE3.TICK_01, loopready)
-	utils.ready.emitters.next(true)
-}
-process.radio.addListener('radio.ready', onradio)
-
-function loopready() { process.radio.emit('radio.ready', { [process.$instance]: process.radio.isReady() }) }
-process.ee3.addListener(shared.enums.EE3.TICK_01, loopready)
+process.radio.once('radios.ready', () => utils.ready.radios.next(true))
 
 
 
