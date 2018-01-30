@@ -66,6 +66,7 @@ export function syncAssets() {
 
 
 export function syncTickers() {
+	console.warn('FILTER IDS WITH NON ALPHANUMERIC IDS')
 	return Promise.resolve().then(function() {
 		return http.get('https://api.coinmarketcap.com/v1/ticker/', {
 			limit: -1,

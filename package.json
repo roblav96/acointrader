@@ -66,6 +66,7 @@
 		"restify-errors": "latest",
 		"rethinkdbdash": "latest",
 		"rxjs": "latest",
+		"sequence-sdk": "latest",
 		"secure-ls": "latest",
 		"simple-statistics": "latest",
 		"technicalindicators": "latest",

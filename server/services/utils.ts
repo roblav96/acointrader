@@ -16,6 +16,7 @@ export const ready = {
 	radios: new rx.BehaviorSubject(false),
 	restify: new rx.BehaviorSubject(false),
 	forex: new rx.BehaviorSubject(false),
+	ledger: new rx.BehaviorSubject(false),
 }
 
 

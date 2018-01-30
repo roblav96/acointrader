@@ -119,7 +119,7 @@ process.radio.once('radios.ready', () => utils.ready.radios.next(true))
 
 if (utils.isMaster()) {
 	const restart = _.once(function() {
-		console.warn('restart')
+		console.warn('RESTART')
 		// if (process.DEVELOPMENT) return;
 		process.nextTick(() => process.exit(0))
 	})
