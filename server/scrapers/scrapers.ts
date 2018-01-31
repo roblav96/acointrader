@@ -27,7 +27,7 @@ import * as restcountries from './restcountries.eu'
 
 forex.initAssets().then(function() {
 	if (utils.isMaster()) return Promise.resolve();
-	// return pforever(yahoo.syncForexQuotes, true)
+	return pforever(yahoo.syncForexQuotes, true)
 })
 
 

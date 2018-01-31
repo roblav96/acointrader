@@ -17,7 +17,6 @@ declare global {
 			$dname: string
 			$host: string
 			$port: number
-			$stack: string
 		}
 	}
 

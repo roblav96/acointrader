@@ -46,13 +46,13 @@ export function initAssets(): Promise<void> {
 			})
 		})
 
-		utils.ready.forex.next(true)
+		utils.rxready.forex.next(true)
 
 		return Promise.resolve()
 
 	}).catch(function(error) {
 		console.error('initAssets > error', errors.render(error))
-		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(initAssets)
+		return pevent(process.ee3, shared.enums.EE3.TICK_3).then(initAssets)
 	})
 }
 

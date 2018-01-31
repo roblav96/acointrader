@@ -9,7 +9,6 @@ import os from 'os'
 import cluster from 'cluster'
 import url from 'url'
 import ee3 from 'eventemitter3'
-import * as errors from './services/errors'
 
 
 
@@ -31,23 +30,17 @@ if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
 process.$host = process.$webpack.host
 process.$port = process.$webpack.port
 process.$dname = 'aCoinTrader' // '𝛂CoinTrader'
-process.$version = '1'
-
-process.env.NODE_HEAPDUMP_OPTIONS = 'nosignal'
+process.$version = 'v1'
 
 
 
-process.$stack = null
-
+const errors = require('./services/errors')
 process.on('uncaughtException', function(error) {
 	console.error('uncaughtExceptions > error', errors.render(error as any))
 })
-
 process.on('unhandledRejection', function(error) {
 	console.error('unhandledRejection > error', errors.render(error as any))
 })
-
-
 
 process.ee3 = new ee3.EventEmitter()
 
@@ -55,11 +48,8 @@ process.ee3 = new ee3.EventEmitter()
 
 require('debug-trace')()
 console.format = function(arg) {
-	let stack = process.$stack
-	if (!stack) {
-		stack = new Error().stack.toString()
-		stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
-	}
+	let stack = new Error().stack.toString()
+	stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
 	let fullpath = stack.split('/').pop()
 	if (!fullpath) fullpath = arg.filename + ':' + arg.getLineNumber();
 	let file = fullpath.split('.ts:')[0]
@@ -84,7 +74,8 @@ console.format = function(arg) {
 
 
 if (process.DEVELOPMENT) {
-	if (cluster.isMaster) setInterval(process.stdout.write, 1000, (clc as any).erase.line);
+	// if (cluster.isMaster) setInterval(process.stdout.write, 1000, (clc as any).erase.line);
+	if (cluster.isMaster) setInterval(process.stdout.write, 1000, '');
 	const dtsgen = require('dts-gen')
 	const clipboardy = require('clipboardy')
 	process.dtsgen = function(name, value) {
@@ -101,11 +92,10 @@ if (process.DEVELOPMENT) {
 
 
 if (cluster.isMaster) {
-	// process.stdout.write((clc as any).erase.screen)
 	let host = url.parse(process.$domain).host
 	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
 	console.log('\n\n\n\n' +
-		clc.bold.underline(process.$dname) + '\n' +
+		clc.bold.underline('𝛂CoinTrader') + '\n' +
 		'v' + process.$version + ' ' +
 		clc.bold(process.$env) + '\n' +
 		clc.bold.green('@') + host + '\n' +

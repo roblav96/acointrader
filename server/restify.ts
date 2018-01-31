@@ -3,17 +3,15 @@
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import moment from 'moment'
 import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
-import os from 'os'
 import cluster from 'cluster'
 import restify from 'restify'
 import url from 'url'
-import redis from './adapters/redis'
 import r from './adapters/rethinkdb'
+import redis from './adapters/redis'
 import * as security from './services/security'
 
 
@@ -119,7 +117,7 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 
 if (cluster.isMaster) {
-
+	
 	let i: number, len = process.$instances
 	for (i = 0; i < len; i++) { cluster.fork() }
 	cluster.on('disconnect', function(worker) {
@@ -130,12 +128,12 @@ if (cluster.isMaster) {
 		console.error('cluster exit >', worker.id, code, signal)
 		process.radio.emit(shared.enums.RESTART)
 	})
-	utils.ready.restify.next(true)
+	utils.rxready.restify.next(true)
 
 } else {
 
 	server.listen(process.$port, process.$host, function() {
-		utils.ready.restify.next(true)
+		utils.rxready.restify.next(true)
 	})
 
 }

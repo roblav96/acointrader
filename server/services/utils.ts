@@ -1,18 +1,19 @@
 // 
 
-import cluster from 'cluster'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
+import * as errors from './errors'
+import * as shared from '../../shared/shared'
+
+import cluster from 'cluster'
 import moment from 'moment'
 import restify from 'restify'
-import errors from 'restify-errors'
-
 import rx from 'rxjs/Rx'
 
 
 
-export const ready = {
+export const rxready = {
 	radios: new rx.BehaviorSubject(false),
 	restify: new rx.BehaviorSubject(false),
 	forex: new rx.BehaviorSubject(false),
@@ -21,15 +22,8 @@ export const ready = {
 
 
 
-export function isPrimary() {
-	return process.$instance == 0
-}
-export function isMaster() {
-	return cluster.isMaster
-}
-export function isCaboose() {
-	return process.$instance == process.$instances - 1
-}
+export function isPrimary() { return process.$instance == 0 }
+export function isMaster() { return cluster.isMaster }
 
 
 
@@ -37,7 +31,6 @@ export function dispersedMs(ms: number, i: number, length: number) {
 	return Math.round(i * (ms / length))
 }
 export function instanceMs(ms: number) {
-	// return dispersedMs(ms, Math.max(process.$instance, 0), process.$instances)
 	return Math.round(Math.max(process.$instance, 0) * (ms / process.$instances))
 }
 

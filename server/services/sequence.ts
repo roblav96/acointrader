@@ -13,29 +13,31 @@ import * as sequence from 'sequence-sdk'
 import * as forex from './forex'
 import r from '../adapters/rethinkdb'
 
+console.log('process.$webpack.sequence >')
+eyes.inspect(process.$webpack.sequence)
+
+export const ledger = new sequence.Client({
+	ledger: process.$webpack.sequence.ledger,
+	credential: process.$webpack.sequence.credential,
+})
+process.$webpack.sequence = null
+// _.unset(process.$webpack, 'sequence')
+
+console.log('process.$webpack >')
+eyes.inspect(process.$webpack)
 
 
-let ledger: sequence.Client
 
-function init() {
-	// if (!utils.isMaster()) return;
-
-	ledger = new sequence.Client({
-		ledger: 'development',
-		credential: process.$webpack.sequence,
-	})
-
-	Promise.resolve().then(function() {
-		return readyKeys()
-
+function start() {
+	return Promise.resolve().then(function() {
+		return initKeys()
 	}).then(function() {
 		return readyAssets()
-
 	}).then(function() {
-		utils.ready.ledger.next(true)
+		utils.rxready.ledger.next(true)
 
 	}).catch(function(error) {
-		console.error('init > error', errors.render(error))
+		console.error('start > error', errors.render(error))
 	})
 
 	// return new Promise(function(resolve) {
@@ -44,11 +46,11 @@ function init() {
 
 }
 
-utils.ready.radios.filter(v => !!v).take(1).subscribe(init)
+utils.rxready.radios.filter(v => !!v).take(1).subscribe(start)
 
 
 
-function readyKeys() {
+function initKeys() {
 	return Promise.resolve().then(function() {
 		return ledger.keys.queryAll()
 	}).then(function(keys: Array<any>) {
@@ -87,7 +89,7 @@ function readyAssets() {
 		}
 		return r.table('assets').run().then(function(assets: Array<Items.Asset>) {
 			let keys = ['master', 'assets']
-			return pall(assets.map(v => () => createAsset(v, keys)), { concurrency: 10 })
+			return pall(assets.map(v => () => createAsset(v, keys)), { concurrency: 1 })
 		}).then(function() {
 			process.exit(0)
 			throw new errors.FailedDependencyError('RESTART')

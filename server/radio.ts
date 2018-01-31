@@ -8,8 +8,8 @@ import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
-import ci from 'correcting-interval'
 import ee3 from 'eventemitter3'
+import ci from 'correcting-interval'
 import uws from 'uws'
 import UWebSocket from './adapters/uwebsocket'
 
@@ -59,7 +59,7 @@ declare global {
 	interface RadioMessage { event?: string, data?: any, action?: string }
 }
 
-const radioOpts = {
+const ropts = {
 	path: 'radio',
 	port: process.$port - 1,
 }
@@ -71,7 +71,7 @@ if (utils.isMaster()) {
 			let host = client.req.headers['host']
 			next(host == 'localhost')
 		},
-	} as uws.IServerOptions, radioOpts))
+	} as uws.IServerOptions, ropts))
 
 	wss.on('connection', function(client) {
 		client.on('message', function(message: string) {
@@ -91,7 +91,7 @@ if (utils.isMaster()) {
 class RadioEmitter {
 
 	private _ee3 = new ee3.EventEmitter()
-	private _wsc = new UWebSocket('ws://localhost:' + radioOpts.port + '/' + radioOpts.path)
+	private _wsc = new UWebSocket('ws://localhost:' + ropts.port + '/' + ropts.path)
 
 	constructor() {
 		this._wsc.verbose = false
@@ -109,7 +109,7 @@ class RadioEmitter {
 }
 process.radio = new RadioEmitter()
 
-process.radio.once('radios.ready', () => utils.ready.radios.next(true))
+process.radio.once('radios.ready', () => utils.rxready.radios.next(true))
 
 
 
