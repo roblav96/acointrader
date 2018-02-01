@@ -13,6 +13,7 @@
 		"rs": "npm run server:kill && npm run server:rm:dist && npm run server:webpack:dev",
 		"k": "npm run server:kill",
 		"server:kill": "forever stop acointrader-development || true && forever stop acointrader-production || true && npm run server:rm:logs",
+		"server:killer": "forever stopall && npm run server:rm:logs",
 		"server:rm:dist": "rm -rf server/dist",
 		"server:rm:logs": "rm -f ~/.forever/acointrader-development.log || true && rm -f ~/.forever/acointrader-production.log || true",
 		"server:webpack:dev": "cross-env NODE_ENV=DEVELOPMENT webpack --config server.webpack.config --progress --hide-modules --colors --watch",

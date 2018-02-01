@@ -5,7 +5,7 @@ export * from 'restify-errors'
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import restify from 'restify'
+
 import errors from 'restify-errors'
 
 
@@ -58,7 +58,7 @@ export function getStack(i = 2) {
 
 
 
-export function isTimeoutError(error: Error) {
+export function isTimeout(error: Error) {
 	if (error == null || !_.isString(error.message)) return false;
 	let message = error.message.toLowerCase()
 	return message.indexOf('timeout') >= 0 && message.indexOf('exceeded') >= 0

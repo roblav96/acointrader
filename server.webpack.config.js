@@ -24,9 +24,9 @@ const config = {
 	},
 
 	target: 'node',
-	// node: { __filename: true },
 	externals: [NodeExternals()],
 	resolve: { extensions: ['.ts', '.js'] },
+	// node: { __filename: true },
 
 	module: {
 		rules: [

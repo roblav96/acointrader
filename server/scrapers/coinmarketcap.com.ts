@@ -55,10 +55,10 @@ export function syncAssets() {
 		() => syncCoins(),
 		() => syncTokens(),
 	], { concurrency: 1 }).then(function() {
-		console.info('sync > DONE')
+		console.info('syncAssets > DONE')
 		return Promise.resolve(true)
 	}).catch(function(error) {
-		console.error('sync > error', errors.render(error))
+		console.error('syncAssets > error', errors.render(error))
 		return Promise.resolve(false)
 	})
 }
@@ -66,12 +66,10 @@ export function syncAssets() {
 
 
 export function syncTickers() {
-	console.warn('FILTER IDS WITH NON ALPHANUMERIC IDS')
 	return Promise.resolve().then(function() {
 		return http.get('https://api.coinmarketcap.com/v1/ticker/', {
 			limit: -1,
-			// convert: 'USD',
-		})
+		}, { retry: true })
 
 	}).then(function(response: Array<CoinMarketCap.Ticker>) {
 		let items = response.map(function(ticker) {
@@ -84,7 +82,7 @@ export function syncTickers() {
 				totalSupply: Number.parseFloat(ticker.total_supply),
 				maxSupply: Number.parseFloat(ticker.max_supply),
 			} as Items.Asset
-		})
+		}).filter(v => shared.string.isValidSymbol(v.id))
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -102,7 +100,7 @@ export function syncTickers() {
 
 export function syncCoins() {
 	return Promise.resolve().then(function() {
-		return http.scrape('https://coinmarketcap.com/coins/views/all/')
+		return http.scrape('https://coinmarketcap.com/coins/views/all/', null, { retry: true })
 
 	}).then(function(html: string) {
 		let $ = cheerio.load(html)
@@ -117,6 +115,7 @@ export function syncCoins() {
 				mineable: supply.indexOf('*') == -1,
 			} as Items.Asset)
 		})
+		items = items.filter(v => shared.string.isValidSymbol(v.id))
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -134,7 +133,7 @@ export function syncCoins() {
 
 export function syncTokens() {
 	return Promise.resolve().then(function() {
-		return http.scrape('https://coinmarketcap.com/tokens/views/all/')
+		return http.scrape('https://coinmarketcap.com/tokens/views/all/', null, { retry: true })
 
 	}).then(function(html: string) {
 		let $ = cheerio.load(html)
@@ -149,6 +148,7 @@ export function syncTokens() {
 				token: platform,
 			} as Items.Asset)
 		})
+		items = items.filter(v => shared.string.isValidSymbol(v.id))
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

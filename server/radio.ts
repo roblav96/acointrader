@@ -3,7 +3,6 @@
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import moment from 'moment'
 import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
@@ -55,23 +54,27 @@ setImmediate(function() {
 █████████████████████████████████████*/
 
 declare global {
-	namespace NodeJS { interface Process { radio: RadioEmitter } }
-	interface RadioMessage { event?: string, data?: any, action?: string }
+	namespace NodeJS {
+		interface Process { radio: RadioEmitter }
+	}
+	namespace Radio {
+		interface Message { event?: string, data?: any, action?: string }
+	}
 }
 
-const ropts = {
+const opts = {
 	path: 'radio',
 	port: process.$port - 1,
 }
 
-if (utils.isMaster()) {
+if (process.MASTER) {
 
 	const wss = new uws.Server(Object.assign({
 		verifyClient(client, next) {
 			let host = client.req.headers['host']
 			next(host == 'localhost')
 		},
-	} as uws.IServerOptions, ropts))
+	} as uws.IServerOptions, opts))
 
 	wss.on('connection', function(client) {
 		client.on('message', function(message: string) {
@@ -82,8 +85,8 @@ if (utils.isMaster()) {
 		}
 	})
 
-	wss.on('error', function(error) {
-		console.error('uws.Server > radio error', errors.render(error as any))
+	wss.on('error', function(error: any) {
+		console.error('uws.Server > radio error', errors.render(error))
 	})
 
 }
@@ -91,16 +94,16 @@ if (utils.isMaster()) {
 class RadioEmitter {
 
 	private _ee3 = new ee3.EventEmitter()
-	private _wsc = new UWebSocket('ws://localhost:' + ropts.port + '/' + ropts.path)
+	private _wsc = new UWebSocket('ws://localhost:' + opts.port + '/' + opts.path)
 
 	constructor() {
 		this._wsc.verbose = false
-		this._wsc.emitter.addListener('message', (message: RadioMessage) => {
+		this._wsc.emitter.addListener('message', (message: Radio.Message) => {
 			this._ee3.emit(message.event, message.data)
 		})
 	}
 
-	emit(event: string, data?: any) { this._wsc.send({ event, data } as RadioMessage) }
+	emit(event: string, data?: any) { this._wsc.send({ event, data } as Radio.Message) }
 	once(event: string, fn: (data?: any) => void) { this._ee3.once(event, fn) }
 	addListener(event: string, fn: (data?: any) => void) { this._ee3.addListener(event, fn) }
 	removeListener(event: string, fn?: (data?: any) => void) { this._ee3.removeListener(event, fn) }
@@ -117,7 +120,7 @@ process.radio.once('radios.ready', () => utils.rxready.radios.next(true))
 █            RESTART            █
 ███████████████████████████████*/
 
-if (utils.isMaster()) {
+if (process.MASTER) {
 	const restart = _.once(function() {
 		console.warn('RESTART')
 		// if (process.DEVELOPMENT) return;
@@ -126,7 +129,6 @@ if (utils.isMaster()) {
 	process.ee3.once(shared.enums.RESTART, restart)
 	process.radio.once(shared.enums.RESTART, restart)
 }
-
 
 
 

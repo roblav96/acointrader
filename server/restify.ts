@@ -18,8 +18,6 @@ import * as security from './services/security'
 
 const server = restify.createServer()
 
-
-
 // server.opts(/.*/, utils.restifyRoute(function(req, res, next) {
 // 	res.header('Access-Control-Allow-Origin', '*')
 // 	res.header('Access-Control-Allow-Methods', req.header('Access-Control-Request-Method'))
@@ -116,8 +114,9 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 
 
-if (cluster.isMaster) {
+if (process.MASTER) {
 	
+	console.log(clc.bold('Forking x' + clc.bold.redBright(process.$instances) + ' nodes in cluster...'))
 	let i: number, len = process.$instances
 	for (i = 0; i < len; i++) { cluster.fork() }
 	cluster.on('disconnect', function(worker) {
@@ -128,6 +127,7 @@ if (cluster.isMaster) {
 		console.error('cluster exit >', worker.id, code, signal)
 		process.radio.emit(shared.enums.RESTART)
 	})
+	server.close()
 	utils.rxready.restify.next(true)
 
 } else {

@@ -84,6 +84,9 @@ export const string = {
 	parseUrl(website: string) {
 		return url.parse(website)
 	},
+	isValidSymbol(symbol: string) {
+		return symbol.match(/[^a-zA-Z0-9]/) == null
+	},
 }
 if (process.CLIENT) (global as any).string = string;
 
@@ -98,6 +101,11 @@ export const object = {
 			let value = target[key]
 			if (Number.isFinite(value)) return;
 			if (!value) _.unset(target, key);
+		})
+	},
+	destroy<T>(target: T): void {
+		Object.keys(target).forEach(function(key) {
+			target[key] = null
 		})
 	},
 	merge<T>(target: T, source: T): void {

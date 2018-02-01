@@ -3,12 +3,12 @@
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import moment from 'moment'
 
 import os from 'os'
 import cluster from 'cluster'
 import url from 'url'
 import ee3 from 'eventemitter3'
+import moment from 'moment'
 
 
 
@@ -23,6 +23,8 @@ process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
 process.PRODUCTION = process.$env == 'PRODUCTION'
 process.CLIENT = false
 process.SERVER = true
+process.MASTER = cluster.isMaster
+process.PRIMARY = process.$instance == 0
 
 process.$domain = 'https://acointrader.com'
 if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
@@ -30,17 +32,7 @@ if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
 process.$host = process.$webpack.host
 process.$port = process.$webpack.port
 process.$dname = 'aCoinTrader' // '𝛂CoinTrader'
-process.$version = 'v1'
-
-
-
-const errors = require('./services/errors')
-process.on('uncaughtException', function(error) {
-	console.error('uncaughtExceptions > error', errors.render(error as any))
-})
-process.on('unhandledRejection', function(error) {
-	console.error('unhandledRejection > error', errors.render(error as any))
-})
+process.$version = '0.0.1'
 
 process.ee3 = new ee3.EventEmitter()
 
@@ -73,9 +65,18 @@ console.format = function(arg) {
 
 
 
+const errors = require('./services/errors')
+process.on('uncaughtException', function(error) {
+	console.error('uncaughtExceptions > error', errors.render(error))
+})
+process.on('unhandledRejection', function(error) {
+	console.error('unhandledRejection > error', errors.render(error))
+})
+
+
+
 if (process.DEVELOPMENT) {
-	// if (cluster.isMaster) setInterval(process.stdout.write, 1000, (clc as any).erase.line);
-	if (cluster.isMaster) setInterval(process.stdout.write, 1000, '');
+	if (process.MASTER) setInterval(process.stdout.write, 1000, (clc as any).erase.lineRight);
 	const dtsgen = require('dts-gen')
 	const clipboardy = require('clipboardy')
 	process.dtsgen = function(name, value) {
@@ -91,18 +92,17 @@ if (process.DEVELOPMENT) {
 
 
 
-if (cluster.isMaster) {
+if (process.MASTER) {
 	let host = url.parse(process.$domain).host
 	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
 	console.log('\n\n\n\n' +
 		clc.bold.underline('𝛂CoinTrader') + '\n' +
 		'v' + process.$version + ' ' +
 		clc.bold(process.$env) + '\n' +
-		clc.bold.green('@') + host + '\n' +
+		host + '\n' +
 		'/*===============================================\n' +
 		'=========           ' + clc.bold(moment().format('hh:mm:ss')) + '           ==========\n' +
-		'===============================================*/\n\n' +
-		clc.bold('Forking x' + clc.bold.redBright(os.cpus().length) + ' nodes in cluster...') // + '\n'
+		'===============================================*/'
 	)
 }
 

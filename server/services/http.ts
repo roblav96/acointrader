@@ -3,13 +3,13 @@
 import eyes from 'eyes'
 import clc from 'cli-color'
 import _ from 'lodash'
-import moment from 'moment'
 import * as errors from './errors'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
 
 import url from 'url'
 import axios from 'axios'
+import pevent from 'p-event'
 
 
 
@@ -43,8 +43,10 @@ function request(config: HttpRequestConfig): Promise<any> {
 		})
 
 	}).catch(function(error) {
-		if (config.retry && errors.isTimeoutError(error)) {
-			return request(cached)
+		if (config.retry && errors.isTimeout(error)) {
+			return pevent(process.ee3, shared.enums.EE3.TICK_3).then(function() {
+				return request(cached)
+			})
 		}
 		return Promise.reject(error)
 	})

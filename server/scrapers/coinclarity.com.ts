@@ -17,7 +17,32 @@ import * as http from '../services/http'
 
 
 
-const PAGE_LIMIT = 25
+export function syncExchanges() {
+	return Promise.resolve().then(function() {
+		return getExchangeCount()
+
+	}).then(function(count) {
+		let total = _.ceil(count / 25)
+		let pages = Array.from(Array(total + 1), (v, i) => i)
+		pages.unshift(-1)
+		pages.push(...shared.object.clone(pages), ...shared.object.clone(pages))
+		return pall(pages.map(page => () => scrapePage(page)), { concurrency: 1 })
+		// return scrapePage(0)
+		// return scrapeExchangeMeta({
+		// 	id: 'binance',
+		// 	href: 'https://coinclarity.com/exchange/binance/',
+		// 	logoSquare: 'https://coinclarity.com/wp-content/uploads/2017/11/Screenshot-2017-11-17-22.50.06-280x280.png',
+		// })
+
+	}).then(function() {
+		console.warn('exchanges.sync > DONE')
+		return Promise.resolve(true)
+
+	}).catch(function(error) {
+		console.error('exchanges.sync > error', errors.render(error))
+		return Promise.resolve(false)
+	})
+}
 
 
 
@@ -108,37 +133,6 @@ function getExchangeCount() {
 }
 
 
-
-export const exchanges = {
-
-	sync() {
-		return Promise.resolve().then(function() {
-			return getExchangeCount()
-
-		}).then(function(count) {
-			let total = _.ceil(count / PAGE_LIMIT)
-			let pages = Array.from(Array(total + 1), (v, i) => i)
-			pages.unshift(-1)
-			pages.push(...shared.object.clone(pages), ...shared.object.clone(pages))
-			return pall(pages.map(page => () => scrapePage(page)), { concurrency: 1 })
-			// return scrapePage(0)
-			// return scrapeExchangeMeta({
-			// 	id: 'binance',
-			// 	href: 'https://coinclarity.com/exchange/binance/',
-			// 	logoSquare: 'https://coinclarity.com/wp-content/uploads/2017/11/Screenshot-2017-11-17-22.50.06-280x280.png',
-			// })
-
-		}).then(function() {
-			console.warn('exchanges.sync > DONE')
-			return Promise.resolve(true)
-
-		}).catch(function(error) {
-			console.error('exchanges.sync > error', errors.render(error))
-			return Promise.resolve(false)
-		})
-	},
-
-}
 
 
 

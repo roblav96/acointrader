@@ -16,14 +16,10 @@ import rx from 'rxjs/Rx'
 export const rxready = {
 	radios: new rx.BehaviorSubject(false),
 	restify: new rx.BehaviorSubject(false),
+	assets: new rx.BehaviorSubject(false),
 	forex: new rx.BehaviorSubject(false),
 	ledger: new rx.BehaviorSubject(false),
 }
-
-
-
-export function isPrimary() { return process.$instance == 0 }
-export function isMaster() { return cluster.isMaster }
 
 
 

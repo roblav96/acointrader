@@ -1,6 +1,5 @@
 // 
 
-import uws from 'uws'
 import * as axios from 'axios'
 import * as ee3 from 'eventemitter3'
 
@@ -16,6 +15,8 @@ declare global {
 			PRODUCTION: boolean
 			CLIENT: boolean
 			SERVER: boolean
+			MASTER: boolean
+			PRIMARY: boolean
 			$webpack: any
 			$domain: string
 			$version: string
