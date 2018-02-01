@@ -47,10 +47,7 @@ export function syncFiats() {
 			let id = url.split('/').pop()
 			id = id.substring(0, id.indexOf('.')).trim().toUpperCase()
 
-			let item = {
-				id, name, logo,
-				fiat: true,
-			} as Items.Asset
+			let item = { id, name, logo, fiat: true } as Items.Asset
 
 			if (id == 'CNH') {
 				let clone = shared.object.clone(item)

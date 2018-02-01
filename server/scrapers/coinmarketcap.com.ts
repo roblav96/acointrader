@@ -49,16 +49,23 @@ declare global {
 
 
 
-export function syncAssets() {
-	return pall([
-		() => syncTickers(),
-		() => syncCoins(),
-		() => syncTokens(),
-	], { concurrency: 1 }).then(function() {
-		console.info('syncAssets > DONE')
+export function syncCryptos() {
+	return Promise.resolve().then(function() {
+		return Promise.all([
+			syncTickers(),
+			syncCoins(),
+			syncTokens(),
+		])
+		// return pall([
+		// 	() => syncTickers(),
+		// 	() => syncCoins(),
+		// 	() => syncTokens(),
+		// ], { concurrency: 3 })
+	}).then(function() {
+		console.info('syncCryptos > DONE')
 		return Promise.resolve(true)
 	}).catch(function(error) {
-		console.error('syncAssets > error', errors.render(error))
+		console.error('syncCryptos > error', errors.render(error))
 		return Promise.resolve(false)
 	})
 }

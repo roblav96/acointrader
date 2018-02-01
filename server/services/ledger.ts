@@ -16,15 +16,38 @@ import * as http from './http'
 
 
 
+const KEYS = ['master', 'transactions', 'contracts', 'accounts', 'assets']
+
+
+
 export const client = new sequence.Client(process.$webpack.sequence)
-console.log('shared.object.destroy')
-// shared.object.destroy(process.$webpack.sequence)
-// process.$webpack.sequence.ledger = 'null'
-console.log('process.$webpack >')
-eyes.inspect(process.$webpack)
 
 
 
+function createKey(alias: string) {
+	return Promise.resolve().then(function() {
+		return client.keys.create({ alias })
+	}).then(function(result) {
+		return Promise.resolve(!!result)
+	}).catch(function(error) {
+		console.error('createKey > error', errors.render(error))
+		return Promise.resolve(false)
+	})
+}
+
+export function initKeys() {
+	return Promise.resolve().then(function() {
+		return client.keys.queryAll()
+	}).then(function(keys: Array<any>) {
+		if (!_.isEmpty(keys)) return Promise.resolve(true);
+		return Promise.all(KEYS.map(v => createKey(v))).then(function() {
+			return Promise.resolve(true)
+		})
+	}).catch(function(error) {
+		console.error('initKeys > error', errors.render(error))
+		return Promise.resolve(false)
+	})
+}
 
 
 

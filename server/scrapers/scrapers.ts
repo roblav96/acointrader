@@ -35,8 +35,8 @@ forex.initAssets().then(function() {
 function syncAssets() {
 	return pall([
 		// () => r.table('assets').delete().run(),
-		() => coinmarketcap.syncAssets(),
-		() => localbitcoins.syncAssets(),
+		() => coinmarketcap.syncCryptos(),
+		() => localbitcoins.syncFiats(),
 	], { concurrency: 1 }).then(function() {
 		console.warn('syncAssets > DONE')
 		return Promise.resolve(true)

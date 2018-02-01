@@ -76,13 +76,15 @@ if (process.MASTER) {
 		},
 	} as uws.IServerOptions, opts))
 
+	const ready = _.once(function() {
+		_.delay(() => process.radio.emit('radios.ready'), 100)
+	})
+
 	wss.on('connection', function(client) {
+		if (wss.clients.length == (process.$instances + 1)) ready();
 		client.on('message', function(message: string) {
 			wss.clients.forEach(function(v) { v.send(message) })
 		})
-		if (wss.clients.length == (process.$instances + 1)) {
-			process.radio.emit('radios.ready')
-		}
 	})
 
 	wss.on('error', function(error: any) {
