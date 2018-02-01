@@ -26,7 +26,7 @@ Promise.resolve().then(function() {
 	})
 
 }).then(function() {
-	return ledger.initKeys()
+	// return ledger.initKeys()
 
 }).then(function() {
 	// console.warn('initKeys > done')

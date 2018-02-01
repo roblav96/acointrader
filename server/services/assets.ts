@@ -24,6 +24,7 @@ export const FIATS = ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'E
 
 export function init() {
 	return Promise.resolve().then(function() {
+		console.log('FIATS.length', FIATS.length)
 		// return r.table('assets').count().run()
 		// }).then(function(count: number) {
 		// if (process.DEVELOPMENT && !!count) return Promise.resolve(true);
@@ -32,7 +33,7 @@ export function init() {
 		// 	return localbitcoins.syncFiats()
 		return Promise.all([
 			// coinmarketcap.syncCryptos(),
-			localbitcoins.syncFiats(),
+			// localbitcoins.syncFiats(),
 			restcountries.syncFiats(),
 			// coinhills.syncFiats(),
 		])

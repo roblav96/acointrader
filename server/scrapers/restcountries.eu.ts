@@ -10,6 +10,7 @@ import * as shared from '../../shared/shared'
 import r from '../adapters/rethinkdb'
 import redis from '../adapters/redis'
 import * as http from '../services/http'
+import * as assets from '../services/assets'
 
 
 
@@ -77,6 +78,7 @@ export function syncFiats() {
 	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
 	return Promise.resolve().then(function() {
 		return r.table('countries').count().run()
+
 	}).then(function(count: number) {
 		if (!!count) return Promise.resolve(true);
 		return syncCountries()
@@ -84,23 +86,38 @@ export function syncFiats() {
 	}).then(function() {
 		return r.table('countries').run()
 
-	}).then(function(response: Array<RestCountries.Result>) {
+	}).then(function(results: Array<RestCountries.Result>) {
 
-		let currencies = [] as string[]
-		response.forEach(function(result) {
-			let fiats = result.currencies.map(v => v.code)
-			currencies.push(...fiats)
+		let items = [] as Array<Items.Asset>
+		results.forEach(function(result) {
+			result.currencies.forEach(function(currency) {
+				// if (!currency.code || !shared.string.isValidSymbol(currency.code)) return;
+				if (assets.FIATS.indexOf(currency.code) == -1) return;
+
+				let item = {
+					id: currency.code,
+					name: _.startCase(currency.name),
+					fiat: true
+				} as Items.Asset
+				
+				items.push(item)
+
+			})
+			// let fiats = result.currencies.map(v => v.code)
+
+
+			// currencies.push(...fiats)
 		})
-		currencies = _.uniq(currencies)
-		currencies = currencies.filter(v => !!v && shared.string.isValidSymbol(v))
-		currencies.sort()
+		// currencies = _.uniq(currencies)
+		// currencies = currencies.filter(v => !!v && shared.string.isValidSymbol(v))
+		// currencies.sort()
 
 		// console.log('currencies >')
 		// eyes.inspect(currencies)
-		console.log('currencies.length', currencies.length)
+		// console.log('currencies.length', currencies.length)
 
 
-		// return r.table('assets').insert(items, { conflict: 'update' }).run()
+		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.warn('syncFiats > DONE')
