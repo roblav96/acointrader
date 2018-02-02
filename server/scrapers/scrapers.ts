@@ -25,41 +25,41 @@ import * as restcountries from './restcountries.eu'
 
 
 
-forex.initAssets().then(function() {
-	if (utils.isMaster()) return Promise.resolve();
-	return pforever(yahoo.syncForexQuotes, true)
-})
+// forex.initAssets().then(function() {
+// 	if (utils.isMaster()) return Promise.resolve();
+// 	return pforever(yahoo.syncForexQuotes, true)
+// })
 
 
 
-function syncAssets() {
-	return pall([
-		// () => r.table('assets').delete().run(),
-		() => coinmarketcap.syncCryptos(),
-		() => localbitcoins.syncFiats(),
-	], { concurrency: 1 }).then(function() {
-		console.warn('syncAssets > DONE')
-		return Promise.resolve(true)
-	}).catch(function(error) {
-		console.error('syncAssets > error', errors.render(error))
-		return Promise.resolve(false)
-	})
-}
+// function syncAssets() {
+// 	return pall([
+// 		// () => r.table('assets').delete().run(),
+// 		() => coinmarketcap.syncCryptos(),
+// 		() => localbitcoins.syncFiats(),
+// 	], { concurrency: 1 }).then(function() {
+// 		console.warn('syncAssets > DONE')
+// 		return Promise.resolve(true)
+// 	}).catch(function(error) {
+// 		console.error('syncAssets > error', errors.render(error))
+// 		return Promise.resolve(false)
+// 	})
+// }
 
 
 
-if (utils.isMaster()) {
-	// restcountries.syncCountries()
-	// countries.syncCountries()
-	// cryptominded.exchanges.sync()
-	// coinclarity.exchanges.sync()
-	// coinmarketcap.sync()
-	// coinhills.syncFiats()
-	// localbitcoins.syncAssets()
-	// syncAssets()
-	// yahoo.start()
+// if (utils.isMaster()) {
+// 	// restcountries.syncCountries()
+// 	// countries.syncCountries()
+// 	// cryptominded.exchanges.sync()
+// 	// coinclarity.exchanges.sync()
+// 	// coinmarketcap.sync()
+// 	// coinhills.syncFiats()
+// 	// localbitcoins.syncAssets()
+// 	// syncAssets()
+// 	// yahoo.start()
 
-}
+// }
 
 
 

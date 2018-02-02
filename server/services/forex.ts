@@ -19,7 +19,7 @@ import * as yahoo from '../scrapers/yahoo.com'
 export const IDS = [] as Array<string>
 export const PAIRS = [] as Array<string>
 export const SYMBOLS = [] as Array<string>
-export const CURRENCIES = ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'ZAR']
+export const FIATS = ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'ZAR']
 
 
 
@@ -39,14 +39,14 @@ export function initAssets(): Promise<void> {
 			})
 		})
 
-		CURRENCIES.forEach(function(base) {
-			CURRENCIES.forEach(function(quote) {
+		FIATS.forEach(function(base) {
+			FIATS.forEach(function(quote) {
 				if (base == quote) return;
 				SYMBOLS.push(base + quote + '=X')
 			})
 		})
 
-		utils.rxready.forex.next(true)
+		// utils.rxready.forex.next(true)
 
 		return Promise.resolve()
 

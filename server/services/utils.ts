@@ -10,6 +10,7 @@ import cluster from 'cluster'
 import moment from 'moment'
 import restify from 'restify'
 import rx from 'rxjs/Rx'
+import pevent from 'p-event'
 
 
 
@@ -17,9 +18,49 @@ export const rxready = {
 	radios: new rx.BehaviorSubject(false),
 	restify: new rx.BehaviorSubject(false),
 	assets: new rx.BehaviorSubject(false),
-	forex: new rx.BehaviorSubject(false),
 	ledger: new rx.BehaviorSubject(false),
+	// forex: new rx.BehaviorSubject(false),
 }
+
+
+
+export function radioWorkersOnce(event: string, fn: (datas?: any[]) => void) {
+	process.radio.once('_' + event, fn)
+	if (!process.MASTER) return;
+
+	let all = Array.from(Array(process.$instances), (v, i) => '_' + event + '_' + i)
+	Promise.all(all.map(ievent => pevent(process.radio, ievent))).then(function(resolved) {
+		process.radio.emit('_' + event, resolved)
+	})
+}
+
+export function radioWorkerEmit(event: string, data?: any) {
+	process.radio.emit('_' + event + '_' + process.$instance, data)
+}
+
+// allOnce(event: string, fn: (datas?: any[]) => void) {
+// 	let all = Array.from(Array(process.$instances), (v, i) => event + '.' + i)
+// 	console.log('all >')
+// 	eyes.inspect(all)
+// 	Promise.all(all.map(ievent => pevent(this._ee3, ievent))).then(function(resolved) {
+
+// 	})
+// }
+// iemit(event: string, data?: any) {
+
+// }
+
+// private _onces = {} as Dict<{ fn: (datas?: any[]) => void, datas: any[] }>
+// workersOnce(event: string, fn: (datas?: any[]) => void) {
+// 	this._onces[event] = { fn, datas: [] }
+// 	this._ee3.once(event, fn)
+// }
+// workerEmit(event: string, data?: any) {
+// 	this._onces[event].datas[process.$instance] = data
+// 	if (this._onces[event].datas.length == process.$instances) {
+// 		this.emit(event, this._onces[event].datas)
+// 	}
+// }
 
 
 
@@ -52,6 +93,8 @@ export function validBody(body: any, keys: Array<string>): void {
 		if (body[k] == null) throw new errors.PreconditionFailedError(`Missing "${k}" field`);
 	})
 }
+
+
 
 
 

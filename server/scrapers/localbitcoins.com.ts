@@ -54,7 +54,7 @@ export function syncFiats(skips: string[]) {
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
-		console.warn('syncFiats > DONE')
+		console.info('syncFiats > DONE')
 		return Promise.resolve(true)
 
 	}).catch(function(error) {

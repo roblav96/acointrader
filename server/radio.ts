@@ -9,6 +9,7 @@ import * as shared from '../shared/shared'
 
 import ee3 from 'eventemitter3'
 import ci from 'correcting-interval'
+import pevent from 'p-event'
 import uws from 'uws'
 import UWebSocket from './adapters/uwebsocket'
 
