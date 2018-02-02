@@ -32,7 +32,7 @@ export function init() {
 		// if (!!count) return Promise.resolve();
 		return sync()
 	}).then(function() {
-		process.radio.emit(utils.rxReadys.assets.event)
+		// process.radio.emit(utils.rxReadys.assets.event)
 		return Promise.resolve()
 	})
 }
@@ -54,9 +54,9 @@ function scrape() {
 
 function sync() {
 	return Promise.resolve().then(function() {
-		return scrape()
+		// 	return scrape()
 
-	}).then(function() {
+		// }).then(function() {
 		return ledger.syncAssets()
 		// process.radio.emit('assets.sync.ledger')
 		// return Promise.resolve()

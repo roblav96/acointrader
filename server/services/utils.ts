@@ -53,23 +53,31 @@ export const rxReadys = new class RxReadys extends Readys {
 
 
 
-export function radioMaster(event: string, data?: any) {
-	if (!process.MASTER) return;
-	process.radio.emit(event, data)
-	let all = shared.array.create(process.$instances).map(i => event + '.' + i)
-	console.log('all >')
-	eyes.inspect(all)
-	return Promise.all(all.map(v => pevent(process.radio, v)))
+export function radioMaster(event: string, data?: any): Promise<any[]> {
+	if (!process.MASTER) return Promise.resolve(null);
+	return rxReadys.radios.onReady().then(function() {
+		let all = shared.array.create(process.$instances).map(i => 'w.' + event + '.' + i)
+		let proms = all.map(v => pevent(process.radio, v))
+		process.radio.emit(event, data)
+		return Promise.all(proms)
+	})
 }
 
-export function radioWorkerListener(event: string, fn: (event: string) => void) {
+export function radioWorkerOnce(event: string, fn: (data?: any) => void) {
+	if (process.MASTER) return;
+	process.radio.once(event, fn)
+}
+
+export function radioWorkerAddListener(event: string, fn: (data?: any) => void) {
 	if (process.MASTER) return;
 	process.radio.addListener(event, fn)
 }
 
 export function radioWorkerEmit(event: string, data?: any) {
 	if (process.MASTER) return;
-	process.radio.emit(event + '.' + process.$instance, data)
+	rxReadys.radios.onReady().then(function() {
+		process.radio.emit('w.' + event + '.' + process.$instance, data)
+	})
 }
 
 // onceMaster(event: string, fn: (datas?: any[]) => void) {

@@ -80,20 +80,26 @@ function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
 
 export function syncAssets() {
 	return Promise.resolve().then(function() {
-		return utils.rxReadys.radios.onReady()
+		return r.table('assets').run()
 
-	}).then(function() {
-		return utils.radioMaster('workerSyncAssets')
+	}).then(function(items: Items.Asset[]) {
+		return utils.radioMaster('syncAssets', items)
 
+	}).then(function(results) {
+		console.log('utils.radioMaster', results)
+		
 	})
 }
 
-function workerSyncAssets(event: string) {
+utils.radioWorkerAddListener('syncAssets', function (items: Items.Asset[]) {
+	let chunks = shared.array.chunks(items, process.$instances)[process.$instance]
+	console.log('chunks.length', chunks.length)
 	return Promise.resolve().then(function() {
-		console.log('workerSyncAssets', event)
+		return client.assets.queryAll({
+			
+		})
 	})
-}
-utils.radioWorkerListener('workerSyncAssets', workerSyncAssets)
+})
 
 // utils.rxReadys.radios.onReady().then(function() {
 // 	console.info('utils.rxReadys.radios.ready', utils.rxReadys.radios.ready)
