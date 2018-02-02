@@ -10,6 +10,7 @@ declare global {
 	namespace NodeJS {
 		interface Process {
 			dtsgen: (name: string, value: any) => void
+			clipboard: (name: string, input: string) => void
 			$env: string
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean
@@ -24,7 +25,7 @@ declare global {
 			sls: any
 		}
 	}
-	
+
 	interface HttpRequestConfig extends axios.AxiosRequestConfig {
 		silent?: boolean
 		production?: boolean

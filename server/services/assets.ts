@@ -49,11 +49,7 @@ function scrape() {
 			coinmarketcap.syncCryptos(SKIPS.cryptos),
 			localbitcoins.syncFiats(SKIPS.fiats),
 		])
-	}).then(function() {
-		return cryptocompare.syncCryptos(SKIPS.cryptos)
-	}).then(function() {
-		return Promise.resolve()
-	})
+	}).then(() => Promise.resolve())
 }
 
 function sync() {

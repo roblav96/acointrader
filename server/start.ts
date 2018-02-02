@@ -27,7 +27,7 @@ if (process.MASTER) {
 
 
 	}).catch(function(error) {
-		console.error('start > error', errors.render(error))
+		console.error('process.MASTER start > error', errors.render(error))
 	})
 }
 

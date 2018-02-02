@@ -30,17 +30,7 @@ export function initKeys() {
 		if (!_.isEmpty(keys)) return Promise.resolve();
 		return pall(
 			KEYS.map(v => () => createKey(v)), { concurrency: 1 }
-		).then(function() {
-			return Promise.resolve()
-		})
-		// return Promise.all(
-		// 	KEYS.map(v => createKey(v))
-		// ).then(function() {
-		// 	return Promise.resolve()
-		// })
-		// }).catch(function(error) {
-		// 	console.error('initKeys > error', errors.render(error))
-		// 	return Promise.reject(error)
+		).then(() => Promise.resolve())
 	})
 }
 
@@ -48,10 +38,7 @@ function createKey(alias: string) {
 	return Promise.resolve().then(function() {
 		return client.keys.create({ alias })
 	}).then(function(result) {
-		return Promise.resolve(!!result)
-	}).catch(function(error) {
-		console.error('createKey > error', errors.render(error))
-		return Promise.resolve(false)
+		return Promise.resolve()
 	})
 }
 

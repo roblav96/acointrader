@@ -48,11 +48,6 @@ export function syncCryptos(skips: string[]) {
 			syncCoins(skips),
 			syncTokens(skips),
 		])
-		// return pall([
-		// 	() => syncTickers(skips),
-		// 	() => syncCoins(skips),
-		// 	() => syncTokens(skips),
-		// ], { concurrency: 1 })
 	}).then(function() {
 		console.info('syncCryptos > DONE')
 		return Promise.resolve(true)
@@ -66,9 +61,7 @@ export function syncCryptos(skips: string[]) {
 
 export function syncTickers(skips: string[]) {
 	return Promise.resolve().then(function() {
-		return http.get('https://api.coinmarketcap.com/v1/ticker/', {
-			limit: -1,
-		}, { retry: true })
+		return http.get('https://api.coinmarketcap.com/v1/ticker/', { limit: -1 })
 
 	}).then(function(response: Array<CoinMarketCap.Ticker>) {
 		let items = response.map(function(ticker) {
@@ -76,6 +69,7 @@ export function syncTickers(skips: string[]) {
 				id: ticker.symbol,
 				name: ticker.name,
 				crypto: true,
+				logo: 'http://s3-ap-southeast-2.amazonaws.com/apogee-crypto-assets/logos/' + ticker.symbol.toLowerCase() + '-' + ticker.id.toLowerCase() + '.svg',
 				availableSupply: Number.parseFloat(ticker.available_supply),
 				totalSupply: Number.parseFloat(ticker.total_supply),
 				maxSupply: Number.parseFloat(ticker.max_supply),
@@ -99,7 +93,7 @@ export function syncTickers(skips: string[]) {
 
 export function syncCoins(skips: string[]) {
 	return Promise.resolve().then(function() {
-		return http.scrape('https://coinmarketcap.com/coins/views/all/', null, { retry: true })
+		return http.scrape('https://coinmarketcap.com/coins/views/all/')
 
 	}).then(function(html: string) {
 		let $ = cheerio.load(html)
@@ -132,7 +126,7 @@ export function syncCoins(skips: string[]) {
 
 export function syncTokens(skips: string[]) {
 	return Promise.resolve().then(function() {
-		return http.scrape('https://coinmarketcap.com/tokens/views/all/', null, { retry: true })
+		return http.scrape('https://coinmarketcap.com/tokens/views/all/')
 
 	}).then(function(html: string) {
 		let $ = cheerio.load(html)

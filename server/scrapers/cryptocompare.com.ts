@@ -58,12 +58,12 @@ export function syncCryptos(skips: string[]) {
 			items.push({
 				id: result.Symbol,
 				logo: 'https://www.cryptocompare.com' + result.ImageUrl,
-				ccId: result.Id,
+				// ccId: result.Id,
 			} as Items.Asset)
 		})
 		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
 		items.forEach(shared.object.compact)
-		return r.table('assets').insert(items, { conflict: 'update' }).run()
+		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.info('syncCryptos > DONE')

@@ -83,9 +83,16 @@ if (process.DEVELOPMENT) {
 		name = name.replace(/\W+/g, '').trim()
 		let results = dtsgen.generateIdentifierDeclarationFile(name, value)
 		clipboardy.write(results).then(function() {
-			console.info('/*████  DTS COPPIED > "' + clc.bold(name) + '"  ████*/')
+			console.warn('/*████  DTS COPPIED > "' + clc.bold(name) + '"  ████*/')
 		}).catch(function(error) {
-			console.error('clipboardy.write > error', error)
+			console.error('clipboardy.write > error', errors.render(error))
+		})
+	}
+	process.clipboard = function(name, input) {
+		clipboardy.write(input).then(function() {
+			console.warn('/*████  "' + clc.bold(name) + '" > APPENDED TO CLIPBOARD  ████*/')
+		}).catch(function(error) {
+			console.error('clipboardy.write > error', errors.render(error))
 		})
 	}
 }

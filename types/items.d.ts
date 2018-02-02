@@ -34,7 +34,7 @@ declare namespace Items {
 		totalSupply: number
 		maxSupply: number
 		/** ████ www.cryptocompare.com internal id ████ */
-		ccId: string
+		// ccId: string
 	}
 	
 	interface ForexQuote {
