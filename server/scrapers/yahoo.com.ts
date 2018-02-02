@@ -74,7 +74,7 @@ declare global {
 
 export function syncForexQuotes(first?: boolean) {
 	return Promise.resolve().then(function() {
-		if (first === true && utils.isPrimary()) return Promise.resolve();
+		if (first === true && process.PRIMARY) return Promise.resolve();
 		return pevent(process.ee3, shared.enums.EE3.TICK_30)
 
 	}).then(function() {

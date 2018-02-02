@@ -77,8 +77,8 @@ function sync() {
 
 process.radio.addListener('assets.sync', function() {
 
-	utils.radioWorkersOnce('assets.syncz', function (datas) {
-		console.warn('assets.syncz > DONE', datas)
+	process.radio.wonce('assets.sync', function (datas) {
+		console.warn('assets.sync > DONE', datas)
 	})
 
 	if (process.MASTER) return;
@@ -91,7 +91,7 @@ process.radio.addListener('assets.sync', function() {
 		let chunks = shared.array.chunks(items, process.$instances)[process.$instance]
 		console.log('chunks.length', chunks.length)
 		
-		utils.radioWorkerEmit('assets.syncz', chunks.length)
+		process.radio.wemit('assets.sync', chunks.length)
 
 	})
 

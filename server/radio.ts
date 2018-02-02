@@ -112,6 +112,19 @@ class RadioEmitter {
 	removeListener(event: string, fn?: (data?: any) => void) { this._ee3.removeListener(event, fn) }
 	removeAllListeners(event?: string) { this._ee3.removeAllListeners(event) }
 
+	wonce(event: string, fn: (datas?: any[]) => void) {
+		let wevent = 'w.' + event
+		process.radio.once(wevent, fn)
+		if (!process.MASTER) return;
+		let all = shared.array.create(process.$instances).map(i => wevent + '.' + i)
+		Promise.all(all.map(v => pevent(process.radio, v))).then(function(datas) {
+			process.radio.emit(wevent, datas)
+		})
+	}
+	wemit(event: string, data?: any) {
+		process.radio.emit('w.' + event + '.' + process.$instance, data)
+	}
+
 }
 process.radio = new RadioEmitter()
 

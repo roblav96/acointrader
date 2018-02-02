@@ -129,6 +129,9 @@ if (process.CLIENT) (global as any).object = object;
 
 
 export const array = {
+	create(length: number) {
+		return Array.from(Array(length), (v, i) => i)
+	},
 	chunks<T>(items: Array<T>, nchunks: number): Array<Array<T>> {
 		let chunks = Array.from(Array(nchunks), v => []) as Array<Array<T>>
 		items.forEach((v, i) => chunks[i % chunks.length].push(v))

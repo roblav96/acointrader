@@ -92,7 +92,7 @@ export function syncFiats() {
 		results.forEach(function(result) {
 			result.currencies.forEach(function(currency) {
 				// if (!currency.code || !shared.string.isValidSymbol(currency.code)) return;
-				if (assets.FIATS.indexOf(currency.code) == -1) return;
+				// if (assets.FIATS.indexOf(currency.code) == -1) return;
 
 				let item = {
 					id: currency.code,
@@ -116,8 +116,7 @@ export function syncFiats() {
 		// eyes.inspect(currencies)
 		// console.log('currencies.length', currencies.length)
 
-
-		return r.table('assets').insert(items, { conflict: 'update' }).run()
+		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.warn('syncFiats > DONE')

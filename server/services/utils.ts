@@ -24,19 +24,18 @@ export const rxready = {
 
 
 
-export function radioWorkersOnce(event: string, fn: (datas?: any[]) => void) {
-	process.radio.once('_' + event, fn)
-	if (!process.MASTER) return;
+// export function radioWorkersOnce(event: string, fn: (datas?: any[]) => void) {
+// 	process.radio.once('_' + event, fn)
+// 	if (!process.MASTER) return;
+// 	let all = Array.from(Array(process.$instances), (v, i) => '_' + event + '_' + i)
+// 	Promise.all(all.map(ievent => pevent(process.radio, ievent))).then(function(resolved) {
+// 		process.radio.emit('_' + event, resolved)
+// 	})
+// }
 
-	let all = Array.from(Array(process.$instances), (v, i) => '_' + event + '_' + i)
-	Promise.all(all.map(ievent => pevent(process.radio, ievent))).then(function(resolved) {
-		process.radio.emit('_' + event, resolved)
-	})
-}
-
-export function radioWorkerEmit(event: string, data?: any) {
-	process.radio.emit('_' + event + '_' + process.$instance, data)
-}
+// export function radioWorkerEmit(event: string, data?: any) {
+// 	process.radio.emit('_' + event + '_' + process.$instance, data)
+// }
 
 // allOnce(event: string, fn: (datas?: any[]) => void) {
 // 	let all = Array.from(Array(process.$instances), (v, i) => event + '.' + i)
