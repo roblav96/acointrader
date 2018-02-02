@@ -28,11 +28,16 @@ export function initKeys() {
 		return client.keys.queryAll()
 	}).then(function(keys: any[]) {
 		if (!_.isEmpty(keys)) return Promise.resolve();
-		return Promise.all(
-			KEYS.map(v => createKey(v))
+		return pall(
+			KEYS.map(v => () => createKey(v)), { concurrency: 1 }
 		).then(function() {
 			return Promise.resolve()
 		})
+		// return Promise.all(
+		// 	KEYS.map(v => createKey(v))
+		// ).then(function() {
+		// 	return Promise.resolve()
+		// })
 		// }).catch(function(error) {
 		// 	console.error('initKeys > error', errors.render(error))
 		// 	return Promise.reject(error)
