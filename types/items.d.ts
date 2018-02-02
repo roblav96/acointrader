@@ -23,7 +23,6 @@ declare namespace Items {
 	type ExchangesIndex = {[exchange in keyof AllExchanges]: Array<string>}
 	interface Asset extends ExchangesIndex {
 		id: string
-		slug: string
 		name: string
 		logo: string
 		fiat: boolean
@@ -34,6 +33,8 @@ declare namespace Items {
 		availableSupply: number
 		totalSupply: number
 		maxSupply: number
+		/** ████ www.cryptocompare.com internal id ████ */
+		ccId: string
 	}
 	
 	interface ForexQuote {

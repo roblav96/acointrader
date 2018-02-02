@@ -16,7 +16,7 @@ import * as assets from '../services/assets'
 
 
 
-export function syncFiats() {
+export function syncFiats(skips: string[]) {
 	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
 	return Promise.resolve().then(function() {
 		return http.get('https://localbitcoins.com/api/currencies/', null, { retry: true })
@@ -33,22 +33,23 @@ export function syncFiats() {
 			if (name == id) return;
 			name = name.substring(0, name.indexOf('(') - 1)
 
-			let item = { id, name, fiat: true } as Items.Asset
+			let item = {
+				id, name, fiat: true,
+				logo: 'https://www.coinhills.com/images/market/currency/' + id.toLowerCase() + '.svg',
+			} as Items.Asset
 
 			if (id == 'CNY') {
 				let cloned = shared.object.clone(item)
 				cloned.id = 'CNH'
 				cloned.name += ' Offshore'
+				cloned.logo = 'https://www.coinhills.com/images/market/currency/cnh.svg'
 				items.push(cloned)
 			}
 
 			items.push(item)
 		})
 
-		let all = items.map(v => v.id)
-		all.sort()
-		console.log('all.length', all.length)
-
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

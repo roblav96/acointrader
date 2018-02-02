@@ -18,14 +18,6 @@ import * as http from '../services/http'
 declare global {
 	namespace CoinMarketCap {
 
-		interface SearchResult {
-			name: string
-			rank: number
-			slug: string
-			symbol: string
-			tokens: Array<string>
-		}
-
 		interface Ticker {
 			'24h_volume_usd': string
 			available_supply: string
@@ -49,18 +41,18 @@ declare global {
 
 
 
-export function syncCryptos() {
+export function syncCryptos(skips: string[]) {
 	return Promise.resolve().then(function() {
-		return Promise.all([
-			syncTickers(),
-			syncCoins(),
-			syncTokens(),
-		])
-		// return pall([
-		// 	() => syncTickers(),
-		// 	() => syncCoins(),
-		// 	() => syncTokens(),
-		// ], { concurrency: 3 })
+		// return Promise.all([
+		// 	syncTickers(skips),
+		// 	syncCoins(skips),
+		// 	syncTokens(skips),
+		// ])
+		return pall([
+			() => syncTickers(skips),
+			() => syncCoins(skips),
+			() => syncTokens(skips),
+		], { concurrency: 1 })
 	}).then(function() {
 		console.info('syncCryptos > DONE')
 		return Promise.resolve(true)
@@ -72,7 +64,7 @@ export function syncCryptos() {
 
 
 
-export function syncTickers() {
+export function syncTickers(skips: string[]) {
 	return Promise.resolve().then(function() {
 		return http.get('https://api.coinmarketcap.com/v1/ticker/', {
 			limit: -1,
@@ -82,14 +74,14 @@ export function syncTickers() {
 		let items = response.map(function(ticker) {
 			return {
 				id: ticker.symbol,
-				slug: ticker.id,
 				name: ticker.name,
 				crypto: true,
 				availableSupply: Number.parseFloat(ticker.available_supply),
 				totalSupply: Number.parseFloat(ticker.total_supply),
 				maxSupply: Number.parseFloat(ticker.max_supply),
 			} as Items.Asset
-		}).filter(v => shared.string.isValidSymbol(v.id))
+		})
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -105,7 +97,7 @@ export function syncTickers() {
 
 
 
-export function syncCoins() {
+export function syncCoins(skips: string[]) {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinmarketcap.com/coins/views/all/', null, { retry: true })
 
@@ -122,7 +114,7 @@ export function syncCoins() {
 				mineable: supply.indexOf('*') == -1,
 			} as Items.Asset)
 		})
-		items = items.filter(v => shared.string.isValidSymbol(v.id))
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -138,7 +130,7 @@ export function syncCoins() {
 
 
 
-export function syncTokens() {
+export function syncTokens(skips: string[]) {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinmarketcap.com/tokens/views/all/', null, { retry: true })
 
@@ -146,16 +138,15 @@ export function syncTokens() {
 		let $ = cheerio.load(html)
 		let items = [] as Array<Items.Asset>
 		$('table.table > tbody > tr').each(function(i, el) {
-			let symbol = el.attribs['data-platformsymbol'].trim()
+			let platform = el.attribs['data-platformsymbol'].trim()
 			let $el = $(el)
-			let href = $el.find('.platform-name a').attr('href')
-			let platform = _.compact(href.split('/')).pop()
+			let symbol = $el.find('.currency-symbol').text().trim()
 			items.push({
 				id: symbol,
 				token: platform,
 			} as Items.Asset)
 		})
-		items = items.filter(v => shared.string.isValidSymbol(v.id))
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

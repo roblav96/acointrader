@@ -69,6 +69,8 @@ function _init() {
 	r.db('acointrader').tableCreate('exchanges', { primaryKey: 'id', durability: 'soft' });
 
 	r.db('acointrader').tableCreate('assets', { primaryKey: 'id', durability: 'soft' });
+	r.db('acointrader').table('assets').indexCreate('crypto');
+	r.db('acointrader').table('assets').indexCreate('fiat');
 
 	// r.db('acointrader').tableCreate('pairs', { primaryKey: 'id', durability: 'soft' });
 
