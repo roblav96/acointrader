@@ -4,6 +4,8 @@ node_modules
 dist
 *env.json
 
+.stfolder
+.stignore
 .awcache
 *.heapsnapshot
 *.DS_STORE
