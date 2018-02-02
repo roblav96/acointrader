@@ -128,12 +128,12 @@ if (process.MASTER) {
 		process.radio.emit(shared.enums.RESTART)
 	})
 	server.close()
-	utils.rxready.restify.next(true)
+	utils.rxReadys.restify.ready = true
 
 } else {
 
 	server.listen(process.$port, process.$host, function() {
-		utils.rxready.restify.next(true)
+		utils.rxReadys.restify.ready = true
 	})
 
 }

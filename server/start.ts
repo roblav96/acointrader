@@ -33,28 +33,28 @@ if (process.MASTER) {
 
 
 
-utils.rxready.assets.filter(v => !!v).take(1).subscribe(function() {
+// utils.rxready.assets.filter(v => !!v).take(1).subscribe(function() {
 
-	// if (process.MASTER) {
-	// 	Promise.resolve().then(function() {
-	// 		return ledger.client.assets.queryAll()
-	// 	}).then(function(assets: any[]) {
+// 	// if (process.MASTER) {
+// 	// 	Promise.resolve().then(function() {
+// 	// 		return ledger.client.assets.queryAll()
+// 	// 	}).then(function(assets: any[]) {
 
-	// 	}).catch(function(error) {
-	// 		console.error('start > error', errors.render(error))
-	// 	})
-	// }
+// 	// 	}).catch(function(error) {
+// 	// 		console.error('start > error', errors.render(error))
+// 	// 	})
+// 	// }
 
-	// return Promise.resolve().then(function() {
+// 	// return Promise.resolve().then(function() {
 
-	// })
+// 	// })
 
 
-	// console.log('utils.rxready.assets.value', utils.rxready.assets.value)
+// 	// console.log('utils.rxready.assets.value', utils.rxready.assets.value)
 
-	// ledger.
+// 	// ledger.
 
-})
+// })
 
 
 

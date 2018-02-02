@@ -14,15 +14,78 @@ import pevent from 'p-event'
 
 
 
-export const rxready = {
-	radios: new rx.BehaviorSubject(false),
-	restify: new rx.BehaviorSubject(false),
-	assets: new rx.BehaviorSubject(false),
-	ledger: new rx.BehaviorSubject(false),
-	// forex: new rx.BehaviorSubject(false),
+class Ready {
+	id: string
+	event: string
+	private _subject = new rx.BehaviorSubject(false)
+	get ready() { return this._subject.value }
+	set ready(ready: boolean) { if (!this._subject.value) this._subject.next(ready); }
+	constructor(public opts = { auto: true }) {
+		if (this.opts.auto) {
+			process.nextTick(() => process.radio.once(this.event, () => this.ready = true))
+		}
+	}
+	onReady() {
+		if (this._subject.value) return Promise.resolve();
+		return new Promise(resolve => {
+			this._subject.filter(v => !!v).take(1).subscribe(resolve)
+		}).then(() => Promise.resolve())
+	}
+}
+
+class Readys {
+	radios = new Ready({ auto: false })
+	restify = new Ready({ auto: false })
+	assets = new Ready()
+	ledger = new Ready()
+}
+
+export const rxReadys = new class RxReadys extends Readys {
+	constructor() {
+		super()
+		Object.keys(this).forEach(key => {
+			let ready = this[key] as Ready
+			ready.id = key
+			ready.event = 'utils.ready.' + key
+		})
+	}
 }
 
 
+
+export function radioMaster(event: string, data?: any) {
+	if (!process.MASTER) return;
+	process.radio.emit(event, data)
+	let all = shared.array.create(process.$instances).map(i => event + '.' + i)
+	console.log('all >')
+	eyes.inspect(all)
+	return Promise.all(all.map(v => pevent(process.radio, v)))
+}
+
+export function radioWorkerListener(event: string, fn: (event: string) => void) {
+	if (process.MASTER) return;
+	process.radio.addListener(event, fn)
+}
+
+export function radioWorkerEmit(event: string, data?: any) {
+	if (process.MASTER) return;
+	process.radio.emit(event + '.' + process.$instance, data)
+}
+
+// onceMaster(event: string, fn: (datas?: any[]) => void) {
+// 	let wevent = '_w_.' + event
+// 	process.radio.once(wevent, fn)
+// 	if (!process.MASTER) return;
+// 	let all = shared.array.create(process.$instances).map(i => wevent + '.' + i)
+// 	console.log('all >')
+// 	eyes.inspect(all)
+// 	Promise.all(all.map(v => pevent(process.radio, v))).then(function(datas) {
+// 		process.radio.emit(wevent, datas)
+// 	})
+// }
+// emitWorker(event: string, data?: any) {
+// 	process.radio.emit('_w_.' + event + '.' + process.$instance, data)
+// }
 
 // export function radioWorkersOnce(event: string, fn: (datas?: any[]) => void) {
 // 	process.radio.once('_' + event, fn)

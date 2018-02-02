@@ -21,8 +21,6 @@ export const client = new sequence.Client(process.$webpack.sequence)
 
 
 
-
-
 const KEYS = ['master', 'transactions', 'contracts', 'accounts', 'assets']
 
 export function initKeys() {
@@ -51,8 +49,6 @@ function createKey(alias: string) {
 		return Promise.resolve(false)
 	})
 }
-
-
 
 
 
@@ -90,7 +86,30 @@ function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
 	})
 }
 
+export function syncAssets() {
+	return Promise.resolve().then(function() {
+		return utils.rxReadys.radios.onReady()
 
+	}).then(function() {
+		return utils.radioMaster('workerSyncAssets')
+
+	})
+}
+
+function workerSyncAssets(event: string) {
+	return Promise.resolve().then(function() {
+		console.log('workerSyncAssets', event)
+	})
+}
+utils.radioWorkerListener('workerSyncAssets', workerSyncAssets)
+
+// utils.rxReadys.radios.onReady().then(function() {
+// 	console.info('utils.rxReadys.radios.ready', utils.rxReadys.radios.ready)
+// })
+
+// process.radio.addListener('w.ledger.syncAssets', function() {
+
+// })
 
 
 
