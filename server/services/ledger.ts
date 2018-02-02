@@ -10,10 +10,20 @@ import * as utils from './utils'
 import pall from 'p-all'
 import pevent from 'p-event'
 import pforever from 'p-forever'
-import * as sequence from 'sequence-sdk'
 import r from '../adapters/rethinkdb'
 import redis from '../adapters/redis'
 import * as http from './http'
+
+import * as sequence from 'sequence-sdk'
+import * as sequence_shared from 'sequence-sdk/dist/shared'
+
+
+
+declare global {
+	namespace Ledger {
+
+	}
+}
 
 
 
@@ -21,44 +31,52 @@ export const client = new sequence.Client(process.$webpack.sequence)
 
 
 
-const KEYS = ['master', 'transactions', 'contracts', 'accounts', 'assets']
+const KEYS = ['master', 'treasury', 'user']
 
 export function initKeys() {
 	return Promise.resolve().then(function() {
 		return client.keys.queryAll()
-	}).then(function(keys: any[]) {
-		if (!_.isEmpty(keys)) return Promise.resolve();
+	}).then(function(keys: sequence_shared.Key[]) {
+		let dkeys = _.difference(KEYS, keys.map(v => !!v && v.alias))
+		if (_.isEmpty(dkeys)) return Promise.resolve();
 		return pall(
-			KEYS.map(v => () => createKey(v)), { concurrency: 1 }
+			dkeys.map(v => () => createKey(v)), { concurrency: 1 }
 		).then(() => Promise.resolve())
 	})
 }
 
-function createKey(alias: string) {
-	console.log('createKey > alias', alias)
+function createKey(alias: string): Promise<void> {
+	console.log('createKey >', alias)
 	return Promise.resolve().then(function() {
+		return pevent(process.ee3, shared.enums.EE3.TICK_01)
+	}).then(function() {
 		return client.keys.create({ alias })
-	}).then(function(result) {
-		return Promise.resolve()
+	}).then(() => Promise.resolve()).catch(function(error) {
+		console.error('createKey > error', errors.render(error))
+		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(function() {
+			return createKey(alias)
+		})
 	})
 }
 
 
 
-function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
-	console.log('createAsset > item.symbol', item.symbol)
+function createAsset(item: Items.Asset, keys = ['treasury']): Promise<void> {
+	console.log('createAsset >', item.symbol)
 	return Promise.resolve().then(function() {
+		return pevent(process.ee3, shared.enums.EE3.TICK_1)
+	}).then(function() {
 		return client.assets.create({
 			alias: item.symbol,
 			keys: keys.map(v => ({ id: v, alias: v })),
 			quorum: keys.length,
 			tags: item,
 		})
-	}).then(function(result) {
-		return Promise.resolve(!!result)
-	}).catch(function(error) {
+	}).then(() => Promise.resolve()).catch(function(error) {
 		console.error('createAsset > error', errors.render(error))
-		return Promise.resolve(false)
+		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(function() {
+			return createAsset(item, keys)
+		})
 	})
 }
 
@@ -67,12 +85,12 @@ export function syncAssets() {
 		let plucks = ['symbol', 'name', 'logo', 'fiat', 'crypto', 'coin', 'token'] as Array<keyof Items.Asset>
 		return r.table('assets').pluck(plucks as any).run()
 
-	}).then(function(items: Items.Asset[]) {
-		return utils.radioMaster('syncAssets', items)
+		// }).then(function(items: Items.Asset[]) {
+		// 	return utils.radioMaster('syncAssets', items)
 
-	}).then(function(results) {
-		console.warn('syncAssets > results >')
-		eyes.inspect(results)
+		// }).then(function(results) {
+		// 	console.warn('syncAssets > results >')
+		// 	eyes.inspect(results)
 
 	})
 }
@@ -97,17 +115,26 @@ function syncAssetsWorker(items: Items.Asset[]) {
 		console.log('assets >')
 		eyes.inspect(assets)
 		console.log('assets.length', assets.length)
-		return Promise.resolve(assets)
+
+		// _.remove(chunk, function(item, i) {
+		// 	return false
+		// })
+		// if (_.isEmpty(chunk)) return Promise.resolve();
+
+		return pall(
+			chunk.map(v => () => createAsset(v)), { concurrency: 1 }
+		).then(() => Promise.resolve())
 
 	}).catch(function(error) {
 		console.error('syncAssetsWorker > error', errors.render(error))
-		return Promise.resolve([])
+		return Promise.resolve()
 
-	}).then(function(assets: any[]) {
-		return utils.radioWorkerEmit('syncAssets', assets)
-	})
+	}).then(() => utils.radioWorkerEmit('syncAssets'))
+
 }
 utils.radioWorkerAddListener('syncAssets', syncAssetsWorker)
+
+
 
 
 

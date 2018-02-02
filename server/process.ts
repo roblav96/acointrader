@@ -47,7 +47,7 @@ console.format = function(arg) {
 	let file = fullpath.split('.ts:')[0]
 	let i = (fullpath.indexOf('.ts:') == -1) ? 0 : 1
 	let line = fullpath.split('.ts:')[i].split(':')[0]
-	let header = '[' + process.$instance + ']' + '[' + clc.bold(file.toUpperCase()) + ':' + line + ']'
+	let header = '[' + process.$instance + ']' + '[' + clc.bold(file) + ':' + line + ']'
 	let format = 'hh:mm:ss:SSS'
 	let time = moment().format(format)
 	let cString: string
