@@ -44,25 +44,8 @@ function createKey(alias: string) {
 
 
 
-// function initAssets() {
-// 	return Promise.resolve().then(function() {
-// 		return client.assets.queryAll()
-// 	}).then(function(assets: any[]) {
-// 		if (!_.isEmpty(assets)) return Promise.resolve();
-
-// 		let plucks = ['id', 'name', 'logo', 'fiat', 'crypto', 'coin', 'token']
-// 		return r.table('assets').pluck(plucks as any).run().then(function(items: Array<Items.Asset>) {
-// 			let keys = ['master', 'assets']
-// 			return pall(items.map(v => () => createAsset(v, keys)), { concurrency: 1 })
-// 		}).then(function() {
-// 			process.exit(0)
-// 			throw new errors.FailedDependencyError('RESTART')
-// 		})
-// 	})
-// }
-
 function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
-	console.log('item.id', item.id)
+	console.log('createAsset > item.id', item.id)
 	return Promise.resolve().then(function() {
 		return client.assets.create({
 			alias: item.id,
@@ -80,7 +63,8 @@ function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
 
 export function syncAssets() {
 	return Promise.resolve().then(function() {
-		return r.table('assets').run()
+		let plucks = ['id', 'name', 'logo', 'fiat', 'crypto', 'coin', 'token']
+		return r.table('assets').pluck(plucks as any).run()
 
 	}).then(function(items: Items.Asset[]) {
 		return utils.radioMaster('syncAssets', items)
