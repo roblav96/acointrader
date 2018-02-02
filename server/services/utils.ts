@@ -74,9 +74,10 @@ export function radioWorkerAddListener(event: string, fn: (data?: any) => void) 
 }
 
 export function radioWorkerEmit(event: string, data?: any) {
-	if (process.MASTER) return;
-	rxReadys.radios.onReady().then(function() {
+	if (process.MASTER) return Promise.resolve();
+	return rxReadys.radios.onReady().then(function() {
 		process.radio.emit('w.' + event + '.' + process.$instance, data)
+		return Promise.resolve()
 	})
 }
 

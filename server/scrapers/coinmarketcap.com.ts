@@ -66,7 +66,7 @@ export function syncTickers(skips: string[]) {
 	}).then(function(response: Array<CoinMarketCap.Ticker>) {
 		let items = response.map(function(ticker) {
 			return {
-				id: ticker.symbol,
+				symbol: ticker.symbol,
 				name: ticker.name,
 				crypto: true,
 				logo: 'http://s3-ap-southeast-2.amazonaws.com/apogee-crypto-assets/logos/' + ticker.symbol.toLowerCase() + '-' + ticker.id.toLowerCase() + '.svg',
@@ -75,7 +75,7 @@ export function syncTickers(skips: string[]) {
 				maxSupply: Number.parseFloat(ticker.max_supply),
 			} as Items.Asset
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -103,12 +103,10 @@ export function syncCoins(skips: string[]) {
 			let symbol = $el.find('.col-symbol').text().trim()
 			let supply = $el.find('.circulating-supply').text().trim()
 			items.push({
-				id: symbol,
-				coin: true,
-				mineable: supply.indexOf('*') == -1,
+				symbol, coin: true, mineable: supply.indexOf('*') == -1,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -136,11 +134,10 @@ export function syncTokens(skips: string[]) {
 			let $el = $(el)
 			let symbol = $el.find('.currency-symbol').text().trim()
 			items.push({
-				id: symbol,
-				token: platform,
+				symbol, token: platform,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

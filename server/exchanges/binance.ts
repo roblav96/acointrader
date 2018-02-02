@@ -33,10 +33,10 @@ export default class Binance extends Exchange {
 
 			let items = [] as Array<Items.Asset>
 			response.symbols.forEach(symbol => {
-				let exists = items.find(v => v.id == symbol.baseAsset)
+				let exists = items.find(v => v.symbol == symbol.baseAsset)
 				if (exists) return exists[this.id].push(symbol.quoteAsset);
 				items.push({
-					id: symbol.baseAsset,
+					symbol: symbol.baseAsset,
 					[this.id]: [symbol.quoteAsset],
 				} as Items.Asset)
 			})

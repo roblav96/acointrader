@@ -35,6 +35,7 @@ export function initKeys() {
 }
 
 function createKey(alias: string) {
+	console.log('createKey > alias', alias)
 	return Promise.resolve().then(function() {
 		return client.keys.create({ alias })
 	}).then(function(result) {
@@ -45,10 +46,10 @@ function createKey(alias: string) {
 
 
 function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
-	console.log('createAsset > item.id', item.id)
+	console.log('createAsset > item.symbol', item.symbol)
 	return Promise.resolve().then(function() {
 		return client.assets.create({
-			alias: item.id,
+			alias: item.symbol,
 			keys: keys.map(v => ({ id: v, alias: v })),
 			quorum: keys.length,
 			tags: item,
@@ -63,27 +64,52 @@ function createAsset(item: Items.Asset, keys = ['master', 'assets']) {
 
 export function syncAssets() {
 	return Promise.resolve().then(function() {
-		let plucks = ['id', 'name', 'logo', 'fiat', 'crypto', 'coin', 'token']
+		let plucks = ['symbol', 'name', 'logo', 'fiat', 'crypto', 'coin', 'token'] as Array<keyof Items.Asset>
 		return r.table('assets').pluck(plucks as any).run()
 
 	}).then(function(items: Items.Asset[]) {
 		return utils.radioMaster('syncAssets', items)
 
 	}).then(function(results) {
-		console.log('utils.radioMaster', results)
-		
+		console.warn('syncAssets > results >')
+		eyes.inspect(results)
+
 	})
 }
 
-utils.radioWorkerAddListener('syncAssets', function (items: Items.Asset[]) {
-	let chunks = shared.array.chunks(items, process.$instances)[process.$instance]
-	console.log('chunks.length', chunks.length)
+function syncAssetsWorker(items: Items.Asset[]) {
+	if (process.DEVELOPMENT && !process.PRIMARY) return utils.radioWorkerEmit('syncAssets', []);
+
+	let chunk = shared.array.chunks(items, process.$instances)[process.$instance]
 	return Promise.resolve().then(function() {
+
+		let filter = chunk.reduce(function(previous: string, current: Items.Asset, i: number) {
+			if (i == 0) return previous;
+			return previous + ' OR alias=$' + (i + 1)
+		}, 'alias=$1')
+		let filterParams = chunk.map(v => v.symbol)
+
 		return client.assets.queryAll({
-			
+			filter, filterParams,
 		})
+
+	}).then(function(assets: any[]) {
+		console.log('assets >')
+		eyes.inspect(assets)
+		console.log('assets.length', assets.length)
+		return Promise.resolve(assets)
+
+	}).catch(function(error) {
+		console.error('syncAssetsWorker > error', errors.render(error))
+		return Promise.resolve([])
+
+	}).then(function(assets: any[]) {
+		return utils.radioWorkerEmit('syncAssets', assets)
 	})
-})
+}
+utils.radioWorkerAddListener('syncAssets', syncAssetsWorker)
+
+
 
 // utils.rxReadys.radios.onReady().then(function() {
 // 	console.info('utils.rxReadys.radios.ready', utils.rxReadys.radios.ready)

@@ -53,11 +53,11 @@ export function syncCryptos(skips: string[]) {
 	}).then(function(response: ApogeeCrypto.TickerResult[]) {
 		let items = response.map(function(ticker) {
 			return {
-				id: ticker.symbol,
+				symbol: ticker.symbol,
 				logo: 'https://s3-ap-southeast-2.amazonaws.com/apogee-crypto-assets/logos/' + ticker.symbol.toLowerCase() + '-' + ticker.id.toLowerCase() + '.svg',
 			} as Items.Asset
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 
 		items.splice(10)

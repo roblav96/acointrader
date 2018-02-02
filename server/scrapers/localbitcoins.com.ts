@@ -25,22 +25,22 @@ export function syncFiats(skips: string[]) {
 		let results = response.data.currencies
 
 		let items = [] as Array<Items.Asset>
-		Object.keys(results).forEach(function(id) {
-			let value = results[id]
+		Object.keys(results).forEach(function(symbol) {
+			let value = results[symbol]
 			if (value.altcoin) return;
 
 			let name = value.name as string
-			if (name == id) return;
+			if (name == symbol) return;
 			name = name.substring(0, name.indexOf('(') - 1)
 
 			let item = {
-				id, name, fiat: true,
-				logo: 'https://www.coinhills.com/images/market/currency/' + id.toLowerCase() + '.svg',
+				symbol, name, fiat: true,
+				logo: 'https://www.coinhills.com/images/market/currency/' + symbol.toLowerCase() + '.svg',
 			} as Items.Asset
 
-			if (id == 'CNY') {
+			if (symbol == 'CNY') {
 				let cloned = shared.object.clone(item)
-				cloned.id = 'CNH'
+				cloned.symbol = 'CNH'
 				cloned.name += ' Offshore'
 				cloned.logo = 'https://www.coinhills.com/images/market/currency/cnh.svg'
 				items.push(cloned)
@@ -49,7 +49,7 @@ export function syncFiats(skips: string[]) {
 			items.push(item)
 		})
 
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
+		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

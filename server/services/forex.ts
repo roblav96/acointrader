@@ -29,7 +29,7 @@ export function initAssets(): Promise<void> {
 
 	}).then(function(assets: Array<Items.Asset>) {
 		assets.forEach(function(asset) {
-			IDS.push(asset.id)
+			IDS.push(asset.symbol)
 		})
 
 		IDS.forEach(function(base) {

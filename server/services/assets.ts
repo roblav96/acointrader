@@ -13,12 +13,11 @@ import redis from '../adapters/redis'
 import * as http from './http'
 import * as ledger from './ledger'
 import * as coinmarketcap from '../scrapers/coinmarketcap.com'
-import * as cryptocompare from '../scrapers/cryptocompare.com'
 import * as localbitcoins from '../scrapers/localbitcoins.com'
 
 
 
-const SKIPS = {
+export const SKIPS = {
 	cryptos: ['TOP', 'XAU', 'MAD'],
 	fiats: ['BSD', 'SBD', 'ALL', 'CRC', 'XPD'],
 }
@@ -32,14 +31,10 @@ export function init() {
 		// if (!!count) return Promise.resolve();
 		return sync()
 	}).then(function() {
-		// process.radio.emit(utils.rxReadys.assets.event)
+		process.radio.emit(utils.rxReadys.assets.event)
 		return Promise.resolve()
 	})
 }
-
-// utils.rxReadys.assets.onReady().then(function() {
-// 	console.warn('utils.rxReadys.assets.ready', utils.rxReadys.assets.ready)
-// })
 
 
 
@@ -52,17 +47,17 @@ function scrape() {
 	}).then(() => Promise.resolve())
 }
 
-function sync() {
+export function sync() {
 	return Promise.resolve().then(function() {
-		// 	return scrape()
+		return scrape()
 
-		// }).then(function() {
+	}).then(function() {
 		return ledger.syncAssets()
-		// process.radio.emit('assets.sync.ledger')
-		// return Promise.resolve()
 
-	})
+	}).then(() => Promise.resolve())
 }
+
+
 
 // process.radio.addListener('assets.sync.ledger', function() {
 

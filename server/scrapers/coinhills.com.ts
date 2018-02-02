@@ -44,28 +44,28 @@ export function syncFiats() {
 			let url = style.substring(style.indexOf(`url( '`) + 6, style.indexOf(`' )`))
 			let logo = ('https://www.coinhills.com' + url).trim()
 
-			let id = url.split('/').pop()
-			id = id.substring(0, id.indexOf('.')).trim().toUpperCase()
+			let symbol = url.split('/').pop()
+			symbol = symbol.substring(0, symbol.indexOf('.')).trim().toUpperCase()
 
-			let item = { id, name, logo, fiat: true } as Items.Asset
+			let item = { symbol, name, logo, fiat: true } as Items.Asset
 
-			if (id == 'CNH') {
+			if (symbol == 'CNH') {
 				let clone = shared.object.clone(item)
-				clone.id = 'CNY'
+				clone.symbol = 'CNY'
 				items.push(clone)
 			}
-			if (id == 'ILS') {
+			if (symbol == 'ILS') {
 				let clone = shared.object.clone(item)
-				clone.id = 'NIS'
+				clone.symbol = 'NIS'
 				items.push(clone)
 			}
-			if (id == 'BSF') {
+			if (symbol == 'BSF') {
 				let clone = shared.object.clone(item)
-				clone.id = 'VEF'
+				clone.symbol = 'VEF'
 				items.push(clone)
 			}
 
-			if (existing.indexOf(id) >= 0) return;
+			if (existing.indexOf(symbol) >= 0) return;
 
 			items.push(item)
 		})

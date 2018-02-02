@@ -95,7 +95,7 @@ export function syncFiats() {
 				// if (assets.FIATS.indexOf(currency.code) == -1) return;
 
 				let item = {
-					id: currency.code,
+					symbol: currency.code,
 					name: _.startCase(currency.name),
 					fiat: true
 				} as Items.Asset
