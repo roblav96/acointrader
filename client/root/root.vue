@@ -2,25 +2,10 @@
 <script lang="ts" src="./root.ts"></script>
 
 <style>
-/**/
-
-div.application--wrap nav.toolbar.dummy-toolbar {
-    z-index: 0;
+	
+div {
+    width: 10px;
 }
-
-
-/**/
-
-div.debug--breakpoints {
-    position: fixed;
-    z-index: 999;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-}
-
-
-/**/
 
 </style>
 
