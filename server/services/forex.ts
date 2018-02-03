@@ -22,6 +22,10 @@ export function startLoop() {
 
 console.log('!!startLoop', !!startLoop)
 
+
+
+
+
 // export const IDS = [] as Array<string>
 // export const PAIRS = [] as Array<string>
 // export const SYMBOLS = [] as Array<string>

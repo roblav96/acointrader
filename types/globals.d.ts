@@ -11,6 +11,9 @@ declare global {
 		interface Process {
 			dtsgen: (name: string, value: any) => void
 			clipboard: (name: string, input: string) => void
+			benchStart: (id: string) => void
+			benchPing: (id: string, name: string) => void
+			benchEnd: (id: string) => void
 			$env: string
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean

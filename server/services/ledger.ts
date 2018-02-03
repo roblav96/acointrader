@@ -17,19 +17,21 @@ import * as http from './http'
 
 
 
+import * as seq_shared from 'sequence-sdk/dist/shared'
+import * as seq_page from 'sequence-sdk/dist/page'
+
 declare global {
 	namespace Ledger {
-		interface Key {
+		interface Key extends seq_shared.Key { }
+		interface Asset<T = any> extends seq_shared.CreateRequest {
 			id: string
-			alias: string
-		}
-		interface Asset<T = any> {
-			alias: string
 			contractVersion: number
-			id: string
-			keys: Key[]
-			quorum: number
 			tags: T
+		}
+		interface Page<T = any> extends seq_page.Page {
+			client: sequence.Client
+			next: { page_size: number, after: string, type: string }
+			items: T[]
 		}
 	}
 }
@@ -42,7 +44,7 @@ export const client = new sequence.Client(process.$webpack.sequence)
 
 const KEYS = ['master', 'treasury', 'user']
 
-export function initKeys() {
+export function preKeys() {
 	return Promise.resolve().then(function() {
 		return client.keys.queryAll()
 	}).then(function(lkeys: Ledger.Key[]) {
@@ -69,6 +71,15 @@ function createKey(alias: string): Promise<void> {
 }
 
 
+
+export function preAssets() {
+	return Promise.resolve().then(function() {
+		return client.assets.queryPage({ pageSize: 5 })
+	}).then(function(page: Ledger.Page<Ledger.Asset>) {
+		if (!_.isEmpty(page.items)) return Promise.resolve();
+		return syncAssets()
+	})
+}
 
 export function syncAssets() {
 	return Promise.resolve().then(function() {
@@ -111,7 +122,7 @@ utils.radioWorkerAddListener('syncAssets', function(items: Items.Asset[]) {
 })
 
 function createAsset(item: Items.Asset, keys = ['treasury']): Promise<void> {
-	console.log('createAsset >', item.symbol)
+	if (process.PRIMARY) console.log('createAsset >', item.symbol);
 	return Promise.resolve().then(function() {
 		return pevent(process.ee3, shared.enums.EE3.TICK_1)
 	}).then(function() {

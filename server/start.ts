@@ -16,23 +16,29 @@ import * as forex from './services/forex'
 
 
 
-function init(): Promise<void> {
+function start(): Promise<void> {
 	return Promise.resolve().then(function() {
-		return ledger.initKeys()
+		return ledger.preKeys()
 
 	}).then(function() {
-		return assets.init()
+		return assets.pre()
+
+	}).then(function() {
+		return ledger.preAssets()
+
+	}).then(function() {
+		return utils.rxReadys.radios.onReady()
 
 	}).then(function() {
 		process.radio.emit(utils.rxReadys.assets.event)
 		return Promise.resolve()
 
 	}).catch(function(error) {
-		console.error('process.MASTER init > error', errors.render(error))
-		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => init())
+		console.error('process.MASTER start > error', errors.render(error))
+		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => start())
 	})
 }
-if (process.MASTER) init();
+if (process.MASTER) start();
 
 
 

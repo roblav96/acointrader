@@ -7,6 +7,9 @@ import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
+import cluster from 'cluster'
+import url from 'url'
+import moment from 'moment'
 import ee3 from 'eventemitter3'
 import ci from 'correcting-interval'
 import pevent from 'p-event'
@@ -118,18 +121,32 @@ process.radio = new RadioEmitter()
 
 
 
-/*███████████████████████████████
-█            RESTART            █
-███████████████████████████████*/
+/*██████████████████████████████
+█            MASTER            █
+██████████████████████████████*/
 
 if (process.MASTER) {
+
+	console.log(clc.bold('Forking x' + clc.bold.redBright(process.$instances) + ' nodes in cluster...'))
+	let i: number, len = process.$instances
+	for (i = 0; i < len; i++) { cluster.fork() }
+	cluster.on('disconnect', function(worker) {
+		console.warn('cluster disconnect >', worker.id)
+		process.radio.emit('RESTART')
+	})
+	cluster.on('exit', function(worker, code, signal) {
+		console.error('cluster exit >', worker.id, code, signal)
+		process.radio.emit('RESTART')
+	})
+
 	const restart = _.once(function() {
 		console.warn('RESTART')
 		// if (process.DEVELOPMENT) return;
 		process.nextTick(() => process.exit(0))
 	})
-	process.ee3.once(shared.enums.RESTART, restart)
-	process.radio.once(shared.enums.RESTART, restart)
+	process.ee3.once('RESTART', restart)
+	process.radio.once('RESTART', restart)
+
 }
 
 

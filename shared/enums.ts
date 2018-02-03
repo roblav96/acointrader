@@ -9,8 +9,6 @@ import moment from 'moment'
 
 export const enums = {
 
-	RESTART: 'restart',
-
 	EE3: {
 		TICK_01: 'tick:01',
 		TICK_025: 'tick:025',

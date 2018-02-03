@@ -31,7 +31,7 @@ if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
 
 process.$host = process.$webpack.host
 process.$port = process.$webpack.port
-process.$dname = 'aCoinTrader' // '𝛂CoinTrader'
+process.$dname = 'aCoinTrader'
 process.$version = '0.0.1'
 
 process.ee3 = new ee3.EventEmitter()
@@ -75,25 +75,35 @@ process.on('unhandledRejection', function(error) {
 
 
 
-if (process.DEVELOPMENT) {
-	if (process.MASTER) setInterval(process.stdout.write, 1000, (clc as any).erase.lineRight);
-	const dtsgen = require('dts-gen')
-	const clipboardy = require('clipboardy')
-	process.dtsgen = function(name, value) {
-		name = name.replace(/\W+/g, '').trim()
-		let results = dtsgen.generateIdentifierDeclarationFile(name, value)
-		clipboardy.write(results).then(function() {
-			console.warn('/*████  DTS COPPIED > "' + clc.bold(name) + '"  ████*/')
-		}).catch(function(error) {
-			console.error('clipboardy.write > error', errors.render(error))
-		})
+const MUTE = false // !process.MASTER
+const benches = {} as Dict<any>
+const filters = [] as string[]
+process.benchStart = function(id: string) {
+	if (!MUTE && filters.indexOf(id) == -1) {
+		let now = Date.now()
+		benches[id] = {
+			start: now,
+			t: now,
+		}
+		console.log('bench ➤ START', id)
 	}
-	process.clipboard = function(name, input) {
-		clipboardy.write(input).then(function() {
-			console.warn('/*████  "' + clc.bold(name) + '" > APPENDED TO CLIPBOARD  ████*/')
-		}).catch(function(error) {
-			console.error('clipboardy.write > error', errors.render(error))
-		})
+}
+process.benchPing = function(id: string, name: string = '') {
+	if (!MUTE && filters.indexOf(id) == -1 && benches[id]) {
+		let bench = benches[id]
+		let now = Date.now()
+		let time = now - bench.t
+		console.log('bench ➤ PING', id, name, clc.bold(time + 'ms'))
+		benches[id].t = now
+	}
+}
+process.benchEnd = function(id: string) {
+	if (!MUTE && filters.indexOf(id) == -1 && benches[id]) {
+		let bench = benches[id]
+		let now = Date.now()
+		let time = now - bench.start
+		console.log('bench ➤ END', id, 'total', clc.bold.redBright(time + 'ms'))
+		benches[id] = undefined
 	}
 }
 
@@ -112,10 +122,6 @@ if (process.MASTER) {
 		'===============================================*/'
 	)
 }
-
-
-
-
 
 
 

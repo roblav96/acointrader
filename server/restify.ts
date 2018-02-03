@@ -115,19 +115,9 @@ server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: re
 
 
 if (process.MASTER) {
-	
-	console.log(clc.bold('Forking x' + clc.bold.redBright(process.$instances) + ' nodes in cluster...'))
-	let i: number, len = process.$instances
-	for (i = 0; i < len; i++) { cluster.fork() }
-	cluster.on('disconnect', function(worker) {
-		console.warn('cluster disconnect >', worker.id)
-		process.radio.emit(shared.enums.RESTART)
-	})
-	cluster.on('exit', function(worker, code, signal) {
-		console.error('cluster exit >', worker.id, code, signal)
-		process.radio.emit(shared.enums.RESTART)
-	})
+
 	server.close()
+	server.removeAllListeners()
 	utils.rxReadys.restify.ready = true
 
 } else {
@@ -137,7 +127,6 @@ if (process.MASTER) {
 	})
 
 }
-
 
 
 

@@ -18,7 +18,6 @@ import * as forex from '../services/forex'
 
 declare global {
 	namespace Yahoo {
-
 		interface ForexQuote {
 			ask: number
 			askSize: number
@@ -66,7 +65,6 @@ declare global {
 			twoHundredDayAverageChange: number
 			twoHundredDayAverageChangePercent: number
 		}
-
 	}
 }
 

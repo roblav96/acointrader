@@ -25,7 +25,7 @@ export const SKIPS = {
 
 
 
-export function init() {
+export function pre() {
 	return Promise.resolve().then(function() {
 		return r.table('assets').count().run()
 	}).then(function(count: number) {
