@@ -12,6 +12,7 @@ import r from '../adapters/rethinkdb'
 import redis from '../adapters/redis'
 import * as http from './http'
 import * as ledger from './ledger'
+import * as forex from './forex'
 import * as coinmarketcap from '../scrapers/coinmarketcap.com'
 import * as localbitcoins from '../scrapers/localbitcoins.com'
 
@@ -28,7 +29,7 @@ export function init() {
 	return Promise.resolve().then(function() {
 		return r.table('assets').count().run()
 	}).then(function(count: number) {
-		// if (!!count) return Promise.resolve();
+		if (!!count) return Promise.resolve();
 		return sync()
 	}).then(function() {
 		process.radio.emit(utils.rxReadys.assets.event)
@@ -38,23 +39,15 @@ export function init() {
 
 
 
-function scrape() {
+function sync() {
 	return Promise.resolve().then(function() {
 		return Promise.all([
 			coinmarketcap.syncCryptos(SKIPS.cryptos),
 			localbitcoins.syncFiats(SKIPS.fiats),
 		])
-	}).then(() => Promise.resolve())
-}
-
-export function sync() {
-	return Promise.resolve().then(function() {
-		return scrape()
-
 	}).then(function() {
 		return ledger.syncAssets()
-
-	}).then(() => Promise.resolve())
+	})
 }
 
 

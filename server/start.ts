@@ -7,20 +7,22 @@ import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
+import pevent from 'p-event'
 import * as assets from './services/assets'
 import * as ledger from './services/ledger'
+import * as forex from './services/forex'
 
 
 
-if (process.MASTER) {
-	Promise.resolve().then(function() {
+function start(): Promise<void> {
+	return Promise.resolve().then(function() {
 		return ledger.initKeys()
 
 	}).then(function() {
 		return assets.init()
 
-		// }).then(function() {
-		// 	return ledger.client.assets.queryAll()
+	}).then(function() {
+		return ledger.client.assets.queryAll()
 
 		// }).then(function(assets: any[]) {
 		// 	if (!_.isEmpty(assets)) return Promise.resolve();
@@ -28,8 +30,10 @@ if (process.MASTER) {
 
 	}).catch(function(error) {
 		console.error('process.MASTER start > error', errors.render(error))
+		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => start())
 	})
 }
+if (process.MASTER) start();
 
 
 
