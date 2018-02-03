@@ -31,6 +31,10 @@ function start(): Promise<void> {
 
 	}).then(function() {
 		process.radio.emit(utils.rxReadys.assets.event)
+		return r.table('assets').filter(r.row('fiat').eq(true)).run()
+
+	}).then(function(items: Items.Asset[]) {
+		process.radio.emit('fiatAssets', items)
 		return Promise.resolve()
 
 	}).catch(function(error) {
@@ -42,15 +46,20 @@ if (process.MASTER) start();
 
 
 
-utils.rxReadys.assets.subscribe(function() {
+process.radio.once('fiatAssets', function(items: Items.Asset[]) {
 	if (process.MASTER) return;
-	return Promise.resolve().then(function() {
-		return r.table('assets').filter(r.row('fiat').eq(true)).run()
-	}).then(function(items: Items.Asset[]) {
-		console.log('items.length', items.length)
-
-	})
+	console.log('items.length', items.length)
 })
+
+// utils.rxReadys.assets.subscribe(function() {
+// 	if (process.MASTER) return;
+// 	return Promise.resolve().then(function() {
+// 		return r.table('assets').filter(r.row('fiat').eq(true)).run()
+// 	}).then(function(items: Items.Asset[]) {
+// 		console.log('items.length', items.length)
+
+// 	})
+// })
 
 
 

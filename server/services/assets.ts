@@ -49,27 +49,7 @@ function sync() {
 
 
 
-// process.radio.addListener('assets.sync.ledger', function() {
 
-// 	process.radio.wonce('assets.sync', function(datas) {
-// 		console.warn('assets.sync > DONE', datas)
-// 	})
-
-// 	if (process.MASTER) return;
-
-// 	return Promise.resolve().then(function() {
-// 		let plucks = ['id', 'name', 'logo', 'fiat', 'crypto', 'coin', 'token']
-// 		return r.table('assets').pluck(plucks as any).run()
-
-// 	}).then(function(items: Array<Items.Asset>) {
-// 		let chunks = shared.array.chunks(items, process.$instances)[process.$instance]
-// 		console.log('chunks.length', chunks.length)
-
-// 		process.radio.wemit('assets.sync', chunks.length)
-
-// 	})
-
-// })
 
 
 

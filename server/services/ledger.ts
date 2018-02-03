@@ -93,16 +93,14 @@ export function syncAssets() {
 }
 
 utils.radioWorkerAddListener('syncAssets', function(items: Items.Asset[]) {
-	// if (process.DEVELOPMENT && !process.PRIMARY) return utils.radioWorkerEmit('syncAssets', []);
 	let chunk = shared.array.ichunk(items)
 	return Promise.resolve().then(function() {
-		let filter = chunk.reduce(function(previous: string, current: Items.Asset, i: number) {
-			if (i == 0) return previous;
-			return previous + ' OR alias=$' + (i + 1)
-		}, 'alias=$1')
-		let filterParams = chunk.map(v => v.symbol)
 		return client.assets.queryAll({
-			filter, filterParams,
+			filter: chunk.reduce(function(previous: string, current: Items.Asset, i: number) {
+				if (i == 0) return previous;
+				return previous + ' OR alias=$' + (i + 1)
+			}, 'alias=$1'),
+			filterParams: chunk.map(v => v.symbol),
 		})
 
 	}).then(function(assets: Ledger.Asset<Items.Asset>[]) {
@@ -122,7 +120,7 @@ utils.radioWorkerAddListener('syncAssets', function(items: Items.Asset[]) {
 })
 
 function createAsset(item: Items.Asset, keys = ['treasury']): Promise<void> {
-	if (process.PRIMARY) console.log('createAsset >', item.symbol);
+	console.log('createAsset >', item.symbol);
 	return Promise.resolve().then(function() {
 		return pevent(process.ee3, shared.enums.EE3.TICK_1)
 	}).then(function() {
