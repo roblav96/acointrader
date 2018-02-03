@@ -5,7 +5,6 @@ const webpack = require('webpack')
 const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-const CircularDependencyPlugin = require('circular-dependency-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin')
 
 const env = require('./client.env.json')[process.env.NODE_ENV]
@@ -68,7 +67,6 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
-		// new CircularDependencyPlugin({ exclude: /\.vue$/, failOnError: true, cwd: process.cwd() })
 	],
 
 }
@@ -78,7 +76,7 @@ const config = {
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
 	config.devtool = 'source-map'
 	config.watchOptions = { ignored: /node_modules/ }
-	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
+	// config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
 	// config.plugins.push(new WebpackShellPlugin({ onBuildEnd: ['echo "ON BUILD END"'] }))
 	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
 }

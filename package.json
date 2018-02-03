@@ -29,6 +29,8 @@
 		"awesome-phonenumber": "latest",
 		"bigchaindb-driver": "latest",
 		"bluebird": "latest",
+		"bulma": "latest",
+		"buefy": "latest",
 		"cli-color": "latest",
 		"cron": "latest",
 		"chartist": "latest",
