@@ -79,7 +79,7 @@ export function syncForexQuotes(first?: boolean) {
 
 	}).then(function() {
 		return http.get('https://query1.finance.yahoo.com/v7/finance/quote', {
-			symbols: forex.SYMBOLS.join(','),
+			// symbols: forex.SYMBOLS.join(','),
 		}, { silent: true })
 
 	}).then(function(response) {

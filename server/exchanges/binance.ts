@@ -66,7 +66,7 @@ export default class Binance extends Exchange {
 
 		}).then(function(pairs: Array<string>) {
 			pairs = shared.json.parse(pairs)
-			pairs = shared.array.chunks(pairs, process.$instances)[process.$instance]
+			pairs = shared.array.ichunk(pairs)
 
 			// if (utils.isPrimary()) {
 			// 	let aggTrade = pairs.map(v => v.toLowerCase() + '@aggTrade').join('/')

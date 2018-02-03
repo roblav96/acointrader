@@ -83,7 +83,7 @@ export function syncAssets() {
 
 utils.radioWorkerAddListener('syncAssets', function(items: Items.Asset[]) {
 	// if (process.DEVELOPMENT && !process.PRIMARY) return utils.radioWorkerEmit('syncAssets', []);
-	let chunk = shared.array.chunks(items, process.$instances)[process.$instance]
+	let chunk = shared.array.ichunk(items)
 	return Promise.resolve().then(function() {
 		let filter = chunk.reduce(function(previous: string, current: Items.Asset, i: number) {
 			if (i == 0) return previous;

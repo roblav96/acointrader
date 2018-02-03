@@ -21,7 +21,7 @@ export default {
 
 	'GET:currencies': utils.restifyRoute<any, any>(function(req, res, next) {
 		Promise.resolve().then(function() {
-			res.send(forex.FIATS)
+			// res.send(forex.FIATS)
 			return next()
 		}).catch(function(error) {
 			return next(errors.generate(error))

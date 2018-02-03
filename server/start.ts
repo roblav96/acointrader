@@ -8,13 +8,15 @@ import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
 import pevent from 'p-event'
+import r from './adapters/rethinkdb'
+import redis from './adapters/redis'
 import * as assets from './services/assets'
 import * as ledger from './services/ledger'
 import * as forex from './services/forex'
 
 
 
-function start(): Promise<void> {
+function init(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return ledger.initKeys()
 
@@ -22,18 +24,29 @@ function start(): Promise<void> {
 		return assets.init()
 
 	}).then(function() {
-		return ledger.client.assets.queryAll()
-
-		// }).then(function(assets: any[]) {
-		// 	if (!_.isEmpty(assets)) return Promise.resolve();
-
+		process.radio.emit(utils.rxReadys.assets.event)
+		return Promise.resolve()
 
 	}).catch(function(error) {
-		console.error('process.MASTER start > error', errors.render(error))
-		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => start())
+		console.error('process.MASTER init > error', errors.render(error))
+		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => init())
 	})
 }
-if (process.MASTER) start();
+if (process.MASTER) init();
+
+
+
+utils.rxReadys.assets.subscribe(function() {
+	if (process.MASTER) return;
+	return Promise.resolve().then(function() {
+		return r.table('assets').filter(r.row('fiat').eq(true)).run()
+	}).then(function(items: Items.Asset[]) {
+		console.log('items.length', items.length)
+
+	})
+})
+
+
 
 
 

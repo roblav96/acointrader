@@ -31,6 +31,9 @@ class Ready {
 			this._subject.filter(v => !!v).take(1).subscribe(resolve)
 		}).then(() => Promise.resolve())
 	}
+	subscribe(fn: () => void) {
+		this._subject.filter(v => !!v).take(1).subscribe(fn)
+	}
 }
 
 class Readys {

@@ -31,9 +31,6 @@ export function init() {
 	}).then(function(count: number) {
 		if (!!count) return Promise.resolve();
 		return sync()
-	}).then(function() {
-		process.radio.emit(utils.rxReadys.assets.event)
-		return Promise.resolve()
 	})
 }
 

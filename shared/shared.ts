@@ -137,6 +137,10 @@ export const array = {
 		items.forEach((v, i) => chunks[i % chunks.length].push(v))
 		return chunks
 	},
+	ichunk<T>(items: Array<T>): Array<T> {
+		if (process.MASTER) return items;
+		return array.chunks(items, process.$instances)[process.$instance]
+	},
 }
 if (process.CLIENT) (global as any).array = array;
 
