@@ -3,12 +3,14 @@
 		"path": ".",
 		"folder_exclude_patterns": [
 			"server",
+			".stfolder",
 			".awcache",
 			"dist",
 			"node_modules",
 			"client/public/*"
 		],
 		"file_exclude_patterns": [
+			".stignore",
 			"*server.*",
 			"forever-*"
 		]

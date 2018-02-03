@@ -46,21 +46,21 @@ const config = {
 
 				},
 			},
-			{
-				test: /\.(png|jpg|ico|gif|svg)$/,
-				loader: 'file-loader',
-				options: {
-					objectAssign: 'Object.assign',
-				},
-			},
+			// {
+			// 	test: /\.(png|jpg|ico|gif|svg)$/,
+			// 	loader: 'file-loader',
+			// 	options: {
+			// 		objectAssign: 'Object.assign',
+			// 	},
+			// },
 			{
 				test: /\.css$/,
 				loader: ['style-loader', 'css-loader'],
 			},
-			{
-				test: /\.styl$/,
-				loader: ['style-loader', 'css-loader', 'stylus-loader'],
-			},
+			// {
+			// 	test: /\.styl$/,
+			// 	loader: ['style-loader', 'css-loader', 'stylus-loader'],
+			// },
 		],
 	},
 
