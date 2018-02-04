@@ -4,6 +4,8 @@ import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
 import Vue from 'vue'
 import _ from 'lodash'
+import * as shared from '../../shared/shared'
+import * as utils from '../services/utils'
 
 
 
@@ -13,7 +15,8 @@ import _ from 'lodash'
 export default class Root extends Vue {
 
 	created() {
-
+		shared
+		// console.log('shared.json', shared.json)
 	}
 
 	initing = true

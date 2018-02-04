@@ -10,7 +10,6 @@ import * as utils from './utils'
 
 import { parse as parseUrl } from 'url'
 import requestip from 'request-ip'
-import sha3 from 'js-sha3'
 import forge from 'node-forge'
 import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'

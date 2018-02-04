@@ -9,7 +9,6 @@ import * as shared from '../../shared/shared'
 
 import pall from 'p-all'
 import cheerio from 'cheerio'
-import jimp from 'jimp'
 import r from '../adapters/rethinkdb'
 import redis from '../adapters/redis'
 import * as http from '../services/http'

@@ -24,13 +24,11 @@ declare global {
 			altcoin: boolean
 		}
 		interface Ticker {
-			avg_12h: string
 			avg_1h: string
-			avg_24h: string
 			avg_6h: string
-			rates: {
-				last: string
-			}
+			avg_12h: string
+			avg_24h: string
+			rates: { last: string }
 			volume_btc: string
 		}
 
@@ -75,17 +73,19 @@ export function syncFiats(skips: string[]) {
 
 			items.push(item)
 		})
-		
-		items.splice(5)
 
 		items = items.filter(function(item) {
 			let ticker = tickers[item.symbol]
-			console.log('ticker >')
+			if (!ticker) return false;
+			console.log(item.symbol, item.name, '>')
 			eyes.inspect(ticker)
 			return !!item && shared.string.isValidSymbol(item.symbol) && skips.indexOf(item.symbol) == -1
 		})
+
 		items.forEach(shared.object.compact)
-		return r.table('assets').insert(items, { conflict: 'update' }).run()
+		console.log('items >')
+		eyes.inspect(items)
+		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.info('syncFiats > DONE')

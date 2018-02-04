@@ -24,8 +24,8 @@ process.$version = '1'
 import 'animate.css'
 import 'chartist/dist/chartist.min.css'
 import 'buefy/lib/buefy.css'
-import './styles/styles.css'
-import './styles/root.css'
+import './styles.css'
+// import './styles/root.css'
 
 
 
