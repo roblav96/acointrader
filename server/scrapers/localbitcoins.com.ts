@@ -16,15 +16,25 @@ import * as assets from '../services/assets'
 
 
 
-interface TradesResponse {
-	avg_12h: string
-	avg_1h: string
-	avg_24h: string
-	avg_6h: string
-	rates: {
-		last: string
+declare global {
+	namespace LocalBitcoins {
+
+		interface Currency {
+			name: string
+			altcoin: boolean
+		}
+		interface Ticker {
+			avg_12h: string
+			avg_1h: string
+			avg_24h: string
+			avg_6h: string
+			rates: {
+				last: string
+			}
+			volume_btc: string
+		}
+
 	}
-	volume_btc: string
 }
 
 
@@ -38,15 +48,15 @@ export function syncFiats(skips: string[]) {
 		])
 
 	}).then(function(resolved) {
-		let results = resolved[0].data.currencies
-		let volumes = resolved[1]
+		let results = resolved[0].data.currencies as Dict<LocalBitcoins.Currency>
+		let tickers = resolved[1] as Dict<LocalBitcoins.Ticker>
 
 		let items = [] as Array<Items.Asset>
 		Object.keys(results).forEach(function(symbol) {
-			let value = results[symbol]
-			if (value.altcoin) return;
+			let currency = results[symbol]
+			if (currency.altcoin) return;
 
-			let name = value.name as string
+			let name = currency.name
 			if (name == symbol) return;
 			name = name.substring(0, name.indexOf('(') - 1)
 
@@ -65,8 +75,15 @@ export function syncFiats(skips: string[]) {
 
 			items.push(item)
 		})
+		
+		items.splice(5)
 
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(function(item) {
+			let ticker = tickers[item.symbol]
+			console.log('ticker >')
+			eyes.inspect(ticker)
+			return !!item && shared.string.isValidSymbol(item.symbol) && skips.indexOf(item.symbol) == -1
+		})
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
