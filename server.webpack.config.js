@@ -5,7 +5,6 @@ const webpack = require('webpack')
 const path = require('path')
 const NodeExternals = require('webpack-node-externals')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-const CircularDependencyPlugin = require('circular-dependency-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin')
 
 const env = require('./server.env.json')[process.env.NODE_ENV]
@@ -45,7 +44,6 @@ const config = {
 
 	plugins: [
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
-		// new CircularDependencyPlugin({ exclude: /\.vue$/, failOnError: true, cwd: process.cwd() })
 	],
 
 	devtool: 'source-map',

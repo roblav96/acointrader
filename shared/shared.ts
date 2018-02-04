@@ -87,6 +87,22 @@ export const string = {
 	isValidSymbol(symbol: string) {
 		return symbol.match(/[^a-zA-Z0-9]/) == null
 	},
+	fuzzy(needle: string, haystack: string) {
+		let hlen = haystack.length
+		let nlen = needle.length
+		if (nlen > hlen) return false;
+		if (nlen === hlen) return needle === haystack;
+		outer: for (let i = 0, j = 0; i < nlen; i++) {
+			let nch = needle.charCodeAt(i)
+			while (j < hlen) {
+				if (haystack.charCodeAt(j++) === nch) {
+					continue outer
+				}
+			}
+			return false
+		}
+		return true
+	},
 }
 if (process.CLIENT) (global as any).string = string;
 

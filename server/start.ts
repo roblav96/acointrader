@@ -34,7 +34,8 @@ function start(): Promise<void> {
 		return r.table('assets').filter(r.row('fiat').eq(true)).run()
 
 	}).then(function(items: Items.Asset[]) {
-		process.radio.emit('fiatAssets', items)
+		let symbols = items.map(v => v.symbol)
+		process.radio.emit('forex.start', symbols)
 		return Promise.resolve()
 
 	}).catch(function(error) {
@@ -42,14 +43,22 @@ function start(): Promise<void> {
 		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => start())
 	})
 }
-if (process.MASTER) start();
 
 
 
-process.radio.once('fiatAssets', function(items: Items.Asset[]) {
-	if (process.MASTER) return;
-	console.log('items.length', items.length)
-})
+if (process.MASTER) {
+
+	start()
+
+} else {
+
+	process.radio.once('forex.start', forex.start)
+
+}
+
+
+
+
 
 // utils.rxReadys.assets.subscribe(function() {
 // 	if (process.MASTER) return;

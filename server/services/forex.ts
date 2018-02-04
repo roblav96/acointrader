@@ -16,11 +16,28 @@ import * as yahoo from '../scrapers/yahoo.com'
 
 
 
-export function startLoop() {
-	
+export function start(symbols: string[]) {
+	return Promise.resolve().then(function() {
+		console.log('symbols.length', symbols.length)
+
+		let pairs = [] as string[]
+		symbols.forEach(function(base) {
+			symbols.forEach(function(quote) {
+				if (base == quote) return;
+				pairs.push(base + quote)
+			})
+		})
+
+		let chunk = shared.array.ichunk(pairs)
+		console.log('chunk.length', chunk.length)
+
+		
+
+	}).catch(function(error) {
+		console.error('startForex > error', errors.render(error))
+	})
 }
 
-console.log('!!startLoop', !!startLoop)
 
 
 
