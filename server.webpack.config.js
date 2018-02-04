@@ -46,7 +46,7 @@ const config = {
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	],
 
-	devtool: 'source-map',
+	devtool: 'inline-source-map',
 
 }
 

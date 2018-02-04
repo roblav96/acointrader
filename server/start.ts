@@ -14,10 +14,19 @@ import * as assets from './services/assets'
 import * as ledger from './services/ledger'
 import * as forex from './services/forex'
 
+import estack from 'extract-stack'
+
 
 
 function start(): Promise<void> {
 	return Promise.resolve().then(function() {
+
+		const error = new Error('Missing unicorn')
+		console.log('estack.lines(error.stack) >')
+		eyes.inspect(estack.lines(error.stack))
+
+
+
 		// 	return ledger.startKeys()
 
 		// }).then(function() {
