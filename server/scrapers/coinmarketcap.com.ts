@@ -75,7 +75,7 @@ export function syncTickers(skips: string[]): Promise<boolean> {
 				maxSupply: Number.parseFloat(ticker.max_supply),
 			} as Items.Asset
 		})
-		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -106,7 +106,7 @@ export function syncCoins(skips: string[]): Promise<boolean> {
 				symbol, coin: true, mineable: supply.indexOf('*') == -1,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -137,7 +137,7 @@ export function syncTokens(skips: string[]): Promise<boolean> {
 				symbol, token: platform,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

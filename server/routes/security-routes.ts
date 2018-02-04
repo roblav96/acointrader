@@ -38,7 +38,7 @@ export default {
 			utils.validBody(req.body, ['email'])
 
 			let email = req.body.email
-			if (!shared.isEmail(email)) {
+			if (!shared.valid.email(email)) {
 				throw new errors.PreconditionFailedError('Invalid email')
 			}
 

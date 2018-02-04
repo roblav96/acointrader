@@ -14,27 +14,7 @@ import url from 'url'
 
 
 
-export function isSymbol(symbol: string): boolean {
-	if (!string.is(symbol)) return false;
-	return symbol.match(/[^a-zA-Z0-9]/) == null
-}
-export function isEmail(email: string): boolean {
-	if (!string.is(email)) return false;
-	/** ████  maybe prevents future Regex vulnerabilities?  */
-	if (email.indexOf('@') == -1 || email.indexOf('.') == -1) return false;
-	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
-}
-
-
-
-export const is = {
-	bad(value): boolean {
-		if (value == null) return true;
-		if (string.is(value) && value === '') return true;
-		if (number.is(value) && !Number.isFinite(value)) return true;
-		return false
-	},
-	good(value): boolean { return !is.bad(value) },
+export const valid = {
 	symbol(symbol: string): boolean {
 		if (!string.is(symbol)) return false;
 		return symbol.match(/[^a-zA-Z0-9]/) == null
@@ -47,35 +27,55 @@ export const is = {
 	},
 }
 
+
+
 export const build = {
+	id(id: string, tolower = false): string {
+		id = id.replace(/\W+/g, '').trim()
+		return tolower == true ? id.toLowerCase() : id
+	},
 	exchangeId(website: string): string {
 		let parsed = url.parse(website)
 		let split = parsed.hostname.split('.')
 		if (split[0] == 'www') split.shift();
-		return string.toId(split[0], true)
+		return build.id(split[0], true)
+	},
+	fiatAsset(item: Partial<Items.Asset>): Items.Asset {
+		return Object.assign(item, {
+			fiat: true,
+			logo: 'https://www.coinhills.com/images/market/currency/' + item.symbol.toLowerCase() + '.svg',
+		} as Items.Asset)
 	},
 }
 
 
 
-export function isGood(value): boolean { return !isBad(value) }
+
+
+
+
+/*██████████████████████████████████
+█            CORE UTILS            █
+██████████████████████████████████*/
+
+
+
 export function isBad(value): boolean {
 	if (value == null) return true;
 	if (string.is(value) && value === '') return true;
 	if (number.is(value) && !Number.isFinite(value)) return true;
 	return false
 }
-if (process.CLIENT) (global as any).isBad = isBad;
-if (process.CLIENT) (global as any).isGood = isGood;
+export function isGood(value): boolean { return !isBad(value) }
+
+export const isNodejs = new Function('try { return this === global; } catch(e) { return false }')() as boolean
+
+export function noop(): void { }
 
 
 
 export const string = {
 	is(value): value is string { return typeof value == 'string' },
-	toId(id: string, tolower = false): string {
-		id = id.replace(/\W+/g, '').trim()
-		return tolower == true ? id.toLowerCase() : id
-	},
 	fuzzy(needle: string, haystack: string): boolean {
 		if (!string.is(needle) || !string.is(haystack)) return false;
 		let hlen = haystack.length
@@ -94,7 +94,6 @@ export const string = {
 		return true
 	},
 }
-if (process.CLIENT) (global as any).string = string;
 
 
 
@@ -107,14 +106,12 @@ export const number = {
 		return Number.parseFloat(value.replace(/[^0-9\.]/g, ''))
 	},
 }
-if (process.CLIENT) (global as any).number = number;
 
 
 
 export const boolean = {
 	is(value): value is boolean { return typeof value == 'boolean' },
 }
-if (process.CLIENT) (global as any).boolean = boolean;
 
 
 
@@ -160,24 +157,6 @@ export const object = {
 		})
 	},
 }
-if (process.CLIENT) (global as any).object = object;
-
-
-
-export const json = {
-	is<T>(target: T): target is T {
-		if (string.is(target)) {
-			if (target.charAt(0) == '{' && target.charAt(target.length - 1) == '}') return true;
-			if (target.charAt(0) == '[' && target.charAt(target.length - 1) == ']') return true;
-		}
-		return false
-	},
-	/** ████  ONLY use assuming target as object  */
-	parse<T>(target: T): T {
-		return json.is(target) ? JSON.parse(target as any) : target
-	},
-}
-if (process.CLIENT) (global as any).json = json;
 
 
 
@@ -196,13 +175,25 @@ export const array = {
 		return array.chunks(items, process.$instances)[process.$instance]
 	},
 }
-if (process.CLIENT) (global as any).array = array;
 
 
 
-export function noop(): void { }
+export const json = {
+	is<T>(target: T): target is T {
+		if (string.is(target)) {
+			if (target.charAt(0) == '{' && target.charAt(target.length - 1) == '}') return true;
+			if (target.charAt(0) == '[' && target.charAt(target.length - 1) == ']') return true;
+		}
+		return false
+	},
+	/** ████  ONLY use assuming target as object  */
+	parse<T>(target: T): T {
+		return json.is(target) ? JSON.parse(target as any) : target
+	},
+}
 
-export const isNodejs = new Function('try { return this === global; } catch(e) { return false }')() as boolean
+
+
 
 
 

@@ -26,14 +26,14 @@ export function use(req: RestifyRequest): Promise<void> {
 			authed: false,
 			ip: requestip.getClientIp(req),
 			conn: buildConn(req.headers),
-			uuid: shared.string.toId(req.headers['x-uuid']),
-			finger: shared.string.toId(req.headers['x-finger']),
+			uuid: shared.build.id(req.headers['x-uuid']),
+			finger: shared.build.id(req.headers['x-finger']),
 			email: req.headers['x-email'],
 		} as SecurityDoc
 
 		if (!req.doc.uuid || req.doc.uuid.length != 64) throw new errors.PreconditionFailedError('Invalid x-uuid');
 		if (!req.doc.finger || req.doc.finger.length != 64) throw new errors.PreconditionFailedError('Invalid x-finger');
-		if (req.doc.email && !shared.isEmail(req.doc.email)) throw new errors.PreconditionFailedError('Invalid x-email');
+		if (req.doc.email && !shared.valid.email(req.doc.email)) throw new errors.PreconditionFailedError('Invalid x-email');
 
 		// console.log('req.doc >')
 		// eyes.inspect(req.doc)
