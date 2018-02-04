@@ -18,10 +18,10 @@ import * as forex from './services/forex'
 
 function start(): Promise<void> {
 	return Promise.resolve().then(function() {
-		return ledger.startKeys()
+		// 	return ledger.startKeys()
 
-	}).then(function() {
-		return assets.start()
+		// }).then(function() {
+		// 	return assets.start()
 
 		// }).then(function() {
 		// 	return ledger.startAssets()

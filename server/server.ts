@@ -1,6 +1,6 @@
 // 
 
-require('source-map-support/register')
+require('source-map-support').install()
 require('./process')
 require('./radio')
 require('./restify')

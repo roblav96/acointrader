@@ -7,6 +7,9 @@ import * as errors from './errors'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
 
+import callsite from 'callsite'
+import callsites from 'callsites'
+
 
 
 if (process.DEVELOPMENT) {
@@ -30,6 +33,35 @@ if (process.DEVELOPMENT) {
 			console.error('clipboardy.write > error', errors.render(error))
 		})
 	}
+
+
+
+	if (process.MASTER) {
+		let fns = [
+			'getThis',
+			'getTypeName',
+			'getFunction',
+			'getFunctionName',
+			'getMethodName',
+			'getFileName',
+			'getLineNumber',
+			'getColumnNumber',
+			'getEvalOrigin',
+			'isToplevel',
+			'isEval',
+			'isNative',
+			'isConstructor',
+		] as string[]
+
+		callsites().forEach(function(csite, i) {
+			console.log('████  ' + i + '  ████')
+			fns.forEach(function(fn) {
+				console.log('fn >', fn, csite[fn]())
+			})
+		})
+	}
+
+
 
 }
 
