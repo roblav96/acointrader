@@ -5,7 +5,6 @@ const webpack = require('webpack')
 const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-const WebpackShellPlugin = require('webpack-shell-plugin')
 
 const env = require('./client.env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
@@ -69,22 +68,22 @@ const config = {
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	],
 
+	devtool: 'inline-source-map',
+
 }
 
 
 
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	config.devtool = 'source-map'
 	config.watchOptions = { ignored: /node_modules/ }
-	// config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
-	// config.plugins.push(new WebpackShellPlugin({ onBuildEnd: ['echo "ON BUILD END"'] }))
+	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
 	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
 }
 
 
 
 if (process.env.NODE_ENV == 'PRODUCTION') {
-	config.devtool = 'inline-source-map'
+
 }
 
 
