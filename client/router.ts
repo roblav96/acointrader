@@ -2,12 +2,16 @@
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import * as store from './services/store'
-// import * as security from './services/security'
+import _ from 'lodash'
+import * as shared from '../shared/shared'
+import * as utils from './services/utils'
 
 import Root from './root/root'
 
-
+console.log('_.keys(shared)', _.keys(shared))
+console.log('_.keysIn(shared)', _.keysIn(shared))
+console.log('_.functions(shared)', _.functions(shared))
+console.log('_.functionsIn(shared)', _.functionsIn(shared))
 
 export const routes = [
 

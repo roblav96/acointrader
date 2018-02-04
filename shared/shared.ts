@@ -174,6 +174,20 @@ export const array = {
 		if (process.MASTER) return items;
 		return array.chunks(items, process.$instances)[process.$instance]
 	},
+	merge<T>(target: T[], source: T[], key: string): void {
+		// if (!array.is(source)) return;
+		source.forEach(function(item, i) {
+			let found = target.find(v => v && v[key] == item[key])
+			if (found) object.merge(found, item);
+			else target.push(item);
+		})
+	},
+	dictionary<T>(items: T[], key: string): Dict<T> {
+		return items.reduce(function(prev, curr, i) {
+			prev[curr[key]] = curr
+			return prev
+		}, {})
+	}
 }
 
 
@@ -191,7 +205,6 @@ export const json = {
 		return json.is(target) ? JSON.parse(target as any) : target
 	},
 }
-
 
 
 
