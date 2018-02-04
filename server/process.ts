@@ -59,9 +59,9 @@ console.format = function(args) {
 		output = clc.redBright('=============================== ERROR ================================\n') + output
 		file = clc.redBright(file)
 	} else {
-		file = clc[color](file)
+		// file = clc[color](file)
 	}
-	output += '[' + clc.bold(file + ':' + line) + ']'
+	output += '[' + clc.bold(file) + ':' + line + ']'
 	return '\n \n' + clc.underline(output) + '\n'
 }
 

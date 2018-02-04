@@ -76,25 +76,33 @@ declare global {
 
 export function syncFiatAssets(): Promise<boolean> {
 	return Promise.resolve().then(function() {
-		return http.get('https://restcountries.eu/rest/v2/all')
+		return r.table('countries').run()
 
 	}).then(function(response: RestCountries.Country[]) {
-		
+		if (response.length == 0) {
+			return syncCountries().then(() => r.table('countries').run())
+		}
+		return Promise.resolve(response)
+
+	}).then(function(response: RestCountries.Country[]) {
+
+		console.log('response.length', response.length)
+
 		let items = [] as Items.Asset[]
 		response.forEach(function(country) {
 			country.currencies.forEach(function(currency) {
 				if (!shared.valid.symbol(currency.code)) return;
-
-				let item = {
+				items.push({
 					symbol: currency.code,
 					name: _.startCase(currency.name),
-					fiat: true
-				} as Items.Asset
-				
-				items.push(item)
-
+					unicode: currency.symbol,
+					fiat: true,
+				} as Items.Asset)
 			})
-			// let fiats = result.currencies.map(v => v.code)
+
+			let fiats = country.currencies.map(v => v.code)
+			console.log(country.name, 'fiats >')
+			eyes.inspect(fiats)
 
 		})
 
@@ -119,76 +127,19 @@ export function syncFiatAssets(): Promise<boolean> {
 
 
 
-
-export function syncFiatAssets() {
-	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
+function syncCountries() {
 	return Promise.resolve().then(function() {
-		return r.table('countries').count().run()
-
-	}).then(function(count: number) {
-		if (!!count) return Promise.resolve(true);
-		return syncCountries()
-
+		return http.get('https://restcountries.eu/rest/v2/all')
+	}).then(function(response) {
+		return r.table('countries').insert(response, { conflict: 'update' }).run()
 	}).then(function() {
-		return r.table('countries').run()
-
-	}).then(function(results: Array<RestCountries.Country>) {
-
-		let items = [] as Array<Items.Asset>
-		results.forEach(function(result) {
-			result.currencies.forEach(function(currency) {
-				// if (!currency.code || !shared.valid.symbol(currency.code)) return;
-				// if (assets.FIATS.indexOf(currency.code) == -1) return;
-
-				let item = {
-					symbol: currency.code,
-					name: _.startCase(currency.name),
-					fiat: true
-				} as Items.Asset
-				
-				items.push(item)
-
-			})
-			// let fiats = result.currencies.map(v => v.code)
-
-
-			// currencies.push(...fiats)
-		})
-		// currencies = _.uniq(currencies)
-		// currencies = currencies.filter(v => !!v && shared.valid.symbol(v))
-		// currencies.sort()
-
-		// console.log('currencies >')
-		// eyes.inspect(currencies)
-		// console.log('currencies.length', currencies.length)
-
-		// return r.table('assets').insert(items, { conflict: 'update' }).run()
-
-	}).then(function() {
-		console.warn('syncFiats > DONE')
+		console.info('syncCountries > DONE')
 		return Promise.resolve(true)
-
 	}).catch(function(error) {
-		console.error('syncFiats > error', errors.render(error))
+		console.error('syncCountries > error', errors.render(error))
 		return Promise.resolve(false)
 	})
 }
-
-
-
-// export function syncCountries() {
-// 	return Promise.resolve().then(function() {
-// 		return http.get('https://restcountries.eu/rest/v2/all')
-// 	}).then(function(response) {
-// 		return r.table('countries').insert(response, { conflict: 'update' }).run()
-// 	}).then(function() {
-// 		console.info('syncCountries > DONE')
-// 		return Promise.resolve(true)
-// 	}).catch(function(error) {
-// 		console.error('syncCountries > error', errors.render(error))
-// 		return Promise.resolve(false)
-// 	})
-// }
 
 
 
