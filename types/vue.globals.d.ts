@@ -15,7 +15,6 @@ declare global {
 		dname?: string
 		description?: string
 		icon?: string
-		bold?: boolean
 		mmenu?: boolean
 		children?: Array<RouteConfig>
 	}
