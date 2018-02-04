@@ -15,22 +15,15 @@ import * as ledger from './ledger'
 import * as forex from './forex'
 import * as coinmarketcap from '../scrapers/coinmarketcap.com'
 import * as localbitcoins from '../scrapers/localbitcoins.com'
+import * as restcountries from '../scrapers/restcountries.eu'
 
 
 
-export const SKIPS = {
-	cryptos: ['TOP', 'XAU', 'MAD'],
-	fiats: ['BSD', 'SBD', 'ALL', 'CRC', 'XPD'],
-}
-
-
-
-export function pre() {
-	return localbitcoins.syncFiats(SKIPS.fiats)
+export function start() {
 	return Promise.resolve().then(function() {
 		return r.table('assets').count().run()
 	}).then(function(count: number) {
-		if (!!count) return Promise.resolve();
+		// if (count > 0) return Promise.resolve();
 		return sync()
 	})
 }
@@ -40,11 +33,24 @@ export function pre() {
 function sync() {
 	return Promise.resolve().then(function() {
 		return Promise.all([
-			coinmarketcap.syncCryptos(SKIPS.cryptos),
-			localbitcoins.syncFiats(SKIPS.fiats),
+			coinmarketcap.syncCryptoAssets(),
+			localbitcoins.syncFiatAssets(),
 		])
+		
 	}).then(function() {
-		return ledger.syncAssets()
+		return r.table('assets').filter(
+			r.row('fiat').eq(true).and(r.row('crypto').eq(true))
+		).getField('symbol').run()
+		
+	}).then(function(symbols: string[]) {
+		console.log('sync > symbols >')
+		eyes.inspect(symbols)
+		
+		if (symbols.length > 0) {
+			throw new errors.ConflictError(JSON.stringify(symbols))
+		}
+		// return ledger.syncAssets()
+		
 	})
 }
 

@@ -40,12 +40,6 @@ export const build = {
 		if (split[0] == 'www') split.shift();
 		return build.id(split[0], true)
 	},
-	fiatAsset(item: Partial<Items.Asset>): Items.Asset {
-		return Object.assign(item, {
-			fiat: true,
-			logo: 'https://www.coinhills.com/images/market/currency/' + item.symbol.toLowerCase() + '.svg',
-		} as Items.Asset)
-	},
 }
 
 

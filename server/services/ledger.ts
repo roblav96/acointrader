@@ -44,7 +44,7 @@ export const client = new sequence.Client(process.$webpack.sequence)
 
 const KEYS = ['master', 'treasury', 'user']
 
-export function preKeys() {
+export function startKeys() {
 	return Promise.resolve().then(function() {
 		return client.keys.queryAll()
 	}).then(function(lkeys: Ledger.Key[]) {
@@ -72,10 +72,13 @@ function createKey(alias: string): Promise<void> {
 
 
 
-export function preAssets() {
+export function startAssets() {
 	return Promise.resolve().then(function() {
 		return client.assets.queryPage({ pageSize: 5 })
 	}).then(function(page: Ledger.Page<Ledger.Asset>) {
+		console.log('preAssets > page >')
+		eyes.inspect(page)
+		console.log('preAssets > page.items.length', page.items.length)
 		if (!_.isEmpty(page.items)) return Promise.resolve();
 		return syncAssets()
 	})

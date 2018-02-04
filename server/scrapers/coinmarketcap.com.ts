@@ -41,25 +41,25 @@ declare global {
 
 
 
-export function syncCryptos(skips: string[]): Promise<boolean> {
+export function syncCryptoAssets(): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return Promise.all([
-			syncTickers(skips),
-			syncCoins(skips),
-			syncTokens(skips),
+			syncTickers(),
+			syncCoins(),
+			syncTokens(),
 		])
 	}).then(function() {
-		console.info('syncCryptos > DONE')
+		console.info('syncCryptoAssets > DONE')
 		return Promise.resolve(true)
 	}).catch(function(error) {
-		console.error('syncCryptos > error', errors.render(error))
+		console.error('syncCryptoAssets > error', errors.render(error))
 		return Promise.resolve(false)
 	})
 }
 
 
 
-export function syncTickers(skips: string[]): Promise<boolean> {
+export function syncTickers(): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return http.get('https://api.coinmarketcap.com/v1/ticker/', { limit: -1 })
 
@@ -75,8 +75,13 @@ export function syncTickers(skips: string[]): Promise<boolean> {
 				maxSupply: Number.parseFloat(ticker.max_supply),
 			} as Items.Asset
 		})
-		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
-		items.forEach(shared.object.compact)
+
+		_.remove(items, function(item, i) {
+			if (!shared.valid.symbol(item.symbol)) return true;
+			shared.object.compact(item)
+			return false
+		})
+		
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
@@ -91,7 +96,7 @@ export function syncTickers(skips: string[]): Promise<boolean> {
 
 
 
-export function syncCoins(skips: string[]): Promise<boolean> {
+export function syncCoins(): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinmarketcap.com/coins/views/all/')
 
@@ -106,8 +111,13 @@ export function syncCoins(skips: string[]): Promise<boolean> {
 				symbol, coin: true, mineable: supply.indexOf('*') == -1,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
-		items.forEach(shared.object.compact)
+
+		_.remove(items, function(item, i) {
+			if (!shared.valid.symbol(item.symbol)) return true;
+			shared.object.compact(item)
+			return false
+		})
+		
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
@@ -122,7 +132,7 @@ export function syncCoins(skips: string[]): Promise<boolean> {
 
 
 
-export function syncTokens(skips: string[]): Promise<boolean> {
+export function syncTokens(): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinmarketcap.com/tokens/views/all/')
 
@@ -137,8 +147,13 @@ export function syncTokens(skips: string[]): Promise<boolean> {
 				symbol, token: platform,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
-		items.forEach(shared.object.compact)
+
+		_.remove(items, function(item, i) {
+			if (!shared.valid.symbol(item.symbol)) return true;
+			shared.object.compact(item)
+			return false
+		})
+		
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {

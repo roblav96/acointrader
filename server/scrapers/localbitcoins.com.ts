@@ -37,12 +37,11 @@ declare global {
 
 
 
-export function syncFiats(skips: string[]): Promise<boolean> {
-	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
+export function syncFiatAssets(): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return Promise.all([
-			http.get('https://localbitcoins.com/api/currencies/', null, { retry: true }),
-			http.get('https://localbitcoins.com/bitcoinaverage/ticker-all-currencies/', null, { retry: true }),
+			http.get('https://localbitcoins.com/api/currencies/'),
+			http.get('https://localbitcoins.com/bitcoinaverage/ticker-all-currencies/'),
 		])
 
 	}).then(function(resolved) {
@@ -50,36 +49,45 @@ export function syncFiats(skips: string[]): Promise<boolean> {
 		let tickers = resolved[1] as Dict<LocalBitcoins.Ticker>
 
 		let items = [
-			shared.build.fiatAsset({ symbol: 'XAU', name: 'Gold Ounce', commodity: true }),
-			shared.build.fiatAsset({ symbol: 'XAG', name: 'Silver Ounce', commodity: true }),
-			shared.build.fiatAsset({ symbol: 'XPT', name: 'Platinum Ounce', commodity: true }),
-			shared.build.fiatAsset({ symbol: 'CNH', name: 'Chinese Yuan Offshore' }),
-		]
+			{ symbol: 'XAU', name: 'Gold Ounce', commodity: true },
+			{ symbol: 'XAG', name: 'Silver Ounce', commodity: true },
+			{ symbol: 'XPT', name: 'Platinum Ounce', commodity: true },
+			{ symbol: 'CNH', name: 'Chinese Yuan Offshore', fiat: true },
+		] as Items.Asset[]
 
 		Object.keys(results).forEach(function(symbol) {
 			let currency = results[symbol]
+
 			if (currency.altcoin) return;
+			// if (!tickers[symbol]) return;
+			if (items.findIndex(v => v.symbol == symbol) >= 0) return;
 
 			let name = currency.name
 			let iend = name.indexOf('(')
 			if (iend > 0) name = name.substring(0, iend).trim();
-			if (name == symbol) return;
-			if (items.findIndex(v => v.symbol == symbol) >= 0) return;
-
-			items.push(shared.build.fiatAsset({ symbol, name }))
+			// if (name == symbol) {
+			// 	console.warn('name == symbol >', symbol)
+			// 	return
+			// }
+			items.push({ symbol, name, fiat: true } as Items.Asset)
 
 		})
 
-		items = items.filter(v => !!v && shared.valid.symbol(v.symbol) && skips.indexOf(v.symbol) == -1)
-		items.forEach(shared.object.compact)
+		_.remove(items, function(item, i) {
+			if (!shared.valid.symbol(item.symbol)) return true;
+			item.logo = 'https://www.coinhills.com/images/market/currency/' + item.symbol.toLowerCase() + '.svg'
+			shared.object.compact(item)
+			return false
+		})
+
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
-		console.info('syncFiats > DONE')
+		console.info('syncFiatAssets > DONE')
 		return Promise.resolve(true)
 
 	}).catch(function(error) {
-		console.error('syncFiats > error', errors.render(error))
+		console.error('syncFiatAssets > error', errors.render(error))
 		return Promise.resolve(false)
 	})
 }

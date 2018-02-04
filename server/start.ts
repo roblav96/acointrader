@@ -18,16 +18,16 @@ import * as forex from './services/forex'
 
 function start(): Promise<void> {
 	return Promise.resolve().then(function() {
-		return ledger.preKeys()
+		return ledger.startKeys()
 
 	}).then(function() {
-		return assets.pre()
+		return assets.start()
 
-	}).then(function() {
-		return ledger.preAssets()
+		// }).then(function() {
+		// 	return ledger.startAssets()
 
-	}).then(function() {
-		return utils.rxReadys.radios.onReady()
+		// }).then(function() {
+		// 	return utils.rxReadys.radios.onReady()
 
 		// }).then(function() {
 		// 	process.radio.emit(utils.rxReadys.assets.event)
@@ -39,8 +39,9 @@ function start(): Promise<void> {
 		// 	return Promise.resolve()
 
 	}).catch(function(error) {
-		console.error('process.MASTER start > error', errors.render(error))
-		return pevent(process.ee3, shared.enums.EE3.TICK_1).then(() => start())
+		console.error('MASTER start > error', errors.render(error))
+		if (process.DEVELOPMENT) return Promise.resolve();
+		return pevent(process.ee3, shared.enums.EE3.TICK_5).then(() => start())
 	})
 }
 

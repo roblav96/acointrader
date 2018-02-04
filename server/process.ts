@@ -39,28 +39,33 @@ process.ee3 = new ee3.EventEmitter()
 
 
 require('debug-trace')()
-console.format = function(arg) {
+console.format = function(args) {
+	let time = moment().format('hh:mm:ss:SSS')
+	let instance = '[' + process.$instance + ']'
+	let output = time + instance
+	
 	let stack = new Error().stack.toString()
 	stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
 	let fullpath = stack.split('/').pop()
-	if (!fullpath) fullpath = arg.filename + ':' + arg.getLineNumber();
+	if (!fullpath) fullpath = args.filename + ':' + args.getLineNumber();
 	let file = fullpath.split('.ts:')[0]
 	let i = (fullpath.indexOf('.ts:') == -1) ? 0 : 1
 	let line = fullpath.split('.ts:')[i].split(':')[0]
-	let header = '[' + process.$instance + ']' + '[' + clc.bold(file) + ':' + line + ']'
-	let format = 'hh:mm:ss:SSS'
-	let time = moment().format(format)
-	let cString: string
-	if (arg.method == 'log') {
-		cString = clc.blue(time) + header
-	} else if (arg.method == 'info') {
-		cString = clc.green(time) + header
-	} else if (arg.method == 'warn') {
-		cString = clc.yellowBright('=============================== WARN ================================\n') + clc.yellow(time) + header
-	} else if (arg.method == 'error') {
-		cString = clc.redBright('=============================== ERROR ================================\n') + clc.red(time) + header
-	}
-	return '\n \n' + clc.underline(cString) + '\n'
+	
+	let block = '█'
+	
+	// let otrace = '[' + clc.bold(file) + ':' + line + ']'
+	// let output = clc.blue(time) + header
+	// if (args.method == 'log') {
+	// 	// output = clc.blue(time) + header
+	// } else if (args.method == 'info') {
+	// 	output = clc.green(time) + header
+	// } else if (args.method == 'warn') {
+	// 	output = clc.yellowBright('=============================== WARN ================================\n') + clc.yellow(time) + header
+	// } else if (args.method == 'error') {
+	// 	output = clc.redBright('=============================== ERROR ================================\n') + clc.red(time) + header
+	// }
+	return '\n \n' + clc.underline(output) + '\n'
 }
 
 

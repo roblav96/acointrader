@@ -17,7 +17,7 @@ import * as assets from '../services/assets'
 declare global {
 	namespace RestCountries {
 
-		interface Result {
+		interface Country {
 			alpha2Code: string
 			alpha3Code: string
 			altSpellings: string[]
@@ -74,7 +74,53 @@ declare global {
 
 
 
-export function syncFiats() {
+export function syncFiatAssets(): Promise<boolean> {
+	return Promise.resolve().then(function() {
+		return http.get('https://restcountries.eu/rest/v2/all')
+
+	}).then(function(response: RestCountries.Country[]) {
+		
+		let items = [] as Items.Asset[]
+		response.forEach(function(country) {
+			country.currencies.forEach(function(currency) {
+				if (!shared.valid.symbol(currency.code)) return;
+
+				let item = {
+					symbol: currency.code,
+					name: _.startCase(currency.name),
+					fiat: true
+				} as Items.Asset
+				
+				items.push(item)
+
+			})
+			// let fiats = result.currencies.map(v => v.code)
+
+		})
+
+		_.remove(items, function(item, i) {
+			if (!shared.valid.symbol(item.symbol)) return true;
+			item.logo = 'https://www.coinhills.com/images/market/currency/' + item.symbol.toLowerCase() + '.svg'
+			shared.object.compact(item)
+			return false
+		})
+
+		return r.table('assets').insert(items, { conflict: 'update' }).run()
+
+	}).then(function() {
+		console.info('syncFiatAssets > DONE')
+		return Promise.resolve(true)
+
+	}).catch(function(error) {
+		console.error('syncFiatAssets > error', errors.render(error))
+		return Promise.resolve(false)
+	})
+}
+
+
+
+
+export function syncFiatAssets() {
 	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
 	return Promise.resolve().then(function() {
 		return r.table('countries').count().run()
@@ -86,7 +132,7 @@ export function syncFiats() {
 	}).then(function() {
 		return r.table('countries').run()
 
-	}).then(function(results: Array<RestCountries.Result>) {
+	}).then(function(results: Array<RestCountries.Country>) {
 
 		let items = [] as Array<Items.Asset>
 		results.forEach(function(result) {
@@ -130,19 +176,19 @@ export function syncFiats() {
 
 
 
-export function syncCountries() {
-	return Promise.resolve().then(function() {
-		return http.get('https://restcountries.eu/rest/v2/all')
-	}).then(function(response) {
-		return r.table('countries').insert(response, { conflict: 'update' }).run()
-	}).then(function() {
-		console.info('syncCountries > DONE')
-		return Promise.resolve(true)
-	}).catch(function(error) {
-		console.error('syncCountries > error', errors.render(error))
-		return Promise.resolve(false)
-	})
-}
+// export function syncCountries() {
+// 	return Promise.resolve().then(function() {
+// 		return http.get('https://restcountries.eu/rest/v2/all')
+// 	}).then(function(response) {
+// 		return r.table('countries').insert(response, { conflict: 'update' }).run()
+// 	}).then(function() {
+// 		console.info('syncCountries > DONE')
+// 		return Promise.resolve(true)
+// 	}).catch(function(error) {
+// 		console.error('syncCountries > error', errors.render(error))
+// 		return Promise.resolve(false)
+// 	})
+// }
 
 
 
