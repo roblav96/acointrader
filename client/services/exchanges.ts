@@ -9,8 +9,6 @@ import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as security from './security'
 import * as http from './http'
-import Snackbar from '../components/snackbar/snackbar'
-import EmailPrompt from '../components/email-prompt/email-prompt'
 
 
 
@@ -77,11 +75,11 @@ export class ExchangeBuilder extends ExchangeMetadata {
 
 	saveApiKey(apiKey: ExchangeApiKey): Promise<boolean> {
 		return Promise.resolve().then(() => {
-			if (!security.state.email) return EmailPrompt.prompt();
+			// if (!security.state.email) return EmailPrompt.prompt();
 			return Promise.resolve(true)
 		}).then(result => {
 			if (!result) {
-				Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your crypto assets! Please try again.', color: 'warning' })
+				// Snackbar.push({ message: 'A recovery email is mandatory to ensure the safety of your crypto assets! Please try again.', color: 'warning' })
 				return Promise.resolve(false)
 			}
 			let encrypted = shared.security.encryptObject(apiKey, process.sls.get('security.publicPem'))

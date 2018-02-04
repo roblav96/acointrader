@@ -4,7 +4,6 @@ import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
 import Vue from 'vue'
 import _ from 'lodash'
-import sha3 from 'js-sha3'
 import forge from 'node-forge'
 { (window as any).forge = forge }
 import Fingerprint2 from 'fingerprintjs2'
@@ -14,7 +13,6 @@ import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as store from './store'
 import * as http from './http'
-import EmailPrompt from '../components/email-prompt/email-prompt'
 
 
 

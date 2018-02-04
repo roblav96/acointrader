@@ -41,7 +41,7 @@ declare global {
 
 
 
-export function syncCryptos(skips: string[]) {
+export function syncCryptos(skips: string[]): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return Promise.all([
 			syncTickers(skips),
@@ -59,7 +59,7 @@ export function syncCryptos(skips: string[]) {
 
 
 
-export function syncTickers(skips: string[]) {
+export function syncTickers(skips: string[]): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return http.get('https://api.coinmarketcap.com/v1/ticker/', { limit: -1 })
 
@@ -75,7 +75,7 @@ export function syncTickers(skips: string[]) {
 				maxSupply: Number.parseFloat(ticker.max_supply),
 			} as Items.Asset
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -91,7 +91,7 @@ export function syncTickers(skips: string[]) {
 
 
 
-export function syncCoins(skips: string[]) {
+export function syncCoins(skips: string[]): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinmarketcap.com/coins/views/all/')
 
@@ -106,7 +106,7 @@ export function syncCoins(skips: string[]) {
 				symbol, coin: true, mineable: supply.indexOf('*') == -1,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
@@ -122,7 +122,7 @@ export function syncCoins(skips: string[]) {
 
 
 
-export function syncTokens(skips: string[]) {
+export function syncTokens(skips: string[]): Promise<boolean> {
 	return Promise.resolve().then(function() {
 		return http.scrape('https://coinmarketcap.com/tokens/views/all/')
 
@@ -137,7 +137,7 @@ export function syncTokens(skips: string[]) {
 				symbol, token: platform,
 			} as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
 

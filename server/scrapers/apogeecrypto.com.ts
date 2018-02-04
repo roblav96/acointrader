@@ -56,7 +56,7 @@ export function syncCryptos(skips: string[]) {
 				logo: 'https://s3-ap-southeast-2.amazonaws.com/apogee-crypto-assets/logos/' + ticker.symbol.toLowerCase() + '-' + ticker.id.toLowerCase() + '.svg',
 			} as Items.Asset
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 
 		items.splice(10)
@@ -96,7 +96,7 @@ export function syncCryptos(skips: string[]) {
 
 
 // 		})
-// 		// items = items.filter(v => !!v && shared.string.isValidSymbol(v.id) && skips.indexOf(v.id) == -1)
+// 		// items = items.filter(v => !!v && shared.isSymbol(v.id) && skips.indexOf(v.id) == -1)
 // 		// items.forEach(shared.object.compact)
 // 		// console.log('items >')
 // 		// eyes.inspect(items)

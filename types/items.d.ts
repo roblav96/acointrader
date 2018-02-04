@@ -26,15 +26,17 @@ declare namespace Items {
 		name: string
 		logo: string
 		fiat: boolean
+		commodity: boolean
 		crypto: boolean
 		coin: boolean
 		token: string
 		mineable: boolean
+		inactive: boolean
 		availableSupply: number
 		totalSupply: number
 		maxSupply: number
 	}
-	
+
 	interface ForexQuote {
 		pair: string
 		base: string
@@ -52,7 +54,7 @@ declare namespace Items {
 		updated: number
 		stamp: number
 	}
-	
+
 	interface MarketTrade {
 		id: string
 		pair: string
@@ -61,7 +63,7 @@ declare namespace Items {
 		price: number
 		size: number
 		executed: number
-		
+
 	}
 
 

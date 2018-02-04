@@ -61,7 +61,7 @@ export function syncCryptos(skips: string[]) {
 			// 	ccId: result.Id,
 			// } as Items.Asset)
 		})
-		items = items.filter(v => !!v && shared.string.isValidSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
+		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
 		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 

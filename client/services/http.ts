@@ -5,7 +5,6 @@ import axios from 'axios'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
 import * as security from './security'
-import Snackbar from '../components/snackbar/snackbar'
 
 
 
@@ -53,7 +52,7 @@ function request(config: HttpRequestConfig): Promise<any> {
 		if (_.has(error, 'response.data.message')) message = error.response.data.message;
 		let premessage = '[' + config.method + '] /api' + config.url
 		console.log('%c◀ ' + premessage + ' ◀', 'color: red; font-weight: bolder;', message)
-		Snackbar.push({ message: premessage + ' > ' + message, color: 'error' })
+		// Snackbar.push({ message: premessage + ' > ' + message, color: 'error' })
 		return Promise.reject(error)
 	})
 

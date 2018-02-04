@@ -28,7 +28,7 @@ export function syncExchanges() {
 		let results = response.results as Array<any>
 		let items = results.map(function(result) {
 			return {
-				id: shared.string.parseExchangeId(result.url.homepage),
+				id: shared.parseExchangeId(result.url.homepage),
 				logoWide: result.url.logo,
 				mobileapp: !!result.properties.mobile_app,
 				fees: result.rating.fees,

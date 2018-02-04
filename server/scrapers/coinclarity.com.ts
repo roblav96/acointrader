@@ -60,12 +60,12 @@ function scrapeExchangeMeta(meta: ExchangeMeta) {
 		let $a = $('.profile-sidebar-section a').first()
 		let href = $a.attr('href')
 		if (!href) href = $a.text();
-		let id = shared.string.parseExchangeId(href)
+		let id = shared.parseExchangeId(href)
 		let parsed = url.parse(href)
 		let website = parsed.protocol + '//' + parsed.hostname
 
 		let year = $('.profile-sidebar-section span').last().text()
-		let inaugurated = shared.string.parseInt(year)
+		let inaugurated = shared.number.parseInt(year)
 
 		let description = $('blockquote').text().trim()
 		if (description.charAt(description.length - 1) != '.') description += '.';
@@ -126,7 +126,7 @@ function getExchangeCount() {
 	}).then(function(html: string) {
 		let $ = cheerio.load(html)
 		let slug = $('.post-slug') // $('.top-paginator .post-count .post-slug')
-		let count = shared.string.parseInt(slug.text())
+		let count = shared.number.parseInt(slug.text())
 		return Promise.resolve(count)
 	})
 }

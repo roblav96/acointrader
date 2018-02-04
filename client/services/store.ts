@@ -8,9 +8,6 @@ import * as utils from './utils'
 import * as security from './security'
 import * as exchanges from './exchanges'
 import * as user from './user'
-import MainDrawer from '../components/main-drawer/main-drawer'
-import Snackbar from '../components/snackbar/snackbar'
-// import RegisterDialog from '../components/register-dialog/register-dialog'
 
 
 
@@ -25,8 +22,8 @@ class State {
 	// markets = exchanges.exchanges.map(v => v.market)
 	// accounts = exchanges.exchanges.map(v => v.account)
 
-	mainDrawer = MainDrawer.state
-	snackbar = Snackbar.state
+	// mainDrawer = MainDrawer.state
+	// snackbar = Snackbar.state
 	// registerDialog = RegisterDialog.state
 
 }

@@ -91,7 +91,7 @@ export function syncFiats() {
 		let items = [] as Array<Items.Asset>
 		results.forEach(function(result) {
 			result.currencies.forEach(function(currency) {
-				// if (!currency.code || !shared.string.isValidSymbol(currency.code)) return;
+				// if (!currency.code || !shared.isSymbol(currency.code)) return;
 				// if (assets.FIATS.indexOf(currency.code) == -1) return;
 
 				let item = {
@@ -109,7 +109,7 @@ export function syncFiats() {
 			// currencies.push(...fiats)
 		})
 		// currencies = _.uniq(currencies)
-		// currencies = currencies.filter(v => !!v && shared.string.isValidSymbol(v))
+		// currencies = currencies.filter(v => !!v && shared.isSymbol(v))
 		// currencies.sort()
 
 		// console.log('currencies >')

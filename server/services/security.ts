@@ -33,7 +33,7 @@ export function use(req: RestifyRequest): Promise<void> {
 
 		if (!req.doc.uuid || req.doc.uuid.length != 64) throw new errors.PreconditionFailedError('Invalid x-uuid');
 		if (!req.doc.finger || req.doc.finger.length != 64) throw new errors.PreconditionFailedError('Invalid x-finger');
-		if (req.doc.email && !shared.isValidEmail(req.doc.email)) throw new errors.PreconditionFailedError('Invalid x-email');
+		if (req.doc.email && !shared.isEmail(req.doc.email)) throw new errors.PreconditionFailedError('Invalid x-email');
 
 		// console.log('req.doc >')
 		// eyes.inspect(req.doc)

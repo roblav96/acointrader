@@ -24,12 +24,12 @@ declare global {
 			altcoin: boolean
 		}
 		interface Ticker {
-			avg_1h: string
-			avg_6h: string
-			avg_12h: string
-			avg_24h: string
-			rates: { last: string }
-			volume_btc: string
+			avg_1h: number
+			avg_6h: number
+			avg_12h: number
+			avg_24h: number
+			rates: { last: number }
+			volume_btc: number
 		}
 
 	}
@@ -37,7 +37,7 @@ declare global {
 
 
 
-export function syncFiats(skips: string[]) {
+export function syncFiats(skips: string[]): Promise<boolean> {
 	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
 	return Promise.resolve().then(function() {
 		return Promise.all([
@@ -49,43 +49,33 @@ export function syncFiats(skips: string[]) {
 		let results = resolved[0].data.currencies as Dict<LocalBitcoins.Currency>
 		let tickers = resolved[1] as Dict<LocalBitcoins.Ticker>
 
-		let items = [] as Array<Items.Asset>
+		let items = [
+			fiatAsset({ symbol: 'XAU', name: 'Gold Ounce' }),
+			// fiatAsset('XAU', 'Gold Ounce'),
+			// fiatAsset('XAG', 'Silver Ounce'),
+			// fiatAsset('XPT', 'Platinum Ounce'),
+			// fiatAsset('CNH', 'Chinese Yuan Offshore'),
+		]
+
 		Object.keys(results).forEach(function(symbol) {
 			let currency = results[symbol]
 			if (currency.altcoin) return;
 
 			let name = currency.name
+			let iend = name.indexOf('(')
+			if (iend > 0) name = name.substring(0, iend).trim();
 			if (name == symbol) return;
-			name = name.substring(0, name.indexOf('(') - 1)
+			if (items.findIndex(v => v.symbol == symbol) >= 0) return;
 
-			let item = {
-				symbol, name, fiat: true,
-				logo: 'https://www.coinhills.com/images/market/currency/' + symbol.toLowerCase() + '.svg',
-			} as Items.Asset
+			items.push(fiatAsset({ symbol, name }))
 
-			if (symbol == 'CNY') {
-				let cloned = shared.object.clone(item)
-				cloned.symbol = 'CNH'
-				cloned.name += ' Offshore'
-				cloned.logo = 'https://www.coinhills.com/images/market/currency/cnh.svg'
-				items.push(cloned)
-			}
-
-			items.push(item)
 		})
 
-		items = items.filter(function(item) {
-			let ticker = tickers[item.symbol]
-			if (!ticker) return false;
-			console.log(item.symbol, item.name, '>')
-			eyes.inspect(ticker)
-			return !!item && shared.string.isValidSymbol(item.symbol) && skips.indexOf(item.symbol) == -1
-		})
-
+		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
+		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 		console.log('items >')
 		eyes.inspect(items)
-		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.info('syncFiats > DONE')
@@ -97,6 +87,18 @@ export function syncFiats(skips: string[]) {
 	})
 }
 
+
+
+function fiatAsset(item: Partial<Items.Asset>): Items.Asset {
+	return Object.assign({
+		fiat: true,
+		logo: 'https://www.coinhills.com/images/market/currency/' + item.symbol.toLowerCase() + '.svg',
+	} as Items.Asset, item)
+	// return {
+	// 	symbol, name, fiat: true,
+	// 	logo: 'https://www.coinhills.com/images/market/currency/' + symbol.toLowerCase() + '.svg',
+	// } as Items.Asset
+}
 
 
 
