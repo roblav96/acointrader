@@ -16,13 +16,30 @@ import * as assets from '../services/assets'
 
 
 
+interface TradesResponse {
+	avg_12h: string
+	avg_1h: string
+	avg_24h: string
+	avg_6h: string
+	rates: {
+		last: string
+	}
+	volume_btc: string
+}
+
+
+
 export function syncFiats(skips: string[]) {
 	// r.db('acointrader').table('assets').filter(r.row('fiat').eq(true).and(r.row('coin').eq(true)))
 	return Promise.resolve().then(function() {
-		return http.get('https://localbitcoins.com/api/currencies/', null, { retry: true })
+		return Promise.all([
+			http.get('https://localbitcoins.com/api/currencies/', null, { retry: true }),
+			http.get('https://localbitcoins.com/bitcoinaverage/ticker-all-currencies/', null, { retry: true }),
+		])
 
-	}).then(function(response) {
-		let results = response.data.currencies
+	}).then(function(resolved) {
+		let results = resolved[0].data.currencies
+		let volumes = resolved[1]
 
 		let items = [] as Array<Items.Asset>
 		Object.keys(results).forEach(function(symbol) {

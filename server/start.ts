@@ -29,14 +29,14 @@ function start(): Promise<void> {
 	}).then(function() {
 		return utils.rxReadys.radios.onReady()
 
-	}).then(function() {
-		process.radio.emit(utils.rxReadys.assets.event)
-		return r.table('assets').filter(r.row('fiat').eq(true)).run()
+		// }).then(function() {
+		// 	process.radio.emit(utils.rxReadys.assets.event)
+		// 	return r.table('assets').filter(r.row('fiat').eq(true)).run()
 
-	}).then(function(items: Items.Asset[]) {
-		let symbols = items.map(v => v.symbol)
-		process.radio.emit('forex.start', symbols)
-		return Promise.resolve()
+		// }).then(function(items: Items.Asset[]) {
+		// 	let symbols = items.map(v => v.symbol)
+		// 	process.radio.emit('forex.start', symbols)
+		// 	return Promise.resolve()
 
 	}).catch(function(error) {
 		console.error('process.MASTER start > error', errors.render(error))

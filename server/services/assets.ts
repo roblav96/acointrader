@@ -26,6 +26,7 @@ export const SKIPS = {
 
 
 export function pre() {
+	return localbitcoins.syncFiats(SKIPS.fiats)
 	return Promise.resolve().then(function() {
 		return r.table('assets').count().run()
 	}).then(function(count: number) {
