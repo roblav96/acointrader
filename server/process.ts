@@ -63,20 +63,6 @@ console.format = function(args) {
 	}
 	output += '[' + clc.bold(file + ':' + line) + ']'
 	return '\n \n' + clc.underline(output) + '\n'
-	// let cdict = {
-	// 	log: ['blueBright', 'blueBright'],
-	// 	info: ['greenBright', 'greenBright'],
-	// 	warn: ['yellowBright', 'yellow'],
-	// 	error: ['redBright', 'redBright'],
-	// } as Dict<string[]>
-	// let colors = cdict[args.method] || ['magentaBright', 'magenta']
-	// let output = clc[colors[0]]('▉') + time + instance + '[' + clc.bold(clc[colors[1]](file) + ':' + line) + ']'
-
-	// if (args.method == 'warn') {
-	// 	output = clc[colors[0]]('=============================== WARN ================================\n') + output
-	// } else if (args.method == 'error') {
-	// 	output = clc[colors[0]]('=============================== ERROR ================================\n') + output
-	// }
 }
 
 
