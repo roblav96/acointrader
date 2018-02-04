@@ -60,7 +60,7 @@ function scrapeExchangeMeta(meta: ExchangeMeta) {
 		let $a = $('.profile-sidebar-section a').first()
 		let href = $a.attr('href')
 		if (!href) href = $a.text();
-		let id = shared.parseExchangeId(href)
+		let id = shared.build.exchangeId(href)
 		let parsed = url.parse(href)
 		let website = parsed.protocol + '//' + parsed.hostname
 

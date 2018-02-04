@@ -50,11 +50,10 @@ export function syncFiats(skips: string[]): Promise<boolean> {
 		let tickers = resolved[1] as Dict<LocalBitcoins.Ticker>
 
 		let items = [
-			fiatAsset({ symbol: 'XAU', name: 'Gold Ounce' }),
-			// fiatAsset('XAU', 'Gold Ounce'),
-			// fiatAsset('XAG', 'Silver Ounce'),
-			// fiatAsset('XPT', 'Platinum Ounce'),
-			// fiatAsset('CNH', 'Chinese Yuan Offshore'),
+			fiatAsset({ symbol: 'XAU', name: 'Gold Ounce', commodity: true }),
+			fiatAsset({ symbol: 'XAG', name: 'Silver Ounce', commodity: true }),
+			fiatAsset({ symbol: 'XPT', name: 'Platinum Ounce', commodity: true }),
+			fiatAsset({ symbol: 'CNH', name: 'Chinese Yuan Offshore' }),
 		]
 
 		Object.keys(results).forEach(function(symbol) {
@@ -73,9 +72,7 @@ export function syncFiats(skips: string[]): Promise<boolean> {
 
 		items = items.filter(v => !!v && shared.isSymbol(v.symbol) && skips.indexOf(v.symbol) == -1)
 		items.forEach(shared.object.compact)
-		// return r.table('assets').insert(items, { conflict: 'update' }).run()
-		console.log('items >')
-		eyes.inspect(items)
+		return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.info('syncFiats > DONE')
@@ -90,14 +87,10 @@ export function syncFiats(skips: string[]): Promise<boolean> {
 
 
 function fiatAsset(item: Partial<Items.Asset>): Items.Asset {
-	return Object.assign({
+	return Object.assign(item, {
 		fiat: true,
 		logo: 'https://www.coinhills.com/images/market/currency/' + item.symbol.toLowerCase() + '.svg',
-	} as Items.Asset, item)
-	// return {
-	// 	symbol, name, fiat: true,
-	// 	logo: 'https://www.coinhills.com/images/market/currency/' + symbol.toLowerCase() + '.svg',
-	// } as Items.Asset
+	} as Items.Asset)
 }
 
 

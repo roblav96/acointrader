@@ -1,7 +1,7 @@
 {
 	"uid": "acointrader-production",
-	"minUptime": 1000,
-	"spinSleepTime": 1000,
+	"minUptime": 3000,
+	"spinSleepTime": 3000,
 	"append": true,
 	"killTree": true,
 	"watch": false,

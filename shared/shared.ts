@@ -4,7 +4,7 @@ export * from './enums'
 export * from './security-utils'
 export * from './exchange-utils'
 
-
+// 
 
 import eyes from 'eyes'
 import clc from 'cli-color'
@@ -24,11 +24,36 @@ export function isEmail(email: string): boolean {
 	if (email.indexOf('@') == -1 || email.indexOf('.') == -1) return false;
 	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
 }
-export function parseExchangeId(website: string): string {
-	let parsed = url.parse(website)
-	let split = parsed.hostname.split('.')
-	if (split[0] == 'www') split.shift();
-	return string.toId(split[0], true)
+
+
+
+export const is = {
+	bad(value): boolean {
+		if (value == null) return true;
+		if (string.is(value) && value === '') return true;
+		if (number.is(value) && !Number.isFinite(value)) return true;
+		return false
+	},
+	good(value): boolean { return !is.bad(value) },
+	symbol(symbol: string): boolean {
+		if (!string.is(symbol)) return false;
+		return symbol.match(/[^a-zA-Z0-9]/) == null
+	},
+	email(email: string): boolean {
+		if (!string.is(email)) return false;
+		/** ████  maybe prevents future Regex vulnerabilities?  */
+		if (email.indexOf('@') == -1 || email.indexOf('.') == -1) return false;
+		return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+	},
+}
+
+export const build = {
+	exchangeId(website: string): string {
+		let parsed = url.parse(website)
+		let split = parsed.hostname.split('.')
+		if (split[0] == 'www') split.shift();
+		return string.toId(split[0], true)
+	},
 }
 
 

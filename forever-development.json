@@ -1,7 +1,7 @@
 {
 	"uid": "acointrader-development",
-	"minUptime": 1000,
-	"spinSleepTime": 1000,
+	"minUptime": 5000,
+	"spinSleepTime": 5000,
 	"append": true,
 	"killTree": true,
 	"killSignal": "SIGTERM",
