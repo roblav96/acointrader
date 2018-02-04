@@ -9,9 +9,6 @@ import cluster from 'cluster'
 import url from 'url'
 import ee3 from 'eventemitter3'
 import moment from 'moment'
-// import callsites from 'callsites'
-// import cstack from 'clean-stack'
-// import estack from 'extract-stack'
 
 
 
@@ -45,8 +42,6 @@ require('debug-trace')()
 console.format = function(args) {
 	let time = moment().format('hh:mm:ss:SSS')
 	let instance = '[' + process.$instance + ']'
-	let output = time + instance
-	
 	let stack = new Error().stack.toString()
 	stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
 	let fullpath = stack.split('/').pop()
@@ -54,21 +49,34 @@ console.format = function(args) {
 	let file = fullpath.split('.ts:')[0]
 	let i = (fullpath.indexOf('.ts:') == -1) ? 0 : 1
 	let line = fullpath.split('.ts:')[i].split(':')[0]
-	
-	let block = '█'
-	
-	// let otrace = '[' + clc.bold(file) + ':' + line + ']'
-	// let output = clc.blue(time) + header
-	// if (args.method == 'log') {
-	// 	// output = clc.blue(time) + header
-	// } else if (args.method == 'info') {
-	// 	output = clc.green(time) + header
-	// } else if (args.method == 'warn') {
-	// 	output = clc.yellowBright('=============================== WARN ================================\n') + clc.yellow(time) + header
-	// } else if (args.method == 'error') {
-	// 	output = clc.redBright('=============================== ERROR ================================\n') + clc.red(time) + header
-	// }
+	let cdict = { log: 'blue', info: 'green', warn: 'yellow', error: 'red' } as Dict<string>
+	let color = cdict[args.method] || 'magenta'
+	let output = clc[color + 'Bright']('▉') + time + instance
+	if (args.method == 'warn') {
+		output = clc.yellowBright('=============================== WARN ================================\n') + output
+		file = clc.yellow(file)
+	} else if (args.method == 'error') {
+		output = clc.redBright('=============================== ERROR ================================\n') + output
+		file = clc.redBright(file)
+	} else {
+		file = clc[color](file)
+	}
+	output += '[' + clc.bold(file + ':' + line) + ']'
 	return '\n \n' + clc.underline(output) + '\n'
+	// let cdict = {
+	// 	log: ['blueBright', 'blueBright'],
+	// 	info: ['greenBright', 'greenBright'],
+	// 	warn: ['yellowBright', 'yellow'],
+	// 	error: ['redBright', 'redBright'],
+	// } as Dict<string[]>
+	// let colors = cdict[args.method] || ['magentaBright', 'magenta']
+	// let output = clc[colors[0]]('▉') + time + instance + '[' + clc.bold(clc[colors[1]](file) + ':' + line) + ']'
+
+	// if (args.method == 'warn') {
+	// 	output = clc[colors[0]]('=============================== WARN ================================\n') + output
+	// } else if (args.method == 'error') {
+	// 	output = clc[colors[0]]('=============================== ERROR ================================\n') + output
+	// }
 }
 
 

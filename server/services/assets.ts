@@ -43,7 +43,7 @@ function sync() {
 		).getField('symbol').run()
 		
 	}).then(function(symbols: string[]) {
-		console.log('sync > symbols >')
+		console.warn('sync > symbols >')
 		eyes.inspect(symbols)
 		
 		if (symbols.length > 0) {
