@@ -57,18 +57,15 @@ export function syncFiatAssets(): Promise<boolean> {
 
 		Object.keys(results).forEach(function(symbol) {
 			let currency = results[symbol]
+			let name = currency.name
 
 			if (currency.altcoin) return;
-			// if (!tickers[symbol]) return;
+			if (name == symbol) return;
+			if (!tickers[symbol]) return;
 			if (items.findIndex(v => v.symbol == symbol) >= 0) return;
 
-			let name = currency.name
 			let iend = name.indexOf('(')
 			if (iend > 0) name = name.substring(0, iend).trim();
-			// if (name == symbol) {
-			// 	console.warn('name == symbol >', symbol)
-			// 	return
-			// }
 			items.push({ symbol, name, fiat: true } as Items.Asset)
 
 		})

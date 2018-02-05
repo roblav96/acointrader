@@ -33,8 +33,9 @@ export function start() {
 function sync() {
 	return Promise.resolve().then(function() {
 		return Promise.all([
-			coinmarketcap.syncCryptoAssets(),
-			localbitcoins.syncFiatAssets(),
+			// coinmarketcap.syncCryptoAssets(),
+			// localbitcoins.syncFiatAssets(),
+			restcountries.syncFiatAssets(),
 		])
 		
 	}).then(function() {

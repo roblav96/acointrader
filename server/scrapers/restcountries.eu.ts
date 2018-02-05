@@ -112,8 +112,11 @@ export function syncFiatAssets(): Promise<boolean> {
 			shared.object.compact(item)
 			return false
 		})
+		
+		console.log('items >')
+		eyes.inspect(items)
 
-		return r.table('assets').insert(items, { conflict: 'update' }).run()
+		// return r.table('assets').insert(items, { conflict: 'update' }).run()
 
 	}).then(function() {
 		console.info('syncFiatAssets > DONE')
