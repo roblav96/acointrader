@@ -24,7 +24,13 @@ export function sync(): Promise<void> {
 		])
 
 	}).then(function(resolved) {
-		let items = _.flatten(resolved)
+		let items = [
+			{ symbol: 'XAU', name: 'Gold Ounce', fiat: true, commodity: true },
+			{ symbol: 'XAG', name: 'Silver Ounce', fiat: true, commodity: true },
+			{ symbol: 'XPT', name: 'Platinum Ounce', fiat: true, commodity: true },
+			{ symbol: 'XPD', name: 'Palladium Ounce', fiat: true, commodity: true },
+		] as Items.Asset[]
+		items.push(..._.flatten(resolved))
 		items.push({ symbol: 'CNH', name: 'Chinese Yuan Offshore', fiat: true } as Items.Asset)
 		items = _.uniqBy(items, 'symbol')
 
