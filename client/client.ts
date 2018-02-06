@@ -45,7 +45,10 @@ Vue.config.performance = false
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(Buefy, {
-
+	defaultSnackbarDuration: 3000,
+	defaultToastDuration: 3000,
+	defaultInputAutocomplete: 'off',
+	defaultNoticeQueue: false,
 })
 
 

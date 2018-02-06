@@ -9,8 +9,7 @@ import * as utils from './utils'
 
 const sls = new SecureLS({ encodingType: 'aes' })
 
-console.warn('sls.clear')
-sls.clear()
+console.warn('sls.clear'); sls.clear();
 
 export function get<T = any>(key: string, def = null as T): T {
 	return sls.get(key) || def
