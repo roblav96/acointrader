@@ -20,9 +20,11 @@ import * as restcountries from '../scrapers/restcountries.eu'
 export function pre(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return r.table('assets').filter(r.row('fiat').eq(true)).count().run()
+
 	}).then(function(count: number) {
 		if (process.DEVELOPMENT && count > 0) return Promise.resolve();
 		return sync()
+
 	})
 }
 
@@ -82,18 +84,30 @@ export function start(): Promise<void> {
 		})
 
 		let chunks = shared.array.chunks(pairs, process.$instances)
-		shared.array.create(process.$instances).forEach(function(i) {
-			process.radio.emit('fiats.watch.' + i, chunks[i])
-		})
+		let dict = {}
+		chunks.forEach((v, i) => dict[i + ':' + process.ENV] = JSON.stringify(v))
+		return redis.hmset('fiats:watch', dict)
 
+	}).then(function() {
+		shared.array.create(process.$instances).forEach(function(i) {
+			process.radio.emit('fiats.watch.' + i)
+		})
 		return Promise.resolve()
+
 	})
 }
 
 
 
-function watch(pairs: string[]) {
-	console.log('pairs.length', pairs.length)
+function watch() {
+	return Promise.resolve().then(function() {
+		return redis.hget('fiats:watch', process.$instance + ':' + process.ENV)
+
+	}).then(function(pairs: string[]) {
+		pairs = shared.json.parse(pairs)
+		console.log('pairs.length', pairs.length)
+
+	})
 }
 if (process.WORKER) process.radio.once('fiats.watch.' + process.$instance, watch);
 

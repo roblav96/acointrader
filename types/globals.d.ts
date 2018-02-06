@@ -14,7 +14,7 @@ declare global {
 			benchStart: (id: string) => void
 			benchPing: (id: string, name: string) => void
 			benchEnd: (id: string) => void
-			$env: string
+			ENV: string
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean
 			CLIENT: boolean

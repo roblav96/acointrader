@@ -21,7 +21,7 @@ export const valid = {
 	},
 	email(email: string): boolean {
 		if (!string.is(email)) return false;
-		/** ████  maybe prevents future Regex vulnerabilities?  */
+		/** ████ maybe prevents future Regex vulnerabilities? */
 		if (email.indexOf('@') == -1 || email.indexOf('.') == -1) return false;
 		return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
 	},
@@ -177,9 +177,9 @@ export const array = {
 		})
 	},
 	dictionary<T>(items: T[], key: string): Dict<T> {
-		return items.reduce(function(prev, curr, i) {
-			prev[curr[key]] = curr
-			return prev
+		return items.reduce(function(previous, current, i) {
+			previous[current[key]] = current
+			return previous
 		}, {})
 	}
 }
@@ -194,7 +194,7 @@ export const json = {
 		}
 		return false
 	},
-	/** ████  ONLY use assuming target as object  */
+	/** ████ ONLY use assuming target as object */
 	parse<T>(target: T): T {
 		return json.is(target) ? JSON.parse(target as any) : target
 	},

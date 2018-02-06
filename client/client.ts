@@ -1,8 +1,8 @@
 // 
 
-process.$env = process.$webpack.env
-process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
-process.PRODUCTION = process.$env == 'PRODUCTION'
+process.ENV = process.$webpack.env
+process.DEVELOPMENT = process.ENV == 'DEVELOPMENT'
+process.PRODUCTION = process.ENV == 'PRODUCTION'
 process.CLIENT = true
 process.SERVER = false
 

@@ -18,9 +18,9 @@ eOpts.maxLength = 65536
 process.$instances = os.cpus().length
 process.$instance = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1
 
-process.$env = process.$webpack.env
-process.DEVELOPMENT = process.$env == 'DEVELOPMENT'
-process.PRODUCTION = process.$env == 'PRODUCTION'
+process.ENV = process.$webpack.env
+process.DEVELOPMENT = process.ENV == 'DEVELOPMENT'
+process.PRODUCTION = process.ENV == 'PRODUCTION'
 process.CLIENT = false
 process.SERVER = true
 process.MASTER = cluster.isMaster
@@ -118,7 +118,7 @@ if (process.MASTER) {
 	console.log('\n\n' +
 		clc.bold.underline.magenta('𝛂CoinTrader') + '\n' +
 		'v' + process.$version + ' ' +
-		clc.bold(process.$env) + '\n' +
+		clc.bold(process.ENV) + '\n' +
 		host + '\n' +
 		'/*===============================================\n' +
 		'=========           ' + clc.bold(moment().format('hh:mm:ss')) + '           ==========\n' +
