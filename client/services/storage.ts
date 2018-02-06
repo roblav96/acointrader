@@ -7,7 +7,22 @@ import * as utils from './utils'
 
 
 
-export const sls = new SecureLS({ encodingType: 'aes' })
+const sls = new SecureLS({ encodingType: 'aes' })
 
+export function get<T>(key: string, def = null as T): T {
+	return sls.get(key) || def
+}
+
+export function set(key: string, value: any) {
+	sls.set(key, value)
+}
+
+export function remove(key: string) {
+	sls.remove(key)
+}
+
+export function clear() {
+	sls.clear()
+}
 
 

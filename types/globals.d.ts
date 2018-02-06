@@ -26,7 +26,6 @@ declare global {
 			$domain: string
 			$version: string
 			ee3: ee3.EventEmitter
-			sls: any
 		}
 	}
 

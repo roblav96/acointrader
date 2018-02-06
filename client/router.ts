@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import _ from 'lodash'
 import * as shared from '../shared/shared'
 import * as utils from './services/utils'
+import * as security from './services/security'
 import * as store from './services/store'
 
 import Root from './root/root'
@@ -43,10 +44,9 @@ Root.options.store = store.store
 
 
 new Root().$mount('#root')
-// security.getReady().then(function() {
-// 	new Root().$mount('#root')
-// 	return Promise.resolve()
-// })
+security.init().then(function() {
+	// new Root().$mount('#root')
+})
 
 
 

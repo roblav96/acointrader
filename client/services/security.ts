@@ -13,8 +13,8 @@ import * as http from './http'
 
 
 export const state = {
-	email: storage.sls.get('security.email') as string,
-	phone: storage.sls.get('security.phone') as string,
+	// email: storage.sls.get('security.email') as string,
+	// phone: storage.sls.get('security.phone') as string,
 }
 
 
@@ -61,7 +61,7 @@ function syncToken() {
 	})
 }
 
-export function getReady() {
+export function init() {
 	return Promise.resolve().then(function() {
 		return Promise.all([
 			initUuid(), initFinger(), initPemKeys(),
@@ -84,11 +84,11 @@ export function getHeaders(): HttpHeaders {
 
 
 
-export function saveEmail(response) {
-	storage.sls.set('security.email', response.email)
-	state.email = response.email
-	storage.sls.set('security.publicPem', response.publicPem)
-}
+// export function saveEmail(response) {
+// 	storage.sls.set('security.email', response.email)
+// 	state.email = response.email
+// 	storage.sls.set('security.publicPem', response.publicPem)
+// }
 
 // export function askEmail(): Promise<boolean> {
 // 	return EmailPrompt.prompt(state.email).then(function(email) {
