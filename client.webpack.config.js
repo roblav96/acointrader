@@ -25,7 +25,9 @@ const config = {
 
 	resolve: {
 		extensions: ['.vue', '.ts', '.js'],
-		alias: { 'vue$': 'vue/dist/vue.esm.js' },
+		alias: {
+			'vue$': 'vue/dist/vue.esm.js',
+		},
 	},
 
 	module: {
@@ -68,7 +70,7 @@ const config = {
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
 	],
 
-	devtool: 'inline-source-map',
+	devtool: 'source-map',
 
 }
 

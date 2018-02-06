@@ -7,7 +7,6 @@ import * as errors from './services/errors'
 import * as utils from './services/utils'
 import * as shared from '../shared/shared'
 
-import cluster from 'cluster'
 import restify from 'restify'
 import url from 'url'
 import r from './adapters/rethinkdb'
@@ -89,7 +88,7 @@ server.on('uncaughtException', function(req: RestifyRequest, res: RestifyRespons
 
 server.on('after', function(req: RestifyRequest, res: RestifyResponse, route: restify.Route, error: any) {
 
-	if (res && res.statusCode == 302) return;
+	// if (res && res.statusCode == 302) return;
 
 	if (error) {
 		let name = _.get(req, 'route.name') as string

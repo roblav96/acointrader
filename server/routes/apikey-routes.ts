@@ -24,7 +24,7 @@ export default {
 			return r.table('users').get(req.doc.email).run()
 
 		}).then(function(data) {
-			let apiKey = shared.security.decryptObject(req.body, data.privatePem) as ExchangeApiKey
+			let apiKey = shared.security.decrypt(req.body, data.privatePem) // as ExchangeApiKey
 			return r.table('users').update({
 				email: req.doc.email,
 				apiKeys: { [apiKey.id]: apiKey },
@@ -46,7 +46,7 @@ export default {
 			return r.table('users').get(req.doc.email).run()
 
 		}).then(function(data) {
-			let apiKey = shared.security.decryptObject(req.body, data.privatePem) as ExchangeApiKey
+			let apiKey = shared.security.decrypt(req.body, data.privatePem) // as ExchangeApiKey
 			return r.table('users').update({
 				email: req.doc.email,
 				apiKeys: { [apiKey.id]: null },

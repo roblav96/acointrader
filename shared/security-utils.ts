@@ -9,17 +9,11 @@ import forge from 'node-forge'
 
 
 
-declare global {
-	interface PemKeyPair { publicPem: string, privatePem: string }
-}
-
-
-
 export const security = {
 
-	sha256(input: string): string {
+	sha256(value: string): string {
 		let md = (forge.md as any).sha512.sha256.create()
-		md.update(input)
+		md.update(value)
 		return md.digest().toHex()
 	},
 
@@ -30,31 +24,27 @@ export const security = {
 	generatePrime(size: number): Promise<string> {
 		return new Promise(function(resolve, reject) {
 			forge.prime.generateProbablePrime((size * 4), function(error, result) {
-				if (error) reject(error);
-				else resolve(result.toString(16));
+				if (error) return reject(error);
+				resolve(result.toString(16))
 			})
 		})
 	},
 
-	generatePemKeyPair(size: number): Promise<PemKeyPair> {
+	generatePemKeyPair(size: number): Promise<Security.PemKeyPair> {
 		return new Promise(function(resolve, reject) {
-			if (process.CLIENT) {
-				resolve(forge.pki.rsa.generateKeyPair({ bits: size, e: 0x10001 }))
-			} else {
-				forge.pki.rsa.generateKeyPair({ bits: size }, function(error, keypair) {
-					if (error) reject(error);
-					else resolve(keypair);
-				})
-			}
+			forge.pki.rsa.generateKeyPair({ bits: size, workers: -1 }, function(error, keypair) {
+				if (error) return reject(error);
+				resolve(keypair)
+			})
 		}).then(function(keypair: forge.pki.KeyPair) {
 			return Promise.resolve({
 				publicPem: forge.pki.publicKeyToPem(keypair.publicKey),
 				privatePem: forge.pki.privateKeyToPem(keypair.privateKey),
-			} as PemKeyPair)
+			} as Security.PemKeyPair)
 		})
 	},
 
-	encryptObject<T>(decrypted: T, publicPem: string): T {
+	encrypt<T>(decrypted: T, publicPem: string): T {
 		let publicKey = forge.pki.publicKeyFromPem(publicPem)
 		let encrypted = {} as T
 		Object.keys(decrypted).forEach(function(key) {
@@ -65,7 +55,7 @@ export const security = {
 		return encrypted
 	},
 
-	decryptObject<T>(encrypted: T, privatePem: string): T {
+	decrypt<T>(encrypted: T, privatePem: string): T {
 		let privateKey = forge.pki.privateKeyFromPem(privatePem)
 		let decrypted = {} as T
 		Object.keys(encrypted).forEach(function(key) {
@@ -76,12 +66,24 @@ export const security = {
 		return decrypted
 	},
 
-
-
 }
 
 
 
+
+
+
+
+declare global {
+	namespace Security {
+
+		interface PemKeyPair {
+			publicPem: string
+			privatePem: string
+		}
+
+	}
+}
 
 
 

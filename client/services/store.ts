@@ -12,6 +12,8 @@ import * as user from './user'
 
 class State {
 
+	loading = true
+
 	security = security.state
 	user = user.state
 

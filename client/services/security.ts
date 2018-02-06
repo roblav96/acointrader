@@ -13,38 +13,38 @@ import * as http from './http'
 
 
 export const state = {
-	// email: storage.sls.get('security.email') as string,
-	// phone: storage.sls.get('security.phone') as string,
+	email: storage.get('security.email', ''),
+	phone: storage.get('security.phone', ''),
 }
 
 
 
 function initUuid() {
-	let uuid = storage.sls.get('security.uuid') as string
+	let uuid = storage.get('security.uuid') as string
 	if (uuid) return Promise.resolve();
 	return shared.security.generatePrime(64).then(function(prime) {
-		storage.sls.set('security.uuid', prime)
+		storage.set('security.uuid', prime)
 		return Promise.resolve()
 	})
 }
 
 function initFinger() {
-	let finger = storage.sls.get('security.finger') as string
+	let finger = storage.get('security.finger') as string
 	if (finger) return Promise.resolve();
 	return new Promise<void>(function(resolve) {
 		new Fingerprint2().get(finger => {
-			storage.sls.set('security.finger', shared.security.sha256(finger))
+			storage.set('security.finger', shared.security.sha256(finger))
 			resolve()
 		})
 	})
 }
 
 function initPemKeys() {
-	let publicPem = storage.sls.get('security.publicPem') as string
+	let publicPem = storage.get('security.publicPem') as string
 	if (publicPem) return Promise.resolve();
 	return shared.security.generatePemKeyPair(1024).then(function(keypair) {
-		storage.sls.set('security.publicPem', keypair.publicPem)
-		storage.sls.set('security.privatePem', keypair.privatePem)
+		storage.set('security.publicPem', keypair.publicPem)
+		storage.set('security.privatePem', keypair.privatePem)
 		return Promise.resolve()
 	})
 }
@@ -62,22 +62,34 @@ function syncToken() {
 }
 
 export function init() {
+
 	return Promise.resolve().then(function() {
-		return Promise.all([
-			initUuid(), initFinger(), initPemKeys(),
-		])
-	}).then(syncToken).then(function() {
-		return Promise.resolve()
+		console.log('generatePemKeyPair')
+		return shared.security.generatePemKeyPair(2048).then(function(keypair) {
+			console.log('keypair', keypair)
+		})
+		// forge.pki.rsa.generateKeyPair({ bits: 2048, workers: 2 }, function(error, keypair) {
+		// 	if (error) return console.error('init > error', error);
+		// 	console.log('keypair', keypair)
+		// })
 	})
+
+	// return Promise.resolve().then(function() {
+	// 	return Promise.all([
+	// 		initUuid(), initFinger(), initPemKeys(),
+	// 	])
+	// }).then(syncToken).then(function() {
+	// 	return Promise.resolve()
+	// })
 }
 
 
 
 export function getHeaders(): HttpHeaders {
 	let headers = {
-		'x-uuid': storage.sls.get('security.uuid'),
-		'x-finger': storage.sls.get('security.finger'),
-		'x-email': storage.sls.get('security.email') || undefined,
+		'x-uuid': storage.get('security.uuid'),
+		'x-finger': storage.get('security.finger'),
+		'x-email': storage.get('security.email') || undefined,
 	} as HttpHeaders
 	return headers
 }
@@ -85,9 +97,9 @@ export function getHeaders(): HttpHeaders {
 
 
 // export function saveEmail(response) {
-// 	storage.sls.set('security.email', response.email)
+// 	storage.set('security.email', response.email)
 // 	state.email = response.email
-// 	storage.sls.set('security.publicPem', response.publicPem)
+// 	storage.set('security.publicPem', response.publicPem)
 // }
 
 // export function askEmail(): Promise<boolean> {
@@ -95,7 +107,7 @@ export function getHeaders(): HttpHeaders {
 // 		if (!email) return Promise.resolve(false);
 // 		return http.post('/security/set-email', { email }).then(function(response) {
 // 			console.log('response', response)
-// 			// storage.sls.set('security.email', email)
+// 			// storage.set('security.email', email)
 // 			// state.email = email
 // 			return Promise.resolve(true)
 // 		})
@@ -111,7 +123,7 @@ export function getHeaders(): HttpHeaders {
 // 		if (!email) return Promise.resolve(false);
 // 		return http.post('/set-email', { email }).then(function(response) {
 // 			console.log('response', response)
-// 			storage.sls.set('security.email', email)
+// 			storage.set('security.email', email)
 // 			state.email = email
 // 			return Promise.resolve(true)
 // 		})

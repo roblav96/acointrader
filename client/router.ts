@@ -41,9 +41,10 @@ export const router = new VueRouter({
 Root.options.router = router
 Root.options.store = store.store
 
+export const vm = new Root().$mount('#root')
 
 
-new Root().$mount('#root')
+
 security.init().then(function() {
 	// new Root().$mount('#root')
 })

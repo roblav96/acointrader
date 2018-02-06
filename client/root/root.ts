@@ -15,14 +15,11 @@ import * as utils from '../services/utils'
 export default class Root extends Vue {
 
 	created() {
-		shared
-		// console.log('shared.json', shared.json)
+		
 	}
 
-	initing = true
 	mounted() {
-		_.delay(() => this.initing = false, 100)
-		_.delay(() => this.initing = null, 1000)
+		
 	}
 
 	beforeDestroy() {
