@@ -1,10 +1,10 @@
 <!--  -->
 <script lang="ts" src="./root.ts"></script>
-
+<!--  -->
 <style src="./root.css"></style>
-
+<!--  -->
 <template>
-    <section class="section">
+    <div id="root">
 
         <div class="container">
             <h1 class="title">
@@ -30,8 +30,8 @@
             </button>
         </div>
 
-        <!-- <b-loading :active.sync="$store.state.loading" :canCancel="false"></b-loading> -->
+        <b-loading :active.sync="$store.state.blockui" :canCancel="false"></b-loading>
 
-    </section>
+    </div>
 </template>
 

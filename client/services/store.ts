@@ -12,7 +12,7 @@ import * as user from './user'
 
 class State {
 
-	loading = true
+	blockui = true
 
 	security = security.state
 	user = user.state
