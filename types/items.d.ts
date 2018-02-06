@@ -25,14 +25,11 @@ declare namespace Items {
 		symbol: string
 		name: string
 		logo: string
-		unicode: string
 		fiat: boolean
-		commodity: boolean
 		crypto: boolean
 		coin: boolean
 		token: string
 		mineable: boolean
-		inactive: boolean
 		availableSupply: number
 		totalSupply: number
 		maxSupply: number

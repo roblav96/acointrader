@@ -9,7 +9,7 @@ process.SERVER = false
 process.$domain = 'https://acointrader.com'
 if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
 
-process.$version = '1'
+process.$version = '0.0.1'
 
 
 

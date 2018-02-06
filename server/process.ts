@@ -54,10 +54,10 @@ console.format = function(args) {
 	let output = clc[color + 'Bright']('▉') + time + instance
 	if (args.method == 'warn') {
 		output = clc.yellowBright('=============================== WARN ================================\n') + output
-		file = clc.yellow(file)
+		// file = clc.yellow(file)
 	} else if (args.method == 'error') {
 		output = clc.redBright('=============================== ERROR ================================\n') + output
-		file = clc.redBright(file)
+		// file = clc.redBright(file)
 	} else {
 		// file = clc[color](file)
 	}

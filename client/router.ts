@@ -8,10 +8,7 @@ import * as utils from './services/utils'
 
 import Root from './root/root'
 
-console.log('_.keys(shared)', _.keys(shared))
-console.log('_.keysIn(shared)', _.keysIn(shared))
-console.log('_.functions(shared)', _.functions(shared))
-console.log('_.functionsIn(shared)', _.functionsIn(shared))
+
 
 export const routes = [
 
@@ -24,7 +21,7 @@ export const routes = [
 	// 	path: '/accounts',
 	// 	component: Accounts,
 	// },
-	
+
 	// {
 	// 	path: '*',
 	// 	redirect: { name: 'accounts' },
@@ -51,5 +48,11 @@ new Root().$mount('#root')
 // })
 
 
+
+
+
+if (process.DEVELOPMENT) {
+	Object.keys(shared).forEach(k => window[k] = shared[k])
+}
 
 
