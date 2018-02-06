@@ -30,7 +30,7 @@
             </button>
         </div>
 
-        <b-loading :active="$store.state.blockui" :canCancel="false"></b-loading>
+        <b-loading :active.sync="$store.state.blockui" :canCancel="false"></b-loading>
 
     </div>
 </template>
