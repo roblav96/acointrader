@@ -63,6 +63,7 @@
 		"p-timeout": "latest",
 		"plivo": "latest",
 		"query-string": "latest",
+		"react-stockcharts": "next",
 		"request-ip": "latest",
 		"restify": "latest",
 		"restify-errors": "latest",
