@@ -17,49 +17,43 @@ import trumpet from 'trumpet'
 import pdelay from 'delay'
 import pevent from 'p-event'
 import pforever from 'p-forever'
-import redis from '../adapters/redis'
 import r from '../adapters/rethinkdb'
+import redis from '../adapters/redis'
 import * as http from '../services/http'
-import * as forex from '../services/forex'
 
 
 
-export function getFiatQuotes(symbols: string[]) {
+export function getFiatQuotes(pairs: string[]): Promise<Items.FiatQuote[]> {
 	return Promise.resolve().then(function() {
 		return http.get('https://query1.finance.yahoo.com/v7/finance/quote', {
-			symbols: symbols.join(','),
-		}, { silent: true })
+			symbols: pairs.map(v => v + '=X').join(','),
+		}, { silent: false })
 
 	}).then(function(response) {
-		let fxquotes = response.quoteResponse.result as Array<Yahoo.Quote>
-		let items = fxquotes.filter(v => !!v).map(function(fxquote) {
-			let pair = fxquote.symbol.split('=').shift()
+		let yquotes = response.quoteResponse.result as Yahoo.Quote[]
+		
+		let fquotes = yquotes.filter(v => !!v).map(function(yquote) {
+			let pair = yquote.symbol.split('=').shift()
 			return {
 				pair,
-				base: pair.replace(fxquote.currency, ''),
-				quote: fxquote.currency,
-				symbol: fxquote.symbol,
-				name: fxquote.shortName,
-				exchange: fxquote.exchange,
-				bidPrice: fxquote.bid,
-				bidSize: fxquote.bidSize,
-				askPrice: fxquote.ask,
-				askSize: fxquote.askSize,
-				price: fxquote.regularMarketPrice,
-				change: fxquote.regularMarketChange,
-				changePercent: fxquote.regularMarketChangePercent,
-				updated: fxquote.regularMarketTime * 1000,
+				base: pair.replace(yquote.currency, ''),
+				quote: yquote.currency,
+				bidPrice: yquote.bid,
+				bidSize: yquote.bidSize,
+				askPrice: yquote.ask,
+				askSize: yquote.askSize,
+				price: yquote.regularMarketPrice,
+				updated: yquote.regularMarketTime * 1000,
 				stamp: Date.now(),
 			} as Items.FiatQuote
 		})
-		items.forEach(shared.object.compact)
-
-		let coms = items.map(v => ['hmset', 'fiats:' + v.pair, v])
-		return redis.pipelinecoms(coms as any)
+		
+		fquotes.forEach(shared.object.compact)
+		return Promise.resolve(fquotes)
 
 	}).catch(function(error) {
-		console.error('syncForexQuotes > error', errors.render(error))
-		return Promise.resolve()
+		console.error('getFiatQuotes > error', errors.render(error))
+		return Promise.resolve([])
 	})
 }
 

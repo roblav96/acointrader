@@ -40,16 +40,11 @@ declare namespace Items {
 		pair: string
 		base: string
 		quote: string
-		symbol: string
-		name: string
-		exchange: string
 		bidPrice: number
 		bidSize: number
 		askPrice: number
 		askSize: number
 		price: number
-		change: number
-		changePercent: number
 		updated: number
 		stamp: number
 	}

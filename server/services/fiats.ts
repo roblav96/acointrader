@@ -7,6 +7,8 @@ import * as errors from './errors'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
 
+import pevent from 'p-event'
+import pforever from 'p-forever'
 import r from '../adapters/rethinkdb'
 import redis from '../adapters/redis'
 import * as http from './http'
@@ -86,7 +88,7 @@ export function start(): Promise<void> {
 		let chunks = shared.array.chunks(pairs, process.$instances)
 		let dict = {}
 		chunks.forEach((v, i) => dict[i + ':' + process.ENV] = JSON.stringify(v))
-		return redis.hmset('fiats:watch', dict)
+		return redis.hmset('watch:fiats', dict)
 
 	}).then(function() {
 		shared.array.create(process.$instances).forEach(function(i) {
@@ -101,15 +103,26 @@ export function start(): Promise<void> {
 
 function watch() {
 	return Promise.resolve().then(function() {
-		return redis.hget('fiats:watch', process.$instance + ':' + process.ENV)
+		return pevent(process.ee3, shared.enums.EE3.TICK_60)
+
+	}).then(function() {
+		return redis.hget('watch:fiats', process.$instance + ':' + process.ENV)
 
 	}).then(function(pairs: string[]) {
 		pairs = shared.json.parse(pairs)
-		console.log('pairs.length', pairs.length)
+		return yahoo.getFiatQuotes(pairs)
+
+	}).then(function(fquotes) {
+		let coms = fquotes.map(v => ['hmset', 'fiats:' + v.pair, v])
+		return redis.pipelinecoms(coms as any)
 
 	})
 }
-if (process.WORKER) process.radio.once('fiats.watch.' + process.$instance, watch);
+if (process.WORKER) {
+	process.radio.once('fiats.watch.' + process.$instance, function() {
+		pforever(watch)
+	})
+}
 
 
 
