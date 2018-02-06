@@ -101,28 +101,26 @@ export function start(): Promise<void> {
 
 
 
-function watch() {
+function watch(i: number) {
+	const MAX = process.PRODUCTION ? 1024 : 128
 	return Promise.resolve().then(function() {
-		return pevent(process.ee3, shared.enums.EE3.TICK_60)
-
-	}).then(function() {
 		return redis.hget('watch:fiats', process.$instance + ':' + process.ENV)
 
 	}).then(function(pairs: string[]) {
 		pairs = shared.json.parse(pairs)
-		return yahoo.getFiatQuotes(pairs)
+		let count = Math.ceil(pairs.length / MAX)
+		let chunk = shared.array.chunks(pairs, count)[i % count]
+		return yahoo.getFiatQuotes(chunk)
 
 	}).then(function(fquotes) {
 		let coms = fquotes.map(v => ['hmset', 'fiats:' + v.pair, v])
 		return redis.pipelinecoms(coms as any)
 
+	}).catch(function(error) {
+		console.error('watch > error', errors.render(error))
 	})
 }
-if (process.WORKER) {
-	process.radio.once('fiats.watch.' + process.$instance, function() {
-		pforever(watch)
-	})
-}
+if (process.WORKER) process.ee3.addListener(shared.enums.EE3.TICK_60, watch);
 
 
 

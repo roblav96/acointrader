@@ -24,14 +24,21 @@ import * as http from '../services/http'
 
 
 export function getFiatQuotes(pairs: string[]): Promise<Items.FiatQuote[]> {
+	if (_.isEmpty(pairs)) return Promise.resolve([]);
+
 	return Promise.resolve().then(function() {
 		return http.get('https://query1.finance.yahoo.com/v7/finance/quote', {
 			symbols: pairs.map(v => v + '=X').join(','),
-		}, { silent: false })
+			fields: ([
+				'symbol', 'currency',
+				'bid', 'bidSize', 'ask', 'askSize',
+				'regularMarketPrice', 'regularMarketTime',
+			] as (keyof Yahoo.Quote)[]).join(','),
+		}, { silent: true })
 
 	}).then(function(response) {
 		let yquotes = response.quoteResponse.result as Yahoo.Quote[]
-		
+
 		let fquotes = yquotes.filter(v => !!v).map(function(yquote) {
 			let pair = yquote.symbol.split('=').shift()
 			return {
@@ -47,7 +54,7 @@ export function getFiatQuotes(pairs: string[]): Promise<Items.FiatQuote[]> {
 				stamp: Date.now(),
 			} as Items.FiatQuote
 		})
-		
+
 		fquotes.forEach(shared.object.compact)
 		return Promise.resolve(fquotes)
 
