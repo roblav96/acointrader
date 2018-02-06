@@ -1,53 +1,50 @@
 // 
 
-import * as Vts from 'vue-property-decorator'
-import * as Avts from 'av-ts'
-import Vue from 'vue'
 import _ from 'lodash'
 import forge from 'node-forge'
-{ (window as any).forge = forge }
-import Fingerprint2 from 'fingerprintjs2'
 import pdelay from 'delay'
-import axios from 'axios'
+import Fingerprint2 from 'fingerprintjs2'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
+import * as storage from './storage'
 import * as store from './store'
 import * as http from './http'
 
 
 
 export const state = {
-	email: process.sls.get('security.email') as string,
+	email: storage.sls.get('security.email') as string,
+	phone: storage.sls.get('security.phone') as string,
 }
 
 
 
 function initUuid() {
-	let uuid = process.sls.get('security.uuid') as string
+	let uuid = storage.sls.get('security.uuid') as string
 	if (uuid) return Promise.resolve();
 	return shared.security.generatePrime(64).then(function(prime) {
-		process.sls.set('security.uuid', prime)
+		storage.sls.set('security.uuid', prime)
 		return Promise.resolve()
 	})
 }
 
 function initFinger() {
-	let finger = process.sls.get('security.finger') as string
+	let finger = storage.sls.get('security.finger') as string
 	if (finger) return Promise.resolve();
 	return new Promise<void>(function(resolve) {
 		new Fingerprint2().get(finger => {
-			process.sls.set('security.finger', shared.security.sha256(finger))
+			storage.sls.set('security.finger', shared.security.sha256(finger))
 			resolve()
 		})
 	})
 }
 
 function initPemKeys() {
-	let publicPem = process.sls.get('security.publicPem') as string
+	let publicPem = storage.sls.get('security.publicPem') as string
 	if (publicPem) return Promise.resolve();
 	return shared.security.generatePemKeyPair(1024).then(function(keypair) {
-		process.sls.set('security.publicPem', keypair.publicPem)
-		process.sls.set('security.privatePem', keypair.privatePem)
+		storage.sls.set('security.publicPem', keypair.publicPem)
+		storage.sls.set('security.privatePem', keypair.privatePem)
 		return Promise.resolve()
 	})
 }
@@ -78,9 +75,9 @@ export function getReady() {
 
 export function getHeaders(): HttpHeaders {
 	let headers = {
-		'x-uuid': process.sls.get('security.uuid'),
-		'x-finger': process.sls.get('security.finger'),
-		'x-email': process.sls.get('security.email') || undefined,
+		'x-uuid': storage.sls.get('security.uuid'),
+		'x-finger': storage.sls.get('security.finger'),
+		'x-email': storage.sls.get('security.email') || undefined,
 	} as HttpHeaders
 	return headers
 }
@@ -88,9 +85,9 @@ export function getHeaders(): HttpHeaders {
 
 
 export function saveEmail(response) {
-	process.sls.set('security.email', response.email)
+	storage.sls.set('security.email', response.email)
 	state.email = response.email
-	process.sls.set('security.publicPem', response.publicPem)
+	storage.sls.set('security.publicPem', response.publicPem)
 }
 
 // export function askEmail(): Promise<boolean> {
@@ -98,7 +95,7 @@ export function saveEmail(response) {
 // 		if (!email) return Promise.resolve(false);
 // 		return http.post('/security/set-email', { email }).then(function(response) {
 // 			console.log('response', response)
-// 			// process.sls.set('security.email', email)
+// 			// storage.sls.set('security.email', email)
 // 			// state.email = email
 // 			return Promise.resolve(true)
 // 		})
@@ -114,7 +111,7 @@ export function saveEmail(response) {
 // 		if (!email) return Promise.resolve(false);
 // 		return http.post('/set-email', { email }).then(function(response) {
 // 			console.log('response', response)
-// 			process.sls.set('security.email', email)
+// 			storage.sls.set('security.email', email)
 // 			state.email = email
 // 			return Promise.resolve(true)
 // 		})

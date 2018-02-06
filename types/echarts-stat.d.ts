@@ -1,5 +1,9 @@
 // 
 
+declare module 'echarts-stat' {
+	export = EChartsStat
+}
+
 declare namespace EChartsStat {
 
 	type InputData = Array<Array<number>>
@@ -54,7 +58,4 @@ declare namespace EChartsStat {
 
 }
 
-declare module 'echarts-stat' {
-	export = EChartsStat
-}
 

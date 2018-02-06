@@ -25,16 +25,11 @@ import 'animate.css'
 import 'chartist/dist/chartist.min.css'
 import 'buefy/lib/buefy.css'
 import './styles.css'
-// import './styles/root.css'
 
 
 
-import 'correcting-interval'
 import ee3 from 'eventemitter3'
 process.ee3 = new ee3.EventEmitter()
-
-import SecureLS from 'secure-ls'
-process.sls = new SecureLS({ encodingType: 'aes' })
 
 
 
@@ -46,6 +41,7 @@ import Buefy from 'buefy'
 Vue.config.devtools = false
 Vue.config.productionTip = false
 Vue.config.performance = false
+
 Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(Buefy, {

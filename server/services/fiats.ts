@@ -107,7 +107,7 @@ function watch(i: number) {
 		return redis.hget('watch:fiats', process.$instance + ':' + process.ENV)
 
 	}).then(function(pairs: string[]) {
-		pairs = shared.json.parse(pairs)
+		pairs = shared.json.parse(pairs) || []
 		let count = Math.ceil(pairs.length / MAX)
 		let chunk = shared.array.chunks(pairs, count)[i % count]
 		return yahoo.getFiatQuotes(chunk)

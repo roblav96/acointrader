@@ -1,26 +1,13 @@
 // 
 
 import _ from 'lodash'
-import forge from 'node-forge'
+import SecureLS from 'secure-ls'
 import * as shared from '../../shared/shared'
 import * as utils from './utils'
-import * as security from './security'
-import * as http from './http'
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+export const sls = new SecureLS({ encodingType: 'aes' })
 
 
 

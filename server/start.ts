@@ -31,13 +31,7 @@ function start(): Promise<void> {
 		return fiats.start()
 
 	}).then(function() {
-		// 	process.radio.emit(utils.rxReadys.assets.event)
-		// 	return r.table('assets').filter(r.row('fiat').eq(true)).run()
-
-		// }).then(function(items: Items.Asset[]) {
-		// 	let symbols = items.map(v => v.symbol)
-		// 	process.radio.emit('forex.start', symbols)
-		// 	return Promise.resolve()
+		
 
 	}).catch(function(error) {
 		console.error('MASTER start > error', errors.render(error))

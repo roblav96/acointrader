@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import _ from 'lodash'
 import * as shared from '../shared/shared'
 import * as utils from './services/utils'
+import * as store from './services/store'
 
 import Root from './root/root'
 
@@ -37,7 +38,7 @@ export const router = new VueRouter({
 })
 
 Root.options.router = router
-// Root.options.store = store.store
+Root.options.store = store.store
 
 
 
@@ -48,11 +49,5 @@ new Root().$mount('#root')
 // })
 
 
-
-
-
-if (process.DEVELOPMENT) {
-	Object.keys(shared).forEach(k => window[k] = shared[k])
-}
 
 

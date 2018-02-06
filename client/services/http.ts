@@ -19,10 +19,8 @@ function request(config: HttpRequestConfig): Promise<any> {
 		let silent = config.silent == true || process.PRODUCTION
 		if (silent != true) console.log('%c▶ ' + config.method + ' ' + (config.production ? 'https://acointrader.com/api' + config.url : config.url) + ' ▶', 'font-weight: 300;', _.truncate(JSON.stringify(config.params || config.data || {}), { length: 64 }));
 
-
-
 		let isproxy = config.url[0] != '/'
-		let proxyconfig = isproxy ? utils.clone(config) : null
+		let proxyconfig = isproxy ? shared.object.clone(config) : null
 
 		if (!config.params) config.params = {};
 		if (config.silent == true) config.params.silent = true;
@@ -30,10 +28,11 @@ function request(config: HttpRequestConfig): Promise<any> {
 		let domain = config.production ? 'https://acointrader.com' : process.$domain
 		config.baseURL = domain + '/api'
 
-		Object.assign(config.headers, security.getHeaders(), {
+		Object.assign(config.headers, {
 			'x-version': process.$version,
 			'x-platform': 'web',
 		})
+		Object.assign(config.headers, security.getHeaders())
 		shared.object.compact(config.headers)
 
 		if (isproxy) {
@@ -58,18 +57,18 @@ function request(config: HttpRequestConfig): Promise<any> {
 
 }
 
-export function get<T = any>(url: string, params?: any, config = {} as HttpRequestConfig) {
+export function get<T = any>(url: string, params?: any, config = {} as HttpRequestConfig): Promise<T> {
 	config.url = url
 	config.method = 'GET'
 	if (params) config.params = params;
-	return request(config) as Promise<T>
+	return request(config)
 }
 
-export function post<D = any, T = any>(url: string, data?: D, config = {} as HttpRequestConfig) {
+export function post<D = any, T = any>(url: string, data?: D, config = {} as HttpRequestConfig): Promise<T> {
 	config.url = url
 	config.method = 'POST'
 	if (data) config.data = data;
-	return request(config) as Promise<T>
+	return request(config)
 }
 
 
