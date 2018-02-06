@@ -46,7 +46,7 @@ export const vm = new Root().$mount('#root')
 
 
 security.init().then(function() {
-	// new Root().$mount('#root')
+	store.store.state.blockui = false
 })
 
 

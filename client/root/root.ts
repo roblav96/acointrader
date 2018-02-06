@@ -18,8 +18,10 @@ export default class Root extends Vue {
 		
 	}
 
+	initing = true
 	mounted() {
-		
+		_.delay(() => this.initing = false, 100)
+		_.delay(() => this.initing = null, 1000)
 	}
 
 	beforeDestroy() {

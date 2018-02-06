@@ -4,7 +4,7 @@
 <style src="./root.css"></style>
 <!--  -->
 <template>
-    <div id="root">
+    <div id="root" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }">
 
         <div class="container">
             <h1 class="title">
@@ -30,7 +30,7 @@
             </button>
         </div>
 
-        <b-loading :active.sync="$store.state.blockui" :canCancel="false"></b-loading>
+        <b-loading :active="$store.state.blockui" :canCancel="false"></b-loading>
 
     </div>
 </template>

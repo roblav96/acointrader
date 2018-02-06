@@ -102,7 +102,7 @@ export function start(): Promise<void> {
 
 
 function watch(i: number) {
-	const MAX = process.PRODUCTION ? 1024 : 128
+	const MAX = process.PRODUCTION ? 1024 : 64
 	return Promise.resolve().then(function() {
 		return redis.hget('watch:fiats', process.$instance + ':' + process.ENV)
 

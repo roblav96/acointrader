@@ -32,7 +32,7 @@ function initFinger() {
 	let finger = storage.get('security.finger') as string
 	if (finger) return Promise.resolve();
 	return new Promise<void>(function(resolve) {
-		new Fingerprint2().get(finger => {
+		new Fingerprint2().get(function(finger) {
 			storage.set('security.finger', shared.security.sha256(finger))
 			resolve()
 		})
@@ -42,7 +42,8 @@ function initFinger() {
 function initPemKeys() {
 	let publicPem = storage.get('security.publicPem') as string
 	if (publicPem) return Promise.resolve();
-	return shared.security.generatePemKeyPair(1024).then(function(keypair) {
+	return shared.security.generatePemKeyPair(2048).then(function(keypair) {
+		console.log('keypair', keypair)
 		storage.set('security.publicPem', keypair.publicPem)
 		storage.set('security.privatePem', keypair.privatePem)
 		return Promise.resolve()
@@ -51,36 +52,24 @@ function initPemKeys() {
 
 
 
-function syncToken() {
-	return http.get('/security/token').then(response => {
+function initToken(): Promise<void> {
+	return http.get('/security/token').then(function(response) {
 		console.log('syncToken > response', response)
 		return Promise.resolve()
 	}).catch(function(error) {
 		console.error('syncToken > error', error)
-		return pdelay(process.DEVELOPMENT ? 3000 : 1000).then(syncToken)
+		return pdelay(process.DEVELOPMENT ? 3000 : 1000).then(initToken)
 	})
 }
 
 export function init() {
-
 	return Promise.resolve().then(function() {
-		console.log('generatePemKeyPair')
-		return shared.security.generatePemKeyPair(2048).then(function(keypair) {
-			console.log('keypair', keypair)
-		})
-		// forge.pki.rsa.generateKeyPair({ bits: 2048, workers: 2 }, function(error, keypair) {
-		// 	if (error) return console.error('init > error', error);
-		// 	console.log('keypair', keypair)
-		// })
+		return Promise.all([
+			initUuid(), initFinger(), initPemKeys(),
+		])
+	}).then(function() {
+		return initToken()
 	})
-
-	// return Promise.resolve().then(function() {
-	// 	return Promise.all([
-	// 		initUuid(), initFinger(), initPemKeys(),
-	// 	])
-	// }).then(syncToken).then(function() {
-	// 	return Promise.resolve()
-	// })
 }
 
 
