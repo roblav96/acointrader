@@ -21,10 +21,12 @@ process.$version = '0.0.1'
 
 
 
+import 'mdi/css/materialdesignicons.css'
 import 'animate.css'
 import 'chartist/dist/chartist.min.css'
 import 'buefy/lib/buefy.css'
-import './styles.css'
+import './styles/styles.css'
+import './styles/root.css'
 
 
 

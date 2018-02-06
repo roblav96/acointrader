@@ -1,24 +1,32 @@
 <!--  -->
 <script lang="ts" src="./root.ts"></script>
 <!--  -->
-<style src="./root.css"></style>
+<style>
+/*  */
+
+
+/*  */
+
+</style>
 <!--  -->
 <template>
     <div id="root" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }">
 
-        <section class="hero is-bold app-navbar animated slideInDown">
-            <div class="hero-head">
-                <nav class="nav">
-                    <div class="nav-left">
-                        <a class="nav-item is-hidden-tablet"><i aria-hidden="true" class="fa fa-bars"></i></a>
-                    </div>
-                    <div class="nav-center">
-                    	haii
-                    </div>
-                    <div class="nav-right is-flex"></div>
-                </nav>
-            </div>
-        </section>
+        <div class="block">
+            <b-icon icon="account" size="is-large" type="is-success"></b-icon>
+            <b-icon icon="home" size="is-large" type="is-info"></b-icon>
+            <b-icon icon="view-dashboard" size="is-large" type="is-primary"></b-icon>
+        </div>
+
+        <button class="button is-dark">
+            <b-icon icon="check"></b-icon>
+            <span>Finish</span>
+        </button>
+
+        <button class="button is-warning">
+            <b-icon icon="check"></b-icon>
+            <span>Finish</span>
+        </button>
 
         <b-loading :active.sync="$store.state.blockui" :canCancel="false"></b-loading>
 
