@@ -29,6 +29,8 @@ function start(): Promise<void> {
 
 	}).then(function() {
 		return fiats.start()
+
+	}).then(function() {
 		// 	process.radio.emit(utils.rxReadys.assets.event)
 		// 	return r.table('assets').filter(r.row('fiat').eq(true)).run()
 

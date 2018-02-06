@@ -50,7 +50,7 @@ export function syncForexQuotes(first?: boolean) {
 		})
 		items.forEach(shared.object.compact)
 
-		let coms = items.map(v => ['hmset', 'fx:' + v.pair, v])
+		let coms = items.map(v => ['hmset', 'fiats:' + v.pair, v])
 		return redis.pipelinecoms(coms as any)
 
 	}).catch(function(error) {

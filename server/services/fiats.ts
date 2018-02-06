@@ -68,7 +68,7 @@ function sync(): Promise<void> {
 
 
 
-export function start() {
+export function start(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return r.table('assets').filter(r.row('fiat').eq(true)).getField('symbol').run()
 
@@ -82,16 +82,20 @@ export function start() {
 		})
 
 		let chunks = shared.array.chunks(pairs, process.$instances)
-		console.log('pairs.length', pairs.length)
+		shared.array.create(process.$instances).forEach(function(i) {
+			process.radio.emit('fiats.watch.' + i, chunks[i])
+		})
 
+		return Promise.resolve()
 	})
 }
 
 
 
-function watch(items: Items.Asset[]) {
-
+function watch(pairs: string[]) {
+	console.log('pairs.length', pairs.length)
 }
+if (process.WORKER) process.radio.once('fiats.watch.' + process.$instance, watch);
 
 
 

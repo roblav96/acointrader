@@ -21,6 +21,7 @@ declare global {
 			SERVER: boolean
 			MASTER: boolean
 			PRIMARY: boolean
+			WORKER: boolean
 			$webpack: any
 			$domain: string
 			$version: string

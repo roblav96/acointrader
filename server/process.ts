@@ -25,6 +25,7 @@ process.CLIENT = false
 process.SERVER = true
 process.MASTER = cluster.isMaster
 process.PRIMARY = process.$instance == 0
+process.WORKER = cluster.isWorker
 
 process.$domain = 'https://acointrader.com'
 if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
@@ -114,8 +115,8 @@ process.benchEnd = function(id: string) {
 if (process.MASTER) {
 	let host = url.parse(process.$domain).host
 	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
-	console.log('\n\n\n\n' +
-		clc.bold.underline('𝛂CoinTrader') + '\n' +
+	console.log('\n\n' +
+		clc.bold.underline.magenta('𝛂CoinTrader') + '\n' +
 		'v' + process.$version + ' ' +
 		clc.bold(process.$env) + '\n' +
 		host + '\n' +
