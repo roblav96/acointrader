@@ -12,21 +12,22 @@ import r from './adapters/rethinkdb'
 import redis from './adapters/redis'
 import * as assets from './services/assets'
 import * as ledger from './services/ledger'
+import * as fiats from './services/fiats'
 import * as forex from './services/forex'
 
 
 
 function start(): Promise<void> {
 	return Promise.resolve().then(function() {
-		return ledger.startKeys()
+		return ledger.preKeys()
 
 	}).then(function() {
-		return assets.start()
+		return fiats.preAssets()
 
 	}).then(function() {
-		// 	return ledger.startAssets()
+		// return ledger.preAssets()
 
-		// }).then(function() {
+	}).then(function() {
 		// 	return utils.rxReadys.radios.onReady()
 
 		// }).then(function() {

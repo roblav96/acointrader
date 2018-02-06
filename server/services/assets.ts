@@ -20,7 +20,7 @@ import * as restcountries from '../scrapers/restcountries.eu'
 
 
 
-export function start() {
+export function pre() {
 	return Promise.resolve().then(function() {
 		return r.table('assets').count().run()
 	}).then(function(count: number) {
@@ -32,33 +32,33 @@ export function start() {
 
 
 
-function sync() {
-	return Promise.resolve().then(function() {
-		return Promise.all([
-			// coinmarketcap.syncCryptoAssets(),
-			localbitcoins.getFiatAssets(),
-			restcountries.getFiatAssets(),
-		])
+// function sync() {
+// 	return Promise.resolve().then(function() {
+// 		return Promise.all([
+// 			// coinmarketcap.syncCryptoAssets(),
+// 			localbitcoins.getFiatAssets(),
+// 			restcountries.getFiatAssets(),
+// 		])
 
-	}).then(function(resolved) {
+// 	}).then(function(resolved) {
 
 
-		// }).then(function() {
-		// 	return r.table('assets').filter(
-		// 		r.row('fiat').eq(true).and(r.row('crypto').eq(true))
-		// 	).getField('symbol').run()
+// 		// }).then(function() {
+// 		// 	return r.table('assets').filter(
+// 		// 		r.row('fiat').eq(true).and(r.row('crypto').eq(true))
+// 		// 	).getField('symbol').run()
 
-		// }).then(function(symbols: string[]) {
-		// 	console.warn('sync > symbols >')
-		// 	eyes.inspect(symbols)
+// 		// }).then(function(symbols: string[]) {
+// 		// 	console.warn('sync > symbols >')
+// 		// 	eyes.inspect(symbols)
 
-		// 	if (symbols.length > 0) {
-		// 		throw new errors.ConflictError(JSON.stringify(symbols))
-		// 	}
-		// 	// return ledger.syncAssets()
+// 		// 	if (symbols.length > 0) {
+// 		// 		throw new errors.ConflictError(JSON.stringify(symbols))
+// 		// 	}
+// 		// 	// return ledger.syncAssets()
 
-	})
-}
+// 	})
+// }
 
 
 

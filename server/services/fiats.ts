@@ -10,9 +10,21 @@ import * as utils from './utils'
 import r from '../adapters/rethinkdb'
 import redis from '../adapters/redis'
 import * as http from './http'
+import * as ledger from './ledger'
 import * as yahoo from '../scrapers/yahoo.com'
 import * as localbitcoins from '../scrapers/localbitcoins.com'
 import * as restcountries from '../scrapers/restcountries.eu'
+
+
+
+export function preAssets(): Promise<void> {
+	return Promise.resolve().then(function() {
+		return r.table('assets').filter(r.row('fiat').eq(true)).count().run()
+	}).then(function(count: number) {
+		if (process.DEVELOPMENT && count > 0) return Promise.resolve();
+		return sync()
+	})
+}
 
 
 
@@ -42,6 +54,12 @@ export function sync(): Promise<void> {
 		})
 
 		return r.table('assets').insert(items, { conflict: 'update' }).run()
+
+	}).then(function() {
+		return r.table('assets').filter(r.row('fiat').eq(true)).run()
+
+	}).then(function(items: Items.Asset[]) {
+		return ledger.insertAssets(items)
 
 	}).catch(function(error) {
 		console.error('sync > error', errors.render(error))
