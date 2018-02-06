@@ -8,7 +8,7 @@ import * as utils from './services/utils'
 import * as security from './services/security'
 import * as store from './services/store'
 
-import Root from './root/root'
+import Root from './components/root/root'
 
 
 

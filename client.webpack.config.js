@@ -5,7 +5,6 @@ const webpack = require('webpack')
 const path = require('path')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 const env = require('./client.env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
@@ -45,22 +44,27 @@ const config = {
 				test: /\.vue$/,
 				loader: 'vue-loader',
 				options: {
-					extractCSS: true,
+					
 				},
 			},
 			{
 				test: /\.css$/,
-				// loader: ['style-loader', 'css-loader'],
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: 'css-loader',
-				}),
+				loader: ['style-loader', 'css-loader'],
 			},
 			{
 				test: /\.(ttf|eot|woff|woff2|svg)$/,
 				loader: 'file-loader',
 				options: {
-
+					publicPath: '/dist/',
+					name: '[name].[ext]',
+				},
+			},
+			{
+				test: /worker/,
+				loader: 'file-loader',
+				options: {
+					publicPath: '/dist/',
+					name: '[name].[ext]',
 				},
 			},
 		],
@@ -69,7 +73,6 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
-		new ExtractTextPlugin('styles.css'),
 	],
 
 	devtool: 'source-map',
