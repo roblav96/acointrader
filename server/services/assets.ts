@@ -26,7 +26,7 @@ export function pre() {
 	}).then(function(count: number) {
 		// if (count > 0) return Promise.resolve();
 		// return sync()
-		return fiats.sync()
+		// return fiats.sync()
 	})
 }
 

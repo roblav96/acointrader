@@ -36,7 +36,7 @@ declare namespace Items {
 		maxSupply: number
 	}
 
-	interface ForexQuote {
+	interface FiatQuote {
 		pair: string
 		base: string
 		quote: string

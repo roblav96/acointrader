@@ -43,6 +43,7 @@ export function start(symbols: string[]) {
 
 
 
+
 // export const IDS = [] as Array<string>
 // export const PAIRS = [] as Array<string>
 // export const SYMBOLS = [] as Array<string>

@@ -19,18 +19,16 @@ import * as forex from './services/forex'
 
 function start(): Promise<void> {
 	return Promise.resolve().then(function() {
-		return ledger.preKeys()
+		return ledger.pre()
 
 	}).then(function() {
-		return fiats.preAssets()
+		return fiats.pre()
 
 	}).then(function() {
-		// return ledger.preAssets()
+		return utils.rxReadys.radios.onReady()
 
 	}).then(function() {
-		// 	return utils.rxReadys.radios.onReady()
-
-		// }).then(function() {
+		return fiats.start()
 		// 	process.radio.emit(utils.rxReadys.assets.event)
 		// 	return r.table('assets').filter(r.row('fiat').eq(true)).run()
 

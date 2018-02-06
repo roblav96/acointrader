@@ -21,9 +21,17 @@ export const client = new sequence.Client(process.$webpack.sequence)
 
 
 
+export function pre(): Promise<void> {
+	return Promise.resolve().then(function() {
+		return preKeys()
+	})
+}
+
+
+
 const KEYS = ['master', 'server', 'treasury', 'exchange']
 
-export function preKeys(): Promise<void> {
+function preKeys(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return client.keys.queryAll()
 	}).then(function(keys: Ledger.Key[]) {
@@ -107,19 +115,19 @@ function createAsset(item: Items.Asset, keys = ['master', 'server', 'treasury'])
 
 
 
-import * as seq_shared from 'sequence-sdk/dist/shared'
-import * as seq_page from 'sequence-sdk/dist/page'
+import * as sdkshared from 'sequence-sdk/dist/shared'
+import * as sdkpage from 'sequence-sdk/dist/page'
 
 declare global {
 	namespace Ledger {
 
-		interface Key extends seq_shared.Key { }
-		interface Asset<T = any> extends seq_shared.CreateRequest {
+		interface Key extends sdkshared.Key { }
+		interface Asset<T = any> extends sdkshared.CreateRequest {
 			id: string
 			contractVersion: number
 			tags: T
 		}
-		interface Page<T = any> extends seq_page.Page {
+		interface Page<T = any> extends sdkpage.Page {
 			client: sequence.Client
 			next: { page_size: number, after: string, type: string }
 			items: T[]

@@ -17,7 +17,7 @@ import * as restcountries from '../scrapers/restcountries.eu'
 
 
 
-export function preAssets(): Promise<void> {
+export function pre(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return r.table('assets').filter(r.row('fiat').eq(true)).count().run()
 	}).then(function(count: number) {
@@ -28,7 +28,7 @@ export function preAssets(): Promise<void> {
 
 
 
-export function sync(): Promise<void> {
+function sync(): Promise<void> {
 	return Promise.resolve().then(function() {
 		return Promise.all([
 			restcountries.getFiatAssets(),
@@ -68,6 +68,30 @@ export function sync(): Promise<void> {
 
 
 
+export function start() {
+	return Promise.resolve().then(function() {
+		return r.table('assets').filter(r.row('fiat').eq(true)).getField('symbol').run()
+
+	}).then(function(symbols: string[]) {
+		let pairs = [] as string[]
+		symbols.forEach(function(base) {
+			symbols.forEach(function(quote) {
+				if (base == quote) return;
+				pairs.push(base + quote)
+			})
+		})
+
+		let chunks = shared.array.chunks(pairs, process.$instances)
+		console.log('pairs.length', pairs.length)
+
+	})
+}
+
+
+
+function watch(items: Items.Asset[]) {
+
+}
 
 
 
