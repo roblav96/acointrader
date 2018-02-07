@@ -1,0 +1,798 @@
+[
+  {
+    "timeStamp": 1517988547309,
+    "time": 16633,
+    "hash": "754a8d73c7831337160f",
+    "errors": [],
+    "size": 9894678,
+    "assets": [
+      {
+        "name": "materialdesignicons-webfont.ttf",
+        "chunks": [],
+        "size": 302940
+      },
+      {
+        "name": "prime.worker.min.js",
+        "chunks": [],
+        "size": 21250
+      },
+      {
+        "name": "materialdesignicons-webfont.eot",
+        "chunks": [],
+        "size": 303160
+      },
+      {
+        "name": "materialdesignicons-webfont.woff2",
+        "chunks": [],
+        "size": 112468
+      },
+      {
+        "name": "materialdesignicons-webfont.woff",
+        "chunks": [],
+        "size": 148792
+      },
+      {
+        "name": "prime.worker.min.js.map",
+        "chunks": [],
+        "size": 121
+      },
+      {
+        "name": "materialdesignicons-webfont.svg",
+        "chunks": [],
+        "size": 2299872
+      },
+      {
+        "name": "vendor.js",
+        "chunks": [
+          0
+        ],
+        "size": 50053,
+        "miniSize": 43507,
+        "minified": false
+      },
+      {
+        "name": "vendor.dll.js",
+        "chunks": [
+          1
+        ],
+        "size": 2940604,
+        "miniSize": 2581519,
+        "minified": false
+      },
+      {
+        "name": "vendor.js.map",
+        "chunks": [
+          0
+        ],
+        "size": 61619
+      },
+      {
+        "name": "vendor.dll.js.map",
+        "chunks": [
+          1
+        ],
+        "size": 3653799
+      }
+    ],
+    "chunks": [
+      {
+        "size": 34493,
+        "files": [
+          "vendor.js",
+          "vendor.js.map"
+        ],
+        "modules": [
+          {
+            "name": "./client/services/security.ts",
+            "size": 2157,
+            "id": 19
+          },
+          {
+            "name": "./shared/shared.ts",
+            "size": 5876,
+            "id": 30
+          },
+          {
+            "name": "crypto (ignored)",
+            "size": 15,
+            "id": 35
+          },
+          {
+            "name": "./client/services/storage.ts",
+            "size": 388,
+            "id": 47
+          },
+          {
+            "name": "./client/services/http.ts",
+            "size": 2447,
+            "id": 48
+          },
+          {
+            "name": "./node_modules/ts-loader!./client/components/root/root.ts",
+            "size": 1844,
+            "id": 54
+          },
+          {
+            "name": "dll vendor",
+            "size": 12,
+            "id": 55
+          },
+          {
+            "name": "./client/client.ts",
+            "size": 1109,
+            "id": 56
+          },
+          {
+            "name": "./client/styles/styles.css",
+            "size": 1087,
+            "id": 75
+          },
+          {
+            "name": "./node_modules/css-loader!./client/styles/styles.css",
+            "size": 7776,
+            "id": 76
+          },
+          {
+            "name": "./client/styles/root.css",
+            "size": 1081,
+            "id": 77
+          },
+          {
+            "name": "./node_modules/css-loader!./client/styles/root.css",
+            "size": 232,
+            "id": 78
+          },
+          {
+            "name": "./client/router.ts",
+            "size": 462,
+            "id": 82
+          },
+          {
+            "name": "./shared/enums.ts",
+            "size": 344,
+            "id": 86
+          },
+          {
+            "name": "./shared/security-utils.ts",
+            "size": 2147,
+            "id": 87
+          },
+          {
+            "name": "./shared/exchange-utils.ts",
+            "size": 26,
+            "id": 101
+          },
+          {
+            "name": "./client/services/store.ts",
+            "size": 394,
+            "id": 128
+          },
+          {
+            "name": "./client/services/user.ts",
+            "size": 332,
+            "id": 129
+          },
+          {
+            "name": "./client/components/root/root.vue",
+            "size": 1809,
+            "id": 130
+          },
+          {
+            "name": "./node_modules/vue-style-loader!./node_modules/css-loader?sourceMap!./node_modules/vue-loader/lib/style-compiler?{\"vue\":true,\"id\":\"data-v-34ddee48\",\"scoped\":false,\"sourceMap\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./client/components/root/root.vue",
+            "size": 1637,
+            "id": 131
+          },
+          {
+            "name": "./node_modules/css-loader?sourceMap!./node_modules/vue-loader/lib/style-compiler?{\"vue\":true,\"id\":\"data-v-34ddee48\",\"scoped\":false,\"sourceMap\":true}!./node_modules/vue-loader/lib/selector.js?type=styles&index=0!./client/components/root/root.vue",
+            "size": 1401,
+            "id": 132
+          },
+          {
+            "name": "./node_modules/vue-loader/lib/template-compiler?{\"id\":\"data-v-34ddee48\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./client/components/root/root.vue",
+            "size": 1917,
+            "id": 138
+          }
+        ]
+      },
+      {
+        "size": 2920656,
+        "files": [
+          "vendor.dll.js",
+          "vendor.dll.js.map"
+        ],
+        "modules": [
+          {
+            "name": "./node_modules/node-forge/lib/forge.js",
+            "size": 200,
+            "id": 0
+          },
+          {
+            "name": "./node_modules/node-forge/lib/util.js",
+            "size": 77536,
+            "id": 1
+          },
+          {
+            "name": "./node_modules/process/browser.js",
+            "size": 5418,
+            "id": 2
+          },
+          {
+            "name": "./node_modules/axios/lib/utils.js",
+            "size": 7541,
+            "id": 3
+          },
+          {
+            "name": "./node_modules/node-forge/lib/random.js",
+            "size": 5435,
+            "id": 4
+          },
+          {
+            "name": "./node_modules/node-forge/lib/asn1.js",
+            "size": 42046,
+            "id": 5
+          },
+          {
+            "name": "./node_modules/node-forge/lib/md.js",
+            "size": 253,
+            "id": 6
+          },
+          {
+            "name": "./node_modules/css-loader/lib/css-base.js",
+            "size": 2260,
+            "id": 7
+          },
+          {
+            "name": "(webpack)/buildin/global.js",
+            "size": 509,
+            "id": 8
+          },
+          {
+            "name": "./node_modules/node-forge/lib/aes.js",
+            "size": 39026,
+            "id": 9
+          },
+          {
+            "name": "./node_modules/node-forge/lib/oids.js",
+            "size": 5981,
+            "id": 10
+          },
+          {
+            "name": "./node_modules/style-loader/lib/addStyles.js",
+            "size": 9918,
+            "id": 11
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pem.js",
+            "size": 6456,
+            "id": 12
+          },
+          {
+            "name": "./node_modules/node-forge/lib/hmac.js",
+            "size": 3833,
+            "id": 13
+          },
+          {
+            "name": "./node_modules/node-forge/lib/sha1.js",
+            "size": 9095,
+            "id": 14
+          },
+          {
+            "name": "./node_modules/vue/dist/vue.esm.js",
+            "size": 288299,
+            "id": 15
+          },
+          {
+            "name": "./node_modules/timers-browserify/main.js",
+            "size": 1895,
+            "id": 16
+          },
+          {
+            "name": "./node_modules/node-forge/lib/des.js",
+            "size": 20442,
+            "id": 17
+          },
+          {
+            "name": "./node_modules/node-forge/lib/rsa.js",
+            "size": 55193,
+            "id": 18
+          },
+          {
+            "name": "./node_modules/node-forge/lib/cipher.js",
+            "size": 6668,
+            "id": 20
+          },
+          {
+            "name": "./node_modules/node-forge/lib/md5.js",
+            "size": 7983,
+            "id": 21
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pbkdf2.js",
+            "size": 5807,
+            "id": 22
+          },
+          {
+            "name": "./node_modules/node-forge/lib/jsbn.js",
+            "size": 35188,
+            "id": 23
+          },
+          {
+            "name": "./node_modules/node-forge/lib/x509.js",
+            "size": 102211,
+            "id": 24
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pss.js",
+            "size": 7854,
+            "id": 25
+          },
+          {
+            "name": "./node_modules/lodash/lodash.js",
+            "size": 539588,
+            "id": 26
+          },
+          {
+            "name": "./node_modules/axios/lib/defaults.js",
+            "size": 2316,
+            "id": 27
+          },
+          {
+            "name": "./node_modules/vue-router/dist/vue-router.esm.js",
+            "size": 65626,
+            "id": 28
+          },
+          {
+            "name": "./node_modules/vuex/dist/vuex.esm.js",
+            "size": 26121,
+            "id": 29
+          },
+          {
+            "name": "./node_modules/node-forge/lib/cipherModes.js",
+            "size": 28610,
+            "id": 31
+          },
+          {
+            "name": "./node_modules/node-forge/lib/tls.js",
+            "size": 132470,
+            "id": 32
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pki.js",
+            "size": 2651,
+            "id": 33
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pbe.js",
+            "size": 30999,
+            "id": 34
+          },
+          {
+            "name": "./node_modules/node-forge/lib/sha256.js",
+            "size": 9574,
+            "id": 36
+          },
+          {
+            "name": "./node_modules/node-forge/lib/prng.js",
+            "size": 11656,
+            "id": 37
+          },
+          {
+            "name": "./node_modules/node-forge/lib/rc2.js",
+            "size": 11949,
+            "id": 38
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pkcs1.js",
+            "size": 8376,
+            "id": 39
+          },
+          {
+            "name": "./node_modules/node-forge/lib/prime.js",
+            "size": 8776,
+            "id": 40
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pkcs12.js",
+            "size": 33347,
+            "id": 41
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pkcs7asn1.js",
+            "size": 11462,
+            "id": 42
+          },
+          {
+            "name": "./node_modules/node-forge/lib/mgf1.js",
+            "size": 1645,
+            "id": 43
+          },
+          {
+            "name": "./node_modules/node-forge/lib/debug.js",
+            "size": 2076,
+            "id": 44
+          },
+          {
+            "name": "./node_modules/node-forge/lib/log.js",
+            "size": 9170,
+            "id": 45
+          },
+          {
+            "name": "(webpack)/buildin/module.js",
+            "size": 517,
+            "id": 46
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/bind.js",
+            "size": 256,
+            "id": 49
+          },
+          {
+            "name": "./node_modules/axios/lib/adapters/xhr.js",
+            "size": 6170,
+            "id": 50
+          },
+          {
+            "name": "./node_modules/axios/lib/core/createError.js",
+            "size": 625,
+            "id": 51
+          },
+          {
+            "name": "./node_modules/axios/lib/cancel/isCancel.js",
+            "size": 102,
+            "id": 52
+          },
+          {
+            "name": "./node_modules/axios/lib/cancel/Cancel.js",
+            "size": 385,
+            "id": 53
+          },
+          {
+            "name": "./node_modules/node-forge/dist/prime.worker.min.js",
+            "size": 45,
+            "id": 57
+          },
+          {
+            "name": "./node_modules/node-forge/dist/prime.worker.min.js.map",
+            "size": 49,
+            "id": 58
+          },
+          {
+            "name": "./node_modules/mdi/css/materialdesignicons.css",
+            "size": 1074,
+            "id": 59
+          },
+          {
+            "name": "./node_modules/css-loader!./node_modules/mdi/css/materialdesignicons.css",
+            "size": 128107,
+            "id": 60
+          },
+          {
+            "name": "./node_modules/css-loader/lib/url/escape.js",
+            "size": 448,
+            "id": 61
+          },
+          {
+            "name": "./node_modules/mdi/fonts/materialdesignicons-webfont.eot?v=2.1.19",
+            "size": 57,
+            "id": 62
+          },
+          {
+            "name": "./node_modules/mdi/fonts/materialdesignicons-webfont.eot",
+            "size": 57,
+            "id": 63
+          },
+          {
+            "name": "./node_modules/mdi/fonts/materialdesignicons-webfont.woff2?v=2.1.19",
+            "size": 59,
+            "id": 64
+          },
+          {
+            "name": "./node_modules/mdi/fonts/materialdesignicons-webfont.woff?v=2.1.19",
+            "size": 58,
+            "id": 65
+          },
+          {
+            "name": "./node_modules/mdi/fonts/materialdesignicons-webfont.ttf?v=2.1.19",
+            "size": 57,
+            "id": 66
+          },
+          {
+            "name": "./node_modules/mdi/fonts/materialdesignicons-webfont.svg?v=2.1.19",
+            "size": 57,
+            "id": 67
+          },
+          {
+            "name": "./node_modules/style-loader/lib/urls.js",
+            "size": 3008,
+            "id": 68
+          },
+          {
+            "name": "./node_modules/animate.css/animate.css",
+            "size": 1026,
+            "id": 69
+          },
+          {
+            "name": "./node_modules/css-loader!./node_modules/animate.css/animate.css",
+            "size": 75747,
+            "id": 70
+          },
+          {
+            "name": "./node_modules/chartist/dist/chartist.css",
+            "size": 1041,
+            "id": 71
+          },
+          {
+            "name": "./node_modules/css-loader!./node_modules/chartist/dist/chartist.css",
+            "size": 15222,
+            "id": 72
+          },
+          {
+            "name": "./node_modules/buefy/lib/buefy.css",
+            "size": 1032,
+            "id": 73
+          },
+          {
+            "name": "./node_modules/css-loader!./node_modules/buefy/lib/buefy.css",
+            "size": 307318,
+            "id": 74
+          },
+          {
+            "name": "./node_modules/eventemitter3/index.js",
+            "size": 9141,
+            "id": 79
+          },
+          {
+            "name": "./node_modules/setimmediate/setImmediate.js",
+            "size": 6473,
+            "id": 80
+          },
+          {
+            "name": "./node_modules/buefy/lib/index.js",
+            "size": 186289,
+            "id": 81
+          },
+          {
+            "name": "./node_modules/delay/index.js",
+            "size": 994,
+            "id": 83
+          },
+          {
+            "name": "./node_modules/p-defer/index.js",
+            "size": 177,
+            "id": 84
+          },
+          {
+            "name": "./node_modules/fingerprintjs2/dist/fingerprint2.min.js",
+            "size": 34536,
+            "id": 85
+          },
+          {
+            "name": "./node_modules/node-forge/lib/index.js",
+            "size": 657,
+            "id": 88
+          },
+          {
+            "name": "./node_modules/node-forge/lib/aesCipherSuites.js",
+            "size": 9136,
+            "id": 89
+          },
+          {
+            "name": "./node_modules/buffer/index.js",
+            "size": 48610,
+            "id": 90
+          },
+          {
+            "name": "./node_modules/base64-js/index.js",
+            "size": 3469,
+            "id": 91
+          },
+          {
+            "name": "./node_modules/ieee754/index.js",
+            "size": 2054,
+            "id": 92
+          },
+          {
+            "name": "./node_modules/isarray/index.js",
+            "size": 132,
+            "id": 93
+          },
+          {
+            "name": "./node_modules/node-forge/lib/mgf.js",
+            "size": 274,
+            "id": 94
+          },
+          {
+            "name": "./node_modules/node-forge/lib/kem.js",
+            "size": 5210,
+            "id": 95
+          },
+          {
+            "name": "./node_modules/node-forge/lib/md.all.js",
+            "size": 251,
+            "id": 96
+          },
+          {
+            "name": "./node_modules/node-forge/lib/sha512.js",
+            "size": 17134,
+            "id": 97
+          },
+          {
+            "name": "./node_modules/node-forge/lib/pkcs7.js",
+            "size": 39210,
+            "id": 98
+          },
+          {
+            "name": "./node_modules/node-forge/lib/ssh.js",
+            "size": 7163,
+            "id": 99
+          },
+          {
+            "name": "./node_modules/node-forge/lib/task.js",
+            "size": 19780,
+            "id": 100
+          },
+          {
+            "name": "./node_modules/url/url.js",
+            "size": 23317,
+            "id": 102
+          },
+          {
+            "name": "./node_modules/punycode/punycode.js",
+            "size": 14670,
+            "id": 103
+          },
+          {
+            "name": "./node_modules/url/util.js",
+            "size": 314,
+            "id": 104
+          },
+          {
+            "name": "./node_modules/querystring-es3/index.js",
+            "size": 127,
+            "id": 105
+          },
+          {
+            "name": "./node_modules/querystring-es3/decode.js",
+            "size": 2510,
+            "id": 106
+          },
+          {
+            "name": "./node_modules/querystring-es3/encode.js",
+            "size": 2544,
+            "id": 107
+          },
+          {
+            "name": "./node_modules/secure-ls/dist/secure-ls.js",
+            "size": 167075,
+            "id": 108
+          },
+          {
+            "name": "./node_modules/axios/index.js",
+            "size": 40,
+            "id": 109
+          },
+          {
+            "name": "./node_modules/axios/lib/axios.js",
+            "size": 1368,
+            "id": 110
+          },
+          {
+            "name": "./node_modules/is-buffer/index.js",
+            "size": 698,
+            "id": 111
+          },
+          {
+            "name": "./node_modules/axios/lib/core/Axios.js",
+            "size": 2189,
+            "id": 112
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/normalizeHeaderName.js",
+            "size": 357,
+            "id": 113
+          },
+          {
+            "name": "./node_modules/axios/lib/core/settle.js",
+            "size": 757,
+            "id": 114
+          },
+          {
+            "name": "./node_modules/axios/lib/core/enhanceError.js",
+            "size": 592,
+            "id": 115
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/buildURL.js",
+            "size": 1576,
+            "id": 116
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/parseHeaders.js",
+            "size": 1393,
+            "id": 117
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/isURLSameOrigin.js",
+            "size": 2245,
+            "id": 118
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/btoa.js",
+            "size": 986,
+            "id": 119
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/cookies.js",
+            "size": 1365,
+            "id": 120
+          },
+          {
+            "name": "./node_modules/axios/lib/core/InterceptorManager.js",
+            "size": 1251,
+            "id": 121
+          },
+          {
+            "name": "./node_modules/axios/lib/core/dispatchRequest.js",
+            "size": 2199,
+            "id": 122
+          },
+          {
+            "name": "./node_modules/axios/lib/core/transformData.js",
+            "size": 550,
+            "id": 123
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/isAbsoluteURL.js",
+            "size": 563,
+            "id": 124
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/combineURLs.js",
+            "size": 380,
+            "id": 125
+          },
+          {
+            "name": "./node_modules/axios/lib/cancel/CancelToken.js",
+            "size": 1240,
+            "id": 126
+          },
+          {
+            "name": "./node_modules/axios/lib/helpers/spread.js",
+            "size": 564,
+            "id": 127
+          },
+          {
+            "name": "./node_modules/vue-style-loader/lib/addStylesClient.js",
+            "size": 6232,
+            "id": 133
+          },
+          {
+            "name": "./node_modules/vue-style-loader/lib/listToStyles.js",
+            "size": 637,
+            "id": 134
+          },
+          {
+            "name": "./node_modules/vue-property-decorator/lib/vue-property-decorator.umd.js",
+            "size": 4849,
+            "id": 135
+          },
+          {
+            "name": "./node_modules/vue-class-component/dist/vue-class-component.common.js",
+            "size": 6183,
+            "id": 136
+          },
+          {
+            "name": "./node_modules/reflect-metadata/Reflect.js",
+            "size": 52339,
+            "id": 137
+          },
+          {
+            "name": "./node_modules/vue-loader/lib/runtime/component-normalizer.js",
+            "size": 2880,
+            "id": 139
+          }
+        ]
+      }
+    ]
+  }
+]

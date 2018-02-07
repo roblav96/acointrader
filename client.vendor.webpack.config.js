@@ -5,23 +5,19 @@ eyes.defaults.maxLength = 131072
 const webpack = require('webpack')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const AutoDllPlugin = require('autodll-webpack-plugin')
-const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
-const env = require('./client.env.json')[process.env.NODE_ENV]
-env.env = process.env.NODE_ENV
 
 
 
 const config = {
 
 	context: process.cwd(),
-	entry: './client/client.ts',
+	entry: { vendor: ['./client/client.ts'] },
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
-		filename: 'vendor.js',
+		filename: '[name].js',
+		library: '[name]',
 	},
 
 	node: { fs: 'empty' },
@@ -76,21 +72,20 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.ProgressPlugin(),
-		new webpack.DllReferencePlugin({
-			context: process.cwd(),
-			manifest: require(path.resolve('./client/public/dist', 'vendor.dll.json')),
-		}),
 		// new webpack.optimize.CommonsChunkPlugin({
 		// 	name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
 		// 	// async: true, children: true,
 		// }),
-		// new webpack.DllPlugin({
-		// 	path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
-		// 	name: '[name]',
-		// }),
+		new webpack.DllPlugin({
+			path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
+			name: '[name]',
+		}),
 		// new webpack.optimize.ModuleConcatenationPlugin(),
 		// new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: true }),
-		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
+		// new WebpackMonitor({
+		// 	port: 9991, capture: true, launch: true,
+		// }),
+		// new BundleAnalyzerPlugin({ analyzerPort: 9992 }),
 	],
 
 	stats: 'verbose',
@@ -102,9 +97,7 @@ const config = {
 
 
 if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	config.watchOptions = { ignored: /node_modules/ }
-	config.plugins.push(new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]))
-	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
+
 }
 
 
@@ -115,14 +108,7 @@ if (process.env.NODE_ENV == 'PRODUCTION') {
 
 
 
-Object.keys(env).forEach(function(key) {
-	env[key] = JSON.stringify(env[key])
-})
-config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
-
-
-
-console.log('client.webpack.config >'); eyes.inspect(config);
+console.log('client.vendor.webpack.config >'); eyes.inspect(config);
 
 module.exports = config
 
