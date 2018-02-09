@@ -1,6 +1,6 @@
 {
 	"scripts": {
-		"i": "npm install && npm run fixdts && npm run rcv",
+		"i": "npm install || true && tsc-fix && npm run fixdts && npm run rcv",
 		"fixdts": "rm -f node_modules/vuex/types/vue.d.ts && rm -f node_modules/@types/echarts/index.d.ts",
 		"rm": "npm run server:kill && npm run rm:flush",
 		"rm:flush": "rm -rf node_modules && npm run rm:dists",
@@ -123,7 +123,7 @@
 		"file-loader": "latest",
 		"npm-run-all": "latest",
 		"style-loader": "latest",
-		"typescript": "2.6.2",
+		"typescript": "latest",
 		"ts-loader": "latest",
 		"vue-loader": "latest",
 		"vue-template-compiler": "latest",
