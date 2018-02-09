@@ -14,27 +14,30 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 
 
-const env = {} // require('./client.env.json')[process.env.NODE_ENV]
-env.env = process.env.NODE_ENV
+const sargs = process.env.args.split(':')
+const env = {} // require('./client.env.json')[sargs[0]]
+env.env = { dev: 'DEVELOPMENT', prod: 'PRODUCTION' }[sargs[0]]
+
+
+
+const vdlls = [
+	'axios',
+	'lodash',
+	'node-forge',
+	'vue',
+]
 
 
 
 const config = {
 
 	context: process.cwd(),
-	entry: './client/client.ts',
+	entry: { build: './client/client.ts' },
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
-		filename: 'build.js',
+		filename: '[name].bundle.js',
 	},
-
-	// externals: [
-	// 	'axios',
-	// 	'lodash',
-	// 	'node-forge',
-	// 	'vue',
-	// ],
 
 	node: { fs: 'empty' },
 
@@ -88,17 +91,29 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.ProgressPlugin(),
+		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'manifest',
-			minChunks: Infinity
+		new AutoDllPlugin({
+			debug: true,
+			filename: '[name].dll.js',
+			entry: {
+				vendor: vdlls,
+			},
 		}),
 
+		// new webpack.DllReferencePlugin({
+		// 	context: process.cwd(),
+		// 	manifest: require(path.resolve('./client/public/dist', 'vendor.dll.json')),
+		// }),
+
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'manifest',
+		// 	minChunks: Infinity
+		// }),
 		// new webpack.optimize.CommonsChunkPlugin({
 		// 	name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
 		// 	// async: true, children: true,
 		// }),
-
 		// new AutoDllPlugin({
 		// 	debug: true,
 		// 	filename: '[name].dll.js',
@@ -106,19 +121,12 @@ const config = {
 		// 		vendor: ['vue', 'lodash', 'node-forge', 'axios'],
 		// 	},
 		// }),
-
-		// new webpack.DllReferencePlugin({
-		// 	context: process.cwd(),
-		// 	manifest: require(path.resolve('./client/public/dist', 'vendor.dll.json')),
-		// }),
-
 		// new webpack.DllPlugin({
 		// 	path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
 		// 	name: '[name]',
 		// }),
 		// new webpack.optimize.ModuleConcatenationPlugin(),
 		// new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: true }),
-		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 	],
 
 	stats: 'verbose',

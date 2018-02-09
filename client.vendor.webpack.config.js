@@ -14,20 +14,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 
 
+const vendor = [
+	'axios',
+	'lodash',
+	'node-forge',
+	'vue',
+]
+
+
+
 const config = {
 
-	entry: {
-		vendor: [
-			'axios',
-			'lodash',
-			'node-forge',
-			'vue',
-		]
-	},
-
 	context: process.cwd(),
-	// entry: { vendor: ['./client/client.ts'] },
-	// entry: './client/client.ts',
+	entry: { vendor },
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
@@ -87,6 +86,7 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.ProgressPlugin(),
+		new BundleAnalyzerPlugin({ analyzerPort: 9992 }),
 
 		new webpack.DllPlugin({
 			path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
@@ -114,7 +114,6 @@ const config = {
 		// new WebpackMonitor({
 		// 	port: 9991, capture: true, launch: true,
 		// }),
-		// new BundleAnalyzerPlugin({ analyzerPort: 9992 }),
 	],
 
 	stats: 'verbose',
