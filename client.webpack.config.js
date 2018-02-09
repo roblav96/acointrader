@@ -26,8 +26,15 @@ const config = {
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
-		filename: 'builders.js',
+		filename: 'build.js',
 	},
+
+	// externals: [
+	// 	'axios',
+	// 	'lodash',
+	// 	'node-forge',
+	// 	'vue',
+	// ],
 
 	node: { fs: 'empty' },
 
@@ -83,9 +90,14 @@ const config = {
 		new webpack.ProgressPlugin(),
 
 		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
-			// async: true, children: true,
+			name: 'manifest',
+			minChunks: Infinity
 		}),
+
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
+		// 	// async: true, children: true,
+		// }),
 
 		// new AutoDllPlugin({
 		// 	debug: true,
@@ -111,7 +123,7 @@ const config = {
 
 	stats: 'verbose',
 	profile: true,
-	devtool: 'source-map',
+	devtool: 'inline-source-map',
 
 }
 
