@@ -1,18 +1,33 @@
 // 
 
-const eyes = require('eyes')
-eyes.defaults.maxLength = 131072
+const eyes = require('eyes'); eyes.defaults.maxLength = 131072;
 const webpack = require('webpack')
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const LiveReloadPlugin = require('webpack-livereload-plugin')
+
+const AutoDllPlugin = require('autodll-webpack-plugin')
+const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 
 
 const config = {
 
+	entry: {
+		vendor: [
+			'axios',
+			'lodash',
+			'node-forge',
+			'vue',
+		]
+	},
+
 	context: process.cwd(),
-	entry: { vendor: ['./client/client.ts'] },
+	// entry: { vendor: ['./client/client.ts'] },
+	// entry: './client/client.ts',
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
@@ -72,14 +87,28 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.ProgressPlugin(),
-		// new webpack.optimize.CommonsChunkPlugin({
-		// 	name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
-		// 	// async: true, children: true,
-		// }),
+
 		new webpack.DllPlugin({
 			path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
 			name: '[name]',
 		}),
+
+		// new AutoDllPlugin({
+		// 	debug: true,
+		// 	filename: '[name].dll.js',
+		// 	entry: {
+		// 		vendor: ['vue', 'lodash', 'node-forge', 'axios'],
+		// 	},
+		// }),
+
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
+		// 	// async: true, children: true,
+		// }),
+		// new webpack.DllPlugin({
+		// 	path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
+		// 	name: '[name]',
+		// }),
 		// new webpack.optimize.ModuleConcatenationPlugin(),
 		// new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: true }),
 		// new WebpackMonitor({

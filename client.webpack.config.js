@@ -3,12 +3,18 @@
 const eyes = require('eyes'); eyes.defaults.maxLength = 131072;
 const webpack = require('webpack')
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const AutoDllPlugin = require('autodll-webpack-plugin')
-const LiveReloadPlugin = require('webpack-livereload-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const LiveReloadPlugin = require('webpack-livereload-plugin')
 
-const env = require('./client.env.json')[process.env.NODE_ENV]
+const AutoDllPlugin = require('autodll-webpack-plugin')
+const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+
+
+const env = {} // require('./client.env.json')[process.env.NODE_ENV]
 env.env = process.env.NODE_ENV
 
 
@@ -20,7 +26,7 @@ const config = {
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
-		filename: 'vendor.js',
+		filename: 'builders.js',
 	},
 
 	node: { fs: 'empty' },
@@ -75,14 +81,25 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.ProgressPlugin(),
-		new webpack.DllReferencePlugin({
-			context: process.cwd(),
-			manifest: require(path.resolve('./client/public/dist', 'vendor.dll.json')),
+
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
+			// async: true, children: true,
 		}),
-		// new webpack.optimize.CommonsChunkPlugin({
-		// 	name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
-		// 	// async: true, children: true,
+
+		// new AutoDllPlugin({
+		// 	debug: true,
+		// 	filename: '[name].dll.js',
+		// 	entry: {
+		// 		vendor: ['vue', 'lodash', 'node-forge', 'axios'],
+		// 	},
 		// }),
+
+		// new webpack.DllReferencePlugin({
+		// 	context: process.cwd(),
+		// 	manifest: require(path.resolve('./client/public/dist', 'vendor.dll.json')),
+		// }),
+
 		// new webpack.DllPlugin({
 		// 	path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
 		// 	name: '[name]',
