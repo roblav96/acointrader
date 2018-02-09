@@ -5,7 +5,7 @@
 		"rm": "npm run server:kill && npm run rm:flush",
 		"rm:flush": "rm -rf node_modules && npm run rm:dists",
 		"rm:dists": "rm -rf dist && npm-run-all --parallel client:rm:dist server:rm:dist",
-		"tsc": "npm run terminal:clear && echo Running TypeScript Compiler... && tsc || true && rm -rf dist",
+		"tsc": "npm run terminal:clear && echo 'Running TypeScript Compiler...\n' && tsc --diagnostics || true && rm -rf dist",
 		"rc": "npm run client:rm:dist && npm run client:webpack:dev",
 		"rcv": "npm run client:rm:dist && npm run client:vendor:webpack:build",
 		"client:rm:dist": "rm -rf client/public/dist",

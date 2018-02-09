@@ -112,20 +112,4 @@ process.benchEnd = function(id: string) {
 
 
 
-if (process.MASTER) {
-	let host = url.parse(process.$domain).host
-	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
-	console.log('\n\n' +
-		clc.bold.underline.magenta('𝛂CoinTrader') + '\n' +
-		'v' + process.$version + ' ' +
-		clc.bold(process.ENV) + '\n' +
-		host + '\n' +
-		'/*===============================================\n' +
-		'=========           ' + clc.bold(moment().format('hh:mm:ss')) + '           ==========\n' +
-		'===============================================*/'
-	)
-}
-
-
-
 
