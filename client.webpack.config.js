@@ -1,7 +1,6 @@
 // 
 
-const eyes = require('eyes')
-eyes.defaults.maxLength = 131072
+const eyes = require('eyes'); eyes.defaults.maxLength = 131072;
 const webpack = require('webpack')
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
