@@ -15,24 +15,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 
 const sargs = process.env.args.split(':')
-const env = {} // require('./client.env.json')[sargs[0]]
-env.env = { dev: 'DEVELOPMENT', prod: 'PRODUCTION' }[sargs[0]]
-
-
-
-const vdlls = [
-	'axios',
-	'lodash',
-	'node-forge',
-	'vue',
-]
+const env = {
+	env: { dev: 'DEVELOPMENT', prod: 'PRODUCTION' }[sargs[0]],
+	watch: sargs.indexOf('watch') >= 0,
+	vendor: sargs.indexOf('vendor') >= 0,
+}
+// Object.assign(env, require('./client.env.json')[env.env])
 
 
 
 const config = {
 
 	context: process.cwd(),
-	entry: { build: './client/client.ts' },
+	// entry: './client/client.ts',
+	entry: { build: ['./client/client.ts'] },
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
@@ -70,6 +66,10 @@ const config = {
 				loader: ['style-loader', 'css-loader'],
 			},
 			{
+				test: /\.scss$/,
+				loader: ['style-loader', 'css-loader', 'sass-loader'],
+			},
+			{
 				test: /\.(ttf|eot|woff|woff2|svg)$/,
 				loader: 'file-loader',
 				options: {
@@ -90,16 +90,17 @@ const config = {
 
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
+		// new webpack.IgnorePlugin(/mdi/),
 		new webpack.ProgressPlugin(),
 		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 
-		new AutoDllPlugin({
-			debug: true,
-			filename: '[name].dll.js',
-			entry: {
-				vendor: vdlls,
-			},
-		}),
+		// new AutoDllPlugin({
+		// 	debug: true,
+		// 	filename: '[name].dll.js',
+		// 	entry: {
+		// 		vendor: vendors,
+		// 	},
+		// }),
 
 		// new webpack.DllReferencePlugin({
 		// 	context: process.cwd(),
@@ -129,15 +130,77 @@ const config = {
 		// new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: true }),
 	],
 
-	stats: 'verbose',
+	// stats: 'verbose',
+	stats: 'normal',
 	profile: true,
-	devtool: 'inline-source-map',
+	devtool: 'source-map',
+	cache: true,
 
 }
 
 
 
-if (process.env.NODE_ENV == 'DEVELOPMENT') {
+const vendors = [
+	// 'animate.css',
+	// 'av-ts',
+	// 'awesome-phonenumber',
+	// 'axios',
+	// 'bluebird',
+	// 'buefy',
+	// 'bulma',
+	// 'chartist',
+	// 'copy-text-to-clipboard',
+	// 'delay',
+	// 'eventemitter3',
+	// 'fingerprintjs2',
+	// 'fuzzy',
+	'humanize-plus',
+	'lodash',
+	// 'luxon',
+	'mdi',
+	// 'moment',
+	'node-forge',
+	'p-all',
+	// 'p-event',
+	// 'p-forever',
+	// 'p-queue',
+	// 'p-timeout',
+	// 'query-string',
+	// 'rxjs',
+	'secure-ls',
+	// 'simple-statistics',
+	// 'technicalindicators',
+	// 'timeseries-analysis',
+	'vue',
+	// 'vue-class-component',
+	// 'vue-property-decorator',
+	// 'vue-router',
+	// 'vuex',
+]
+
+if (env.vendor) {
+	// config.entry = vendors
+	// config.entry = {}
+	// config.externals = /node_modules/
+	// vendors.forEach(function(vendor) {
+	// 	config.entry[vendor] = [vendor]
+	// })
+	config.entry = { vendor: ['./client/client.ts'] }
+	config.output = {
+		path: path.resolve(process.cwd(), './client/public/dist'),
+		publicPath: '/client/public/dist/',
+		filename: '[name].dll.js',
+		library: '[name]',
+	}
+	config.plugins.push(new webpack.DllPlugin({
+		path: path.resolve(process.cwd(), './client/public/dist', '[name].dll.json'),
+		name: '[name]',
+	}))
+}
+
+
+
+if (env.watch) {
 	config.watchOptions = { ignored: /node_modules/ }
 	config.plugins.push(new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]))
 	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
