@@ -5,7 +5,6 @@ import * as VueRouter from 'vue-router'
 import * as Vuex from 'vuex'
 import * as Vts from 'vue-property-decorator'
 import * as Avts from 'av-ts'
-import Root from '../client/root/root'
 
 
 
