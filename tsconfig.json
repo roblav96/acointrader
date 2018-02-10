@@ -7,6 +7,8 @@
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
+		"skipLibCheck": false,
+		"removeComments": true,
 		"pretty": true,
 		"sourceMap": true,
 		"outDir": "dist"
@@ -19,8 +21,8 @@
 	],
 	"exclude": [
 		"build",
-		"node_modules",
-		"dist"
+		"dist",
+		"node_modules"
 	]
 }
 

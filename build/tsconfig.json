@@ -1,11 +1,11 @@
 {
 	"extends": "../tsconfig",
 	"compilerOptions": {
+		"module": "commonjs",
 		"allowSyntheticDefaultImports": false,
-		"inlineSourceMap": true,
-		"sourceMap": false
+		"skipLibCheck": true
 	},
-	"files": ["gulpfile.ts"],
-	"include": ["gulpfile.ts"]
+	"files": ["./gulpfile.ts"],
+	"include": ["./gulpfile.ts"]
 }
 
