@@ -11,6 +11,7 @@ const AutoDllPlugin = require('autodll-webpack-plugin')
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 
 
@@ -23,17 +24,15 @@ const env = {
 }
 // Object.assign(env, require('./client.env.json')[env.env])
 
-console.log('__dirname', __dirname)
-console.log('process.cwd()', process.cwd())
+
 
 const config = {
 
-	context: process.cwd(),
-	// entry: './client/client.ts',
+	context: __dirname,
 	entry: { client: ['./client/client.ts'] },
 	output: {
-		path: path.resolve(process.cwd(), './client/dist'),
-		publicPath: '/client/dist/',
+		path: path.resolve(__dirname, './client/dist'),
+		publicPath: '/',
 		filename: '[name].build.js',
 		chunkFilename: '[id].[name].chunk.js',
 	},
@@ -61,33 +60,48 @@ const config = {
 				test: /\.vue$/,
 				loader: 'vue-loader',
 				options: {
-
+					extractCSS: true,
 				},
 			},
+			{
+				test: /\.(css|sass|scss)$/,
+				loader: ['style-loader', 'css-loader', 'sass-loader'],
+			},
+			// {
+			// 	test: /\.(css|sass|scss)$/,
+			// 	loader: ExtractTextPlugin.extract({
+			// 		fallback: 'style-loader',
+			// 		// use: ['css-loader', 'sass-loader'],
+			// 		use: [
+			// 			{ loader: 'css-loader', options: { sourceMap: !env.prod } },
+			// 			{ loader: 'sass-loader', options: { sourceMap: !env.prod } },
+			// 		],
+			// 	}),
+			// },
 			// {
 			// 	test: /\.css$/,
 			// 	loader: ['style-loader', 'css-loader'],
 			// },
-			{
-				test: /\.(css|sass|scss)$/,
-				loader: [
-					{ loader: 'style-loader' },
-					{ loader: 'css-loader', options: { sourceMap: !env.prod } },
-					{
-						loader: 'sass-loader', options: {
-							sourceMap: !env.prod,
-							// includePaths: [
-							// 	path.resolve('./node_modules/bootstrap-sass/assets/stylesheets')
-							// ],
-						}
-					},
-				],
-			},
+			// {
+			// 	test: /\.(css|sass|scss)$/,
+			// 	loader: [
+			// 		{ loader: 'style-loader' },
+			// 		{ loader: 'css-loader', options: { sourceMap: !env.prod } },
+			// 		{
+			// 			loader: 'sass-loader', options: {
+			// 				sourceMap: !env.prod,
+			// 				// includePaths: [
+			// 				// 	path.resolve('./node_modules/bootstrap-sass/assets/stylesheets')
+			// 				// ],
+			// 			}
+			// 		},
+			// 	],
+			// },
 			{
 				test: /\.(ttf|eot|woff|woff2|svg)$/,
 				loader: 'file-loader',
 				options: {
-					publicPath: '/dist/',
+					// publicPath: '/dist/',
 					name: '[name].[ext]',
 				},
 			},
@@ -95,7 +109,7 @@ const config = {
 				test: /worker/,
 				loader: 'file-loader',
 				options: {
-					publicPath: '/dist/',
+					// publicPath: '/dist/',
 					name: '[name].[ext]',
 				},
 			},
@@ -106,6 +120,7 @@ const config = {
 		new webpack.IgnorePlugin(/typescript/),
 		// new webpack.IgnorePlugin(/mdi/),
 		new webpack.ProgressPlugin(),
+		// new ExtractTextPlugin('style.css'),
 		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 
 		new webpack.optimize.CommonsChunkPlugin({
@@ -114,12 +129,11 @@ const config = {
 		}),
 		// new webpack.optimize.AggressiveSplittingPlugin(),
 
-		new HtmlWebpackPlugin({
-            inject: true,
-            template: path.resolve(process.cwd(), './client/index.html'),
-        }),
-        
-        
+		// new HtmlWebpackPlugin({
+		// 	template: 'client/index.html', inject: true,
+		// }),
+
+
 
 		// new AutoDllPlugin({
 		// 	debug: true,

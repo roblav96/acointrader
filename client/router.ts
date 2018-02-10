@@ -42,11 +42,11 @@ Root.options.router = router
 Root.options.store = store.store
 
 export const vm = new Root().$mount('#root')
-console.log('!!vm', !!vm)
+// console.log('!!vm', !!vm)
 
 
 security.init().then(function() {
-	store.store.state.blockui = false
+	// store.store.state.blockui = false
 })
 
 

@@ -136,6 +136,7 @@
 		"uglifyjs-webpack-plugin": "latest",
 		"vue-loader": "latest",
 		"vue-template-compiler": "latest",
+		"extract-text-webpack-plugin": "latest",
 		"webpack": "latest",
 		"webpack-bundle-analyzer": "latest",
 		"webpack-livereload-plugin": "latest",
