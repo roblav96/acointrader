@@ -17,6 +17,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const sargs = process.env.args.split(':')
 const env = {
 	env: { dev: 'DEVELOPMENT', prod: 'PRODUCTION' }[sargs[0]],
+	[sargs[0]]: true,
 	watch: sargs.indexOf('watch') >= 0,
 	vendor: sargs.indexOf('vendor') >= 0,
 }
@@ -28,11 +29,12 @@ const config = {
 
 	context: process.cwd(),
 	// entry: './client/client.ts',
-	entry: { build: ['./client/client.ts'] },
+	entry: { client: ['./client/client.ts'] },
 	output: {
 		path: path.resolve(process.cwd(), './client/public/dist'),
 		publicPath: '/client/public/dist/',
-		filename: '[name].bundle.js',
+		filename: '[name].build.js',
+		// chunkFilename: '[id].chunk.js',
 	},
 
 	node: { fs: 'empty' },
@@ -61,13 +63,24 @@ const config = {
 
 				},
 			},
+			// {
+			// 	test: /\.css$/,
+			// 	loader: ['style-loader', 'css-loader'],
+			// },
 			{
-				test: /\.css$/,
-				loader: ['style-loader', 'css-loader'],
-			},
-			{
-				test: /\.scss$/,
-				loader: ['style-loader', 'css-loader', 'sass-loader'],
+				test: /\.(css|sass|scss)$/,
+				loader: [
+					{ loader: 'style-loader' },
+					{ loader: 'css-loader', options: { sourceMap: !env.prod } },
+					{
+						loader: 'sass-loader', options: {
+							sourceMap: !env.prod,
+							// includePaths: [
+							// 	path.resolve('./node_modules/bootstrap-sass/assets/stylesheets')
+							// ],
+						}
+					},
+				],
 			},
 			{
 				test: /\.(ttf|eot|woff|woff2|svg)$/,
@@ -134,81 +147,33 @@ const config = {
 	stats: 'normal',
 	profile: true,
 	devtool: 'source-map',
-	cache: true,
+	// cache: true,
 
 }
 
 
 
-const vendors = [
-	// 'animate.css',
-	// 'av-ts',
-	// 'awesome-phonenumber',
-	// 'axios',
-	// 'bluebird',
-	// 'buefy',
-	// 'bulma',
-	// 'chartist',
-	// 'copy-text-to-clipboard',
-	// 'delay',
-	// 'eventemitter3',
-	// 'fingerprintjs2',
-	// 'fuzzy',
-	'humanize-plus',
-	'lodash',
-	// 'luxon',
-	'mdi',
-	// 'moment',
-	'node-forge',
-	'p-all',
-	// 'p-event',
-	// 'p-forever',
-	// 'p-queue',
-	// 'p-timeout',
-	// 'query-string',
-	// 'rxjs',
-	'secure-ls',
-	// 'simple-statistics',
-	// 'technicalindicators',
-	// 'timeseries-analysis',
-	'vue',
-	// 'vue-class-component',
-	// 'vue-property-decorator',
-	// 'vue-router',
-	// 'vuex',
-]
-
-if (env.vendor) {
-	// config.entry = vendors
-	// config.entry = {}
-	// config.externals = /node_modules/
-	// vendors.forEach(function(vendor) {
-	// 	config.entry[vendor] = [vendor]
-	// })
-	config.entry = { vendor: ['./client/client.ts'] }
-	config.output = {
-		path: path.resolve(process.cwd(), './client/public/dist'),
-		publicPath: '/client/public/dist/',
-		filename: '[name].dll.js',
-		library: '[name]',
-	}
-	config.plugins.push(new webpack.DllPlugin({
-		path: path.resolve(process.cwd(), './client/public/dist', '[name].dll.json'),
-		name: '[name]',
-	}))
-}
-
-
-
-if (env.watch) {
+if (process.env.dev) {
 	config.watchOptions = { ignored: /node_modules/ }
 	config.plugins.push(new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]))
 	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
+	config.plugins.push(new webpack.NamedModulesPlugin())
+
+	config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+		name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
+		// async: true, children: true,
+	}))
+	// config.plugins.push(new webpack.optimize.AggressiveSplittingPlugin())
+
+	// config.plugins.push(new webpack.BannerPlugin({
+	// 	banner: "hash:[hash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]"
+	// }))
+
 }
 
 
 
-if (process.env.NODE_ENV == 'PRODUCTION') {
+if (process.env.prod) {
 
 }
 
@@ -224,5 +189,76 @@ config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
 console.log('client.webpack.config >'); eyes.inspect(config);
 
 module.exports = config
+
+
+
+// const vendors = [
+// 	// 'animate.css',
+// 	// 'av-ts',
+// 	// 'awesome-phonenumber',
+// 	// 'axios',
+// 	// 'bluebird',
+// 	// 'buefy',
+// 	// 'bulma',
+// 	// 'chartist',
+// 	// 'copy-text-to-clipboard',
+// 	// 'delay',
+// 	// 'eventemitter3',
+// 	// 'fingerprintjs2',
+// 	// 'fuzzy',
+// 	'humanize-plus',
+// 	'lodash',
+// 	// 'luxon',
+// 	'mdi',
+// 	// 'moment',
+// 	'node-forge',
+// 	'p-all',
+// 	// 'p-event',
+// 	// 'p-forever',
+// 	// 'p-queue',
+// 	// 'p-timeout',
+// 	// 'query-string',
+// 	// 'rxjs',
+// 	'secure-ls',
+// 	// 'simple-statistics',
+// 	// 'technicalindicators',
+// 	// 'timeseries-analysis',
+// 	'vue',
+// 	// 'vue-class-component',
+// 	// 'vue-property-decorator',
+// 	// 'vue-router',
+// 	// 'vuex',
+// ]
+
+// if (env.vendor) {
+// 	// config.entry = vendors
+// 	// config.entry = {}
+// 	// config.externals = /node_modules/
+// 	// vendors.forEach(function(vendor) {
+// 	// 	config.entry[vendor] = [vendor]
+// 	// })
+// 	config.entry = { vendor: ['./client/client.ts'] }
+// 	config.output.filename = '[name].dll.js'
+// 	config.output.library = '[name]'
+// 	config.plugins.push(new webpack.DllPlugin({
+// 		path: path.resolve(process.cwd(), './client/public/dist', '[name].dll.json'),
+// 		name: '[name]',
+// 	}))
+// }
+
+
+
+// if (env.watch) {
+// 	config.watchOptions = { ignored: /node_modules/ }
+// 	config.plugins.push(new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]))
+// 	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
+
+// 	config.plugins.push(new webpack.optimize.AggressiveSplittingPlugin())
+
+// 	config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
+// 		name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
+// 		// async: true, children: true,
+// 	}))
+// }
 
 

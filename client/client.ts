@@ -24,7 +24,9 @@ process.$version = '0.0.1'
 import 'node-forge/dist/prime.worker.min.js'
 import 'node-forge/dist/prime.worker.min.js.map'
 
-import 'mdi/css/materialdesignicons.css'
+// import 'mdi/css/materialdesignicons.css'
+import 'mdi/scss/materialdesignicons.scss'
+
 import 'animate.css'
 import 'chartist/dist/chartist.css'
 import 'buefy/lib/buefy.css'
