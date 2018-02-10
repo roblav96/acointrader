@@ -10,8 +10,8 @@
 </style>
 <!--  -->
 <template>
-    <!-- <div id="root" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }"> -->
-    <div id="root">
+    <!-- <div id="root"> -->
+    <div id="root" :class="{ 'anim-loading': initing === true, 'animated animated-faster fadeIn': initing === false }">
 
         <div class="block">
             <b-icon icon="account" size="is-large" type="is-success"></b-icon>
