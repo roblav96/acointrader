@@ -8,7 +8,7 @@
 		"tsc": "npm run terminal:clear && echo 'Running TypeScript Compiler...\n' && tsc --diagnostics || true && rimraf dist",
 		"rc": "npm run client:rm:dist && npm run client:webpack:dev:watch",
 		"rcw": "npm run client:rm:dist && npm run client:webpack:dev:vendor",
-		"client:rm:dist": "rimraf client/public/dist",
+		"client:rm:dist": "rimraf client/dist",
 		"client:webpack:dev:watch": "cross-env args=dev:watch webpack --config client.webpack.config --watch",
 		"client:webpack:dev:vendor": "cross-env args=dev:vendor webpack --config client.webpack.config",
 		"client:webpack:watch": "cross-env args=dev:watch webpack --config client.webpack.config --watch",

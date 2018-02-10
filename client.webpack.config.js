@@ -23,7 +23,8 @@ const env = {
 }
 // Object.assign(env, require('./client.env.json')[env.env])
 
-
+console.log('__dirname', __dirname)
+console.log('process.cwd()', process.cwd())
 
 const config = {
 
@@ -31,10 +32,10 @@ const config = {
 	// entry: './client/client.ts',
 	entry: { client: ['./client/client.ts'] },
 	output: {
-		path: path.resolve(process.cwd(), './client/public/dist'),
-		publicPath: '/client/public/dist/',
+		path: path.resolve(process.cwd(), './client/dist'),
+		publicPath: '/client/dist/',
 		filename: '[name].build.js',
-		// chunkFilename: '[id].chunk.js',
+		chunkFilename: '[id].[name].chunk.js',
 	},
 
 	node: { fs: 'empty' },
@@ -107,6 +108,19 @@ const config = {
 		new webpack.ProgressPlugin(),
 		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
+			// async: true, children: true,
+		}),
+		// new webpack.optimize.AggressiveSplittingPlugin(),
+
+		new HtmlWebpackPlugin({
+            inject: true,
+            template: path.resolve(process.cwd(), './client/index.html'),
+        }),
+        
+        
+
 		// new AutoDllPlugin({
 		// 	debug: true,
 		// 	filename: '[name].dll.js',
@@ -117,7 +131,7 @@ const config = {
 
 		// new webpack.DllReferencePlugin({
 		// 	context: process.cwd(),
-		// 	manifest: require(path.resolve('./client/public/dist', 'vendor.dll.json')),
+		// 	manifest: require(path.resolve('./client/dist', 'vendor.dll.json')),
 		// }),
 
 		// new webpack.optimize.CommonsChunkPlugin({
@@ -136,7 +150,7 @@ const config = {
 		// 	},
 		// }),
 		// new webpack.DllPlugin({
-		// 	path: path.resolve(process.cwd(), './client/public/dist', '[name].json'),
+		// 	path: path.resolve(process.cwd(), './client/dist', '[name].json'),
 		// 	name: '[name]',
 		// }),
 		// new webpack.optimize.ModuleConcatenationPlugin(),
@@ -157,13 +171,8 @@ if (process.env.dev) {
 	config.watchOptions = { ignored: /node_modules/ }
 	config.plugins.push(new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]))
 	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
-	config.plugins.push(new webpack.NamedModulesPlugin())
 
-	config.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-		name: 'vendor.dll', minChunks: ({ resource }) => /node_modules/.test(resource),
-		// async: true, children: true,
-	}))
-	// config.plugins.push(new webpack.optimize.AggressiveSplittingPlugin())
+	// config.plugins.push(new webpack.NamedModulesPlugin())
 
 	// config.plugins.push(new webpack.BannerPlugin({
 	// 	banner: "hash:[hash], chunkhash:[chunkhash], name:[name], filebase:[filebase], query:[query], file:[file]"
@@ -241,7 +250,7 @@ module.exports = config
 // 	config.output.filename = '[name].dll.js'
 // 	config.output.library = '[name]'
 // 	config.plugins.push(new webpack.DllPlugin({
-// 		path: path.resolve(process.cwd(), './client/public/dist', '[name].dll.json'),
+// 		path: path.resolve(process.cwd(), './client/dist', '[name].dll.json'),
 // 		name: '[name]',
 // 	}))
 // }
