@@ -31,8 +31,8 @@ const config = {
 	context: __dirname,
 	entry: { client: ['./client/client.ts'] },
 	output: {
-		path: path.resolve(__dirname, './client/dist'),
-		publicPath: '/',
+		path: path.resolve(__dirname, './client/public/dist'),
+		publicPath: '/dist/',
 		filename: '[name].build.js',
 		chunkFilename: '[id].[name].chunk.js',
 	},
@@ -120,7 +120,7 @@ const config = {
 		new webpack.IgnorePlugin(/typescript/),
 		// new webpack.IgnorePlugin(/mdi/),
 		new webpack.ProgressPlugin(),
-		// new ExtractTextPlugin('style.css'),
+		new ExtractTextPlugin('style.css'),
 		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 
 		new webpack.optimize.CommonsChunkPlugin({
