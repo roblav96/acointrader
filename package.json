@@ -1,5 +1,7 @@
 {
 	"scripts": {
+		"g": "tsc-watch -p build/tsconfig.json --onSuccess 'gulp -f build/gulpfile.js'",
+		"gulp": "gulp",
 		"i": "npm install || true && npm run fixdts",
 		"fixdts": "rimraf node_modules/vuex/types/vue.d.ts && rimraf node_modules/@types/echarts/index.d.ts",
 		"rm": "npm run server:kill && npm run rm:flush",
@@ -80,6 +82,7 @@
 		"timeseries-analysis": "latest",
 		"trumpet": "latest",
 		"uws": "latest",
+		"validator": "latest",
 		"vue": "latest",
 		"vue-class-component": "latest",
 		"vue-property-decorator": "latest",
@@ -96,6 +99,7 @@
 		"@types/cron": "latest",
 		"@types/delay": "latest",
 		"@types/eyes": "latest",
+		"@types/gulp": "latest",
 		"@types/ioredis": "0.0.27",
 		"@types/lockr": "latest",
 		"@types/lodash": "latest",
@@ -127,6 +131,7 @@
 		"gulp": "next",
 		"gulp-cli": "latest",
 		"html-webpack-plugin": "latest",
+		"minimist": "latest",
 		"node-sass": "latest",
 		"npm-run-all": "latest",
 		"rimraf": "latest",
