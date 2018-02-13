@@ -17,9 +17,6 @@ const env = {
 }
 Object.assign(env, require('./server.env.json')[env.env])
 
-console.log('SERVER env >')
-eyes.inspect(env)
-
 
 
 const config = {
