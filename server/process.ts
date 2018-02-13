@@ -12,8 +12,7 @@ import moment from 'moment'
 
 
 
-const eOpts = (eyes as any).defaults as eyes.EyesOptions
-eOpts.maxLength = 65536
+{ ((eyes as any).defaults as eyes.EyesOptions).maxLength = 65536 }
 
 process.$instances = os.cpus().length
 process.$instance = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1

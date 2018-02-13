@@ -100,6 +100,7 @@
 		"@types/webpack": "latest",
 		"babel-core": "latest",
 		"babel-loader": "latest",
+		"cli-spinners": "latest",
 		"clipboardy": "latest",
 		"cross-env": "latest",
 		"css-loader": "latest",
