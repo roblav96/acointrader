@@ -96,11 +96,11 @@ const config = {
 	plugins: [
 		new webpack.IgnorePlugin(/typescript/),
 		new webpack.ProgressPlugin(),
-		new webpack.NoEmitOnErrorsPlugin(),
+		// new webpack.NoEmitOnErrorsPlugin(),
 		// new BundleAnalyzerPlugin({ analyzerPort: 9999 }),
 
 		// new webpack.HashedModuleIdsPlugin(),
-		new webpack.optimize.ModuleConcatenationPlugin(),
+		// new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor', minChunks: ({ resource }) => /node_modules/.test(resource),
 			// async: true, children: true,
@@ -113,7 +113,7 @@ const config = {
 
 		new ExtractTextPlugin({
 			filename: '[name].styles.css',
-			allChunks: true,
+			// allChunks: true,
 		}),
 		new HtmlWebpackPlugin({
 			template: 'client/index.html',
@@ -123,8 +123,8 @@ const config = {
 		}),
 	],
 
-	// stats: 'verbose',
-	stats: 'normal',
+	stats: 'verbose',
+	// stats: 'normal',
 	devtool: 'source-map',
 	// cache: true,
 
@@ -139,7 +139,7 @@ if (env.dev) {
 
 if (env.watch) {
 	config.watch = true
-	config.plugins.push(new webpack.WatchIgnorePlugin([/node_modules/, /dist/, /server/, /\.js$/, /\.d\.ts$/]))
+	config.plugins.push(new webpack.WatchIgnorePlugin([/node_modules/, /dist/, /server/]))
 }
 
 
