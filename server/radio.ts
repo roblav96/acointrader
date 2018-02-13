@@ -130,7 +130,7 @@ if (process.MASTER) {
 	let host = url.parse(process.$domain).host
 	if (process.DEVELOPMENT) host = process.$host + ':' + process.$port;
 	console.log('\n\n' +
-		clc.bold.underline.cyan('𝛂CoinTrader') + '\n' +
+		clc.bold.underline.magenta('𝛂CoinTrader') + '\n' +
 		'v' + process.$version + ' ' +
 		clc.bold(process.ENV) + '\n' +
 		host + '\n' +

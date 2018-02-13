@@ -26,7 +26,7 @@ const config = {
 	output: {
 		path: path.resolve(__dirname, './server/dist'),
 		publicPath: '/server/dist/',
-		filename: 'server.js',
+		filename: 'build.js',
 	},
 
 	target: 'node',
@@ -51,7 +51,7 @@ const config = {
 	],
 
 	stats: 'normal',
-	devtool: 'inline-source-map',
+	devtool: 'source-map',
 
 }
 
@@ -61,7 +61,7 @@ if (env.dev) {
 	// config.profile = true
 	// config.plugins.push(new BundleAnalyzer())
 	config.plugins.push(new ShellPlugin({
-		onBuildEnd: ['supervisor --non-interactive --quiet server/dist/server.js'],
+		onBuildEnd: ['npm run server:forever:dev'],
 	}))
 }
 
