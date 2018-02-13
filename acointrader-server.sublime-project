@@ -3,13 +3,10 @@
 		"path": ".",
 		"folder_exclude_patterns": [
 			"client",
-			".stfolder",
-			".awcache",
 			"dist",
 			"node_modules"
 		],
 		"file_exclude_patterns": [
-			".stignore",
 			"*client.*"
 		]
 	}]

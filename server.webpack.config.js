@@ -1,14 +1,24 @@
 // 
 
-const eyes = require('eyes')
+const eyes = require('eyes'); eyes.defaults.maxLength = 131072;
 const webpack = require('webpack')
 const path = require('path')
+const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const NodeExternals = require('webpack-node-externals')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-const WebpackShellPlugin = require('webpack-shell-plugin')
+const ShellPlugin = require('webpack-shell-plugin')
 
-const env = require('./server.env.json')[process.env.NODE_ENV]
-env.env = process.env.NODE_ENV
+
+
+const sargs = process.env.args.split(':')
+const env = {
+	env: { dev: 'DEVELOPMENT', prod: 'PRODUCTION' }[sargs[0]],
+	[sargs[0]]: true,
+	watch: sargs.indexOf('watch') >= 0,
+}
+Object.assign(env, require('./server.env.json')[env.env])
+
+console.log('SERVER env >')
+eyes.inspect(env)
 
 
 
@@ -19,13 +29,12 @@ const config = {
 	output: {
 		path: path.resolve(__dirname, './server/dist'),
 		publicPath: '/server/dist/',
-		filename: 'build.js',
+		filename: 'server.js',
 	},
 
 	target: 'node',
 	externals: [NodeExternals()],
 	resolve: { extensions: ['.ts', '.js'] },
-	// node: { __filename: true },
 
 	module: {
 		rules: [
@@ -35,34 +44,38 @@ const config = {
 				loader: 'ts-loader',
 				options: {
 					reportFiles: ['server/**/*.ts', 'shared/**/*.ts', 'types/**/*.d.ts'],
-					// context: __dirname,
-					// context: './',
 				},
 			},
 		],
 	},
 
 	plugins: [
-		new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
+		new webpack.ProgressPlugin(),
 	],
 
+	stats: 'normal',
 	devtool: 'inline-source-map',
 
 }
 
 
 
-if (process.env.NODE_ENV == 'DEVELOPMENT') {
-	config.watchOptions = { ignored: /node_modules/ }
-	config.plugins.push(new WebpackShellPlugin({
-		onBuildEnd: ['npm run server:boot:development'],
+if (env.dev) {
+	// config.profile = true
+	// config.plugins.push(new BundleAnalyzer())
+	config.plugins.push(new ShellPlugin({
+		onBuildEnd: ['supervisor --non-interactive --quiet server/dist/server.js'],
 	}))
-	// config.plugins.push(new BundleAnalyzerPlugin.BundleAnalyzerPlugin())
+}
+
+if (env.watch) {
+	config.watch = true
+	config.plugins.push(new webpack.WatchIgnorePlugin([/node_modules/, /dist/, /client/]))
 }
 
 
 
-if (process.env.NODE_ENV == 'PRODUCTION') {
+if (env.prod) {
 
 }
 
@@ -75,7 +88,7 @@ config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
 
 
 
-// console.log('server.webpack.config.js >'); eyes.inspect(config);
+// console.log('SERVER config >'); eyes.inspect(config);
 
 module.exports = config
 

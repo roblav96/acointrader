@@ -7,7 +7,7 @@ import * as errors from '../services/errors'
 import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
-import ee3 from 'eventemitter3'
+import * as ee3 from 'eventemitter3'
 import uws from 'uws'
 
 
@@ -16,7 +16,7 @@ declare global {
 	// interface UwsClient extends uws {
 	// 	events: Array<string>
 	// }
-	interface UwsEmitter extends ee3.EventEmitter {
+	interface UwsEmitter extends ee3 {
 		emit(event: keyof typeof UWebSocket, ...args: Array<any>): boolean
 		once(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
 		addListener(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
