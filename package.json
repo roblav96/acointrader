@@ -1,7 +1,13 @@
 {
 	"scripts": {
-		"g": "tsc-watch -p build/tsconfig.json --onSuccess 'gulp -f dist/gulpfile.js'",
-		"gulp": "gulp",
+		"i": "npm install && npm run fixdts",
+		"fixdts": "rimraf node_modules/vuex/types/vue.d.ts && rimraf node_modules/@types/echarts/index.d.ts",
+		"rm": "npm run rm:flush",
+		"rm:flush": "rimraf node_modules && npm run rm:dist",
+		"rm:dist": "rimraf dist && run-p client:rm:dist server:rm:dist",
+		"rc": "run-s client:rm:dist client:webpack:dev",
+		"client:rm:dist": "rimraf client/dist",
+		"client:webpack:dev": "cross-env args=dev:watch webpack --config client.webpack.config",
 		"tsc": "tsc"
 	},
 	"dependencies": {
@@ -27,14 +33,10 @@
 		"fingerprintjs2": "latest",
 		"fuzzy": "latest",
 		"humanize-plus": "latest",
-		"imap-simple": "latest",
 		"ioredis": "latest",
-		"jsonic": "latest",
 		"lockr": "latest",
 		"lodash": "latest",
 		"luxon": "latest",
-		"mail-listener2": "latest",
-		"mailparser": "latest",
 		"mdi": "latest",
 		"moment": "latest",
 		"node-forge": "latest",
@@ -43,7 +45,6 @@
 		"p-forever": "latest",
 		"p-queue": "latest",
 		"p-timeout": "latest",
-		"plivo": "latest",
 		"query-string": "latest",
 		"request-ip": "latest",
 		"restify": "latest",
@@ -56,9 +57,7 @@
 		"simple-statistics": "latest",
 		"technicalindicators": "latest",
 		"timeseries-analysis": "latest",
-		"trumpet": "latest",
 		"uws": "latest",
-		"validator": "latest",
 		"vue": "latest",
 		"vue-class-component": "latest",
 		"vue-property-decorator": "latest",
@@ -75,7 +74,6 @@
 		"@types/cron": "latest",
 		"@types/delay": "latest",
 		"@types/eyes": "latest",
-		"@types/gulp": "latest",
 		"@types/ioredis": "0.0.27",
 		"@types/lockr": "latest",
 		"@types/lodash": "latest",
@@ -104,10 +102,7 @@
 		"file-loader": "latest",
 		"fork-ts-checker-notifier-webpack-plugin": "latest",
 		"fork-ts-checker-webpack-plugin": "latest",
-		"gulp": "next",
-		"gulp-cli": "latest",
 		"html-webpack-plugin": "latest",
-		"minimist": "latest",
 		"node-sass": "latest",
 		"npm-run-all": "latest",
 		"rimraf": "latest",
@@ -125,4 +120,3 @@
 		"webpack-livereload-plugin": "latest"
 	}
 }
-

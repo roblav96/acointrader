@@ -33,7 +33,7 @@ export const security = {
 	generatePemKeyPair(size: number): Promise<Security.PemKeyPair> {
 		return new Promise(function(resolve, reject) {
 			let opts = { bits: size, workers: -1 } as any
-			if (process.CLIENT) opts.workerScript = '/dist/prime.worker.min.js';
+			if (process.CLIENT) opts.workerScript = '/prime.worker.min.js';
 			forge.pki.rsa.generateKeyPair(opts, function(error, keypair) {
 				if (error) return reject(error);
 				resolve(keypair)
