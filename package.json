@@ -119,6 +119,7 @@
 		"source-map-support": "latest",
 		"style-loader": "latest",
 		"ts-loader": "latest",
+		"tsc-watch": "latest",
 		"typescript": "latest",
 		"uglifyjs-webpack-plugin": "latest",
 		"vue-loader": "latest",

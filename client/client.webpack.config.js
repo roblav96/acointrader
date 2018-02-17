@@ -1,6 +1,7 @@
 // 
 
-const eyes = require('eyes'); eyes.defaults.maxLength = 131072;
+const eyes = require('eyes');
+eyes.defaults.maxLength = 131072;
 const webpack = require('webpack')
 const path = require('path')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
@@ -16,7 +17,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const sargs = process.env.args.split(':')
 const env = {
-	env: { dev: 'DEVELOPMENT', prod: 'PRODUCTION' }[sargs[0]],
+	env: {
+		dev: 'DEVELOPMENT',
+		prod: 'PRODUCTION',
+	}[sargs[0]],
 	[sargs[0]]: true,
 	watch: sargs.indexOf('watch') >= 0,
 }
@@ -30,7 +34,9 @@ const env = {
 const config = {
 
 	context: __dirname,
-	entry: { client: ['./client/client.ts'] },
+	entry: {
+		client: ['./client/client.ts']
+	},
 	output: {
 		path: path.resolve(__dirname, './client/dist'),
 		publicPath: '/',
@@ -39,7 +45,12 @@ const config = {
 	},
 
 	node: {
-		setImmediate: false, dgram: 'empty', fs: 'empty', net: 'empty', tls: 'empty', child_process: 'empty',
+		setImmediate: false,
+		dgram: 'empty',
+		fs: 'empty',
+		net: 'empty',
+		tls: 'empty',
+		child_process: 'empty',
 	},
 
 	resolve: {
@@ -50,8 +61,7 @@ const config = {
 	},
 
 	module: {
-		rules: [
-			{
+		rules: [{
 				test: /\.ts$/,
 				exclude: /node_modules/,
 				loader: 'ts-loader',
@@ -70,9 +80,18 @@ const config = {
 				test: /\.(css|sass|scss)$/,
 				loader: ExtractTextPlugin.extract({
 					fallback: 'style-loader',
-					use: [
-						{ loader: 'css-loader', options: { sourceMap: !env.prod } },
-						{ loader: 'sass-loader', options: { sourceMap: !env.prod } },
+					use: [{
+							loader: 'css-loader',
+							options: {
+								sourceMap: !env.prod
+							}
+						},
+						{
+							loader: 'sass-loader',
+							options: {
+								sourceMap: !env.prod
+							}
+						},
 					],
 				}),
 			},
@@ -102,7 +121,10 @@ const config = {
 		// new webpack.HashedModuleIdsPlugin(),
 		// new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor', minChunks: ({ resource }) => /node_modules/.test(resource),
+			name: 'vendor',
+			minChunks: ({
+				resource
+			}) => /node_modules/.test(resource),
 			// async: true, children: true,
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
@@ -133,7 +155,9 @@ const config = {
 
 
 if (env.dev) {
-	config.plugins.push(new LiveReloadPlugin({ appendScriptTag: true }))
+	config.plugins.push(new LiveReloadPlugin({
+		appendScriptTag: true
+	}))
 	config.profile = true
 }
 
@@ -150,15 +174,15 @@ if (env.prod) {
 
 
 
-Object.keys(env).forEach(function(key) {
+Object.keys(env).forEach(function (key) {
 	env[key] = JSON.stringify(env[key])
 })
-config.plugins.push(new webpack.DefinePlugin({ 'process.$webpack': env }))
+config.plugins.push(new webpack.DefinePlugin({
+	'process.$webpack': env
+}))
 
 
 
 // console.log('client.webpack.config >'); eyes.inspect(config);
 
 module.exports = config
-
-
