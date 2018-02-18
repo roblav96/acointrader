@@ -1,14 +1,11 @@
 {
 	"extends": "../tsconfig",
 	"compilerOptions": {
-		"target": "es5",
+		"target": "es6",
 		"module": "commonjs",
 		"lib": ["es2015"],
-		"allowSyntheticDefaultImports": false
+		"allowSyntheticDefaultImports": true
 	},
-	"files": [
-		"./server.ts"
-	],
 	"include": [
 		"../types/**/*.d.ts",
 		"../shared/**/*.ts",

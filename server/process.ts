@@ -12,29 +12,35 @@ import * as moment from 'moment'
 
 
 
-{ ((eyes as any).defaults as eyes.EyesOptions).maxLength = 65536 }
+Object.assign((eyes as any).defaults, {
+	maxLength: 65536,
+	showHidden: true,
+} as eyes.EyesOptions)
 
-process.INSTANCES = os.cpus().length
+process.INSTANCES = 2 // os.cpus().length
 process.INSTANCE = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1
 
-process.ENV = process.$webpack.env
+process.ENV = process.env.NODE_ENV as any
 process.DEVELOPMENT = process.ENV == 'DEVELOPMENT'
 process.PRODUCTION = process.ENV == 'PRODUCTION'
 process.CLIENT = false
 process.SERVER = true
 process.MASTER = cluster.isMaster
-process.PRIMARY = process.INSTANCE == 0
 process.WORKER = cluster.isWorker
+process.PRIMARY = process.INSTANCE == 0
 
-process.$domain = 'https://acointrader.com'
-if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
-
-process.HOST = process.$webpack.host
-process.PORT = process.$webpack.port
 process.DNAME = 'aCoinTrader'
-process.$version = '0.0.1'
+process.VERSION = '0.0.1'
+process.DOMAIN = 'https://acointrader.com'
+if (process.DEVELOPMENT) process.DOMAIN = 'http://dev.acointrader.com';
 
-process.ee3 = new ee3.EventEmitter()
+process.ENVJSON = process.cwd() + '/server/server.env.json'
+const envjson = require(process.ENVJSON)[process.ENV]
+Object.keys(envjson).forEach(function(key) {
+	if (key == key.toUpperCase()) process[key] = envjson[key];
+})
+
+process.EE3 = new ee3()
 
 
 
@@ -43,7 +49,8 @@ console.format = function(args) {
 	let time = moment().format('hh:mm:ss:SSS')
 	let instance = '[' + process.INSTANCE + ']'
 	let stack = new Error().stack.toString()
-	stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
+	// eyes.inspect(stack, 'stack')
+	stack = stack.replace(/^ {4}at /gm, '').split('\n')[4].trim()
 	let fullpath = stack.split('/').pop()
 	if (!fullpath) fullpath = args.filename + ':' + args.getLineNumber();
 	let file = fullpath.split('.ts:')[0]
@@ -67,45 +74,35 @@ console.format = function(args) {
 
 
 
-const errors = require('./services/errors')
 process.on('uncaughtException', function(error) {
-	console.error('uncaughtExceptions > error', errors.render(error))
+	console.error('uncaughtExceptions > error', error)
 })
 process.on('unhandledRejection', function(error) {
-	console.error('unhandledRejection > error', errors.render(error))
+	console.error('unhandledRejection > error', error)
+	process.exit(1)
 })
 
 
 
-const MUTE = false // !process.MASTER
-const benches = {} as Dict<any>
-const filters = [] as string[]
-process.benchStart = function(id: string) {
-	if (!MUTE && filters.indexOf(id) == -1) {
-		let now = Date.now()
-		benches[id] = {
-			start: now,
-			t: now,
-		}
-		console.log('bench ➤ START', id)
+if (process.DEVELOPMENT) {
+	if (process.MASTER) setInterval(process.stdout.write, 1000, (clc as any).erase.lineRight);
+	const dtsgen = require('dts-gen')
+	const clipboardy = require('clipboardy')
+	process.dtsgen = function(name, value) {
+		name = name.replace(/\W+/g, '').trim()
+		let results = dtsgen.generateIdentifierDeclarationFile(name, value)
+		clipboardy.write(results).then(function() {
+			console.warn('/*████  DTS COPPIED > "' + clc.bold(name) + '"  ████*/')
+		}).catch(function(error) {
+			console.error('clipboardy.write > error', error)
+		})
 	}
-}
-process.benchPing = function(id: string, name: string = '') {
-	if (!MUTE && filters.indexOf(id) == -1 && benches[id]) {
-		let bench = benches[id]
-		let now = Date.now()
-		let time = now - bench.t
-		console.log('bench ➤ PING', id, name, clc.bold(time + 'ms'))
-		benches[id].t = now
-	}
-}
-process.benchEnd = function(id: string) {
-	if (!MUTE && filters.indexOf(id) == -1 && benches[id]) {
-		let bench = benches[id]
-		let now = Date.now()
-		let time = now - bench.start
-		console.log('bench ➤ END', id, 'total', clc.bold.redBright(time + 'ms'))
-		benches[id] = undefined
+	process.clipboard = function(name, input) {
+		clipboardy.write(input).then(function() {
+			console.warn('/*████  "' + clc.bold(name) + '" > APPENDED TO CLIPBOARD  ████*/')
+		}).catch(function(error) {
+			console.error('clipboardy.write > error', error)
+		})
 	}
 }
 
