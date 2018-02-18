@@ -11,13 +11,13 @@
 		"removeComments": true,
 		"pretty": true,
 		"sourceMap": true,
-		"outDir": "dist"
+		"outDir": "./dist"
 	},
 	"include": [
-		"types/**/*.d.ts",
-		"shared/**/*.ts",
-		"client/**/*.ts",
-		"server/**/*.ts"
+		"./types/**/*.d.ts",
+		"./shared/**/*.ts",
+		"./client/**/*.ts",
+		"./server/**/*.ts"
 	],
 	"exclude": [
 		"dist",

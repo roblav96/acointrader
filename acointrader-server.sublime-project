@@ -3,7 +3,7 @@
 		"path": ".",
 		"folder_exclude_patterns": [
 			"client",
-			"dist",
+			// "dist",
 			"node_modules"
 		],
 		"file_exclude_patterns": [
@@ -11,4 +11,3 @@
 		]
 	}]
 }
-
