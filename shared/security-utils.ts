@@ -1,11 +1,11 @@
 // 
 
-import eyes from 'eyes'
-import clc from 'cli-color'
-import _ from 'lodash'
-import moment from 'moment'
+import * as eyes from 'eyes'
+import * as clc from 'cli-color'
+import * as _ from 'lodash'
+import * as moment from 'moment'
 
-import forge from 'node-forge'
+import * as forge from 'node-forge'
 
 
 

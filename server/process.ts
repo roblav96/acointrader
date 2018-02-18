@@ -1,14 +1,14 @@
 // 
 
-import eyes from 'eyes'
-import clc from 'cli-color'
-import _ from 'lodash'
+import * as eyes from 'eyes'
+import * as clc from 'cli-color'
+import * as _ from 'lodash'
 
-import os from 'os'
-import cluster from 'cluster'
-import url from 'url'
-import ee3 from 'eventemitter3'
-import moment from 'moment'
+import * as os from 'os'
+import * as cluster from 'cluster'
+import * as url from 'url'
+import * as ee3 from 'eventemitter3'
+import * as moment from 'moment'
 
 
 

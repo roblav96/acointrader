@@ -6,11 +6,11 @@ export * from './exchange-utils'
 
 // 
 
-import eyes from 'eyes'
-import clc from 'cli-color'
-import _ from 'lodash'
-import moment from 'moment'
-import url from 'url'
+import * as eyes from 'eyes'
+import * as clc from 'cli-color'
+import * as _ from 'lodash'
+import * as moment from 'moment'
+import * as url from 'url'
 
 
 
