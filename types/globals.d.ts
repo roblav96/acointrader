@@ -1,7 +1,6 @@
 // 
 
 import * as axios from 'axios'
-import * as ee3 from 'eventemitter3'
 
 
 
@@ -9,23 +8,15 @@ declare global {
 
 	namespace NodeJS {
 		interface Process {
-			dtsgen: (name: string, value: any) => void
-			clipboard: (name: string, input: string) => void
-			benchStart: (id: string) => void
-			benchPing: (id: string, name: string) => void
-			benchEnd: (id: string) => void
-			ENV: string
+			dtsgen: (desc: string, value: any) => void
+			clipboard: (desc: string, input: string) => void
+			ENV: 'DEVELOPMENT' | 'PRODUCTION'
 			DEVELOPMENT: boolean
 			PRODUCTION: boolean
 			CLIENT: boolean
 			SERVER: boolean
-			MASTER: boolean
-			PRIMARY: boolean
-			WORKER: boolean
-			$webpack: any
-			$domain: string
-			$version: string
-			ee3: ee3.EventEmitter
+			DOMAIN: string
+			VERSION: string
 		}
 	}
 
@@ -35,6 +26,8 @@ declare global {
 		scraper?: boolean
 		retry?: boolean
 	}
+
+
 
 }
 

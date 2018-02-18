@@ -14,8 +14,8 @@ import * as moment from 'moment'
 
 { ((eyes as any).defaults as eyes.EyesOptions).maxLength = 65536 }
 
-process.$instances = os.cpus().length
-process.$instance = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1
+process.INSTANCES = os.cpus().length
+process.INSTANCE = cluster.isWorker ? Number.parseInt(cluster.worker.id as any) - 1 : -1
 
 process.ENV = process.$webpack.env
 process.DEVELOPMENT = process.ENV == 'DEVELOPMENT'
@@ -23,15 +23,15 @@ process.PRODUCTION = process.ENV == 'PRODUCTION'
 process.CLIENT = false
 process.SERVER = true
 process.MASTER = cluster.isMaster
-process.PRIMARY = process.$instance == 0
+process.PRIMARY = process.INSTANCE == 0
 process.WORKER = cluster.isWorker
 
 process.$domain = 'https://acointrader.com'
 if (process.DEVELOPMENT) process.$domain = 'http://dev.acointrader.com';
 
-process.$host = process.$webpack.host
-process.$port = process.$webpack.port
-process.$dname = 'aCoinTrader'
+process.HOST = process.$webpack.host
+process.PORT = process.$webpack.port
+process.DNAME = 'aCoinTrader'
 process.$version = '0.0.1'
 
 process.ee3 = new ee3.EventEmitter()
@@ -41,7 +41,7 @@ process.ee3 = new ee3.EventEmitter()
 require('debug-trace')()
 console.format = function(args) {
 	let time = moment().format('hh:mm:ss:SSS')
-	let instance = '[' + process.$instance + ']'
+	let instance = '[' + process.INSTANCE + ']'
 	let stack = new Error().stack.toString()
 	stack = stack.replace(/^([^\n]*?\n){2}((.|\n)*)$/gmi, '$2').split('\n')[2].trim()
 	let fullpath = stack.split('/').pop()

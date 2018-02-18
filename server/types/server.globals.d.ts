@@ -12,11 +12,14 @@ declare global {
 
 	namespace NodeJS {
 		interface Process {
-			$instance: number
-			$instances: number
-			$dname: string
-			$host: string
-			$port: number
+			MASTER: boolean
+			WORKER: boolean
+			PRIMARY: boolean
+			INSTANCE: number
+			INSTANCES: number
+			DNAME: string
+			HOST: string
+			PORT: number
 		}
 	}
 
@@ -31,12 +34,12 @@ declare global {
 		response?: AxiosErrorResponse
 	}
 	interface AxiosErrorResponse extends axios.AxiosResponse {
-		data: AxiosErrorData
+		data: any // AxiosErrorData
 	}
-	type AxiosErrorData = errors.HttpError
-	type AxiosCanceler = axios.Canceler
+	// type AxiosErrorData = errors.HttpError
+	// type AxiosCanceler = axios.Canceler
 
-	type IdkError = Error & AxiosError & errors.HttpError
+	// type IdkError = Error & AxiosError & errors.HttpError
 
 
 

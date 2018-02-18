@@ -166,7 +166,7 @@ export const array = {
 	},
 	ichunk<T>(items: T[]): T[] {
 		if (process.MASTER) return items;
-		return array.chunks(items, process.$instances)[process.$instance]
+		return array.chunks(items, process.INSTANCES)[process.INSTANCE]
 	},
 	merge<T>(target: T[], source: T[], key: string): void {
 		// if (!array.is(source)) return;
