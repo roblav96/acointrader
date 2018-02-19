@@ -8,7 +8,7 @@ import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
 import * as ee3 from 'eventemitter3'
-import * as uws from 'uws'
+import * as WebSocket from 'uws'
 
 
 
@@ -25,63 +25,40 @@ import * as uws from 'uws'
 // 	}
 // }
 
-export default class UWebSocket extends ee3 {
+export default class UWebSocket {
 
-	// static readonly connecting = 'connecting'
-	// static readonly connected = 'connected'
-	// static readonly disconnected = 'disconnected'
-	// static readonly destroyed = 'destroyed'
-	// static readonly error = 'error'
-	// static readonly message = 'message'
-
-	// private _emitter = new ee3() // as UwsEmitter
-
-	verbose = true
-	warnings = true
-	errors = true
+	private static opts = {
+		immortal: true,
+		autoconnect: true,
+	}
+	
+	logs = { verbose: true, warnings: true, errors: true }
 
 	constructor(
 		public address: string,
-		public immortal = true,
+		public opts = {} as typeof UWebSocket.opts,
 	) {
-		super()
-		this.connect()
+		shared.object.repair(this.opts, UWebSocket.opts)
+		console.log('this.opts >')
+		eyes.inspect(this.opts)
+		// this.connect()
 		// process.EE3.addListener(shared.EE3.TICK_10, () => this._socket.ping())
 	}
 
-	destroy(reconnect = false) {
+	destroy() {
 		console.warn('destroy')
 		if (this._socket) {
 			this._socket.close()
 			this._socket.terminate()
+			this._socket.removeAllListeners()
+			this._socket = null
 		}
-		if (reconnect) {
-			this.reconnect()
-		}
-		// this._emitter.emit('destroyed')
-		// if (purge) {
-		// 	this._emitter.removeAllListeners()
-		// } else if (this.immortal) {
-		// 	this.reconnect()
-		// }
 	}
 
-	// connecting() { return !!this._socket && this._socket.readyState == this._socket.CONNECTING }
-	// ready() { return !!this._socket && this._socket.readyState == this._socket.OPEN }
-
-	private _socket: uws
+	private _socket: WebSocket
 	connect() {
-		// if (this.connecting() || this.ready()) return;
 		if (this._socket) this.destroy();
-		// if (this._socket) {
-		// 	this._socket.removeAllListeners()
-		// 	this._socket = null
-		// }
-		this._socket = new uws(this.address)
-		// this._socket.onopen = this.onopen as any
-		// this._socket.onclose = this.onclose as any
-		// this._socket.onerror = this.onerror as any
-		// this._socket.onmessage = this.onmessage as any
+		this._socket = new WebSocket(this.address)
 		this._socket.on('open', this.onopen)
 		this._socket.on('close', this.onclose)
 		this._socket.on('error', this.onerror)
@@ -93,13 +70,15 @@ export default class UWebSocket extends ee3 {
 	reconnect = _.throttle(this.connect, 1000, { leading: false, trailing: true })
 
 	private onopen = () => {
-		if (this.verbose) console.info(this.address, '> connected');
-		// setTimeout(() => this._socket.close(), 3000)
+		if (this.logs.verbose) console.info(this.address, '> connected');
+		setTimeout(() => this._socket.close(1, 'dev'), 3000)
 	}
 
 	private onclose = (code: number, message: string) => {
-		if (this.warnings) console.warn(this.address, '> onclose >', code, message);
-		this.destroy(this.immortal)
+		if (this.logs.warnings) console.warn(this.address, '> onclose >', code, message);
+		// this.destroy(this.immortal)
+		// this.reconnect()
+		// this.destroy(this.immortal)
 		// if (this.immortal) this.reconnect();
 		// this._emitter.emit('disconnected', code, message)
 		// this.destroy()
@@ -107,8 +86,10 @@ export default class UWebSocket extends ee3 {
 
 	private onerror = error => {
 		if (!error) return;
-		if (this.errors) console.error(this.address, '> onerror >', errors.render(error));
-		this.destroy(this.immortal)
+		if (this.logs.errors) console.error(this.address, '> onerror >', errors.render(error));
+		// this.destroy(this.immortal)
+		// this.reconnect()
+		// this.destroy(this.immortal)
 		// if (this.immortal) this.reconnect();
 		// this.destroy(this.immortal)
 		// this._emitter.emit('error', error)
@@ -116,18 +97,18 @@ export default class UWebSocket extends ee3 {
 	}
 
 	private onmessage = message => {
-		this._emitter.emit('message', shared.json.parse(message))
+		// this._emitter.emit('message', shared.json.parse(message))
 	}
-	
-	
 
-	send(message: any) {
-		this._socket.send(JSON.stringify(message), error => {
-			if (!error) return;
-			if (this.errors) console.error(this.address, '> send error >', errors.render(error as any));
-			this._emitter.emit('error', error)
-		})
-	}
+
+
+	// send(message: any) {
+	// 	this._socket.send(JSON.stringify(message), error => {
+	// 		if (!error) return;
+	// 		if (this.errors) console.error(this.address, '> send error >', errors.render(error as any));
+	// 		this._emitter.emit('error', error)
+	// 	})
+	// }
 
 	// private emit<T = any>(event: string, ...args: Array<T>) { this.ee3.emit(event, ...args) }
 	// removeAllListeners(event?: string) { this.ee3.removeAllListeners(event) }
