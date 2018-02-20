@@ -1,5 +1,6 @@
 // 
 
+export * from './uemitter'
 export * from './enums'
 export * from './security-utils'
 export * from './exchange-utils'

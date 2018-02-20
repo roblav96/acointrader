@@ -7,58 +7,43 @@ import * as errors from '../services/errors'
 import * as utils from '../services/utils'
 import * as shared from '../../shared/shared'
 
-import * as ee3 from 'eventemitter3'
-import * as WebSocket from 'uws'
+import * as uws from 'uws'
 
 
 
-// declare global {
-// 	// interface UwsClient extends uws {
-// 	// 	events: Array<string>
-// 	// }
-// 	interface UwsEmitter extends ee3 {
-// 		emit(event: keyof typeof UWebSocket, ...args: Array<any>): boolean
-// 		once(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
-// 		addListener(event: keyof typeof UWebSocket, fn: (...args: Array<any>) => void): this
-// 		removeListener(event: keyof typeof UWebSocket, fn?: (data?: any) => void): this
-// 		removeAllListeners(event?: keyof typeof UWebSocket): this
-// 	}
-// }
-
-export default class UWebSocket {
+type Events = 'open' | 'close' | 'error' | 'message'
+export default class UWebSocket extends shared.UEmitter<Events> {
 
 	private static opts = {
 		immortal: true,
 		autoconnect: true,
 	}
-	
+
 	logs = { verbose: true, warnings: true, errors: true }
 
 	constructor(
 		public address: string,
 		public opts = {} as typeof UWebSocket.opts,
 	) {
+		super()
 		shared.object.repair(this.opts, UWebSocket.opts)
-		console.log('this.opts >')
-		eyes.inspect(this.opts)
-		// this.connect()
+		this.connect()
 		// process.EE3.addListener(shared.EE3.TICK_10, () => this._socket.ping())
 	}
 
 	destroy() {
 		console.warn('destroy')
-		if (this._socket) {
-			this._socket.close()
-			this._socket.terminate()
-			this._socket.removeAllListeners()
-			this._socket = null
-		}
+		this._socket.close()
+		this._socket.terminate()
+		this._socket.removeAllListeners()
+		this._socket = null
+		this.removeAllListeners()
 	}
 
-	private _socket: WebSocket
+	private _socket: uws
 	connect() {
 		if (this._socket) this.destroy();
-		this._socket = new WebSocket(this.address)
+		this._socket = new uws(this.address)
 		this._socket.on('open', this.onopen)
 		this._socket.on('close', this.onclose)
 		this._socket.on('error', this.onerror)
@@ -71,7 +56,8 @@ export default class UWebSocket {
 
 	private onopen = () => {
 		if (this.logs.verbose) console.info(this.address, '> connected');
-		setTimeout(() => this._socket.close(1, 'dev'), 3000)
+		// setTimeout(() => this._socket.close(1, 'dev'), 3000)
+		setTimeout(() => this.destroy(), 3000)
 	}
 
 	private onclose = (code: number, message: string) => {
@@ -125,6 +111,15 @@ export default class UWebSocket {
 
 
 
+
+
+// div.srg > div.g div.exp-outline {
+// 	display: none;
+// }
+
+// div.srg > div.g div.rc > div[jsl^='$t'] {
+// 	display: none;
+// }
 
 
 

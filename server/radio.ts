@@ -101,6 +101,7 @@ class RadioEmitter {
 	private _wsc = new UWebSocket('ws://localhost:' + ropts.port + '/' + ropts.path)
 
 	constructor() {
+		this._wsc.addListener('EventEmitter')
 		// this._wsc.verbose = false
 		// this._wsc.emitter.addListener('message', (message: Radio.Message) => {
 		// 	this._ee3.emit(message.event, message.data)
