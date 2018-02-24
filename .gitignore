@@ -2,10 +2,11 @@
 
 node_modules
 dist
-*env.json
 
+*.env.json
+
+*.log
 *.heapsnapshot
 *.DS_STORE
-*.log
 
 
